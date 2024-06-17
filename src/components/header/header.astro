@@ -1,0 +1,145 @@
+---
+import Logo from "../logo.astro";
+import BottomGroup from "./bottom-group.astro";
+import { bottomGroups, topGroups } from "./navigation-data";
+import SearchForm from "./search-form.astro";
+import TopGroup from "./top-group.astro";
+---
+
+<div
+  class="sticky -top-px before:absolute before:top-0 before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 data-[scrolling='true']:bg-white before:to-secondary-600 pt-4 pb-6 z-10 group transition-colors border-b border-transparent data-[scrolling='true']:border-gray-300"
+  data-menu
+>
+  <header class="mx-auto max-w-6xl px-4" data-menu>
+    <nav class="flex items-end">
+      <a
+        href="#content"
+        class="btn-primary fixed left-1/2 top-0 -translate-x-1/2 -translate-y-full focus:translate-y-0"
+        >Skip to content</a
+      >
+
+      <a
+        href="/"
+        aria-label="messiah university main page"
+        class="mr-auto text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
+      >
+        <Logo />
+      </a>
+
+      <div>
+        <ul class="flex justify-end mb-4 items-center">
+          {topGroups.map((group, index) => <TopGroup group={group} id={index + 1 + "bottom"} />)}
+
+          <li>
+            <a
+              href="/"
+              class="text-white uppercase group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 hover:text-tertiary-400 px-4 py-3 block transition-colors"
+              >Give</a
+            >
+          </li>
+
+          <SearchForm />
+        </ul>
+
+        <ul class="flex gap-x-6 lg:gap-x-10 xl:gap-x-12">
+          {bottomGroups.map((group, index) => <BottomGroup group={group} id={index + 1 + "top"} />)}
+        </ul>
+      </div>
+    </nav>
+  </header>
+</div>
+
+<div
+  class="h-[40vw] relative max-h-[800px] border-b-8 border-tertiary-400 bg-[url(/images/services-banner.jpg)] bg-cover bg-no-repeat after:absolute after:bottom-0 after:left-0 after:right-0 after:top-0 after:bg-gradient-to-b after:from-black/40 after:to-transparent -mt-32"
+  aria-hidden="true"
+>
+</div>
+
+<script>
+  const menu = document.querySelector<HTMLDivElement>("[data-menu]");
+
+  function hide(button: HTMLButtonElement) {
+    let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
+
+    if (group) {
+      group.classList.add("opacity-0");
+      button.setAttribute("aria-expanded", "false");
+      group.setAttribute("aria-hidden", "true");
+      group.addEventListener(
+        "transitionend",
+        () => {
+          group.classList.add("invisible");
+        },
+        { once: true }
+      );
+    }
+  }
+
+  function show(button: HTMLButtonElement) {
+    let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
+
+    if (group) {
+      group.classList.remove("opacity-0", "invisible");
+      button.setAttribute("aria-expanded", "true");
+      group.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function hideActive() {
+    let active = getActive();
+
+    if (active) {
+      hide(active);
+      active.focus();
+    }
+  }
+
+  function handleToggleMenu(button: HTMLButtonElement) {
+    if (button.getAttribute("aria-expanded") === "false") {
+      hideActive();
+      show(button);
+    } else {
+      hide(button);
+    }
+  }
+
+  function getActive() {
+    return menu?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
+  }
+
+  function handleClick(event: MouseEvent) {
+    let element = event.target as HTMLElement | null;
+    console.log(element);
+    let active = getActive();
+
+    if (element?.hasAttribute("aria-controls")) {
+      handleToggleMenu(element as HTMLButtonElement);
+    }
+
+    if (!element?.closest("[data-menu]") && active) {
+      hideActive();
+    }
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    let active = getActive();
+
+    if (event.key === "Escape" && active) {
+      hideActive();
+    }
+  }
+
+  document.addEventListener("click", handleClick);
+  document.addEventListener("keydown", handleKeyDown);
+
+  if (menu) {
+    let observer = new IntersectionObserver(
+      ([entry]) => {
+        entry?.target.setAttribute("data-scrolling", String(!entry.isIntersecting));
+      },
+      { threshold: 1 }
+    );
+
+    observer.observe(menu);
+  }
+</script>

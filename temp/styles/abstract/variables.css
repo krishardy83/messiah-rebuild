@@ -1,0 +1,26 @@
+:root {
+  /* Fonts */
+  --ff-serif: ITC Mendoza Roman, ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+  --ff-sans: Aptifer Sans, ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --ff-headings: Priori Sans, ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --fs-xs: 0.75rem; /* 12px */
+  --fs-base: 1rem; /* 16px */
+  --fs-lg: 1.125rem; /* 18px */
+  --fs-xl: 1.25rem; /* 20px */
+
+  /* Colors */
+  --clr-gray-100: hsl(0, 0%, 94%); /* #f0f0f0 */
+  --clr-gray-200: hsl(0, 0%, 87%); /* #dddddd */
+  --clr-gray-300: hsl(0, 0%, 80%); /* #cccccc */
+  --clr-gray-400: hsl(220, 1%, 39%); /* #636466 */
+  --clr-gray-500: hsl(0, 0%, 26%); /* #424242 */
+
+  --clr-blue-700: hsl(216, 41%, 26%); /* #273d5e */
+
+  --clr-black: hsl(0, 0%, 0%); /* #000000 */
+  --clr-white: hsl(0, 0%, 100%); /* #ffffff */
+}

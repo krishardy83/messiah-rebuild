@@ -1,0 +1,32 @@
+---
+interface Props {
+  links: {
+    label: string;
+    href: string;
+  }[];
+}
+
+const { links } = Astro.props;
+
+function isLast(index: number): boolean {
+  return index === links.length - 1;
+}
+---
+
+<nav aria-label="Breadcrumb" class="border-b border-gray-300 pb-4">
+  <ol class="flex flex-wrap text-xs">
+    {
+      links.map((link, index) => (
+        <li class={isLast(index) ? undefined : "after:mx-2 after:content-['/']"}>
+          <a
+            href={link.href}
+            class:list={["link", isLast(index) ? "text-gray-500" : "text-primary-800"]}
+            aria-current={isLast(index) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>

@@ -1,0 +1,73 @@
+---
+export interface TopGroup {
+  title: string;
+  children: (
+    | {
+        title: string;
+        href: string;
+        type: "button";
+      }
+    | {
+        title: string;
+        href: string;
+        type: "link";
+      }
+    | {
+        type: "separator";
+      }
+  )[];
+}
+
+interface Props {
+  group: TopGroup;
+  id: string;
+}
+
+const { group, id } = Astro.props;
+---
+
+<li class="relative">
+  <button
+    type="button"
+    aria-expanded="false"
+    aria-haspopup="true"
+    id={`group-button-${id}`}
+    aria-controls={`group-${id}`}
+    class="text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 hover:text-tertiary-400 aria-expanded:bg-primary-800 transition-colors px-4 py-3 uppercase"
+  >
+    {group.title}
+  </button>
+
+  <div
+    id={`group-${id}`}
+    class="opacity-0 invisible absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10"
+    role="region"
+    aria-labelledby={`group-button-${id}`}
+    aria-hidden="true"
+  >
+    <ul class="flex flex-col gap-2">
+      {
+        group.children.map((child) => {
+          if (child.type === "separator") {
+            return <li role="separator" class="w-full h-px bg-primary-500 my-4" />;
+          }
+
+          return (
+            <li>
+              <a
+                href={child.href}
+                class:list={[
+                  child.type === "button"
+                    ? "btn-tertiary w-full hover:opacity-80 transition-opacity"
+                    : "link text-lg",
+                ]}
+              >
+                {child.title}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</li>
