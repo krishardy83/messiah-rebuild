@@ -1,3 +1,11 @@
+---
+interface Props {
+  transparent: boolean;
+}
+
+const { transparent } = Astro.props;
+---
+
 <li>
   <button
     type="button"
@@ -6,7 +14,12 @@
     aria-haspopup="true"
     id="search-form-toggle"
     aria-controls="search-form"
-    class="text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 hover:text-tertiary-400 ml-4 mt-1 transition-colors"
+    class:list={[
+      "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
+      transparent
+        ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+        : "text-primary-800",
+    ]}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

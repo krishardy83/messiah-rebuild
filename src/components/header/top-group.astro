@@ -21,9 +21,10 @@ export interface TopGroup {
 interface Props {
   group: TopGroup;
   id: string;
+  transparent: boolean;
 }
 
-const { group, id } = Astro.props;
+const { group, id, transparent } = Astro.props;
 ---
 
 <li class="relative">
@@ -33,7 +34,12 @@ const { group, id } = Astro.props;
     aria-haspopup="true"
     id={`group-button-${id}`}
     aria-controls={`group-${id}`}
-    class="text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 hover:text-tertiary-400 aria-expanded:bg-primary-800 transition-colors px-4 py-3 uppercase"
+    class:list={[
+      "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase",
+      transparent
+        ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+        : "text-primary-800",
+    ]}
   >
     {group.title}
   </button>

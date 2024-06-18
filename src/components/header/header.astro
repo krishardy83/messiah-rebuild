@@ -4,6 +4,12 @@ import BottomGroup from "./bottom-group.astro";
 import { bottomGroups, topGroups } from "./navigation-data";
 import SearchForm from "./search-form.astro";
 import TopGroup from "./top-group.astro";
+
+interface Props {
+  transparent: boolean;
+}
+
+const { transparent } = Astro.props;
 ---
 
 <div
@@ -21,38 +27,51 @@ import TopGroup from "./top-group.astro";
       <a
         href="/"
         aria-label="messiah university main page"
-        class="mr-auto text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
+        class:list={[
+          "mr-auto",
+          transparent
+            ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
+            : "text-primary-800",
+        ]}
       >
         <Logo />
       </a>
 
       <div>
         <ul class="flex justify-end mb-4 items-center">
-          {topGroups.map((group, index) => <TopGroup group={group} id={index + 1 + "bottom"} />)}
+          {
+            topGroups.map((group, index) => (
+              <TopGroup group={group} id={index + 1 + "bottom"} transparent={transparent} />
+            ))
+          }
 
           <li>
             <a
               href="/"
-              class="text-white uppercase group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 hover:text-tertiary-400 px-4 py-3 block transition-colors"
-              >Give</a
+              class:list={[
+                "uppercase hover:text-tertiary-400 px-4 py-3 block transition-colors",
+                transparent
+                  ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  : "text-primary-800",
+              ]}
             >
+              Give
+            </a>
           </li>
 
-          <SearchForm />
+          <SearchForm transparent={transparent} />
         </ul>
 
         <ul class="flex gap-x-6 lg:gap-x-10 xl:gap-x-12">
-          {bottomGroups.map((group, index) => <BottomGroup group={group} id={index + 1 + "top"} />)}
+          {
+            bottomGroups.map((group, index) => (
+              <BottomGroup group={group} id={index + 1 + "top"} transparent={transparent} />
+            ))
+          }
         </ul>
       </div>
     </nav>
   </header>
-</div>
-
-<div
-  class="h-[40vw] relative max-h-[800px] border-b-8 border-tertiary-400 bg-[url(/images/services-banner.jpg)] bg-cover bg-no-repeat after:absolute after:bottom-0 after:left-0 after:right-0 after:top-0 after:bg-gradient-to-b after:from-black/40 after:to-transparent -mt-32"
-  aria-hidden="true"
->
 </div>
 
 <script>

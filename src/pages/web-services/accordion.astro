@@ -1,0 +1,118 @@
+---
+import Breadcrumbs from "../../components/breadcrumbs.astro";
+import Sidebar from "../../components/sidebar.astro";
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero title="Accordion Example" description="Example of an accordion widget">
+  <div class="bg-white px-6 py-4">
+    <Breadcrumbs
+      links={[
+        { label: "Home", href: "/" },
+        { label: "Campus Directory", href: "/" },
+        { label: "Offices", href: "/" },
+        { label: "Web Services", href: "/" },
+      ]}
+    />
+
+    <div class="flex flex-col md:flex-row">
+      <Sidebar>
+        <a href="/" class="btn-primary w-full">Submit a web services ticket</a>
+
+        <nav aria-label="Web Services links">
+          <h2 class="mb-2 uppercase font-title text-xl font-bold text-primary-800">Web Services</h2>
+
+          <ul class="list-disc space-y-1 pl-6">
+            <li>
+              <a href="/" class="link">FAQ's</a>
+            </li>
+            <li>
+              <a href="/" class="link">Project planning</a>
+            </li>
+            <li>
+              <a href="/" class="link">Services provided</a>
+            </li>
+            <li>
+              <a href="/" class="link">Support & training</a>
+            </li>
+            <li>
+              <a href="/" class="link">Website governance</a>
+            </li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Quick Links">
+          <h2 class="mb-2 font-title text-xl uppercase font-bold text-primary-800">Quick Links</h2>
+
+          <ul class="list-disc space-y-1 pl-6">
+            <li>
+              <a href="/" class="link">Sign up for Training</a>
+            </li>
+            <li>
+              <a href="/" class="link">Request Access to Edit Site</a>
+            </li>
+          </ul>
+        </nav>
+      </Sidebar>
+
+      <article
+        class="prose prose-headings:font-title prose-headings:uppercase prose-headings:text-primary-800 prose-p:font-serif prose-h2:text-3xl prose-h1:text-4xl max-w-none md:px-10 md:py-8"
+      >
+        <h2>Welcome to Web Services</h2>
+
+        <p>
+          The Web Services Office at Messiah University, housed within the Office of Marketing and
+          Communications, functions as the central hub overseeing the University's external website
+          and associated web services. The office operates under the leadership of the Director of
+          Web and Digital Marketing, with day-to-day management entrusted to the Web Services
+          Manager.
+        </p>
+
+        <p>
+          Our basic web design and consulting services are generally provided at no cost to campus
+          clients. However, should the need arise for services beyond our internal capabilities,
+          collaboration with an external vendor may be required, incurring additional expenses.
+        </p>
+
+        <div role="alert" class="not-prose border border-gray-300 bg-gray-100 px-6 py-4">
+          <h3 class="mb-2 font-title uppercase text-xl font-bold text-primary-800">
+            Need web help?
+          </h3>
+
+          <p class="mb-4">
+            The Web Services Team is responsible for overseeing the management of our helpdesk
+            ticket program.
+          </p>
+
+          <p class="mb-4">
+            If you encounter any issues on the Messiah University website, or if you need assistance
+            with your website, please submit a helpdesk ticket by clicking the button below and we
+            will address your concerns at the earliest opportunity.
+          </p>
+
+          <p class="mb-4">We are readily available and happy to assist you!</p>
+
+          <a href="/" class="btn-primary not-prose">I need help with my website!</a>
+        </div>
+
+        <hr />
+
+        <h2>Helpful resources to get you started</h2>
+
+        <p>
+          From time to time, you might have a straightforward question but might not be sure where
+          to look. Find our web services FAQs and handy Jadu tutorials here for your convenience.
+        </p>
+
+        <ul class="not-prose flex gap-4">
+          <li>
+            <a href="/" class="btn-primary">FAQ's</a>
+          </li>
+          <li>
+            <a href="/" class="btn-primary">Jadu tutorials</a>
+          </li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</WithoutHero>

@@ -13,9 +13,10 @@ export interface BottomGroup {
 interface Props {
   group: BottomGroup;
   id: string;
+  transparent: boolean;
 }
 
-const { group, id } = Astro.props;
+const { group, id, transparent } = Astro.props;
 ---
 
 <li>
@@ -25,7 +26,12 @@ const { group, id } = Astro.props;
     aria-haspopup="true"
     id={`group-button-${id}`}
     aria-controls={`group-${id}`}
-    class="lg:text-lg xl:text-xl font-bold text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 hover:text-tertiary-400 aria-expanded:after:bg-gray-100 relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors transition-colors"
+    class:list={[
+      "lg:text-lg xl:text-xl font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors transition-colors",
+      transparent
+        ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+        : "text-primary-800",
+    ]}
   >
     {group.title}
   </button>

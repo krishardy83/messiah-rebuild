@@ -2,6 +2,14 @@
 import Footer from "../components/footer.astro";
 import Header from "../components/header/header.astro";
 import "../styles/base.css";
+
+interface Props {
+  title: string;
+  description: string;
+  transparent?: boolean;
+}
+
+const { title, description, transparent = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -10,17 +18,14 @@ import "../styles/base.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Messiah University" />
-    <meta
-      name="description"
-      content="The Web Office at Messiah College is housed within the Office of Marketing and Public Relations and serves as the central office responsible for the College's external website and related web services."
-    />
+    <meta name="description" content={description} />
 
     <title>
-      Web Services at Messiah University | Messiah, a private Christian University in PA
+      {title} | Messiah, a private Christian University in PA
     </title>
   </head>
   <body class="font-sans text-gray-700">
-    <Header />
+    <Header transparent={transparent} />
 
     <slot />
 
