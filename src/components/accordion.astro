@@ -1,0 +1,82 @@
+---
+import { createId } from "../lib/utils";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+const id = createId();
+---
+
+<div class="not-prose border border-gray-300 mb-4 rounded-md">
+  <button
+    data-accordion
+    type="button"
+    aria-expanded="false"
+    aria-controls={`region-${id}`}
+    id={`button-${id}`}
+    class="flex gap-x-4 text-left items-center aria-expanded:bg-white bg-gray-100 w-full px-4 rounded-md py-4 transition-colors group aria-expanded:rounded-b-none flex-wrap"
+  >
+    <span class="text-primary-800 font-bold font-sans text-lg mr-auto">{title}</span>
+    {
+      subtitle ? (
+        <span class="text-tertiary-500 font-title uppercase font-bold">{subtitle}</span>
+      ) : null
+    }
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="size-5 group-aria-expanded:rotate-180 shrink-0"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
+    </svg>
+  </button>
+
+  <div
+    hidden
+    class="border-t border-gray-300 p-4"
+    role="region"
+    id={`region-${id}`}
+    aria-labelledby={`button-${id}`}
+  >
+    <slot />
+  </div>
+</div>
+
+<script>
+  function toggleAccordion(button: HTMLButtonElement) {
+    let region = document.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
+
+    if (!region) {
+      return;
+    }
+
+    if (button.getAttribute("aria-expanded") === "true") {
+      button.setAttribute("aria-expanded", "false");
+      region.setAttribute("hidden", "true");
+    } else {
+      button.setAttribute("aria-expanded", "true");
+      region.removeAttribute("hidden");
+    }
+  }
+
+  function handleClick(event: MouseEvent) {
+    let element = event.target as HTMLElement | null;
+    let button = element?.closest<HTMLButtonElement>("[aria-controls]");
+
+    if (button) {
+      toggleAccordion(button);
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-accordion]").forEach((button) => {
+    button.addEventListener("click", handleClick);
+  });
+</script>

@@ -1,0 +1,107 @@
+---
+import Breadcrumbs from "../../components/breadcrumbs.astro";
+import Accordion from "../../components/accordion.astro";
+import Sidebar from "../../components/sidebar.astro";
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero title="Accordion Example" description="Example of an accordion widget">
+  <div class="bg-white px-6 py-4">
+    <Breadcrumbs
+      links={[
+        { label: "Home", href: "/" },
+        { label: "Campus Directory", href: "/" },
+        { label: "Offices", href: "/" },
+        { label: "Web Services", href: "/" },
+        { label: "Accordion", href: "/" },
+      ]}
+    />
+
+    <div class="flex flex-col md:flex-row">
+      <Sidebar>
+        <nav aria-label="Web Services links">
+          <h2 class="mt-6 mb-2 uppercase font-title text-xl font-bold text-primary-800">
+            Web Services
+          </h2>
+
+          <ul class="list-disc space-y-1 pl-6">
+            <li>
+              <a href="/" class="link">FAQ's</a>
+            </li>
+            <li>
+              <a href="/" class="link">Project planning</a>
+            </li>
+            <li>
+              <a href="/" class="link">Services provided</a>
+            </li>
+            <li>
+              <a href="/" class="link">Support & training</a>
+            </li>
+            <li>
+              <a href="/" class="link">Website governance</a>
+            </li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Quick Links">
+          <h2 class="mb-2 font-title text-xl uppercase font-bold text-primary-800">Quick Links</h2>
+
+          <ul class="list-disc space-y-1 pl-6">
+            <li>
+              <a href="/" class="link">Sign up for Training</a>
+            </li>
+            <li>
+              <a href="/" class="link">Request Access to Edit Site</a>
+            </li>
+          </ul>
+        </nav>
+      </Sidebar>
+
+      <article
+        class="prose prose-headings:font-title prose-headings:uppercase prose-headings:text-primary-800 prose-p:font-serif prose-h2:text-3xl prose-h1:text-4xl max-w-none md:px-10 md:py-8"
+      >
+        <p>
+          The <b>accordion widget</b> is ideal for long pages with headings and subheadings, organizing
+          content into digestible sections for quick navigation without the need to read through the
+          entire page.
+        </p>
+
+        <p>
+          It's recommended to limit combined accordions to five per row and place one accordion per
+          row for optimal usability.
+        </p>
+
+        <p>Check out the Web Services Jadu 102 page for a real-world example.</p>
+
+        <Accordion title="Example Accordion Heading" subtitle="Example subheading - content within">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
+            adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
+            voluptatum necessitatibus voluptate alias harum reprehenderit odit!
+          </p>
+
+          <ul class="list-disc pl-6 mt-4">
+            <li>Matthew</li>
+            <li>Mark</li>
+            <li>Luke</li>
+            <li>John</li>
+          </ul>
+        </Accordion>
+        <Accordion title="Example Accordion Heading">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
+            adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
+            voluptatum necessitatibus voluptate alias harum reprehenderit odit!
+          </p>
+
+          <ul class="list-disc pl-6 mt-4">
+            <li>Matthew</li>
+            <li>Mark</li>
+            <li>Luke</li>
+            <li>John</li>
+          </ul>
+        </Accordion>
+      </article>
+    </div>
+  </div>
+</WithoutHero>

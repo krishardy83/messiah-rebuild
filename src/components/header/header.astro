@@ -128,7 +128,6 @@ const { transparent } = Astro.props;
 
   function handleClick(event: MouseEvent) {
     let element = event.target as HTMLElement | null;
-    console.log(element);
     let active = getActive();
 
     if (element?.hasAttribute("aria-controls")) {
