@@ -1,6 +1,7 @@
 ---
 import Sidebar from "../../components/sidebar.astro";
 import WithHero from "../../layouts/with-hero.astro";
+import Card from "../../components/card.astro";
 
 const sidebarLinks = [
   {
@@ -57,9 +58,7 @@ const sidebarLinks = [
         collaboration with an external vendor may be required, incurring additional expenses.
       </p>
 
-      <div role="alert" class="not-prose border border-gray-300 bg-gray-100 px-6 py-4">
-        <h3 class="mb-2 font-title uppercase text-xl font-bold text-primary-800">Need web help?</h3>
-
+      <Card title="Need web help?">
         <p class="mb-4">
           The Web Services Team is responsible for overseeing the management of our helpdesk ticket
           program.
@@ -74,7 +73,7 @@ const sidebarLinks = [
         <p class="mb-4">We are readily available and happy to assist you!</p>
 
         <a href="/" class="btn-primary not-prose">I need help with my website!</a>
-      </div>
+      </Card>
 
       <hr />
 
