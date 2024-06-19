@@ -1,4 +1,6 @@
 ---
+import Icon from "../icon.astro";
+
 export interface TopGroup {
   title: string;
   children: (
@@ -35,13 +37,15 @@ const { group, id, transparent } = Astro.props;
     id={`group-button-${id}`}
     aria-controls={`group-${id}`}
     class:list={[
-      "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white",
+      "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white flex items-center gap-x-2 group",
       transparent
         ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
         : "text-primary-800",
     ]}
   >
     {group.title}
+
+    <Icon name="chevron-down" class="size-4 group-aria-expanded:rotate-180" />
   </button>
 
   <div
@@ -62,11 +66,7 @@ const { group, id, transparent } = Astro.props;
             <li>
               <a
                 href={child.href}
-                class:list={[
-                  child.type === "button"
-                    ? "btn-tertiary w-full hover:opacity-80 transition-opacity"
-                    : "link text-lg",
-                ]}
+                class:list={[child.type === "button" ? "btn-tertiary w-full" : "link text-lg"]}
               >
                 {child.title}
               </a>

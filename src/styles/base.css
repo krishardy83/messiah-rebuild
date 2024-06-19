@@ -76,7 +76,7 @@
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-x-2 px-4 py-3 font-title text-base/5 font-bold uppercase tracking-wider transition-colors md:text-base/5;
+    @apply inline-flex items-center justify-center gap-x-2 px-4 py-3 font-title text-base/5 font-bold uppercase tracking-wider transition-all md:text-base/5;
   }
 
   .btn-primary {
@@ -88,7 +88,11 @@
   }
 
   .btn-tertiary {
-    @apply btn bg-gradient-to-r from-primary-600 to-primary-400;
+    @apply btn bg-gradient-to-r from-primary-600 to-primary-400 text-white hover:opacity-80;
+  }
+
+  .btn-quaternary {
+    @apply btn bg-gradient-to-r from-tertiary-500 to-secondary-500 text-white hover:opacity-80;
   }
 
   .link {

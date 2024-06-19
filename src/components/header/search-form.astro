@@ -1,4 +1,6 @@
 ---
+import Icon from "../icon.astro";
+
 interface Props {
   transparent: boolean;
 }
@@ -21,19 +23,7 @@ const { transparent } = Astro.props;
         : "text-primary-800",
     ]}
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="2"
-      stroke="currentColor"
-      class="size-5 pointer-events-none"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
-    </svg>
+    <Icon name="search" class="size-5 pointer-events-none" />
   </button>
 
   <form
@@ -55,20 +45,7 @@ const { transparent } = Astro.props;
         type="submit"
         class="absolute right-4 top-2 text-white hover:text-tertiary-400 transition-colors focus-visible:text-tertiary-400"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="size-5 pointer-events-none"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-          ></path>
-        </svg>
+        <Icon name="search" class="size-5 pointer-events-none" />
       </button>
     </div>
   </form>
