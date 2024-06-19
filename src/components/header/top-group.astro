@@ -35,7 +35,7 @@ const { group, id, transparent } = Astro.props;
     id={`group-button-${id}`}
     aria-controls={`group-${id}`}
     class:list={[
-      "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase",
+      "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white",
       transparent
         ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
         : "text-primary-800",
@@ -46,7 +46,7 @@ const { group, id, transparent } = Astro.props;
 
   <div
     id={`group-${id}`}
-    class="opacity-0 invisible absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10"
+    class="opacity-0 hidden absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
     role="region"
     aria-labelledby={`group-button-${id}`}
     aria-hidden="true"

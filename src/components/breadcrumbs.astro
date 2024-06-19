@@ -1,7 +1,7 @@
 ---
 interface Props {
   links: {
-    label: string;
+    name: string;
     href: string;
   }[];
 }
@@ -23,7 +23,7 @@ function isLast(index: number): boolean {
             class:list={["link", isLast(index) ? "text-gray-500" : "text-primary-800"]}
             aria-current={isLast(index) ? "page" : undefined}
           >
-            {link.label}
+            {link.name}
           </a>
         </li>
       ))

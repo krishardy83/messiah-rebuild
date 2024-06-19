@@ -13,11 +13,11 @@ const { transparent } = Astro.props;
 ---
 
 <div
-  class="sticky -top-px before:absolute before:top-0 before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 data-[scrolling='true']:bg-white before:to-secondary-600 pt-4 pb-6 z-10 group transition-colors border-b border-transparent data-[scrolling='true']:border-gray-300"
+  class="sticky -top-px before:absolute before:top-0 before:h-2 md:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 md:pt-4 pb-2 md:pb-6 z-10 group transition-colors border-b border-transparent data-[scrolling='true']:border-gray-300"
   data-menu
 >
-  <header class="mx-auto max-w-6xl px-4" data-menu>
-    <nav class="flex items-end">
+  <header class="mx-auto max-w-6xl px-4">
+    <nav class="flex items-center md:items-end">
       <a
         href="#content"
         class="btn-primary fixed left-1/2 top-0 -translate-x-1/2 -translate-y-full focus:translate-y-0"
@@ -37,8 +37,35 @@ const { transparent } = Astro.props;
         <Logo />
       </a>
 
-      <div>
-        <ul class="flex justify-end mb-4 items-center">
+      <button
+        type="button"
+        aria-label="toggle navigation"
+        data-menu-toggle
+        class:list={[
+          "group-data-[scrolling='true']:text-primary-800 md:hidden relative z-10",
+          transparent ? "text-white" : "text-primary-800",
+        ]}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-12 pointer-events-none"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+      </button>
+
+      <div
+        class="hidden opacity-0 md:opacity-100 md:block fixed md:static bg-gray-200 md:bg-transparent inset-0 p-12 md:p-0 transition-opacity"
+        data-menu-wrapper
+      >
+        <ul class="flex flex-col md:flex-row md:justify-end mb-4 md:items-center">
           {
             topGroups.map((group, index) => (
               <TopGroup group={group} id={index + 1 + "bottom"} transparent={transparent} />
@@ -62,7 +89,7 @@ const { transparent } = Astro.props;
           <SearchForm transparent={transparent} />
         </ul>
 
-        <ul class="flex gap-x-6 lg:gap-x-10 xl:gap-x-12">
+        <ul class="flex flex-col md:flex-row gap-6 lg:gap-10 xl:gap-12">
           {
             bottomGroups.map((group, index) => (
               <BottomGroup group={group} id={index + 1 + "top"} transparent={transparent} />
@@ -87,7 +114,7 @@ const { transparent } = Astro.props;
       group.addEventListener(
         "transitionend",
         () => {
-          group.classList.add("invisible");
+          group.classList.add("hidden");
         },
         { once: true }
       );
@@ -98,7 +125,7 @@ const { transparent } = Astro.props;
     let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
 
     if (group) {
-      group.classList.remove("opacity-0", "invisible");
+      group.classList.remove("opacity-0", "hidden");
       button.setAttribute("aria-expanded", "true");
       group.setAttribute("aria-hidden", "false");
     }
@@ -113,7 +140,7 @@ const { transparent } = Astro.props;
     }
   }
 
-  function handleToggleMenu(button: HTMLButtonElement) {
+  function handleToggleGroup(button: HTMLButtonElement) {
     if (button.getAttribute("aria-expanded") === "false") {
       hideActive();
       show(button);
@@ -126,12 +153,35 @@ const { transparent } = Astro.props;
     return menu?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
   }
 
+  function handleToggleNavigation() {
+    let menu = document.querySelector<HTMLDivElement>("[data-menu-wrapper]");
+
+    if (menu) {
+      if (menu.classList.contains("hidden")) {
+        menu.classList.remove("hidden", "opacity-0");
+      } else {
+        menu.classList.add("opacity-0");
+        menu.addEventListener(
+          "transitionend",
+          () => {
+            menu.classList.add("hidden");
+          },
+          { once: true }
+        );
+      }
+    }
+  }
+
   function handleClick(event: MouseEvent) {
     let element = event.target as HTMLElement | null;
     let active = getActive();
 
     if (element?.hasAttribute("aria-controls")) {
-      handleToggleMenu(element as HTMLButtonElement);
+      handleToggleGroup(element as HTMLButtonElement);
+    }
+    console.log(element);
+    if (element?.hasAttribute("data-menu-toggle")) {
+      handleToggleNavigation();
     }
 
     if (!element?.closest("[data-menu]") && active) {

@@ -1,3 +1,21 @@
+---
+interface Props {
+  links: {
+    title: string;
+    children: {
+      name: string;
+      href: string;
+      children?: {
+        name: string;
+        href: string;
+      }[];
+    }[];
+  }[];
+}
+
+const { links } = Astro.props;
+---
+
 <aside
   class="sidebar mb-6 flex-shrink-0 border-b border-gray-300 md:mb-0 md:w-[270px] md:border-b-0 md:border-r"
 >
@@ -19,8 +37,28 @@
     Show sidebar
   </button>
 
-  <div class="mb-6 mt-4 hidden space-y-6 md:mb-0 md:mt-0 md:block md:space-y-10" id="sidebar">
+  <div class="mb-6 mt-4 hidden md:mb-0 md:mt-0 md:block" id="sidebar">
     <slot />
+
+    {
+      links.map((link) => (
+        <nav aria-label={link.title}>
+          <h2 class="mt-6 mb-2 uppercase font-title text-xl font-bold text-primary-800">
+            {link.title}
+          </h2>
+
+          <ul class="list-disc space-y-1 pl-6">
+            {link.children.map((child) => (
+              <li>
+                <a href={child.href} class="link">
+                  {child.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
   </div>
 </aside>
 

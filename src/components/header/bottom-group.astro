@@ -27,9 +27,9 @@ const { group, id, transparent } = Astro.props;
     id={`group-button-${id}`}
     aria-controls={`group-${id}`}
     class:list={[
-      "lg:text-lg xl:text-xl font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors transition-colors",
+      "text-lg md:text-base lg:text-lg xl:text-xl font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 relative md:after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors transition-colors",
       transparent
-        ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+        ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
         : "text-primary-800",
     ]}
   >
@@ -38,18 +38,18 @@ const { group, id, transparent } = Astro.props;
 
   <div
     id={`group-${id}`}
-    class="opacity-0 invisible absolute left-0 mt-6 w-full bg-gray-100 py-12 transition-opacity duration-300"
+    class="opacity-0 hidden md:absolute left-0 mt-6 w-full md:bg-gray-100 md:py-12 transition-opacity duration-300"
     role="region"
     aria-labelledby={`group-button-${id}`}
     aria-hidden="true"
   >
-    <div class="mx-auto flex max-w-6xl gap-12 px-4">
-      <div class="w-2/5 border-r border-gray-300 pr-12">
+    <div class="mx-auto flex flex-col md:flex-row max-w-6xl gap-6 md:gap-12 md:px-4">
+      <div class="md:w-2/5 md:border-r md:border-gray-300 md:pr-12">
         <p class="mb-4 font-serif text-2xl font-bold text-primary-800">
           {group.description}
         </p>
 
-        <a href={group.href} class="btn-primary"> Start here </a>
+        <a href={group.href} class="btn-primary">Start here</a>
       </div>
 
       {
