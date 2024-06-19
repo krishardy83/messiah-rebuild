@@ -1,0 +1,22 @@
+---
+import type { ComponentProps, HTMLAttributes } from "astro/types";
+import Icon from "./icon.astro";
+
+interface Props extends HTMLAttributes<"div"> {
+  icon: ComponentProps<typeof Icon>["name"];
+}
+
+const { icon, class: className, ...props } = Astro.props;
+---
+
+<div
+  {...props}
+  role="alert"
+  class:list={["not-prose bg-tertiary-400 text-white px-4 py-2 flex gap-4 items-center", className]}
+>
+  <Icon name={icon} class="size-6 md:size-8 flex-shrink-0" />
+
+  <div>
+    <slot />
+  </div>
+</div>

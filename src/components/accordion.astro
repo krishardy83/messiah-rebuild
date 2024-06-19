@@ -1,5 +1,6 @@
 ---
 import { createId } from "../lib/utils";
+import Icon from "./icon.astro";
 
 interface Props {
   title: string;
@@ -17,7 +18,7 @@ const id = createId();
     aria-expanded="false"
     aria-controls={`region-${id}`}
     id={`button-${id}`}
-    class="flex gap-x-4 text-left items-center aria-expanded:bg-white bg-gray-100 w-full px-4 rounded-md py-4 transition-colors group aria-expanded:rounded-b-none flex-wrap"
+    class="flex gap-x-4 text-left relative items-center aria-expanded:bg-white bg-gray-100 w-full pl-4 pr-14 rounded-md py-4 transition-colors group aria-expanded:rounded-b-none flex-wrap"
   >
     <span class="text-primary-800 font-bold font-sans text-lg mr-auto">{title}</span>
     {
@@ -26,17 +27,10 @@ const id = createId();
       ) : null
     }
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="size-5 group-aria-expanded:rotate-180 shrink-0"
-      aria-hidden="true"
-    >
-      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
-    </svg>
+    <Icon
+      name="chevron-down"
+      class="size-5 absolute right-4 top-1/2 -translate-y-1/2 group-aria-expanded:rotate-180 shrink-0"
+    />
   </button>
 
   <div
