@@ -1,0 +1,83 @@
+---
+import EmployeeRecord from "../../components/employee-record.astro";
+import Sidebar from "../../components/sidebar.astro";
+import WithoutHero from "../../layouts/without-hero.astro";
+
+const sidebarLinks = [
+  {
+    title: "Web Services",
+    children: [
+      { href: "/", name: "FAQ's" },
+      { href: "/", name: "Project planning" },
+      { href: "/", name: "Services provided" },
+      { href: "/", name: "Support & training" },
+      { href: "/", name: "Website governance" },
+    ],
+  },
+  {
+    title: "Quick Links",
+    children: [
+      { href: "/", name: "Sign up for training" },
+      { href: "/", name: "Request access to edit site" },
+    ],
+  },
+];
+---
+
+<WithoutHero
+  title="Employee Record Example"
+  description="Example of a employee record widget"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Employee Record Example", href: "/" },
+  ]}
+>
+  <div class="flex flex-col md:flex-row">
+    <Sidebar links={sidebarLinks} />
+
+    <article
+      class="prose prose-headings:font-title prose-headings:uppercase prose-headings:text-primary-800 prose-p:font-serif prose-h2:text-3xl prose-h1:text-4xl max-w-none md:px-10 md:py-8 prose-ul:font-serif prose-ol:font-serif"
+    >
+      <p>
+        The <b>employee record widget</b> can be used to organize your staff or office listing. It provides
+        a consistent look to your page and offers several field options such as email, phone, website.
+        The content area allows you to list publications, additional titles, or links.
+      </p>
+
+      <p>This widget is best used at 100% width.</p>
+
+      <p>If you would rather use a two column format:</p>
+
+      <ul>
+        <li>Go into the widget</li>
+        <li>Click 'settings'</li>
+        <li>Select 'Employee Widget narrow' from the 'styles' drop-down and</li>
+      </ul>
+
+      <p>
+        For a real-world example of the 100% width version, please visit the <a
+          href="https://www.messiah.edu/info/20045/who_we_are">Marketing and Communications staff</a
+        > page.
+      </p>
+
+      <EmployeeRecord
+        name="Kim Phipps"
+        job="President of Messiah University"
+        email="example@messiah.edu"
+        phone="717-123-4567"
+        fax="717-987-6543"
+        url="http://messiah.edu"
+        image="/images/kim-phipps.jpg"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </EmployeeRecord>
+    </article>
+  </div>
+</WithoutHero>
