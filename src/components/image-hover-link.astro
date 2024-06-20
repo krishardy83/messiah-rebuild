@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"img"> {
+  caption: string;
+  description?: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+  button: {
+    label: string;
+    href: string;
+  };
+}
+
+const { caption, description, image, button, class: className, ...props } = Astro.props;
+---
+
+<figure class={cn("relative w-max not-prose", className)}>
+  <img {...props} src={image.src} alt={image.alt} />
+
+  <figcaption class="absolute flex flex-col inset-0 text-white text-center">
+    <h4 class="font-title uppercase text-xl font-bold bg-primary-800/80 px-2 py-2">
+      {caption}
+    </h4>
+    <div
+      class="bg-primary-800/80 flex-1 opacity-0 p-4 has-[:focus]:opacity-100 hover:opacity-100 transition-opacity duration-300 relative after:absolute after:h-px after:left-10 after:right-10 after:top-0 after:bg-white overflow-auto"
+    >
+      {description ? <p class="text-sm mb-4">{description}</p> : null}
+      <a
+        class="bg-tertiary-400 inline-block px-4 py-1 hover:bg-gray-700 transition-colors"
+        href={button.href}>{button.label}</a
+      >
+    </div>
+  </figcaption>
+</figure>
