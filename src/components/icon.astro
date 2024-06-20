@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
 
 interface Props extends HTMLAttributes<"svg"> {
-  name: "warning" | "calendar" | "bell" | "megaphone" | "chevron-down" | "search";
+  name: "warning" | "calendar" | "bell" | "megaphone" | "chevron-down" | "chevron-right" | "search";
 }
 
 const { name, class: className, ...props } = Astro.props;
@@ -57,6 +57,11 @@ const { name, class: className, ...props } = Astro.props;
   {
     name === "chevron-down" ? (
       <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+    ) : null
+  }
+  {
+    name === "chevron-right" ? (
+      <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
     ) : null
   }
   {

@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+import Icon from "./icon.astro";
+
+interface Props extends HTMLAttributes<"nav"> {
+  title?: string;
+  links: {
+    name: string;
+    href: string;
+    children?: {
+      name: string;
+      href: string;
+    }[];
+  }[];
+}
+
+const { title, links, class: className, ...props } = Astro.props;
+---
+
+<nav {...props} class={cn("not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}>
+  {
+    title ? (
+      <h3 class="mb-2 font-title uppercase text-xl font-bold text-primary-800">{title}</h3>
+    ) : null
+  }
+
+  <ul>
+    {
+      links.map((link) => (
+        <li class="flex items-center gap-2">
+          <Icon name="chevron-right" class="size-4" />
+          <a class="link" href={link.href}>
+            {link.name}
+          </a>
+          {link.children ? (
+            <ul class="ml-4">
+              {link.children.map((child) => (
+                <li class="flex items-center gap-2">
+                  <Icon name="chevron-right" class="size-4" />
+                  <a class="link" href={child.href}>
+                    {child.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
