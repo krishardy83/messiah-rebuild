@@ -1,15 +1,17 @@
 ---
+import Icon from "./icon.astro";
+
+interface Child {
+  name: string;
+  href: string;
+  active?: boolean;
+  children?: Child[];
+}
+
 interface Props {
   links: {
     title: string;
-    children: {
-      name: string;
-      href: string;
-      children?: {
-        name: string;
-        href: string;
-      }[];
-    }[];
+    children: Child[];
   }[];
 }
 
@@ -43,16 +45,58 @@ const { links } = Astro.props;
     {
       links.map((link) => (
         <nav aria-label={link.title}>
-          <h2 class="mt-6 mb-2 uppercase font-title text-xl font-bold text-primary-800">
+          <h2 class="mt-6 mb-2 uppercase mx-4 font-title text-xl font-bold text-primary-800">
             {link.title}
           </h2>
 
-          <ul class="list-disc space-y-1 pl-6">
-            {link.children.map((child) => (
+          <ul class="space-y-2">
+            {link.children.map((level1) => (
               <li>
-                <a href={child.href} class="link">
-                  {child.name}
+                <a
+                  href={level1.href}
+                  class:list={[
+                    "block py-1 px-4",
+                    level1.active ? "bg-primary-800 text-white" : "link",
+                  ]}
+                >
+                  {level1.name}
                 </a>
+
+                {level1.children ? (
+                  <ul class="space-y-2 mt-2 ml-8">
+                    {level1.children?.map((level2) => (
+                      <li class="relative">
+                        {level2.active ? (
+                          <Icon
+                            name="chevron-right"
+                            class="size-5 absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full"
+                          />
+                        ) : null}
+                        <a href={level2.href} class="link block py-1 px-2">
+                          {level2.name}
+                        </a>
+
+                        {level2.children ? (
+                          <ul class="space-y-2 mt-2 ml-8">
+                            {level2.children?.map((level3) => (
+                              <li class="relative">
+                                {level3.active ? (
+                                  <Icon
+                                    name="chevron-right"
+                                    class="size-5 absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full"
+                                  />
+                                ) : null}
+                                <a href={level3.href} class="link block py-1 px-2">
+                                  {level3.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ul>
