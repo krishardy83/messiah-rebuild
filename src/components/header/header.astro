@@ -42,23 +42,22 @@ const { transparent } = Astro.props;
         aria-label="toggle navigation"
         data-menu-toggle
         class:list={[
-          "group-data-[scrolling='true']:text-primary-800 md:hidden relative z-10",
+          "menu-toggle group/trigger group-data-[scrolling='true']:text-primary-800 h-5 w-10 md:hidden relative z-10",
           transparent ? "text-white" : "text-primary-800",
         ]}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-12 pointer-events-none"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-        </svg>
+        <span
+          aria-hidden="true"
+          class="absolute group-[.is-open]/trigger:top-[10px] group-[.is-open]/trigger:rotate-[135deg] left-0 top-0 block h-[2px] w-full bg-current transition-all ease-in-out"
+        ></span>
+        <span
+          aria-hidden="true"
+          class="absolute left-0 group-[.is-open]/trigger:-left-16 group-[.is-open]/trigger:opacity-0 top-[10px] block h-[2px] w-full bg-current transition-all ease-in-out"
+        ></span>
+        <span
+          aria-hidden="true"
+          class="absolute group-[.is-open]/trigger:top-[10px] group-[.is-open]/trigger:-rotate-[135deg] left-0 top-5 block h-[2px] w-full bg-current transition-all ease-in-out"
+        ></span>
       </button>
 
       <div
@@ -153,14 +152,16 @@ const { transparent } = Astro.props;
     return menu?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
   }
 
-  function handleToggleNavigation() {
+  function handleToggleNavigation(trigger: HTMLElement) {
     let menu = document.querySelector<HTMLDivElement>("[data-menu-wrapper]");
 
     if (menu) {
       if (menu.classList.contains("hidden")) {
+        trigger.classList.add("is-open");
         menu.classList.remove("hidden", "opacity-0");
         menu.classList.add("flex");
       } else {
+        trigger.classList.remove("is-open");
         menu.classList.add("opacity-0");
         menu.addEventListener(
           "transitionend",
@@ -183,7 +184,7 @@ const { transparent } = Astro.props;
     }
 
     if (element?.hasAttribute("data-menu-toggle")) {
-      handleToggleNavigation();
+      handleToggleNavigation(element);
     }
 
     if (!element?.closest("[data-menu]") && active) {
