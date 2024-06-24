@@ -18,7 +18,7 @@ interface Props extends HTMLAttributes<"img"> {
 const { caption, description, image, button, class: className, ...props } = Astro.props;
 ---
 
-<figure class={cn("relative w-max not-prose", className)}>
+<figure class={cn("relative max-w-max not-prose", className)}>
   <img {...props} src={image.src} alt={image.alt} />
 
   <figcaption class="absolute flex flex-col inset-0 text-white text-center">
