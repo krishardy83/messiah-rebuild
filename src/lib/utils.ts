@@ -6,7 +6,7 @@ export function cn(...classes: ClassValue[]) {
 }
 
 export function createId(length: number = 5) {
-  const CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
   let result = "";
   let counter = 0;
@@ -17,4 +17,10 @@ export function createId(length: number = 5) {
   }
 
   return result;
+}
+
+export function getYouTubePreview(url: string) {
+  let { searchParams } = new URL(url);
+
+  return `https://img.youtube.com/vi/${searchParams.get("v")}/hqdefault.jpg`;
 }

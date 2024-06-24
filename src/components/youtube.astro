@@ -1,0 +1,93 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./icon.astro";
+import { cn, createId, getYouTubePreview } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  url: string;
+}
+
+const { url, class: className, ...props } = Astro.props;
+let id = createId();
+---
+
+<figure {...props} class={cn("not-prose relative", className)}>
+  <img src={getYouTubePreview(url)} alt="" class="object-cover w-full aspect-video" />
+
+  <button
+    data-youtube-trigger={id}
+    type="button"
+    aria-label="play video"
+    class="absolute inset-0 flex items-center justify-center group"
+  >
+    <span
+      class="rounded-full p-4 block w-max aspect-square text-white bg-tertiary-400 group-hover:bg-white transition-colors group-hover:text-tertiary-400 group-focus-visible:text-tertiary-400 group-focus-visible:bg-white pointer-events-none"
+    >
+      <Icon name="play" class="size-12" />
+    </span>
+  </button>
+
+  <dialog
+    class="backdrop:bg-tertiary-400/80 bg-transparent w-2/3 h-auto aspect-video shadow-lg"
+    id={id}
+  >
+    <button
+      type="button"
+      class="fixed top-4 right-4 text-white transition-colors hover:text-gray-700"
+      aria-label="close youtube vidoe"
+    >
+      <Icon name="close" class="size-12 drop-shadow-md" />
+    </button>
+
+    <iframe
+      width="560"
+      height="315"
+      class="w-full h-full"
+      src="https://www.youtube.com/embed/4xrM6ePWTDY?si=2Eww8XSoNzeRrr7U"
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen></iframe>
+  </dialog>
+</figure>
+
+<script>
+  let triggers = document.querySelectorAll("[data-youtube-trigger]");
+
+  function handleOpenYouTubePlayer(event: Event) {
+    let id = (event.target as HTMLButtonElement).getAttribute("data-youtube-trigger");
+
+    if (id) {
+      let dialog = document.querySelector<HTMLDialogElement>(`#${id}`);
+
+      if (dialog) {
+        dialog.showModal();
+        dialog.addEventListener("keydown", (event: KeyboardEvent) => {
+          if (event.key === "Tab") {
+            let focusable = dialog.querySelectorAll<HTMLElement>("button, a, input");
+
+            if (event.shiftKey) {
+              if (document.activeElement === focusable[0]) {
+                event.preventDefault();
+                focusable[focusable.length - 1]?.focus();
+              }
+            } else if (document.activeElement === focusable[focusable.length - 1]) {
+              event.preventDefault();
+              focusable[0]?.focus();
+            }
+          }
+        });
+
+        dialog.addEventListener(
+          "click",
+          () => {
+            dialog.close();
+          },
+          { once: true }
+        );
+      }
+    }
+  }
+
+  triggers.forEach((trigger) => trigger.addEventListener("click", handleOpenYouTubePlayer));
+</script>

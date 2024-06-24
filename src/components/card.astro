@@ -1,12 +1,15 @@
 ---
-interface Props {
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
   title: string;
 }
 
-const { title } = Astro.props;
+const { title, class: className, ...props } = Astro.props;
 ---
 
-<div class="not-prose border border-gray-300 bg-gray-100 px-6 py-4">
+<div {...props} class={cn("not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}>
   <h3 class="mb-2 font-title uppercase text-xl font-bold text-primary-800">{title}</h3>
 
   <slot />

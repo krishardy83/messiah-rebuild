@@ -1,0 +1,58 @@
+---
+import Sidebar from "../../components/sidebar.astro";
+import Youtube from "../../components/youtube.astro";
+import WithoutHero from "../../layouts/without-hero.astro";
+
+const sidebarLinks = [
+  {
+    title: "Web Services",
+    children: [
+      { href: "/", name: "FAQ's" },
+      { href: "/", name: "Project planning" },
+      { href: "/", name: "Services provided" },
+      { href: "/", name: "Support & training" },
+      { href: "/", name: "Website governance" },
+    ],
+  },
+  {
+    title: "Quick Links",
+    children: [
+      { href: "/", name: "Sign up for training" },
+      { href: "/", name: "Request access to edit site" },
+    ],
+  },
+];
+---
+
+<WithoutHero
+  title="YouTube Example"
+  description="Example of a YouTube widget"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "YouTube Example", href: "/" },
+  ]}
+>
+  <div class="flex flex-col md:flex-row">
+    <Sidebar links={sidebarLinks} />
+
+    <article class="md:px-10 md:py-8 rich-text">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+
+      <Youtube url="https://www.youtube.com/watch?v=4xrM6ePWTDY" />
+
+      <div class="grid grid-cols-2 gap-4 mt-4">
+        <Youtube url="https://www.youtube.com/watch?v=4xrM6ePWTDY" />
+        <Youtube url="https://www.youtube.com/watch?v=4xrM6ePWTDY" />
+      </div>
+    </article>
+  </div>
+</WithoutHero>
