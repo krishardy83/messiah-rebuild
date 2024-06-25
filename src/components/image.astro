@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"figure"> {
+  src: string;
+  caption?: string;
+}
+
+const { src, caption, class: className, ...props } = Astro.props;
+---
+
+<figure {...props} class={cn("not-prose", className)}>
+  <a data-image data-caption={caption} href={src}>
+    <img src={src} alt="" />
+  </a>
+</figure>
+
+<script>
+  import { Fancybox } from "@fancyapps/ui";
+
+  Fancybox.bind("[data-image]");
+</script>
