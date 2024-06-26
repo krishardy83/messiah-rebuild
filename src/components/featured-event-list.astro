@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn, getDay, getMonth, getTime } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  title: string;
+  events: {
+    url: string;
+    title: string;
+    description?: string;
+    date: Date;
+    image?: string;
+  }[];
+}
+
+const { title, events, class: className, ...props } = Astro.props;
+---
+
+<div {...props} class={cn("@container not-prose", className)}>
+  <h3 class="font-title mb-4 uppercase text-xl font-bold text-primary-800">{title}</h3>
+
+  {
+    events.map((event) => (
+      <article class="flex flex-col @md:flex-row gap-4">
+        {event.image ? (
+          <figure class="@md:w-1/3">
+            <img src={event.image} alt="" class="h-full object-cover" />
+          </figure>
+        ) : null}
+
+        <div class="@md:w-2/3 relative @md:pr-28">
+          <time
+            datetime={event.date.toISOString()}
+            class="bg-primary-800 w-max uppercase font-title px-6 py-1 font-bold text-white leading-none flex flex-col items-center mb-4 justify-center @md:absolute right-0 top-0"
+          >
+            <span>{getMonth(event.date)}</span>
+            <span class="text-3xl">{getDay(event.date)}</span>
+            <span>{getTime(event.date)}</span>
+          </time>
+          <h4 class="font-title mb-1 uppercase text-xl font-bold text-primary-800">
+            {event.title}
+          </h4>
+
+          {event.description ? <p class="leading-snug">{event.description}</p> : null}
+
+          <a href={event.url} class="btn-tertiary mt-4">
+            Read more
+          </a>
+        </div>
+      </article>
+    ))
+  }
+</div>

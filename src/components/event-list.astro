@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn, getDay, getMonth } from "../lib/utils";
+import Icon from "./icon.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  title: string;
+  events: {
+    url: string;
+    label: string;
+    date: Date;
+  }[];
+}
+
+const { title, events, class: className, ...props } = Astro.props;
+---
+
+<section
+  {...props}
+  class={cn("@container not-prose border border-gray-300 bg-gray-100", className)}
+>
+  <div class="p-4 @md:p-8">
+    <h3 class="font-title mb-4 uppercase text-xl font-bold text-primary-800">{title}</h3>
+
+    <ul class="space-y-2 @md:space-y-4">
+      {
+        events.map((event) => (
+          <li class="p-4 bg-white shadow-md w-full flex items-center gap-4 relative group">
+            <time
+              datetime={event.date.toISOString()}
+              class="bg-gray-800 uppercase font-title font-bold text-white w-12 text-center aspect-square leading-none flex flex-col items-center justify-center group-hover:bg-primary-700 transition-colors flex-shrink-0"
+            >
+              <span>{getMonth(event.date)}</span>
+              <span>{getDay(event.date)}</span>
+            </time>
+            <a
+              href={event.url}
+              class="after:absolute after:inset-0 @md:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
+            >
+              {event.label}
+            </a>
+            <Icon name="chevron-right" class="ml-auto size-5 hidden @md:block" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

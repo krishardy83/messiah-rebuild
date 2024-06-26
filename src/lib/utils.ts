@@ -24,3 +24,17 @@ export function getYouTubePreview(url: string) {
 
   return `https://img.youtube.com/vi/${searchParams.get("v")}/hqdefault.jpg`;
 }
+
+export function getMonth(date: Date) {
+  return Intl.DateTimeFormat("en-US", { month: "short" }).format(date);
+}
+
+export function getDay(date: Date) {
+  return Intl.DateTimeFormat("en-US", { day: "2-digit" }).format(date);
+}
+
+export function getTime(date: Date) {
+  return Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true }).format(
+    date,
+  );
+}

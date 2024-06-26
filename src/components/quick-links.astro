@@ -22,7 +22,7 @@ const { title, variant = "link", links, class: className, ...props } = Astro.pro
     {
       links.map((link) => (
         <li class="flex items-center gap-2">
-          {variant === "link" ? <Icon name="chevron-right" className="size-4" /> : null}
+          {variant === "link" ? <Icon name="chevron-right" class="size-4" /> : null}
           <a
             href={link.href}
             class:list={["link", variant === "button" ? "btn bg-white shadow-md w-full" : null]}
