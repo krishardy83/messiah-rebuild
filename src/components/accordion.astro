@@ -5,10 +5,11 @@ import Icon from "./icon.astro";
 interface Props {
   title: string;
   subtitle?: string;
+  id?: string;
 }
 
-const { title, subtitle } = Astro.props;
-const id = createId();
+const { title, id, subtitle } = Astro.props;
+const accordionId = id || createId();
 ---
 
 <div class="not-prose border border-gray-300 mb-4 rounded-md">
@@ -16,8 +17,8 @@ const id = createId();
     data-accordion
     type="button"
     aria-expanded="false"
-    aria-controls={`region-${id}`}
-    id={`button-${id}`}
+    aria-controls={accordionId}
+    id={`button-${accordionId}`}
     class="flex gap-x-4 text-left relative items-center aria-expanded:bg-white bg-gray-100 w-full pl-4 pr-14 rounded-md py-4 transition-colors group aria-expanded:rounded-b-none flex-wrap"
   >
     <span class="text-primary-800 font-bold font-sans text-lg mr-auto">{title}</span>
@@ -37,14 +38,16 @@ const id = createId();
     hidden
     class="border-t border-gray-300 p-4"
     role="region"
-    id={`region-${id}`}
-    aria-labelledby={`button-${id}`}
+    id={accordionId}
+    aria-labelledby={`button-${accordionId}`}
   >
     <slot />
   </div>
 </div>
 
 <script>
+  let url = new URL(window.location.href);
+
   function toggleAccordion(button: HTMLButtonElement) {
     let region = document.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
 
@@ -52,13 +55,27 @@ const id = createId();
       return;
     }
 
+    let tabs = url.searchParams.get("tabs")?.split(",") || [];
+
     if (button.getAttribute("aria-expanded") === "true") {
       button.setAttribute("aria-expanded", "false");
       region.setAttribute("hidden", "true");
+
+      let newUrlSearchParams = tabs.filter((tab) => tab !== button.getAttribute("aria-controls"));
+
+      if (newUrlSearchParams.length === 0) {
+        url.searchParams.delete("tabs");
+      } else {
+        url.searchParams.set("tabs", newUrlSearchParams.join(","));
+      }
     } else {
       button.setAttribute("aria-expanded", "true");
       region.removeAttribute("hidden");
+
+      url.searchParams.set("tabs", [...tabs, button.getAttribute("aria-controls")].join(","));
     }
+
+    window.history.pushState(null, "", url);
   }
 
   function handleClick(event: MouseEvent) {
@@ -70,6 +87,21 @@ const id = createId();
     }
   }
 
+  function handleLoad() {
+    const tabs = url.searchParams.get("tabs")?.split(",") || [];
+
+    tabs.forEach((tab) => {
+      let button = document.querySelector<HTMLButtonElement>(`[aria-controls="${tab}"]`);
+      let region = document.querySelector<HTMLDivElement>(`#${tab}`);
+
+      if (button && region) {
+        button.setAttribute("aria-expanded", "true");
+        region.removeAttribute("hidden");
+      }
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", handleLoad);
   document.querySelectorAll<HTMLButtonElement>("[data-accordion]").forEach((button) => {
     button.addEventListener("click", handleClick);
   });
