@@ -17,7 +17,7 @@ const { transparent } = Astro.props;
   data-menu
 >
   <header class="mx-auto max-w-6xl px-4">
-    <nav class="flex items-center md:items-end">
+    <nav class="flex items-center md:items-end flex-wrap">
       <a
         href="#content"
         class="btn-primary fixed left-1/2 top-0 -translate-x-1/2 -translate-y-full focus:translate-y-0"
@@ -28,7 +28,7 @@ const { transparent } = Astro.props;
         href="/"
         aria-label="messiah university main page"
         class:list={[
-          "mr-auto",
+          "mr-auto mt-4",
           transparent
             ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
             : "text-primary-800",
@@ -61,10 +61,20 @@ const { transparent } = Astro.props;
       </button>
 
       <div
-        class="hidden opacity-0 flex-col-reverse justify-end md:opacity-100 md:block fixed md:static bg-gray-200 md:bg-transparent inset-0 p-12 md:p-0 transition-opacity gap-6 md:gap-0"
+        class="opacity-0 hidden md:flex md:flex-col-reverse justify-end md:opacity-100 fixed md:static bg-gray-200 md:bg-transparent inset-0 p-12 md:p-0 transition-opacity gap-6 md:gap-0 grow"
         data-menu-wrapper
       >
-        <ul class="flex flex-col md:flex-row md:justify-end mb-4 md:items-center gap-6 md:gap-0">
+        <ul class="flex flex-col md:flex-row gap-6 justify-end">
+          {
+            bottomGroups.map((group, index) => (
+              <BottomGroup group={group} id={index + 1 + "top"} transparent={transparent} />
+            ))
+          }
+        </ul>
+
+        <ul
+          class="flex flex-col md:flex-row md:justify-end mt-6 md:mt-0 mb-4 md:items-center gap-6 md:gap-0"
+        >
           {
             topGroups.map((group, index) => (
               <TopGroup group={group} id={index + 1 + "bottom"} transparent={transparent} />
@@ -86,14 +96,6 @@ const { transparent } = Astro.props;
           </li>
 
           <SearchForm transparent={transparent} />
-        </ul>
-
-        <ul class="flex flex-col md:flex-row gap-6 lg:gap-10 xl:gap-12">
-          {
-            bottomGroups.map((group, index) => (
-              <BottomGroup group={group} id={index + 1 + "top"} transparent={transparent} />
-            ))
-          }
         </ul>
       </div>
     </nav>
@@ -157,17 +159,19 @@ const { transparent } = Astro.props;
 
     if (menu) {
       if (menu.classList.contains("hidden")) {
+        document.body.classList.add("overflow-hidden");
         trigger.classList.add("is-open");
         menu.classList.remove("hidden", "opacity-0");
-        menu.classList.add("flex");
+        menu.classList.add("overflow-y-auto");
       } else {
+        document.body.classList.remove("overflow-hidden");
         trigger.classList.remove("is-open");
         menu.classList.add("opacity-0");
         menu.addEventListener(
           "transitionend",
           () => {
-            menu.classList.remove("flex");
             menu.classList.add("hidden");
+            menu.classList.remove("overflow-y-auto");
           },
           { once: true }
         );

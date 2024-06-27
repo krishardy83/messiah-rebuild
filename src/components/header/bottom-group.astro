@@ -1,4 +1,6 @@
 ---
+import Icon from "../icon.astro";
+
 export interface BottomGroup {
   title: string;
   href: string;
@@ -27,13 +29,15 @@ const { group, id, transparent } = Astro.props;
     id={`group-button-${id}`}
     aria-controls={`group-${id}`}
     class:list={[
-      "text-lg md:text-base lg:text-lg xl:text-xl font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 relative md:after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors transition-colors",
+      "text-lg md:text-base group lg:text-lg xl:text-xl flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 relative md:after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors transition-colors",
       transparent
         ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
         : "text-primary-800",
     ]}
   >
     {group.title}
+
+    <Icon name="chevron-down" class="size-4 group-aria-expanded:rotate-180 transition-transform" />
   </button>
 
   <div
