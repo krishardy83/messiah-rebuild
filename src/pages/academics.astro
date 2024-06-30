@@ -1,0 +1,119 @@
+---
+import ContinueExploring from "../components/continue-exploring.astro";
+import SingleColumn from "../layouts/single-column.astro";
+---
+
+<SingleColumn
+  title="Graduate Studies"
+  subtitle="Graduate-level academics at Messiah"
+  description="Graduate-level academics at Messiah"
+  image="/images/academics-hero-grad.jpg"
+>
+  <section class="wrapper py-12">
+    <h2 class="font-title text-primary-800 font-bold text-7xl text-center mb-8">
+      Graduate studies academic overview
+    </h2>
+
+    <div class="flex gap-12 mb-12">
+      <p class="w-1/2 text-xl">
+        Are you ready to advance your education and career with a graduate degree or certificate?
+        Messiah University is a <a
+          class="underline"
+          href="https://www.messiah.edu/info/20020/recognitions">nationally ranked</a
+        >, accredited university that successfully integrates top-tier academics and Christian
+        faith. All of our graduate programs provide academic rigor and excellence through a
+        convenient and flexible mix of learning options. Our <a
+          class="underline"
+          href="https://www.messiah.edu/info/22860/degrees_and_certificates">ten programs</a
+        > include twelve master’s degrees, two doctoral degrees, and numerous graduate certificates and
+        post-master’s certificates.
+      </p>
+
+      <figure class="w-1/2">
+        <img
+          src="/images/student-studying.jpg"
+          alt="a student studying with a computer"
+          class="w-full"
+        />
+      </figure>
+    </div>
+
+    <h3
+      class="font-title text-primary-500 text-4xl text-center mb-8 relative before:absolute before:h-px before:bg-tertiary-300 before:left-0 before:right-0 before:top-1/2 after:absolute after:h-full after:bg-white after:w-1/3 after:left-1/2 after:-translate-x-1/2 after:-z-10 before:-z-20"
+    >
+      By the Numbers
+    </h3>
+
+    <ul class="grid grid-cols-3 bg-tertiary-300 gap-px">
+      <li class="text-center text-2xl bg-white px-12">
+        <img class="mx-auto mb-8" src="/icons/academic-cap.png" alt="" />
+        <p>
+          Named in the <span class="text-primary-500">Top 50 Best Christian Graduate Schools</span> by
+          Christian Universities Online
+        </p>
+      </li>
+      <li class="text-center text-2xl bg-white px-12">
+        <img class="mx-auto mb-8" src="/icons/certificate.png" alt="" />
+        <p>
+          Messiah University offers <span class="text-primary-500"
+            >20+ graduate degrees and certificate programs.</span
+          >
+        </p>
+      </li>
+      <li class="text-center text-2xl bg-white px-12">
+        <img class="mx-auto mb-8" src="/icons/students-hug.png" alt="" />
+        <p>
+          Messiah University has <span class="text-primary-500">781 graduate students</span> representing
+          <span class="text-primary-500">38 states and 7 countries.</span>
+        </p>
+      </li>
+    </ul>
+
+    <a
+      href="https://www.messiah.edu/info/20020/recognitions"
+      class="btn-tertiary mx-auto block w-max mt-8">View more distinctives</a
+    >
+  </section>
+
+  <section class="bg-[url(/patterns/pattern-bg.png)]">
+    <div class="wrapper py-32">
+      <h2 class="font-title text-primary-800 font-bold text-7xl text-center mb-8">
+        Explore Messiah’s graduate programs
+      </h2>
+    </div>
+  </section>
+
+  <section class="text-center bg-[url(/images/graduate-studies-bg.jpg)] bg-cover h-screen">
+    <div class="wrapper py-32">
+      <h2 class="font-title text-primary-800 font-bold text-7xl text-center mb-8">
+        School of Graduate and Professional Studies
+      </h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Messiah University’s School of Graduate and Professional Studies educates students for a
+        lifetime of intellectual exploration, ethical leadership and exceptional professional
+        practice within a complex world.
+      </p>
+      <a href="https://www.messiah.edu/gradprograms" class="btn-tertiary">Learn more</a>
+    </div>
+  </section>
+
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Graduate Catalog",
+        href: "https://www.messiah.edu/info/20108/academic_information/1306/academic_information",
+      },
+      { label: "Graduate Tuition", href: "https://www.messiah.edu/info/22941/tuition_and_fees" },
+      {
+        label: "Graduate Admissions",
+        href: "https://www.messiah.edu/info/21084/graduate_admissions",
+      },
+      {
+        label: "Graduate Student Services",
+        href: "https://www.messiah.edu/info/22865/student_services_and_information",
+      },
+    ]}
+  />
+</SingleColumn>

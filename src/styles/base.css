@@ -78,7 +78,7 @@
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-x-2 px-4 py-3 font-title text-base/5 font-bold uppercase tracking-wider transition-all md:text-base/5;
+    @apply inline-flex h-12 items-center justify-center gap-x-2 px-4 font-title text-base/5 font-bold uppercase tracking-wider transition-all md:text-base/5;
   }
 
   .btn-primary {
@@ -111,6 +111,10 @@
 
   .menu-toggle:is(.is-open) {
     @apply text-primary-800;
+  }
+
+  .wrapper {
+    @apply mx-auto max-w-6xl px-4;
   }
 }
 

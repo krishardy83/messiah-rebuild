@@ -42,7 +42,7 @@ const { group, id, transparent } = Astro.props;
 
   <div
     id={`group-${id}`}
-    class="opacity-0 hidden md:absolute left-0 mt-6 w-full md:bg-gray-100 md:py-12 transition-opacity duration-300"
+    class="opacity-0 hidden md:absolute left-0 mt-6 w-full md:bg-gray-100 md:py-12 transition-opacity duration-300 z-30"
     role="region"
     aria-labelledby={`group-button-${id}`}
     aria-hidden="true"

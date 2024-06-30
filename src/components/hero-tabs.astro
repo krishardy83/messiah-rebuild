@@ -1,0 +1,100 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  tabs: {
+    button: string;
+    image: string;
+    title: string;
+    description: string;
+    links: {
+      label: string;
+      href: string;
+    }[];
+  }[];
+}
+
+const { tabs, class: className, ...props } = Astro.props;
+---
+
+<div {...props} class={cn("relative flex flex-col-reverse -mt-48", className)}>
+  <div
+    role="tablist"
+    class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
+  >
+    {
+      tabs.map((tab, index) => (
+        <button
+          type="button"
+          id={`tab-${index}`}
+          role="tab"
+          aria-selected={index === 0}
+          class="text-white w-full sm:w-1/2 md:w-1/4 text-lg uppercase p-4 md:p-8 link text-center font-title font-bold aria-selected:text-tertiary-400 group"
+          aria-controls={`tabpanel-${index}`}
+        >
+          <span class="inline-block border-b-4 border-transparent group-aria-selected:border-tertiary-400 pointer-events-none">
+            {tab.button}
+          </span>
+        </button>
+      ))
+    }
+  </div>
+  {
+    tabs.map((tab, index) => (
+      <div
+        role="tabpanel"
+        tabindex="0"
+        aria-labelledby={`tab-${index}`}
+        id={`tabpanel-${index}`}
+        class={cn(
+          "w-full h-[75vw] min-h-[800px] max-h-[1200px] items-center bg-primary-800 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.75),transparent),var(--bg-banner)] bg-cover bg-no-repeat",
+          index === 0 ? "flex" : "hidden"
+        )}
+        style={{ "--bg-banner": `url(${tab.image})` }}
+      >
+        <div class="max-w-6xl mx-auto px-4 w-full">
+          <h1 class="font-title text-white font-bold text-3xl md:text-5xl lg:text-7xl mb-4 leading-none max-w-2xl">
+            {tab.title}
+          </h1>
+          <p class="text-white text-lg md:text-xl max-w-xl mb-8">{tab.description}</p>
+          <div class="flex gap-2">
+            {tab.links.map((link) => (
+              <a href={link.href} class="btn-tertiary">
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  let tabs = document.querySelectorAll('button[role="tab"]');
+  let panels = document.querySelectorAll('[role="tabpanel"]');
+
+  function handleTabClick(event: Event) {
+    let button = event.target as HTMLButtonElement;
+    let target = button.getAttribute("aria-controls");
+
+    if (target) {
+      tabs.forEach((tab) => {
+        tab.setAttribute("aria-selected", "false");
+      });
+
+      panels.forEach((panel) => {
+        panel.classList.add("hidden");
+
+        if (panel.getAttribute("id") === target) {
+          panel.classList.remove("hidden");
+          panel.classList.add("flex");
+          button.setAttribute("aria-selected", "true");
+        }
+      });
+    }
+  }
+
+  tabs.forEach((tab) => tab.addEventListener("click", handleTabClick));
+</script>

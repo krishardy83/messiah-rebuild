@@ -1,0 +1,274 @@
+---
+import HeroTabs from "../components/hero-tabs.astro";
+import NewsPreview from "../components/news-preview.astro";
+import NextSteps from "../components/next-steps.astro";
+import Youtube from "../components/youtube.astro";
+import Base from "../layouts/base.astro";
+---
+
+<Base title="Graduate Studies" description="Graduate-level academics at Messiah">
+  <main id="content">
+    <NextSteps class="hidden lg:block absolute right-0 top-[300px] z-20" />
+
+    <HeroTabs
+      tabs={[
+        {
+          title: "Falcon Fridays are a great way to experience campus this summer!",
+          description:
+            "Tour our amazing campus, check out our exciting academic programs and spiritual growth opportunities-- and, of course, stick around for some ice cream!",
+          button: "Become a student",
+          image: "https://www.messiah.edu/images/ff.jpg",
+          links: [
+            {
+              href: "https://www.messiah.edu/info/23324/falcon_fridays?element=homepage-car",
+              label: "Learn more",
+            },
+          ],
+        },
+        {
+          title: "Academic Excellence",
+          description:
+            "Experience the academic distinction of a nationally ranked Christian college",
+          image: "https://www.messiah.edu/images/hero_academics.jpg",
+          button: "Academic excellence",
+          links: [
+            {
+              href: "https://www.messiah.edu/majors-minors-programs",
+              label: "Undergrad programs",
+            },
+            {
+              href: "http://www.messiah.edu/info/20436/degrees",
+              label: "Graduate programs",
+            },
+          ],
+        },
+        {
+          title: "Careers and Internships",
+          description: "Explore your calling — from your first year through graduation",
+          button: "Careers & internships",
+          image: "https://www.messiah.edu/images/career_hero.jpg",
+          links: [
+            {
+              href: "https://www.messiah.edu/career-outcomes",
+              label: "Undergrad outcomes",
+            },
+            {
+              href: "https://www.messiah.edu/grad-careers",
+              label: "Graduate outcomes",
+            },
+          ],
+        },
+        {
+          title: "Study Abroad",
+          description: "Where in the world will you go?",
+          button: "Study abroad",
+          image: "https://www.messiah.edu/images/travel_hero.jpg",
+          links: [
+            {
+              href: "https://www.messiah.edu/study-abroad",
+              label: "Explore undergrad opportunities",
+            },
+          ],
+        },
+      ]}
+    />
+  </main>
+
+  <section
+    id="start"
+    class="pt-24 relative before:absolute before:left-0 before:right-0 before:h-px before:bg-primary-200 before:bottom-16 before:-z-10"
+  >
+    <div
+      class="flex flex-col lg:flex-row gap-12 lg:gap-24 pb-56 wrapper bg-[url(/patterns/college-building.png)] bg-no-repeat bg-left-bottom"
+    >
+      <div class="lg:w-3/5">
+        <h2 class="font-title text-primary-800 font-bold text-5xl mb-8">
+          Experience Messiah, a nationally ranked private Christian university in Pennsylvania
+        </h2>
+
+        <p class="text-lg leading-relaxed">
+          <b
+            >Messiah University is a <a
+              class="underline"
+              href="http://www.messiah.edu/info/20020/recognitions">top-ranked</a
+            > private university of the liberal and applied arts and sciences in the northeastern U.S.</b
+          >
+          With a reputation for successfully integrating rigorous academics and <a
+            class="underline"
+            href="http://www.messiah.edu/info/20003/faith_and_values">Christian faith</a
+          > into all of our academic programs, we offer 150+ <a
+            href="https://www.messiah.edu/majors-minors-programs"
+            class="underline">undergraduate</a
+          > and pre-professional degree options and 20+ <a
+            href="
+          http:
+          www.messiah.edu
+          info
+          20436
+          degrees"
+            class="underline">graduate degree</a
+          > and certificate programs.
+        </p>
+      </div>
+
+      <Youtube
+        class="lg:w-2/5 mt-4"
+        src="https://www.youtube.com/watch?v=5_svwEuH9fY"
+        caption="Watch the video to see how Messiah University is transforming the lives of our 3,370 undergraduate and graduate students"
+      />
+    </div>
+  </section>
+
+  <section class="bg-[url(/patterns/img-05.png)] bg-no-repeat bg-cover">
+    <div class="wrapper py-24">
+      <header class="mb-8">
+        <h2 class="font-title text-tertiary-400 font-bold text-5xl md:text-6xl lg:text-7xl mb-2">
+          What do you want to study?
+        </h2>
+        <p class="text-white text-2xl">
+          Search by keywords or interests to explore which of Messiah's 80+ academic programs would
+          be a good fit for you.
+        </p>
+      </header>
+
+      <search>
+        <form action="/" method="GET" class="relative">
+          <input
+            type="search"
+            name="s"
+            class="bg-white w-full px-4 h-16 text-lg"
+            placeholder="Search for programs"
+            required
+            aria-label="enter a program name that you'd like to search for"
+          />
+          <button type="submit" class="absolute btn-primary top-2 right-2">Go</button>
+        </form>
+      </search>
+
+      <div class="flex gap-2 flex-wrap mt-8">
+        <a class="btn-secondary" href="https://www.messiah.edu/majors-minors-programs"
+          >View all Undergraduate Programs</a
+        >
+        <a class="btn-secondary" href="http://www.messiah.edu/info/20436/degrees"
+          >View all Graduate Programs</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="wrapper py-24">
+    <h2 class="font-title text-primary-800 font-bold text-5xl text-center mb-8">
+      Messiah by the numbers
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-tertiary-400">
+      <figure class="bg-white p-8 flex items-center">
+        <img src="/graphics/financial-aid-rate.png" alt="" />
+      </figure>
+      <figure class="bg-white p-8 flex items-center">
+        <img src="/graphics/class_employed.svg" alt="" />
+      </figure>
+      <figure class="bg-white p-8 flex items-center">
+        <img src="/graphics/class_size_2022.png" alt="" />
+      </figure>
+      <figure class="bg-white p-8 flex items-center">
+        <img src="/graphics/total_under_grad_students.svg" alt="" />
+      </figure>
+      <figure class="bg-white p-8 flex items-center">
+        <img src="/graphics/student_faculty_ratio.svg" alt="" />
+      </figure>
+      <figure class="bg-white p-8 flex items-center">
+        <img src="/graphics/under_grad_students.svg" alt="" />
+      </figure>
+    </div>
+
+    <div class="flex justify-center mt-8">
+      <a href="https://www.messiah.edu/info/20002/college_profile" class="btn-tertiary"
+        >Learn more</a
+      >
+    </div>
+  </section>
+
+  <section class="relative bg-primary-800">
+    <iframe
+      title="Explore our beautiful campus background video"
+      src="https://player.vimeo.com/video/465819862?background=1"
+      class="hidden md:block w-full h-auto aspect-video -z-10 outline-none"
+      allowfullscreen=""></iframe>
+
+    <div
+      class="md:absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent pb-16 pt-32"
+    >
+      <div class="wrapper text-center">
+        <h2 class="font-title text-white font-bold text-5xl md:text-6xl lg:text-7xl mb-4">
+          Explore our beautiful campus
+        </h2>
+        <p class="text-white text-lg max-w-4xl mx-auto">
+          Messiah University is an amazing place. But don't just take our word for it. Come visit us
+          and discover why nearly 2,750 undergraduate students choose Messiah every year. When you
+          step onto our beautiful, 375-acre campus in central Pennsylvania, you'll be welcomed into
+          a caring, compassionate, thriving Christian community that feels just like home.
+        </p>
+
+        <div class="flex gap-2 mt-8 flex-wrap justify-center">
+          <a href="https://www.messiah.edu/info/21343/visit_campus" class="btn-secondary"
+            >Visit campus</a
+          >
+          <a href="https://www.messiah.edu/virtual-visit" class="btn-secondary">Virtual visit</a>
+          <a
+            href="https://tour.messiah.edu/?_gl=1*plqisj*_gcl_au*MTEyMjI1NDU1Ny4xNzE0NDAyNTgx*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcxOTczNTEzMC43NC4xLjE3MTk3MzU3NzguMjIuMC4w"
+            class="btn-secondary">Virtual tour</a
+          >
+          <a
+            href="Messiah University is an amazing place. But don't just take our word for it. Come visit us and discover why nearly 2,750 undergraduate students choose Messiah every year. When you step onto our beautiful, 375-acre campus in central Pennsylvania, you'll be welcomed into a caring, compassionate, thriving Christian community that feels just like home."
+            class="btn-secondary">Campus map</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[url(/patterns/pattern-bg.png)]">
+    <div class="wrapper py-24">
+      <h2 class="font-title text-primary-800 font-bold text-5xl text-center mb-8">In the news</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <NewsPreview
+          title="What can you do with a master’s degree in counseling?"
+          image="https://www.messiah.edu/images/counseling_cover.jpg"
+          url="https://www.messiah.edu/news/article/443/what_can_you_do_with_a_master_s_degree_in_counseling"
+        >
+          As the demand for mental health services continues to rise, graduate programs in
+          counseling offer aspiring professionals a pathway to meaningful careers.
+        </NewsPreview>
+
+        <NewsPreview
+          title="Messiah University President Kim Phipps announces plan to retire in June 2025"
+          image="https://www.messiah.edu/images/Messiah_KimPhipps__2023_11_01__017A_COVER_IMAGE_1.jpg"
+          url="https://www.messiah.edu/news/article/442/messiah_university_president_kim_phipps_announces_plan_to_retire_in_june_2025"
+        >
+          Dr. Phipps’ presidency concludes a 40-year career in Christian higher education.
+        </NewsPreview>
+
+        <NewsPreview
+          title="What is an MBA and why do you need one?"
+          image="https://www.messiah.edu/images/business.png"
+          url="https://www.messiah.edu/news/article/439/what_is_an_mba_and_why_do_you_need_one"
+        >
+          Regardless of your undergraduate degree, the Master of Business Administration (MBA)
+          graduate degree is a valuable addition that exponentially advances your career and
+          influence.
+        </NewsPreview>
+
+        <NewsPreview
+          title="Messiah University partners with local school districts to  help address the teacher shortage in Pennsylvania"
+          image="https://www.messiah.edu/images/Education1_web.jpg"
+          url="https://www.messiah.edu/news/article/438/messiah_university_partners_with_local_school_districts_to_help_address_the_teacher_shortage_in_pennsylvania"
+        >
+          Messiah has launched two new initiatives designed to increase the number of teachers in
+          Pennsylvania: Educators for Tomorrow and a Teaching Certification Initiative.
+        </NewsPreview>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,69 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./icon.astro";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"nav"> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<nav {...props} class={cn("bg-white w-60", className)}>
+  <h3 class="text-primary-800 leading-tight px-4 py-2">
+    <span class="uppercase font-title text-lg font-bold block">Next steps</span> for Undergrad students
+  </h3>
+
+  <ul>
+    <li>
+      <a
+        href="/"
+        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+        >Academic programs <Icon name="book" class="size-5" /></a
+      >
+    </li>
+    <li>
+      <a
+        href="/"
+        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+        >Visit campus <Icon name="marker" class="size-5" /></a
+      >
+    </li>
+    <li>
+      <a
+        href="/"
+        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+        >Apply <Icon name="edit" class="size-5" /></a
+      >
+    </li>
+    <li>
+      <a
+        href="/"
+        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+        >Deposit <Icon name="chevron-right" class="size-5" /></a
+      >
+    </li>
+    <li>
+      <a
+        href="/"
+        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+        >Request info <Icon name="computer" class="size-5" /></a
+      >
+    </li>
+    <li>
+      <a
+        href="/"
+        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+        >Tuition & iid</a
+      >
+    </li>
+    <li>
+      <a href="/" class="bg-gray-800 text-white py-2 px-4 flex gap-4 justify-between items-center">
+        <span>
+          <span class="font-title uppercase font-bold block">Switch to</span>
+          Graduate programs
+        </span>
+        <Icon name="switch" class="size-5" />
+      </a>
+    </li>
+  </ul>
+</nav>

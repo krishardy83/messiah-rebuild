@@ -1,0 +1,24 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"article"> {
+  title: string;
+  url: string;
+  image: string;
+}
+
+const { title, url, image, class: className, ...props } = Astro.props;
+---
+
+<article {...props} class={cn("relative not-prose", className)}>
+  <figure class="mb-4 aspect-video bg-white p-1 shadow-md">
+    <img src={image} alt="" class="object-cover w-full h-full" />
+  </figure>
+
+  <h3 class="mb-2 font-title leading-none uppercase text-xl font-bold text-primary-800">
+    <a href={url} class="link before:absolute before:inset-0">{title} </a>
+  </h3>
+
+  <slot />
+</article>

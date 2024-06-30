@@ -14,7 +14,7 @@ const { title, description, subtitle, image } = Astro.props;
 
 <BaseLayout title={title} description={description}>
   <header
-    class={`relative bg-[image:var(--bg-banner)] bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-32 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent`}
+    class={`relative bg-[image:var(--bg-banner)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-32 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent`}
     style={{ "--bg-banner": `url(${image})` }}
     aria-hidden="true"
   >
@@ -38,7 +38,7 @@ const { title, description, subtitle, image } = Astro.props;
     </div>
   </header>
 
-  <main id="content" class="max-w-6xl mx-auto px-4 py-12">
+  <main id="content">
     <slot />
   </main>
 </BaseLayout>

@@ -5,26 +5,31 @@ import { cn, getYouTubePreview } from "../lib/utils";
 
 interface Props extends HTMLAttributes<"figure"> {
   src: string;
+  caption?: string;
 }
 
-const { src, class: className, ...props } = Astro.props;
+const { src, caption, class: className, ...props } = Astro.props;
 ---
 
-<figure {...props} class={cn("not-prose relative", className)}>
-  <img src={getYouTubePreview(src)} alt="" class="object-cover w-full aspect-video" />
+<figure {...props} class={cn("not-prose", className)}>
+  <div class="relative">
+    <img src={getYouTubePreview(src)} alt="" class="object-cover w-full aspect-video" />
 
-  <a
-    data-embed
-    href={src}
-    aria-label="play video"
-    class="absolute inset-0 flex items-center justify-center group"
-  >
-    <span
-      class="rounded-full p-4 block w-max aspect-square text-white bg-tertiary-400 group-hover:bg-white transition-colors group-hover:text-tertiary-400 group-focus-visible:text-tertiary-400 group-focus-visible:bg-white pointer-events-none"
+    <a
+      data-embed
+      href={src}
+      aria-label="play video"
+      class="absolute inset-0 flex items-center justify-center group"
     >
-      <Icon name="play" class="size-12" />
-    </span>
-  </a>
+      <span
+        class="rounded-full p-4 block w-max aspect-square text-white bg-tertiary-400 group-hover:bg-white transition-colors group-hover:text-tertiary-400 group-focus-visible:text-tertiary-400 group-focus-visible:bg-white pointer-events-none"
+      >
+        <Icon name="play" class="size-12" />
+      </span>
+    </a>
+  </div>
+
+  {caption ? <figcaption class="text-center mt-2 text-gray-500">{caption}</figcaption> : null}
 </figure>
 
 <script>
