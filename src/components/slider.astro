@@ -1,0 +1,35 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  slides: {
+    src: string;
+    alt?: string;
+  }[];
+}
+
+const { slides, class: className, ...props } = Astro.props;
+---
+
+<div class="relative">
+  <div class={cn("f-carousel", className)} {...props} data-slider>
+    {
+      slides.map((slide) => (
+        <figure class="f-carousel__slide">
+          <img src={slide.src} alt={slide.alt} class="w-full h-full object-cover" />
+        </figure>
+      ))
+    }
+  </div>
+
+  <slot />
+</div>
+
+<script>
+  import { Carousel } from "@fancyapps/ui";
+
+  const container = document.querySelector<HTMLDivElement>("[data-slider]");
+
+  new Carousel(container, { infinite: true, Dots: false });
+</script>

@@ -1,4 +1,5 @@
 @import "@fancyapps/ui/dist/fancybox/fancybox.css";
+@import "@fancyapps/ui/dist/carousel/carousel.css";
 
 @font-face {
   font-family: Aptifer Sans;
@@ -75,6 +76,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.f-carousel {
+  --f-button-color: white;
+  --f-button-svg-width: 100px;
+  --f-button-svg-height: 100px;
+  --f-button-hover-color: white;
+}
 
 @layer components {
   .btn {
