@@ -49,7 +49,7 @@ const { links } = Astro.props;
             {link.title}
           </h2>
 
-          <ul class="space-y-2">
+          <ul>
             {link.children.map((level1) => (
               <li>
                 <a
@@ -63,7 +63,7 @@ const { links } = Astro.props;
                 </a>
 
                 {level1.children ? (
-                  <ul class="space-y-2 mt-2 ml-8">
+                  <ul class="ml-8">
                     {level1.children?.map((level2) => (
                       <li class="relative">
                         {level2.active ? (
@@ -77,7 +77,7 @@ const { links } = Astro.props;
                         </a>
 
                         {level2.children ? (
-                          <ul class="space-y-2 mt-2 ml-8">
+                          <ul class="ml-8">
                             {level2.children?.map((level3) => (
                               <li class="relative">
                                 {level3.active ? (
