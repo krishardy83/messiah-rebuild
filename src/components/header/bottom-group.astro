@@ -50,8 +50,8 @@ const { group, id, transparent } = Astro.props;
     aria-labelledby={`group-button-${id}`}
     aria-hidden="true"
   >
-    <div class="mx-auto flex flex-col md:flex-row max-w-6xl gap-6 md:gap-12 md:px-4">
-      <div class="md:w-2/5 md:border-r md:border-gray-300 md:pr-12">
+    <div class="mx-auto flex flex-col md:flex-row max-w-6xl gap-1 md:gap-12 md:px-4">
+      <div class="hidden md:block w-2/5 border-r border-gray-300 pr-12">
         <p class="mb-4 font-serif text-2xl font-bold text-primary-800">
           {group.description}
         </p>
