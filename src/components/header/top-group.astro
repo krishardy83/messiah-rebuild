@@ -45,7 +45,10 @@ const { group, id, transparent } = Astro.props;
   >
     {group.title}
 
-    <Icon name="chevron-down" class="size-4 group-aria-expanded:rotate-180 transition-transform" />
+    <Icon
+      name="chevron-down"
+      class="size-4 pointer-events-none group-aria-expanded:rotate-180 transition-transform"
+    />
   </button>
 
   <div
