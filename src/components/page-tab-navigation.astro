@@ -14,7 +14,7 @@ const { tabs, class: className, ...props } = Astro.props;
 
 <nav {...props} class={cn("relative flex flex-col-reverse", className)}>
   <div
-    class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
+    class="hidden md:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
   >
     {
       tabs.map((tab) => (

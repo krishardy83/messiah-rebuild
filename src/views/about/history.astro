@@ -89,17 +89,17 @@ const slides = [
 
 <section
   id="our-history"
-  class="relative scroll-m-24 bg-[url(/images/founded-bg.jpg)] bg-no-repeat bg-cover max-h-screen h-[50vw] flex items-center"
+  class="relative scroll-m-24 bg-[url(/images/founded-bg.jpg)] bg-no-repeat bg-cover max-h-screen lg:h-[50vw] flex items-center"
 >
-  <div class="wrapper w-full">
-    <div class="bg-primary-800/80 w-full max-w-3xl p-8" data-history-slider>
+  <div class="lg:wrapper w-full">
+    <div class="bg-primary-800/80 w-full lg:max-w-3xl p-8" data-history-slider>
       {
         slides.map((slide, index) => (
           <div
             id={`slide-${index}`}
             data-slide
             hidden={index === 0 ? undefined : ""}
-            class="text-white h-60"
+            class="text-white sm:h-60 mb-8"
           >
             <h3 class="font-title font-bold text-4xl mb-2">{slide.title}</h3>
             <p>{slide.description}</p>
@@ -107,7 +107,7 @@ const slides = [
         ))
       }
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 flex-wrap">
         <button type="button" aria-label="previous slide" class="text-white link" data-prev>
           <Icon name="chevron-right" class="size-8 rotate-180 pointer-events-none" />
         </button>
@@ -119,12 +119,12 @@ const slides = [
           >Read more about our history</a
         >
       </div>
-      <nav class="flex mt-8">
+      <nav class="flex mt-8 flex-wrap">
         {
           slides.map((slide, index) => (
             <button
               type="button"
-              class="flex flex-col flex-1 items-center group relative after:absolute after:h-px after:bg-gray-400 after:w-1/2 after:left-8 after:bottom-2 before:absolute before:h-px before:bg-gray-400 before:w-1/2 before:right-8 before:bottom-2 last-of-type:after:hidden first-of-type:before:hidden"
+              class="flex flex-col flex-1 items-center group relative after:absolute after:h-px after:bg-gray-400 after:w-1/2 after:left-8 after:bottom-2 before:absolute before:h-px before:bg-gray-400 before:w-1/2 before:right-8 before:bottom-2 last-of-type:after:hidden first-of-type:before:hidden before:hidden sm:before:block after:hidden sm:after:block"
               data-button={index}
               aria-controls={`slide-${index}`}
               aria-expanded={index === 0 ? true : false}

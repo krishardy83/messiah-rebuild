@@ -14,22 +14,27 @@ const { title, description, subtitle, image } = Astro.props;
 
 <BaseLayout title={title} description={description}>
   <header
-    class={`relative bg-[image:var(--bg-banner)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-32 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent`}
+    class={`relative bg-[image:var(--bg-banner)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-48 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent`}
     style={{ "--bg-banner": `url(${image})` }}
     aria-hidden="true"
   >
-    <div class="max-w-6xl mx-auto px-4 h-[40vw] min-h-[270px] max-h-[800px] flex items-center">
-      <div class="w-1/2 relative z-10">
+    <div
+      class="max-w-6xl mx-auto px-4 h-[70vw] min-h-[400px] max-h-[900px] flex items-end md:items-center pb-4 pd:mb-0"
+    >
+      <div class="md:w-1/2 relative z-10">
         <h1
-          class={cn("uppercase text-white font-title text-8xl font-bold leading-[0.75]", {
-            "border-b-8 border-tertiary-300 mb-4 pb-3": subtitle,
-          })}
+          class={cn(
+            "uppercase text-white font-title text-3xl md:text-4xl lg:text-6xl xl:text-8xl font-bold leading-[0.75]",
+            {
+              "border-b-4 md:border-b-8 border-tertiary-300 mb-4 pb-3": subtitle,
+            }
+          )}
         >
           {title}
         </h1>
         {
           subtitle ? (
-            <p class="text-white uppercase font-title text-4xl font-bold leading-none">
+            <p class="text-white uppercase font-title md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-none">
               {subtitle}
             </p>
           ) : null

@@ -1,4 +1,5 @@
 ---
+import LinedHeading from "../../components/lined-heading.astro";
 import Youtube from "../../components/youtube.astro";
 ---
 
@@ -20,38 +21,34 @@ import Youtube from "../../components/youtube.astro";
 </section>
 
 <section class="wrapper pb-24">
-  <h2
-    class="font-title text-primary-500 text-4xl text-center mb-8 relative before:absolute before:h-px before:bg-tertiary-300 before:left-0 before:right-0 before:top-1/2 after:absolute after:h-full after:bg-white after:w-1/3 after:left-1/2 after:-translate-x-1/2 after:-z-10 before:-z-20"
-  >
-    Messiah by the numbers
-  </h2>
+  <LinedHeading>Messiah by the numbers</LinedHeading>
 
-  <ul class="grid grid-cols-3 bg-tertiary-300 gap-px">
-    <li class="text-center text-2xl bg-white px-12">
+  <ul class="grid grid-cols-1 md:grid-cols-3 bg-tertiary-400 gap-px">
+    <li class="text-center text-2xl bg-white py-12 md:py-0 md:px-12">
       <img class="mx-auto mb-8 max-w-24" src="/icons/globe.png" alt="" />
       <p>
-        Named in the <span class="text-primary-500">Top 50 Best Christian Graduate Schools</span> by
+        Named in the <span class="text-primary-400">Top 50 Best Christian Graduate Schools</span> by
         Christian Universities Online
       </p>
     </li>
-    <li class="text-center text-2xl bg-white px-12">
+    <li class="text-center text-2xl bg-white py-12 md:py-0 md:px-12">
       <img class="mx-auto mb-8" src="/icons/students-hug.png" alt="" />
       <p>
-        Messiah University offers <span class="text-primary-500"
+        Messiah University offers <span class="text-primary-400"
           >20+ graduate degrees and certificate programs.</span
         >
       </p>
     </li>
-    <li class="text-center text-2xl bg-white px-12">
+    <li class="text-center text-2xl bg-white py-12 md:py-0 md:px-12">
       <img class="mx-auto mb-8 max-w-24" src="/icons/on-campus.png" alt="" />
       <p>
-        Messiah University has <span class="text-primary-500">781 graduate students</span> representing
-        <span class="text-primary-500">38 states and 7 countries.</span>
+        Messiah University has <span class="text-primary-400">781 graduate students</span> representing
+        <span class="text-primary-400">38 states and 7 countries.</span>
       </p>
     </li>
   </ul>
 
-  <div class="flex gap-2 justify-center mt-8">
+  <div class="flex gap-2 justify-center flex-wrap mt-8">
     <a href="https://www.messiah.edu/info/20002/college_profile" class="btn-tertiary"
       >Messiah at a glance</a
     >

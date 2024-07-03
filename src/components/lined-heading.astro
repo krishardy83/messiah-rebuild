@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div
+  class={cn(
+    "relative before:absolute before:h-px before:bg-tertiary-400 before:left-0 before:right-0 before:top-1/2 mb-8",
+    className
+  )}
+  {...props}
+>
+  <h2 class="font-title text-primary-400 text-4xl text-center w-max bg-white px-4 relative mx-auto">
+    <slot />
+  </h2>
+</div>
