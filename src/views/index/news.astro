@@ -1,0 +1,50 @@
+---
+import NewsPreview from "../../components/news-preview.astro";
+
+const items = [
+  {
+    title: "What can you do with a master’s degree in counseling?",
+    image: "https://www.messiah.edu/images/counseling_cover.jpg",
+    url: "https://www.messiah.edu/news/article/443/what_can_you_do_with_a_master_s_degree_in_counseling",
+    description:
+      "As the demand for mental health services continues to rise, graduate programs in counseling offer aspiring professionals a pathway to meaningful careers.",
+  },
+  {
+    title: "Messiah University President Kim Phipps announces plan to retire in June 2025",
+    image: "https://www.messiah.edu/images/Messiah_KimPhipps__2023_11_01__017A_COVER_IMAGE_1.jpg",
+    url: "https://www.messiah.edu/news/article/442/messiah_university_president_kim_phipps_announces_plan_to_retire_in_june_2025",
+    description: "Dr. Phipps’ presidency concludes a 40-year career in Christian higher education.",
+  },
+  {
+    title: "What is an MBA and why do you need one?",
+    image: "https://www.messiah.edu/images/business.png",
+    url: "https://www.messiah.edu/news/article/439/what_is_an_mba_and_why_do_you_need_one",
+    description:
+      "Regardless of your undergraduate degree, the Master of Business Administration (MBA) graduate degree is a valuable addition that exponentially advances your career and influence.",
+  },
+  {
+    title:
+      "Messiah University partners with local school districts to  help address the teacher shortage in Pennsylvania",
+    image: "https://www.messiah.edu/images/Education1_web.jpg",
+    url: "https://www.messiah.edu/news/article/438/messiah_university_partners_with_local_school_districts_to_help_address_the_teacher_shortage_in_pennsylvania",
+    description:
+      "Messiah has launched two new initiatives designed to increase the number of teachers in Pennsylvania: Educators for Tomorrow and a Teaching Certification Initiative.",
+  },
+];
+---
+
+<section class="bg-[url(/patterns/pattern-bg.png)]">
+  <div class="wrapper py-24">
+    <h2 class="text-primary-800 text-center h2">In the news</h2>
+
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {
+        items.map((item) => (
+          <NewsPreview title={item.title} image={item.image} url={item.url}>
+            {item.description}
+          </NewsPreview>
+        ))
+      }
+    </div>
+  </div>
+</section>

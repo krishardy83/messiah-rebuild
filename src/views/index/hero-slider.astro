@@ -1,30 +1,74 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { cn } from "../lib/utils";
+import { cn } from "../../lib/utils";
 
-interface Props extends HTMLAttributes<"div"> {
-  tabs: {
-    button: string;
-    image: string;
-    title: string;
-    description: string;
-    links: {
-      label: string;
-      href: string;
-    }[];
-  }[];
-}
-
-const { tabs, class: className, ...props } = Astro.props;
+const slides = [
+  {
+    title: "Falcon Fridays are a great way to experience campus this summer!",
+    description:
+      "Tour our amazing campus, check out our exciting academic programs and spiritual growth opportunities-- and, of course, stick around for some ice cream!",
+    button: "Become a student",
+    image: "https://www.messiah.edu/images/ff.jpg",
+    links: [
+      {
+        href: "https://www.messiah.edu/info/23324/falcon_fridays?element=homepage-car",
+        label: "Learn more",
+      },
+    ],
+  },
+  {
+    title: "Academic Excellence",
+    description: "Experience the academic distinction of a nationally ranked Christian college",
+    image: "https://www.messiah.edu/images/hero_academics.jpg",
+    button: "Academic excellence",
+    links: [
+      {
+        href: "https://www.messiah.edu/majors-minors-programs",
+        label: "Undergrad programs",
+      },
+      {
+        href: "http://www.messiah.edu/info/20436/degrees",
+        label: "Graduate programs",
+      },
+    ],
+  },
+  {
+    title: "Careers and Internships",
+    description: "Explore your calling — from your first year through graduation",
+    button: "Careers & internships",
+    image: "https://www.messiah.edu/images/career_hero.jpg",
+    links: [
+      {
+        href: "https://www.messiah.edu/career-outcomes",
+        label: "Undergrad outcomes",
+      },
+      {
+        href: "https://www.messiah.edu/grad-careers",
+        label: "Graduate outcomes",
+      },
+    ],
+  },
+  {
+    title: "Study Abroad",
+    description: "Where in the world will you go?",
+    button: "Study abroad",
+    image: "https://www.messiah.edu/images/travel_hero.jpg",
+    links: [
+      {
+        href: "https://www.messiah.edu/study-abroad",
+        label: "Explore undergrad opportunities",
+      },
+    ],
+  },
+];
 ---
 
-<div {...props} class={cn("relative flex flex-col-reverse -mt-48", className)}>
+<div class="relative flex flex-col-reverse -mt-48">
   <div
     role="tablist"
     class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
   >
     {
-      tabs.map((tab, index) => (
+      slides.map((slide, index) => (
         <button
           type="button"
           id={`tab-${index}`}
@@ -34,14 +78,14 @@ const { tabs, class: className, ...props } = Astro.props;
           aria-controls={`tabpanel-${index}`}
         >
           <span class="inline-block border-b-4 border-transparent group-aria-selected:border-tertiary-400 pointer-events-none">
-            {tab.button}
+            {slide.button}
           </span>
         </button>
       ))
     }
   </div>
   {
-    tabs.map((tab, index) => (
+    slides.map((slide, index) => (
       <div
         role="tabpanel"
         tabindex="0"
@@ -51,15 +95,15 @@ const { tabs, class: className, ...props } = Astro.props;
           "w-full h-[75vw] min-h-[800px] max-h-[1200px] items-center bg-primary-800 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.75),transparent),var(--bg-banner)] bg-cover bg-no-repeat",
           index === 0 ? "flex" : "hidden"
         )}
-        style={{ "--bg-banner": `url(${tab.image})` }}
+        style={{ "--bg-banner": `url(${slide.image})` }}
       >
         <div class="max-w-6xl mx-auto px-4 w-full">
           <h1 class="font-title text-white font-bold text-3xl md:text-5xl lg:text-7xl mb-4 leading-none max-w-2xl">
-            {tab.title}
+            {slide.title}
           </h1>
-          <p class="text-white text-lg md:text-xl max-w-xl mb-8">{tab.description}</p>
+          <p class="text-white text-lg md:text-xl max-w-xl mb-8">{slide.description}</p>
           <div class="flex gap-2">
-            {tab.links.map((link) => (
+            {slide.links.map((link) => (
               <a href={link.href} class="btn-tertiary">
                 {link.label}
               </a>
