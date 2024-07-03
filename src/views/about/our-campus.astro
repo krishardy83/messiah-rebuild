@@ -1,0 +1,40 @@
+---
+import Slider from "../../components/slider.astro";
+
+const slides = [
+  {
+    src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/Lottie_night_full_size.jpg",
+  },
+  {
+    src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/Sidewalk_full_size.jpg",
+  },
+  {
+    src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/frey_hall_full_size.jpg",
+  },
+  {
+    src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/dorm_fall_full_size.jpg",
+  },
+  {
+    src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/union_winter_full_size.jpg",
+  },
+  {
+    src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/jordan_full_size.jpg",
+  },
+];
+---
+
+<Slider class="h-[50vw] max-h-[800px] scroll-m-24" id="our-campus" slides={slides}>
+  <div
+    class="bg-primary-800/80 absolute w-full max-w-2xl bottom-8 left-1/2 text-center -translate-x-1/2 p-8"
+  >
+    <h3 class="text-white h2">Our beautiful campus</h3>
+    <p class="text-white mb-4 paragraph">
+      Messiah is located in Mechanicsburg, Pennsylvania, just 12 miles from the state capital,
+      Harrisburg, and just a short drive from Philadelphia, Baltimore and Washington, D.C.
+    </p>
+    <a
+      href="https://tour.messiah.edu/?_gl=1*15ki1lh*_gcl_au*MTEyMjI1NDU1Ny4xNzE0NDAyNTgx*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcxOTg1NjYyNC44NS4wLjE3MTk4NTY2MjQuNjAuMC4w"
+      class="btn-secondary">View virtual tour</a
+    >
+  </div>
+</Slider>

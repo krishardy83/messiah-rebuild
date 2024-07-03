@@ -33,3 +33,12 @@ const { slides, class: className, ...props } = Astro.props;
 
   new Carousel(container, { infinite: true, Dots: false });
 </script>
+
+<style is:global>
+  .f-carousel:is([data-slider]) {
+    --f-button-color: white;
+    --f-button-svg-width: 100px;
+    --f-button-svg-height: 100px;
+    --f-button-hover-color: white;
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+import ImageTileSlider from "../../components/image-tile-slider.astro";
+
+const items = [
+  {
+    caption: "Climbnasium",
+    description:
+      "A premier indoor rock climbing facility with climbs to 40 feet in height, climbers of all abilities are sure to be challenged.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/climb.jpg",
+    },
+    button: {
+      href: "https://www.climbnasium.net/",
+      label: "Read more",
+    },
+  },
+  {
+    caption: "Ski roundtop",
+    description: "Roundtop Mountain Resort offers skiing, snowboarding and snow tubing.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/ski.png",
+    },
+    button: {
+      href: "http://www.skiroundtop.com/",
+      label: "Read more",
+    },
+  },
+  {
+    caption: "Hersheypark",
+    description:
+      "Enjoy a day at an amusement park full of rides and attractions, and most importantly—chocolate!",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/park.png",
+    },
+    button: {
+      href: "http://www.hersheypark.com/",
+      label: "Read more",
+    },
+  },
+  {
+    caption: "Yellow Breeches",
+    description:
+      "A central part of campus life, students enjoy swimming, canoeing, tubing and fishing in the creek that runs through campus.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/breeches.png",
+    },
+  },
+  {
+    caption: "City Island",
+    description:
+      "A recreational jewel, City Island features Harrisburg Senators baseball, miniature golf, arcade and batting cages, and many free parks, playgrounds and fields.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/downtown.png",
+    },
+    button: {
+      href: "https://www.visithersheyharrisburg.org/",
+      label: "Read more",
+    },
+  },
+  {
+    caption: "Hiking",
+    description:
+      "The Appalachian Trail nearby features hikes that range from beginner one-mile flat hikes to weekend peak bagging excursions.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/hiking.jpg",
+    },
+  },
+  {
+    caption: "Carlisle Sports Emporium",
+    description:
+      "With mini golf, indoor and outdoor go-karts, laser tag, roller skating, batting cages and a large arcade, you certainly won’t be bored.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/sports.jpg",
+    },
+    button: {
+      href: "https://www.carlislesportsemporium.com/",
+      label: "Read more",
+    },
+  },
+  {
+    caption: "Giant Center",
+    description:
+      "This premier entertainment venue in Hershey, Pennsylvania features headliner concerts and events and is home to the Hershey Bears hockey club.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/giant-center.jpg",
+    },
+    button: {
+      href: "http://www.hersheyentertainment.com/giant-center/",
+      label: "Read more",
+    },
+  },
+];
+---
+
+<section class="bg-[url(/patterns/pattern-bg.png)] py-24">
+  <div class="wrapper">
+    <h2 class="text-primary-800 h2 text-center">Get to know the area</h2>
+    <p class="text-center mb-8 max-w-4xl mx-auto paragraph">
+      The area surrounding Messiah is full of activity! From restaurants, shopping, churches, and
+      exciting adventures, you and your friends will always have something fun to do or see.
+    </p>
+
+    <div class="flex gap-2 justify-center">
+      <a href="https://www.messiah.edu/map/" class="btn-tertiary">Campus map</a>
+      <a href="https://www.messiah.edu/area" class="btn-tertiary">Area guide</a>
+    </div>
+  </div>
+
+  <ImageTileSlider class="mt-8 wrapper" items={items} />
+</section>

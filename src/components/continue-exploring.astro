@@ -14,9 +14,13 @@ const { title, links, class: className, ...props } = Astro.props;
 ---
 
 <nav {...props} class={cn("py-12", className)}>
-  {title ? <h3 class="mb-8 font-title text-4xl font-bold text-primary-800">{title}</h3> : null}
+  {
+    title ? (
+      <h3 class="mb-8 text-center font-title text-4xl font-bold text-primary-800">{title}</h3>
+    ) : null
+  }
 
-  <ul class="flex gap-4 flex-wrap">
+  <ul class="flex gap-4 flex-wrap justify-center">
     {
       links.map((link) => (
         <li>

@@ -1,9 +1,13 @@
 ---
 import ContinueExploring from "../components/continue-exploring.astro";
-import HistorySlider from "../components/history-slider.astro";
-import Slider from "../components/slider.astro";
-import Youtube from "../components/youtube.astro";
 import SingleColumn from "../layouts/single-column.astro";
+import SeeAnew from "../views/about/see-anew.astro";
+import PageTabNavigation from "../components/page-tab-navigation.astro";
+import WhoWeAre from "../views/about/who-we-are.astro";
+import OurCampus from "../views/about/our-campus.astro";
+import GetToKnowArea from "../views/about/get-to-know-area.astro";
+import FaithCommunity from "../views/about/faith-community.astro";
+import History from "../views/about/history.astro";
 ---
 
 <SingleColumn
@@ -12,239 +16,26 @@ import SingleColumn from "../layouts/single-column.astro";
   subtitle="Sharpening intellect. Deepening Christian faith. Inspiring action."
   description="Sharpening intellect. Deepening Christian faith. Inspiring action."
 >
-  <!-- <HeroTabs
+  <PageTabNavigation
     tabs={[
-      {
-        title: "Falcon Fridays are a great way to experience campus this summer!",
-        description:
-          "Tour our amazing campus, check out our exciting academic programs and spiritual growth opportunities-- and, of course, stick around for some ice cream!",
-        button: "Become a student",
-        image: "https://www.messiah.edu/images/ff.jpg",
-        links: [
-          {
-            href: "https://www.messiah.edu/info/23324/falcon_fridays?element=homepage-car",
-            label: "Learn more",
-          },
-        ],
-      },
-      {
-        title: "Academic Excellence",
-        description: "Experience the academic distinction of a nationally ranked Christian college",
-        image: "https://www.messiah.edu/images/hero_academics.jpg",
-        button: "Academic excellence",
-        links: [
-          {
-            href: "https://www.messiah.edu/majors-minors-programs",
-            label: "Undergrad programs",
-          },
-          {
-            href: "http://www.messiah.edu/info/20436/degrees",
-            label: "Graduate programs",
-          },
-        ],
-      },
-      {
-        title: "Careers and Internships",
-        description: "Explore your calling — from your first year through graduation",
-        button: "Careers & internships",
-        image: "https://www.messiah.edu/images/career_hero.jpg",
-        links: [
-          {
-            href: "https://www.messiah.edu/career-outcomes",
-            label: "Undergrad outcomes",
-          },
-          {
-            href: "https://www.messiah.edu/grad-careers",
-            label: "Graduate outcomes",
-          },
-        ],
-      },
-      {
-        title: "Study Abroad",
-        description: "Where in the world will you go?",
-        button: "Study abroad",
-        image: "https://www.messiah.edu/images/travel_hero.jpg",
-        links: [
-          {
-            href: "https://www.messiah.edu/study-abroad",
-            label: "Explore undergrad opportunities",
-          },
-        ],
-      },
-    ]}
-  /> -->
-
-  <section id="start" class="wrapper py-24 flex flex-col lg:flex-row gap-12 lg:gap-24">
-    <div class="lg:w-3/5">
-      <h2 class="font-title text-primary-800 font-bold text-5xl mb-8">Who we are</h2>
-
-      <p class="text-lg leading-relaxed">
-        Messiah University is a nationally ranked, private Christian university with a student body
-        of 3,320 undergraduate and graduate students. Our scenic 375-acre suburban campus is located
-        in central Pennsylvania, just 12 miles from the state capital of Harrisburg. The University
-        was founded in 1909 by the Brethren in Christ Church. Today, the University’s faith base is
-        broadly evangelical and includes students and employees from a variety of denominations and
-        Christian faith traditions.
-      </p>
-    </div>
-
-    <Youtube class="lg:w-2/5 mt-4" src="https://www.youtube.com/watch?v=5_svwEuH9fY" />
-  </section>
-
-  <section class="wrapper py-24">
-    <h2 class="font-title text-primary-800 font-bold text-5xl text-center mb-8">
-      Messiah by the numbers
-    </h2>
-
-    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-tertiary-400">
-      <li class="bg-white p-8 text-xl text-center">
-        Our student body is made up of students from <span class="text-tertiary-500">38</span> states
-        and <span class="text-tertiary-500">21</span> countries
-      </li>
-      <li class="bg-white p-8 text-xl text-center">
-        <span class="text-tertiary-500">60+</span> off-campus study locations in <span
-          class="text-tertiary-500">40</span
-        > countries
-      </li>
-      <li class="bg-white p-8 text-xl text-center">
-        <span class="text-tertiary-500">35+</span> denominations represented in our student body
-      </li>
-    </ul>
-
-    <div class="flex gap-2 justify-center mt-8">
-      <a href="https://www.messiah.edu/info/20002/college_profile" class="btn-tertiary"
-        >Messiah at a glance</a
-      >
-      <a href="https://www.messiah.edu/info/20020/recognitions" class="btn-tertiary"
-        >View recognitions</a
-      >
-    </div>
-  </section>
-
-  <Slider
-    class="h-[50vw] max-h-[800px]"
-    slides={[
-      {
-        src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/Lottie_night_full_size.jpg",
-      },
-      {
-        src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/Sidewalk_full_size.jpg",
-      },
-      {
-        src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/frey_hall_full_size.jpg",
-      },
-      {
-        src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/dorm_fall_full_size.jpg",
-      },
-      {
-        src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/union_winter_full_size.jpg",
-      },
-      {
-        src: "https://www.messiah.edu/site/custom_scripts/styles/img/about/jordan_full_size.jpg",
-      },
-    ]}
-  >
-    <div
-      class="bg-primary-800/80 absolute w-full max-w-2xl bottom-8 left-1/2 text-center -translate-x-1/2 px-8 py-4"
-    >
-      <h3 class="text-white font-title font-bold text-6xl mb-4">Our beautiful campus</h3>
-      <p class="text-white mb-4">
-        Messiah is located in Mechanicsburg, Pennsylvania, just 12 miles from the state capital,
-        Harrisburg, and just a short drive from Philadelphia, Baltimore and Washington, D.C.
-      </p>
-      <a
-        href="https://tour.messiah.edu/?_gl=1*15ki1lh*_gcl_au*MTEyMjI1NDU1Ny4xNzE0NDAyNTgx*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcxOTg1NjYyNC44NS4wLjE3MTk4NTY2MjQuNjAuMC4w"
-        class="btn-secondary">View virtual tour</a
-      >
-    </div>
-  </Slider>
-
-  <HistorySlider
-    slides={[
-      {
-        title: "Founded in 1909",
-        description:
-          "Messiah University is founded by the Brethren in Christ Church under the presidency of S.R. Smith, a church leader and Harrisburg businessman. Its original name was Messiah Bible School and Missionary Training Home. It began as a school offering high school curriculum and a few Bible programs",
-        label: "1909",
-      },
-      {
-        title: "Messiah relocates to Grantham",
-        description:
-          "Messiah Bible School and Missionary Training Home relocates to Grantham, Pennsylvania where students and educators have more classroom space as well as a campus library, dining hall and chapel",
-        label: "1912",
-      },
-      {
-        title: "Name change to Messiah Bible College",
-        description:
-          "Developments in academic programs suggest a name change is necessary. The Messiah Bible School and Missionary Training Home changes its name to Messiah Bible College, which more adequately represents the nature of the school.",
-        label: "1924",
-      },
-      {
-        title: "Curriculum expanded",
-        description:
-          "Messiah College expands its academic curriculum to begin offering college-level courses.",
-        label: "1929",
-      },
-      {
-        title: "Another name change",
-        description: "Messiah Bible College officially changes its name to Messiah College",
-        label: "1951",
-      },
-      {
-        title: "Athletics joins the MAC Conference",
-        description:
-          "Messiah Athletics joins the MAC (Middle Atlantic Conference), which at the time was an athletic organization of 26 small, private liberal arts colleges in Pennsylvania, New Jersey, Delaware and Maryland",
-        label: "1983",
-      },
-      {
-        title: "Service learning established through the Agape Center",
-        description: "The Agape Center for Service and Learning is founded",
-        label: "1997",
-      },
-      {
-        title: "The Oakes Museum opens",
-        description:
-          "With the completion of the Jordan Science Center, Messiah College opened the Oakes Museum, a 40,000-square foot museum with Smithsonian-quality collections of North American and African wildlife, seashells, bird eggs, insects, minerals and fossils",
-        label: "1999",
-      },
-      {
-        title: "Eighth and current president named",
-        description:
-          "Kim S. Phipps, is named the eighth president (and the first female president) of Messiah College.",
-        label: "2004",
-      },
-      {
-        title: "Candidates, computers and championships",
-        description:
-          "Messiah hosts The Compassion Forum, a nationally televised, unprecedented conversation with then-presidential candidates Barack Obama and Hillary Clinton on the integration of faith and public policy. Messiah begins offering undergraduate online courses during the summer session",
-        label: "2008",
-      },
-      {
-        title: "Graduate programs launched; Centennial celebration",
-        description:
-          "Messiah launches its first on many graduate programs to come, an online master's degree in counseling. Messiah celebrates a century of God's faithfulness during its centennial year, with the Centennial celebration “Shared Faith. Bold Vision. Enduring Promise” during the 2009-2010 academic year",
-        label: "2009",
-      },
-      {
-        title: "DNP approved",
-        description:
-          "The Pennsylvania State Board of Nursing fully approves a new Doctor of Nursing Practice-Family Nursing Practitioner (DNP-FNP) program",
-        label: "2015",
-      },
-      {
-        title: "Messiah College becomes Messiah University",
-        description:
-          "Messiah College officially becomes Messiah University. The new name more accurately reflects Messiah's structure that offers an extensive mix of undergraduate and graduate programs in both the liberal and applied arts and sciences—including expansion to master’s and doctorate programs",
-        label: "2020",
-      },
-      {
-        title: "Dedication of new Kim S. Phipps Admissions and Welcome Center",
-        description:
-          "Messiah officially dedicates the Admissions and Welcome Center, a centralized space for prospective students that houses Undergraduate Admissions, as well as other offices that recruit and retain students, including Financial Aid and Financial Services, the Registrar’s Office, and the Office of Alumni and Parent Relations.",
-        label: "2021",
-      },
+      { title: "Our campus", hash: "#our-campus" },
+      { title: "Faith community", hash: "#faith-community" },
+      { title: "See anew", hash: "#see-anew" },
+      { title: "Our history", hash: "#our-history" },
     ]}
   />
+
+  <WhoWeAre />
+
+  <OurCampus />
+
+  <GetToKnowArea />
+
+  <FaithCommunity />
+
+  <SeeAnew />
+
+  <History />
 
   <ContinueExploring
     title="Continue Exploring"
@@ -265,88 +56,4 @@ import SingleColumn from "../layouts/single-column.astro";
       },
     ]}
   />
-
-  <!--
-  <section class="relative bg-primary-800">
-    <iframe
-      title="Explore our beautiful campus background video"
-      src="https://player.vimeo.com/video/465819862?background=1"
-      class="hidden md:block w-full h-auto aspect-video -z-10 outline-none"
-      allowfullscreen=""></iframe>
-
-    <div
-      class="md:absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent pb-16 pt-32"
-    >
-      <div class="wrapper text-center">
-        <h2 class="font-title text-white font-bold text-5xl md:text-6xl lg:text-7xl mb-4">
-          Explore our beautiful campus
-        </h2>
-        <p class="text-white text-lg max-w-4xl mx-auto">
-          Messiah University is an amazing place. But don't just take our word for it. Come visit us
-          and discover why nearly 2,750 undergraduate students choose Messiah every year. When you
-          step onto our beautiful, 375-acre campus in central Pennsylvania, you'll be welcomed into
-          a caring, compassionate, thriving Christian community that feels just like home.
-        </p>
-
-        <div class="flex gap-2 mt-8 flex-wrap justify-center">
-          <a href="https://www.messiah.edu/info/21343/visit_campus" class="btn-secondary"
-            >Visit campus</a
-          >
-          <a href="https://www.messiah.edu/virtual-visit" class="btn-secondary">Virtual visit</a>
-          <a
-            href="https://tour.messiah.edu/?_gl=1*plqisj*_gcl_au*MTEyMjI1NDU1Ny4xNzE0NDAyNTgx*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcxOTczNTEzMC43NC4xLjE3MTk3MzU3NzguMjIuMC4w"
-            class="btn-secondary">Virtual tour</a
-          >
-          <a
-            href="Messiah University is an amazing place. But don't just take our word for it. Come visit us and discover why nearly 2,750 undergraduate students choose Messiah every year. When you step onto our beautiful, 375-acre campus in central Pennsylvania, you'll be welcomed into a caring, compassionate, thriving Christian community that feels just like home."
-            class="btn-secondary">Campus map</a
-          >
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-[url(/patterns/pattern-bg.png)]">
-    <div class="wrapper py-24">
-      <h2 class="font-title text-primary-800 font-bold text-5xl text-center mb-8">In the news</h2>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        <NewsPreview
-          title="What can you do with a master’s degree in counseling?"
-          image="https://www.messiah.edu/images/counseling_cover.jpg"
-          url="https://www.messiah.edu/news/article/443/what_can_you_do_with_a_master_s_degree_in_counseling"
-        >
-          As the demand for mental health services continues to rise, graduate programs in
-          counseling offer aspiring professionals a pathway to meaningful careers.
-        </NewsPreview>
-
-        <NewsPreview
-          title="Messiah University President Kim Phipps announces plan to retire in June 2025"
-          image="https://www.messiah.edu/images/Messiah_KimPhipps__2023_11_01__017A_COVER_IMAGE_1.jpg"
-          url="https://www.messiah.edu/news/article/442/messiah_university_president_kim_phipps_announces_plan_to_retire_in_june_2025"
-        >
-          Dr. Phipps’ presidency concludes a 40-year career in Christian higher education.
-        </NewsPreview>
-
-        <NewsPreview
-          title="What is an MBA and why do you need one?"
-          image="https://www.messiah.edu/images/business.png"
-          url="https://www.messiah.edu/news/article/439/what_is_an_mba_and_why_do_you_need_one"
-        >
-          Regardless of your undergraduate degree, the Master of Business Administration (MBA)
-          graduate degree is a valuable addition that exponentially advances your career and
-          influence.
-        </NewsPreview>
-
-        <NewsPreview
-          title="Messiah University partners with local school districts to  help address the teacher shortage in Pennsylvania"
-          image="https://www.messiah.edu/images/Education1_web.jpg"
-          url="https://www.messiah.edu/news/article/438/messiah_university_partners_with_local_school_districts_to_help_address_the_teacher_shortage_in_pennsylvania"
-        >
-          Messiah has launched two new initiatives designed to increase the number of teachers in
-          Pennsylvania: Educators for Tomorrow and a Teaching Certification Initiative.
-        </NewsPreview>
-      </div>
-    </div>
-  </section> -->
 </SingleColumn>

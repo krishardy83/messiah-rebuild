@@ -77,11 +77,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.f-carousel {
-  --f-button-color: white;
-  --f-button-svg-width: 100px;
-  --f-button-svg-height: 100px;
-  --f-button-hover-color: white;
+@layer utilities {
+  .h2 {
+    @apply mb-4 font-title text-6xl font-bold leading-[0.8];
+  }
+
+  .paragraph {
+    @apply text-lg leading-relaxed;
+  }
 }
 
 @layer components {

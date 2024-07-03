@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  tabs: {
+    title: string;
+    hash: string;
+  }[];
+}
+
+const { tabs, class: className, ...props } = Astro.props;
+---
+
+<nav {...props} class={cn("relative flex flex-col-reverse", className)}>
+  <div
+    class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
+  >
+    {
+      tabs.map((tab) => (
+        <a
+          href={tab.hash}
+          class="text-white w-full sm:w-1/2 md:w-1/4 text-lg uppercase p-4 md:p-8 link text-center font-title font-bold aria-selected:text-tertiary-400 group"
+        >
+          <span class="inline-block border-b-4 border-transparent group-aria-selected:border-tertiary-400 pointer-events-none">
+            {tab.title}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</nav>
