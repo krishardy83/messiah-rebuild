@@ -1,0 +1,1952 @@
+[
+  {
+    "entry_id": "1",
+    "entry_title": "Accounting",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315,318",
+    "program_name": "Accounting",
+    "keywords": "math, cpa, auditing, finance, banking, tax, taxes, forensic, accountant, mathematics",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1351",
+    "entry_title": "Actuarial Science ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,22",
+    "program_name": "Actuarial Science ",
+    "keywords": "actuary, actuarial, actuarial science, math, mathematics, risk, risk management, analysis, finance, financial",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "827",
+    "entry_title": "Administrative Studies ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "29,315",
+    "program_name": "Administrative Studies ",
+    "keywords": "history, public history, business",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "3",
+    "entry_title": "African American Religion and Culture",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325,328",
+    "program_name": "African American Religion and Culture",
+    "keywords": "history, culture, race, literature, black Americans, religion, politics, ethnic",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "4",
+    "entry_title": "African and African American Studies",
+    "live": "1",
+    "category_name": "School of the Humanities",
+    "category_id": "4",
+    "program_name": "African and African American Studies",
+    "keywords": "history, culture, race, literature, black Americans, religion, politics, ethnic",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "5",
+    "entry_title": "American History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,322",
+    "program_name": "American History",
+    "keywords": "culture, colonial, usa, civil war, modern, public, policy, museum, United States",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2456",
+    "entry_title": "Anthropology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,16,330",
+    "program_name": "Anthropology",
+    "keywords": "anthropology, anthropologist, sociology, sociologist, culture, beliefs, behaviors, society, social ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "83",
+    "entry_title": "Applied Health Science",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,21,320,329",
+    "program_name": "Applied Health Science",
+    "keywords": "physical therapy, doctor, health care, health-care, training, public health advocate, recreation specialist, cardiac rehabilitation specialist, cardiac rehabilitation, rehabilitation, rehab, personal training, personal trainer, fitness, wellness, chiropractor, exercise physiologist, physiology,  anatomy, athletics, research, exercise science, exercise scientist, strength and conditioning coach, coach, coaching, pre-med, premed, health, exercise, health and exercise, kinesiology, human performance, pre med, physician assistant, exercise specialist, wellness coach, corporate wellness, medical fitness, fitness coordinator, physician, physician\u2019s assistant, sports medicine, occupational therapy, pre-occupational therapy, pre occupational therapy",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "6",
+    "entry_title": "Art (Business)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314,315",
+    "program_name": "Art (Business)",
+    "keywords": "management, finance, marketing, publicity, advertising, promotion, art, artist, business",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "8",
+    "entry_title": "Art Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314,317",
+    "program_name": "Art Education",
+    "keywords": "teacher, elementary, k-12, secondary, high school, teaching certification, teach, art ed, art teacher, secondary, secondary education, high school teacher",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "9",
+    "entry_title": "Art History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314,322",
+    "program_name": "Art History",
+    "keywords": "architecture, museum, western, renaissance, medieval, art, artist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "375",
+    "entry_title": "Art, Studio ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314",
+    "program_name": "Art, Studio ",
+    "keywords": "visual, photography, ceramics, sculpture, drawing, painting, fiber arts, pottery, graphic design, two dimensional, three dimensional, print making, graphic designer, artist, 3D, art, illustration, illustrations, illustrator",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "10",
+    "entry_title": "Asian Studies",
+    "live": "1",
+    "category_name": "School of the Humanities",
+    "category_id": "4",
+    "program_name": "Asian Studies",
+    "keywords": "ethnic, India, China, Japan, culture, language, history, politics",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2450",
+    "entry_title": "Athletic Training/MSAT 5-year program",
+    "live": "1",
+    "category_name": "",
+    "category_id": "21,320,3",
+    "program_name": "Athletic Training/MSAT 5-year program",
+    "keywords": "athletic training, athletic trainer, sports medicine, athletic, accelerated, human performance, coach, trainer, sports, therapy, therapist, allied health, athletic medicine",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "12",
+    "entry_title": "Bible",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325,328",
+    "program_name": "Bible",
+    "keywords": "pastor, religion, theology, Christianity, christian education, New Testament, Old Testament, hermeneutics, scripture, interpretation, youth pastor, minister, ministry ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "13",
+    "entry_title": "Biblical and Religious Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,328,325",
+    "program_name": "Biblical and Religious Studies",
+    "keywords": "pastor, religion, theology, Christianity, christian education, ministry, doctrine, Greek, Hebrew, youth, youth leader, minister, Bible, youth ministry, youth ministries, Missions, Church, Missionary",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "14",
+    "entry_title": "Biochemistry",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,19,329,320",
+    "program_name": "Biochemistry",
+    "keywords": "chemistry, chemist, biochem, biochemistry, science, scientist, teacher, teach, chemistry teacher, pre med, pre-med, medical, premed, research, researcher, forensics, pharmacy, pharmacist, doctor, physician, lab, laboratory",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1141",
+    "entry_title": "Biochemistry ACS-Certified",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,19",
+    "program_name": "Biochemistry ACS-Certified",
+    "keywords": "chemistry, chemist, biochem, biochemistry, science, scientist, teacher, teach, chemistry teacher, pre med, pre-med, medical, premed, research, researcher, forensics, pharmacy, pharmacist, doctor, physician, lab, laboratory",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "15",
+    "entry_title": "Biochemistry B.A. with Doctor of Pharmacy",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,44,320,329,19",
+    "program_name": "Biochemistry B.A. with Doctor of Pharmacy",
+    "keywords": "chemistry, chem, biology, science, medicine, molecular, research, pharmacology, pharmacist, pharmacy, scientist, researcher, forensics, doctor, lab, laboratory",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "16",
+    "entry_title": "Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,320,329,331",
+    "program_name": "Biology",
+    "keywords": "biomedical, cellular, ecological, organismal, environmental, zoology, medicine, doctor, physician, pre-med, pre med, premed, teaching certification, teach, teacher, biology education, biologist, microbiologist, microbiology, Scientist, Research, secondary, secondary education, high school teacher, biology teacher",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "18",
+    "entry_title": "Biology for Environmental  Science Majors",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,331,329",
+    "program_name": "Biology for Environmental  Science Majors",
+    "keywords": "environment, ecology, sustainability, biology, science, nature, earth, biological science, scientist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "19",
+    "entry_title": "Biomedical Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,320,329",
+    "program_name": "Biomedical Biology",
+    "keywords": "medicine, research, chemistry, microbiology, bioethics, pre-med, premed, biologist, pre med, researcher, chemist, biology, doctor, physician, vet, veterinary",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "20",
+    "entry_title": "Biomedical Engineering Concentration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,320,329,333,20",
+    "program_name": "Biomedical Engineering",
+    "keywords": "medical research, prosthetics, medical equipment, technology, human body, body, biomedical, engineering ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2452",
+    "entry_title": "Biomedical Engineering Degree",
+    "live": "1",
+    "category_name": "",
+    "category_id": "333,3,20,320",
+    "program_name": "Biomedical Engineering ",
+    "keywords": "biomedical engineer, biomedical, medicine, engineer, medical engineer, health care engineer, product developer, clinical engineer, researcher, product designer, product developer, manufacturing engineer, medical equipment",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "21",
+    "entry_title": "Biopsychology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,14,18,320,329",
+    "program_name": "Biopsychology",
+    "keywords": "biology, psychology, occupational therapy, psychiatry, neuroscience, behavioral health, neuroscience, occupational therapy, addiction, behavioral neuroscience, physiological science, research, pre-med, premed, psychologist, pre med, science",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "749",
+    "entry_title": "Broadcasting and Media Production",
+    "live": "1",
+    "category_name": "",
+    "category_id": "27,316",
+    "program_name": "Broadcasting and Media Production",
+    "keywords": "broadcasting, TV Anchor, News Anchor, Sports Anchor, Sports Announcer, news, television, reporter, anchor, journalist, tv production, television, video, production, broadcasting, media, producer,  videographer, video producer, communication, communications",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "395",
+    "entry_title": "Business",
+    "live": "1",
+    "category_name": "Business / Leadership",
+    "category_id": "315",
+    "program_name": "Business",
+    "keywords": "Business and leadership, Master of Business Administration, MBA, Strategic leadership,\r\nDigital marketing, Social entrepreneurship, Organizational and strategic communication, Management, graduate programs, master\u2019s degree\r\n",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "23",
+    "entry_title": "Business Administration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "Business Administration",
+    "keywords": "accounting, finance, marketing, operations, technology, human resources, entrepreneurship, leadership, management, small business, family business, law, international, global, innovation, development",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2361",
+    "entry_title": "Business Administration ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17",
+    "program_name": "Business Administration ",
+    "keywords": "business, business administration, manager, business owner, consultant, sales, entrepreneur, secondary major",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "24",
+    "entry_title": "Business Information Systems",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,315,323",
+    "program_name": "Business Information Systems",
+    "keywords": "computer, technology, programming, networking, applications, database, webmaster, website, business, programmer, developer, development, web developer",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "25",
+    "entry_title": "Cellular Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,320,329",
+    "program_name": "Cellular Biology",
+    "keywords": "molecular, genetics, medicine, immunology, healthcare, biologist, cells, biology, doctor, physician, pre-med, pre med, premed, vet, veterinarian",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1199",
+    "entry_title": "Certificate of Advanced Graduate Studies (CAGS) in Counseling",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Certificate of Advanced Graduate Studies (CAGS) in Counseling",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "2532",
+    "entry_title": "Chemistry",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,19,320,329",
+    "program_name": "Chemistry",
+    "keywords": "science, scientist, organic, inorganic, medicine, research, researcher, laboratory, teaching certification, teacher, chemistry teacher, chem, chemistry,  chemist, pre-med, pre med, premed, forensics, doctor, physician, lab, laboratory, secondary, secondary education, high school teacher",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1157",
+    "entry_title": "Chemistry ACS-Certified ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,19",
+    "program_name": "Chemistry ACS-Certified ",
+    "keywords": "science, scientist, organic, inorganic, medicine, research, researcher, laboratory, teaching certification, teacher, chemistry teacher, chem, chemistry,  chemist, pre-med, pre med, premed, forensics, doctor, physician, lab",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "27",
+    "entry_title": "Children and Youth Services",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,13,330",
+    "program_name": "Children and Youth Services",
+    "keywords": "child development, family, counseling, therapist, counselor, therapy, child life, child life specialist, child care, human services, family advocate, parenting, foster care, adoption, social services",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "29",
+    "entry_title": "Chinese Business",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,30,315,324",
+    "program_name": "Chinese Business",
+    "keywords": "China, language, international, culture, economics, economic development, global trade, business",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "30",
+    "entry_title": "Chinese Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,30,324",
+    "program_name": "Chinese Studies",
+    "keywords": "literature, language, culture, history, religion, politics, international, China, Chinese, mandarin, teach, teacher, Chinese teacher, mandarin teacher, secondary, secondary education, high school teacher",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1193",
+    "entry_title": "Choral Conducting",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Choral Conducting",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "31",
+    "entry_title": "Christian Ministries",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325,328",
+    "program_name": "Christian Ministries",
+    "keywords": "pastor, religion, theology, Christianity, christian education, missions, counselor, youth, youth leader, youth pastor, Bible, youth ministry, youth ministries",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "390",
+    "entry_title": "Church Media",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,11,316,325",
+    "program_name": "Church Media ",
+    "keywords": "digital media, worship, production, music, lighting, lighting design, stage, stage management, stage design, video, projection, church ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "35",
+    "entry_title": "Civil Engineering Concentration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,333",
+    "program_name": "Civil Engineering",
+    "keywords": "structural design, resource management,construction, mechanics, environment, building, bridge, bridges, civil engineer, transportation, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2453",
+    "entry_title": "Civil Engineering Degree",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,333",
+    "program_name": "Civil Engineering",
+    "keywords": "Civil engineering, civil engineer, bridge, bridge design, bridge designer, inspection, construction management, construction, civil, engineer, design engineer ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "36",
+    "entry_title": "Classical and Medieval European History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,324,322",
+    "program_name": "Classical and Medieval European History",
+    "keywords": "greece, rome, world civilization, archaeology, culture, history, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "37",
+    "entry_title": "Classical, Medieval and Renaissance Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,324,322",
+    "program_name": "Classical, Medieval and Renaissance Studies",
+    "keywords": "greece, rome, world civilization, archaeology, culture, history",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1196",
+    "entry_title": "Clinical Mental Health Counseling",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Clinical Mental Health Counseling",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "38",
+    "entry_title": "Clinical Psychology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,14,320,330",
+    "program_name": "Clinical Psychology",
+    "keywords": "counseling, therapy, behavioral health, psychiatry, research, human development, health care, human development, psychological testing, psychology, therapist, counselor, psychotherapy",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "39",
+    "entry_title": "Commercial Music",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,315,326",
+    "program_name": "Commercial Music",
+    "keywords": "performance, music business, art, management, songwriting, composition, musician, music, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "40",
+    "entry_title": "Communication",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,27,316",
+    "program_name": "Communication",
+    "keywords": "journalism, public relations, broadcasting, media, advertising, marketing, event planning, social media, film, journalist, reporter, PR, event planner, communication, communications",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "41",
+    "entry_title": "Community Development",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,16,315,331",
+    "program_name": "Community Development",
+    "keywords": "planning, policy, social justice, economics, leadership, sustainability, sociology, culture, city",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "43",
+    "entry_title": "Composition",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,326",
+    "program_name": "Composition",
+    "keywords": "composing, composer, songwriting, music theory, music, musician",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "44",
+    "entry_title": "Computer and Information Science",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,323",
+    "program_name": "Computer and Information Science",
+    "keywords": "technology, database, programming, applications, information systems, design, coding, mysql, web management, software development, computer, software developer, web manager",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "45",
+    "entry_title": "Computer Engineering Concentration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,323,333",
+    "program_name": "Computer Engineering",
+    "keywords": "technology, database, programming, applications, information systems, design, coding, mysql, web management, software development, software developer, web manager",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "46",
+    "entry_title": "Computer Science",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,323",
+    "program_name": "Computer Science",
+    "keywords": "techonology, database, programming, applications, information systems, design, coding, mysql, web management, software development, software developer, web manager",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "47",
+    "entry_title": "Conducting",
+    "live": "1",
+    "category_name": "Music interest",
+    "category_id": "326",
+    "program_name": "Conducting",
+    "keywords": "music, music education, education, band, band teacher, music teacher, orchestra, orchestral, choral, voice, wind, certificate, musician, conduct, conductor,graduate programs, master\u2019s degree\r\n",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "48",
+    "entry_title": "Congregational Ministries",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325",
+    "program_name": "Congregational Ministries",
+    "keywords": "worship, minister, pastor, preaching, bible, counseling, evangelism, missionary, mission, world missions, missiology, world Christianity, church, ministry ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "150",
+    "entry_title": "Conservation and Agriculture",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,329,331",
+    "program_name": "Conservation and Agriculture",
+    "keywords": "environmental, science, ecological, ecology, biology, sustainability, farming, organic, farm, sustainable",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "49",
+    "entry_title": "Counseling",
+    "live": "1",
+    "category_name": "",
+    "category_id": "320,330",
+    "program_name": "Counseling",
+    "keywords": "clinical, mental, health, marriage, couple, family, counselor, school, school counselor, family counselor, family counseling, mental health, clinical mental, therapy, health, therapist,graduate programs, master\u2019s degree",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "50",
+    "entry_title": "Creative Writing",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,28,316,324",
+    "program_name": "Creative Writing",
+    "keywords": "poetry, drama, nonfiction, fiction, memoir, writer, writing, creative, author, storytelling",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2458",
+    "entry_title": "Criminology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,16,330",
+    "program_name": "Criminology",
+    "keywords": "criminology, criminal justice, sociology, sociologist, police officer, law enforcement, crime, justice, reconciliation, restoration, officer  ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "52",
+    "entry_title": "Cross-Cultural Ministries",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,324,325",
+    "program_name": "Cross-Cultural Ministries",
+    "keywords": "missions, international, religion, evangelism, christian, theology, minister, church, ministry",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1205",
+    "entry_title": "Curriculum and Instruction",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Curriculum and Instruction",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "2341",
+    "entry_title": "Cybersecurity",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,323",
+    "program_name": "Cybersecurity",
+    "keywords": "Cybersecurity, cyber, hacking, hacker, web, web security, security, software, computer, network, Security analyst, Security auditor, Security software developer, Forensic computer analyst, Information security analyst, Security architect\r\n",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "53",
+    "entry_title": "Dance",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,11,314",
+    "program_name": "Dance",
+    "keywords": "ballet, jazz, tap, theatre, performance, choreograph, arts, ministry, theater, dancer, performer",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1188",
+    "entry_title": "Digital Marketing",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Digital Marketing",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "54",
+    "entry_title": "Digital Media",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314,316,11,128,27",
+    "program_name": "Digital Media",
+    "keywords": "computer, digital editing, art, communication, film, production, video, graphic, design, graphic designer, artist, communications,sound design",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1946",
+    "entry_title": "Digital Public Humanities",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,392,322,29",
+    "program_name": "Digital Public Humanities",
+    "keywords": "digital, humanities, history, technology, historian, documentary, documentarian, culture, public humanities",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "55",
+    "entry_title": "Digital Video and Story",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,27,314,316",
+    "program_name": "Digital Video and Story",
+    "keywords": "computer, digital editing, art, communication, film, production, video, graphic, design, scripting, digital media, graphic designer, artist, graphic design, videography, videographer, animation, animator, film production, video game, communications",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "383",
+    "entry_title": "Disability and Family Wellness",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,13,330",
+    "program_name": "Disability and Family Wellness",
+    "keywords": "family science, aging, children, intervention, therapy, disabilities, healthcare, care, family",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "56",
+    "entry_title": "Early Childhood Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,317",
+    "program_name": "Early Childhood Education",
+    "keywords": "preschool, pre-school, teaching, child, development, teach, teacher, nursery school, child care, childcare, teacher assistant, teacher aide, aide, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "57",
+    "entry_title": "Ecological Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,329,331",
+    "program_name": "Ecological Biology",
+    "keywords": "plants, environment, sustainability, animal, science, wildlife, research, biology, biologist, environmental, fish, geologist, ecology, zoology",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "58",
+    "entry_title": "Economic Development",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "Economic Development",
+    "keywords": "business, community, development, planning, international, urban, economics, micro-finance, policy, sustainability, public policy, economist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "59",
+    "entry_title": "Economics",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315,318",
+    "program_name": "Economics",
+    "keywords": "business, policy, micro, macro, economics, financial, law, economist, finance, financial planner",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "60",
+    "entry_title": "Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,317",
+    "program_name": "Education",
+    "keywords": "teacher, teach, elementary, k-12, secondary, high school, Early childhood, child development, elementary, pre-k-grade 4, children, school",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "62",
+    "entry_title": "Education with Dual Teaching Certification in Grades PreK-4 and Special Education (Grades N-8)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,317",
+    "program_name": "Education with Dual Teaching Certification in Grades PreK-4 and Special Education (Grades N-8)",
+    "keywords": "teacher, elementary, k-4, behavioral, disabilities, social disabilities, learning disabilities, Intervention specialist, special education, special needs, learning disabilities, emotional disorders, behavioral disorders, physical disabilities, developmental disabilities, gifted, special, teach, school, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "63",
+    "entry_title": "Education with Teaching Certification in Grades 4-8",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,317",
+    "program_name": "Education with Teaching Certification in Grades 4-8",
+    "keywords": "teacher, middle school, secondary, Middle Level, Middle grades, intermediate school, junior high school, teach, school, secondary education, middle school teacher ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "64",
+    "entry_title": "Education with Teaching Certification in Grades PreK-4",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,317",
+    "program_name": "Education with Teaching Certification in Grades PreK-4",
+    "keywords": "teacher, elementary, k-4, Early Childhood, Early Childhood and Preschool, Child Development, childcare, developmentally appropriate practices, infants, toddlers, teach, pre-school, nursery school, school ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2631",
+    "entry_title": "Education, Teaching Certification in Grades 7-12",
+    "live": "1",
+    "category_name": "",
+    "category_id": "317,12",
+    "program_name": "Education, Teaching Certification in Grades 7-12",
+    "keywords": "high school, high school teacher, teacher, teach, secondary, secondary education, secondary ed",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "65",
+    "entry_title": "Electrical Engineering Concentration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,333",
+    "program_name": "Electrical Engineering",
+    "keywords": "computer, analog, circuits, electro magnetics, electronic, engineer, technology",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2454",
+    "entry_title": "Electrical Engineering Degree",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,333",
+    "program_name": "Electrical Engineering",
+    "keywords": "Electrical engineer, engineering, engineer, electrical, Control and instrumentation engineer, Design engineer, Electrical engineer, Electronics engineer, IT consultant, Network engineer, Nuclear engineer, Systems analyst",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "66",
+    "entry_title": "Engineering",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,333",
+    "program_name": "Engineering",
+    "keywords": "math, science, technology, design, manufacturing, biomedical, civil engineering, computer, electrical, mechanical, engineer, mathematics",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "67",
+    "entry_title": "English",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,28,316,324",
+    "program_name": "English",
+    "keywords": "writing, reading, literature, creative, fiction, non-fiction, non fiction, communication, teaching certification, teacher, high school teacher, secondary, secondary education, English teacher",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "68",
+    "entry_title": "Entrepreneurship",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "Entrepreneurship",
+    "keywords": "business, management, sales, business owner, owner, venture, innovation, leadership, entrepreneur, marketer",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "69",
+    "entry_title": "Environmental Engineering Concentration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,329,333",
+    "program_name": "Environmental Engineering",
+    "keywords": "eco systems, sustainability, solar, bio diesel, gis, energy, alternative, energy, environment, engineer",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "70",
+    "entry_title": "Environmental Science",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,329,327",
+    "program_name": "Environmental Science",
+    "keywords": "biology, ecology, sustainability, eco systems, planning, law, landscape, architecture, marine science, earth, scientist, biologist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "71",
+    "entry_title": "Environmental Science for Biology Majors",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,329,327",
+    "program_name": "Environmental Science for Biology Majors",
+    "keywords": "biology, ecology, sustainability, eco systems, planning, law, landscape, architecture, marine science, biologist, environment, environmental, scientist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "72",
+    "entry_title": "Ethnic and Area Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,37,324",
+    "program_name": "Ethnic and Area Studies",
+    "keywords": "culture, geography, anthropology, sociology, communication, studies, intercultural, social, justice, anthropologist, racial, ethnicity, African American, African, Asian studies",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "881",
+    "entry_title": "Exercise science",
+    "live": "1",
+    "category_name": "",
+    "category_id": "21,320,329",
+    "program_name": "Exercise Science",
+    "keywords": "exercise, fitness, wellness, science, coach, trainer, personal trainer, recreation, rehabilitation, occupational therapy, therapist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "73",
+    "entry_title": "Family and Consumer Sciences Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,13,317,330",
+    "program_name": "Family and Consumer Sciences Education",
+    "keywords": "teacher, food, nutrition, families, child development, family resource management, human development, family, teach, family science, education, home ec, home economics, textile, food science, child, child development, home ec teacher, home economics teacher, family and consumer science teacher, high school teacher, secondary, secondary education",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "750",
+    "entry_title": "Film and Media Arts",
+    "live": "1",
+    "category_name": "",
+    "category_id": "27,314,316",
+    "program_name": "Film and Media Arts",
+    "keywords": "production, screenwriting, directing, edit,  cinematography, film, digital media, screenwriter, videographer, editor, Cinematographer, Video Producer, Production assistant, animation, animator, communication, communications",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "75",
+    "entry_title": "Finance",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,318",
+    "program_name": "Finance",
+    "keywords": "accounting, investing, business, investment, management, planning, economics, math, mathematics, banking, money, financial, financial planner, trader,  analyst, financial analyst",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "76",
+    "entry_title": "Foods and Nutrition",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,21,320,329",
+    "program_name": "Foods and Nutrition",
+    "keywords": "diet, dietetics, science, chemistry, food services, research, health, nutrition",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "77",
+    "entry_title": "French",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,30,324",
+    "program_name": "French",
+    "keywords": "language, culture, literature, international, teaching certification, teach, teacher, teaching, high school teacher, secondary, secondary education",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "78",
+    "entry_title": "Gender Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,16,13,330",
+    "program_name": "Gender Studies",
+    "keywords": "sexuality, men, women, culture, policy, sociology, feminism, anthropology, anthropologist, gender",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "79",
+    "entry_title": "General Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,329",
+    "program_name": "General Biology",
+    "keywords": "biomedical, cellular, ecological, organismal, environmental, zoology, medicine, doctor, physician, biology, biologist, environment, zoology, zoologist, science, scientist, pre med, pre-med, premed",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "81",
+    "entry_title": "Gerontology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,13,330",
+    "program_name": "Gerontology",
+    "keywords": "elder, care, health, adult development, law, long term, long-term, counseling, older adults, aging, old, gerontologist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2339",
+    "entry_title": "Graphic Design",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314",
+    "program_name": "Graphic Design",
+    "keywords": "computer, art, multi-media, typography, new media, illustrations, book design, motion design, animation, graphic design, graphic designer, artist, digital, digital media, illustration",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "82",
+    "entry_title": "Graphic Design and Digital Art",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314",
+    "program_name": "Graphic Design and Digital Art",
+    "keywords": "computer, multi-media, typography, new media, illustrations, book design, motion design, animation, graphic design, graphic designer, artist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "397",
+    "entry_title": "Health and Exercise Science ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "21,3,320,329",
+    "program_name": "Health and Exercise Science ",
+    "keywords": "conditioning, anatomy, human performance, human science, coaching, physical fitness, fitness, training, personal trainer, trainer, coach, coaching, community health program manager, nutritionist, nutrition counselor, community nutritionist, medical nutrition",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "85",
+    "entry_title": "Health and Physical Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,21,317,320",
+    "program_name": "Health and Physical Education",
+    "keywords": "teacher, teaching, gym, dance, sports, athletics, health, elementary, high school, k - 12, teaching certification, teach, physical education, physical education teacher, phys ed teacher, high school teacher, secondary, secondary education, gym teacher ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "86",
+    "entry_title": "Higher Education",
+    "live": "1",
+    "category_name": "Higher Education",
+    "category_id": "321",
+    "program_name": "Higher Education",
+    "keywords": "academic, support, services, athletics, student affairs, administration, advisor, coach, coaching, student activities, multicutlural, residence life, sport management, athletics management, leadership, TESOL, teaching, English, graduate programs, master\u2019s degree\r\n",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "87",
+    "entry_title": "History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,319,322",
+    "program_name": "History",
+    "keywords": "communication, research, history, humanities, teacher, teach, social studies, museum, historic, preservation, historian, public history, archeology, archeologist, archaeology, archaeologist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "88",
+    "entry_title": "Human Development and Family Science",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,13,330",
+    "program_name": "Human Development and Family Science",
+    "keywords": "children, families, marriage, sexuality, multi cultural, counseling, human services, adolescent, family dynamics, family life education, life span, children and youth services, gerontology, gender studies, multicultural families, disability, family wellness, pre-marriage, pre-marital, family therapy, therapist, counselor, child life, child life specialist, development, child development, human development",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "89",
+    "entry_title": "Human Resource Management",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "Human Resource Management",
+    "keywords": "business, training, recruitment, personnel, employees, benefits, labor relations, compensation, benefits, organizational, leadership, motivation, change, vocation, development, behavior",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "90",
+    "entry_title": "Human Services",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,15,330",
+    "program_name": "Human Services",
+    "keywords": "family, counseling, policy, youth, social welfare",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "7",
+    "entry_title": "Interactive Design",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,316,314",
+    "program_name": "Interactive Design",
+    "keywords": "graphic, visual, digital, animation, videography, photography, motion design, computer, technology, digital media, graphic designer, graphic design, artist, art, animator, web developer, videographer, photography, photographer, film",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "91",
+    "entry_title": "International Business",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "International Business",
+    "keywords": "culture, micro finance, development, global, economics, management, trade, finance, international, marketing, business, worldwide",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "92",
+    "entry_title": "International Relations",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,32,319",
+    "program_name": "International Relations",
+    "keywords": "language, culture, history, policy, economic development, economics, politics,",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "93",
+    "entry_title": "Journalism",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,27,316",
+    "program_name": "Journalism",
+    "keywords": "writing, reporting, media, english, editing, newspaper, magazine, news, broadcast journalism,\r\ntelevision journalism, TV reporter, reporter, broadcast, journalist, writer, communication, communications",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "94",
+    "entry_title": "Leadership",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "Leadership",
+    "keywords": "management, business, team work, organizational, theory, development, communication, influence",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "95",
+    "entry_title": "Literature",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,28,316,324",
+    "program_name": "Literature",
+    "keywords": "books, reading, English, communication, fiction, non-fiction, poetry, drama, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1192",
+    "entry_title": "Management",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Management",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "96",
+    "entry_title": "Marketing",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315",
+    "program_name": "Marketing",
+    "keywords": "business, advertising, promotion, strategy, research, retail, consumer behavior, consumer, public relations, social media, media, statistics, analysis, mobile marketing, sales, marketer, advertiser, digital marketing, marketer, content creation, content, email marketing",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1198",
+    "entry_title": "Marriage, Couple and Family Counseling",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Marriage, Couple and Family Counseling",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "97",
+    "entry_title": "Mathematics",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,22,318",
+    "program_name": "Mathematics",
+    "keywords": "teaching, statistics, actuary, calculus, physics, research, equations, math, teacher, mathematician, mathematics teacher, high school teacher, secondary, secondary education",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "98",
+    "entry_title": "Mechanical Engineering Concentration",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,20,333",
+    "program_name": "Mechanical Engineering",
+    "keywords": "design, industrial, mechanics, manufacturing, CAD, drafting, math, science, physics, engineer, Design engineer, Manufacturing engineer, Product designer, Materials analysis, Product development Product support, mathematics",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2455",
+    "entry_title": "Mechanical Engineering Degree",
+    "live": "1",
+    "category_name": "",
+    "category_id": "20,3,333",
+    "program_name": "Mechanical Engineering",
+    "keywords": "Mechanical engineering, mechanical engineer, machinery, mechanical, engineer, researcher, product designer, materials analyst, product developer, tools, engines, machine",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "100",
+    "entry_title": "Mobile Application and Game Design",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,314",
+    "program_name": "Mobile Application and Game Design",
+    "keywords": "digital art, video, animation, mobile, code, coding, computers, programing, web development, information systems, digital media, animator, artist, video game, app designer, game artist, game developer, application, mobile app, sound",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "101",
+    "entry_title": "Modern European History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,322",
+    "program_name": "Modern European History",
+    "keywords": "culture, religion, politics, research, government, history, europe",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "102",
+    "entry_title": "Molecular Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,320,329",
+    "program_name": "Molecular Biology",
+    "keywords": "medicine, research, researcher, chemistry, chemist, veterinary, vet, animal behaviors, ecology, health care, healthcare, biology, biologist, molecular biologist, pre-med, pre med, premed, doctor, physician",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "103",
+    "entry_title": "Multicultural Families",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,13,330",
+    "program_name": "Multicultural Families",
+    "keywords": "human development, marriage, family, ethnicity, human services, family science, minorities, ethnic",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "104",
+    "entry_title": "Music",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,326",
+    "program_name": "Music",
+    "keywords": "performance, art, songwriting, composition, directing, conducting, instrumental, voice, jazz, choral, orchestra, symphony, wind instruments, percussion, music, musician, composer, conductor",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "105",
+    "entry_title": "Music (Business)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,315,326",
+    "program_name": "Music (Business)",
+    "keywords": "performance, art, management, agent, promotion, events, arts, marketing, music, musician, business",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "384",
+    "entry_title": "Music (Music and Worship)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,325,326",
+    "program_name": "Music (Music and Worship)",
+    "keywords": "ministry, performing, pastor, musician, theology, music, worship, worship pastor",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "106",
+    "entry_title": "Music Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,317,326",
+    "program_name": "Music Education",
+    "keywords": "teacher, theory,  voice, instrumental orchestra, k- 12, elementary, secondary, high school, middles school , choir, chorus, music, musician, teach, school, music teacher, high school teacher, secondary, secondary education",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "107",
+    "entry_title": "Music Performance",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,10,314",
+    "program_name": "Music Performance",
+    "keywords": "singing, opera, dance, conducting, theatre, commercial, theory, stage, symphony, orchestra, instrument, theater, performer, musician, music",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "108",
+    "entry_title": "Musical Theatre",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,11,314,326",
+    "program_name": "Musical Theatre",
+    "keywords": "music, theatre, performance, singing, acting, performer, theater, musician",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "109",
+    "entry_title": "Nursing",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,23,320,329",
+    "program_name": "Nursing",
+    "keywords": "nurse, registered nurse, RN, BSN, medical, health care, healthcare, human anatomy, community health, clinical, hospital",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "111",
+    "entry_title": "Nutrition and Dietetics",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,21,320,329",
+    "program_name": "Nutrition and Dietetics",
+    "keywords": "food, science, public health, medical, food service, rd, registered dietitian, wellness, health care, healthcare, dietitian, community health program manager, nutritionist, nutrition counselor, community nutritionist, medical nutrition",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1161",
+    "entry_title": "Occupational Therapy ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Occupational Therapy",
+    "keywords": "MOT, OT, Occupational Therapy, Occupational therapist, graduate programs, master\u2019s degree\r\n\r\n",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "2618",
+    "entry_title": "Occupational Therapy - Early Assurance Program",
+    "live": "1",
+    "category_name": "",
+    "category_id": "5,320",
+    "program_name": "Occupational Therapy - Early Assurance Program",
+    "keywords": "occupational, therapy, therapist, early assurance, EAP, early assurance program, rehabilitation",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1194",
+    "entry_title": "Orchestral Conducting",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Orchestral Conducting",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "113",
+    "entry_title": "Organismal Biology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,18,329",
+    "program_name": "Organismal Biology",
+    "keywords": "science, research, researcher, genetics, bio technology, plants, animals, fungi, organisms, biologist, scientist, veterinarian, vet",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1190",
+    "entry_title": "Organizational and Strategic Communication",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Organizational and Strategic Communication",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "114",
+    "entry_title": "Peace and Conflict Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,39,330",
+    "program_name": "Peace and Conflict Studies",
+    "keywords": "reconciliation, justice, war, religion, policy, sociology, mediation, non-violence, violence, peacemaking, peace",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "115",
+    "entry_title": "Philosophy",
+    "live": "1",
+    "category_name": "",
+    "category_id": "31,4,324,322,330",
+    "program_name": "Philosophy",
+    "keywords": "logic, ethics, epistemology, metaphysics, law, apologetics, critical reasoning, thinking, philosopher, lawyer",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2619",
+    "entry_title": "Physical Therapy - Early Assurance Program",
+    "live": "1",
+    "category_name": "Health / Medicine",
+    "category_id": "320",
+    "program_name": "Physical Therapy - Early Assurance Program",
+    "keywords": "physical, therapy, therapist, dpt, eap, early assurance, early assurance program, athletics, rehabilitation, sports, injury, physical therapy, physical therapist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "116",
+    "entry_title": "Physics (B.A.)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,22,329",
+    "program_name": "Physics",
+    "keywords": "math, mathematics, science, mechanics, research, nuclear, teaching certification, physicist, scientist, secondary, secondary education, teacher, physics teacher, high school, high school teacher, physic, physics",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "117",
+    "entry_title": "Political Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,32,319",
+    "program_name": "Political Studies",
+    "keywords": "government, economic development, law, policy, research, culture, legislative, political science, politics, lawyer, judge",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "118",
+    "entry_title": "Politics and International Relations ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,32,319",
+    "program_name": "Politics and International Relations ",
+    "keywords": "government, economic development, law, policy, research, culture, legislative, political science, judge, lawyer",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "119",
+    "entry_title": "Politics B.A. with M.S. in Public Policy and Management",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,44,319",
+    "program_name": "Politics B.A. with M.S. in Public Policy and Management",
+    "keywords": "foreign policy, public affairs, government, political science. judge, lawyer, law, politics",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2650",
+    "entry_title": "Pre-Audiology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "320,3,25",
+    "program_name": "Pre-Audiology",
+    "keywords": "audiology, science, medical, pre-audiology, hearing, hear, ear, ear doctor, doctor",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "120",
+    "entry_title": "Pre-Chiropractic",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Chiropractic",
+    "keywords": "medicine, doctor, physician, healthcare, health care, health, holistic health, chiropractor, back, spine, pre-med, premed, pre med, pre-chiropractor, pre-chiropractic, pre chiropractor, pre chiropractic, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "121",
+    "entry_title": "Pre-Counseling and Therapy",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,14,13,320,330",
+    "program_name": "Pre-Counseling and Therapy",
+    "keywords": "family, marriage, therapist, counselor, psychology, family service, couple therapy, family therapy, counseling, family, marriage, family service, psychotherapy, counselor, therapist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "122",
+    "entry_title": "Pre-Dentistry",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Dentistry",
+    "keywords": "dentist, physician, healthcare, health care, dental, medicine, doctor, teeth, pre-med, premed, pre med, early assurance, early assurance program, dental, pre-dentistry, pre dentistry, EAP, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "123",
+    "entry_title": "Pre-Law",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,32,319",
+    "program_name": "Pre-Law",
+    "keywords": "legal, lawyer, paralegal, law, judge, politics, political, pre law, pre-law, attorney",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "124",
+    "entry_title": "Pre-Med (Allopathic--M.D.)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Med (Allopathic--M.D.)",
+    "keywords": "medicine, health, doctor, physician, allopathic, health care, healthcare, public health, premed, pre-med, hospital, pre med, early assurance, early assurance program, EAP, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "125",
+    "entry_title": "Pre-Med (Osteopathic--D.O.)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3",
+    "program_name": "Pre-Med (Osteopathic--D.O.)",
+    "keywords": "doctor, physician, health care, healthcare, osteopathic, medicine, public health, premed, hospital, pre med, pre-med, early assurance, early assurance program, EAP, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "126",
+    "entry_title": "Pre-Occupational Therapy",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Occupational Therapy",
+    "keywords": "health care, healthcare, training, physiology,  anatomy, research, therapy, pre-med, pre med, premed, occupational, occupational therapy, occupational therapist, therapist, early assurance, early assurance program, EAP, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "127",
+    "entry_title": "Pre-Optometry",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Optometry",
+    "keywords": "optometrist, ophthalmology, opthamology, health care, medicine, doctor, ophthalmologist, ophtamologist, eye, physician, pre-med, pre med, premed, eye doctor, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "128",
+    "entry_title": "Pre-Pharmacy",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Pharmacy",
+    "keywords": "chemistry, chemist, biology, biologist, science, scientist, medicine, molecular, research, researcher, pharmacology, pharmacist, pharmacologist, pharmacy, pre-med, pre med, premed, doctor, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "129",
+    "entry_title": "Pre-Physical Therapy",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,21,320",
+    "program_name": "Pre-Physical Therapy",
+    "keywords": "athletic training, health, healthcare, health care, exercise science, exercise therapy, exercise scientist, therapist, rehabilitation, rehab, pre-med, premed, pre med, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2197",
+    "entry_title": "Pre-Physical Therapy Advising",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,320",
+    "program_name": "Pre-Physical Therapy Advising",
+    "keywords": "physical therapy, pre-physical therapy, therapist, therapy, PT, early assurance, early assurance program, EAP, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "130",
+    "entry_title": "Pre-Physician Assistant",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3",
+    "program_name": "Pre-Physician Assistant",
+    "keywords": "medicine, health, healthcare, doctor, health care, public health, physician, pre-med, pre med, premed, hospital, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "131",
+    "entry_title": "Pre-Podiatry",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Podiatry",
+    "keywords": "podiatrist, health care, medicine, doctor, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "381",
+    "entry_title": "Pre-Professional  ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,21,320,329",
+    "program_name": "Pre-Professional ",
+    "keywords": "doctor, physician, chiropractor, exercise, health, science, rehabilitation",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "132",
+    "entry_title": "Pre-Public Health",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Public Health",
+    "keywords": "health care, healthcare, policy, management, research, researcher, Epidemiology, behavorial science, biostatistics, environmental health, science, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "133",
+    "entry_title": "Pre-Veterinary",
+    "live": "1",
+    "category_name": "",
+    "category_id": "43,3,320",
+    "program_name": "Pre-Veterinary",
+    "keywords": "animal science, science, scientist, animal, behavior, zoology, medicine, doctor, veterinarian, vet, zoologist, pre-med, pre med, premed, medical",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "2666",
+    "entry_title": "Professional writing ",
+    "live": "1",
+    "category_name": "",
+    "category_id": "28,324,316",
+    "program_name": "Professional Writing",
+    "keywords": "writing, writer, author, journalist, editor, publisher, scriptwriter",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "134",
+    "entry_title": "Psychology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,14,330",
+    "program_name": "Psychology",
+    "keywords": "research, counseling, experimental, social research, cognition, behavior, development, abnormal, addiction, biopsychology, counselor, therapist, psychologist, human development",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "135",
+    "entry_title": "Public History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,322",
+    "program_name": "Public History",
+    "keywords": "museum, archives, archeology, preservation, research, digital history, archaeology, archeologist, archaeologist  ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "136",
+    "entry_title": "Public Relations",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,27,316",
+    "program_name": "Public Relations",
+    "keywords": "media, communications, event planning, crisis management, social media, writing, persuasion, business, marketing, event planner, marketer, crisis, writer, communication",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "137",
+    "entry_title": "Religion",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325,328",
+    "program_name": "Religion",
+    "keywords": "bible, ministry, theology, Christian, world, church history, religious history, minister, pastor, ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1197",
+    "entry_title": "School Counseling",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "School Counseling",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "1189",
+    "entry_title": "Social Entrepreneurship",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Social Entrepreneurship",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "138",
+    "entry_title": "Social Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,330,322",
+    "program_name": "Social Studies",
+    "keywords": "teaching, education, teacher, high school, secondary, history, politics, government, teach, school, high school teacher, social studies teacher, history teacher, secondary education",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "139",
+    "entry_title": "Social Work",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,15,330",
+    "program_name": "Social Work",
+    "keywords": "therapy, therapist, case work, human services, adults, social justice, advocacy, counseling, counselor, LSW LCSW, social services, social worker",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "140",
+    "entry_title": "Socio-Cultural Perspectives on Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,330,317",
+    "program_name": "Socio-Cultural Perspectives on Education",
+    "keywords": "culture, diversity, urban, sociology, teacher, teaching, teach",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "141",
+    "entry_title": "Sociology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,16,330",
+    "program_name": "Sociology",
+    "keywords": "cross cultural, justice, research, global, world, community, public, social, urban, development, people, human services, missions, international, culture, sociologist, anthropologist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "142",
+    "entry_title": "Software Development",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,323",
+    "program_name": "Software Development",
+    "keywords": "application, computer science, web, website, database, gaming, computer, technology, programmer, computer programmer, programing, programming, software developer, developer, software, software development",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "143",
+    "entry_title": "Spanish",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,30,324",
+    "program_name": "Spanish",
+    "keywords": "language, culture, policy, teaching certification, espanol, teach, teaching, teacher, Spanish teacher, high school teacher, secondary, secondary education",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "144",
+    "entry_title": "Spanish Business",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,30,315,324",
+    "program_name": "Spanish Business",
+    "keywords": "language, international, culture, economics, economic development, global trade, Latin America, business, marketing, Spanish",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1202",
+    "entry_title": "Special Education",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Special Education",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "1201",
+    "entry_title": "Special Education PA Teaching Certification (7-12)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Special Education PA Teaching Certification (7-12)",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "1200",
+    "entry_title": "Special Education PA Teaching Certification (PreK-8)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Special Education PA Teaching Certification (PreK-8)",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "1265",
+    "entry_title": "Speech and Language Pathology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "12,2",
+    "program_name": "Speech and Language Pathology",
+    "keywords": "Speech, language, speech and language pathology, speech pathology, speech therapy, speech and language, audiology, audiologist, speech pathologist, speech and language pathologist, communication science, communication disorder, communication sciences and disorders, therapy, dialect, dialect coach",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "145",
+    "entry_title": "Sport Management",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,21,315",
+    "program_name": "Sport Management",
+    "keywords": "business, athletics, administration, sponsorship, marketing, management, law, sports, marketer, coach, coaching, sports information operations, equipment management, ticketing and sales, public relations, fundraising, development, hospitality management, facility management, field maintenance, field preparation, ticket sales, seating management, advertising, event planning, food management, sport media, sport communication, sport agent, sport policy, sport governance ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "146",
+    "entry_title": "Statistics",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,22,318",
+    "program_name": "Statistics",
+    "keywords": "math, mathematics, data, analyze, actuary, biostatistics, statistician, mathematician ",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1191",
+    "entry_title": "Strategic Leadership",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Strategic Leadership",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "149",
+    "entry_title": "Sustainability Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,5,41,329,331,18",
+    "program_name": "Sustainability Studies",
+    "keywords": "ethics, environmental, urban, rural, development, community, sustainable agriculture, public policy, agriculture, ecology, creation, restoration",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "151",
+    "entry_title": "Teaching English to Speakers of Other Languages",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,12,324,317",
+    "program_name": "Teaching English to Speakers of Other Languages",
+    "keywords": "education, teacher, global, cross cultural, culture, linguistics, writing, reading, linguistic, TESOL, teach, English, language",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1203",
+    "entry_title": "Teaching English to Speakers of Other Languages (TESOL) with Pennsylvania English as a Second Language (ESL) Program Specialist Certification (K-12)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Teaching English to Speakers of Other Languages (TESOL) with Pennsylvania English as a Second Language (ESL) Program Specialist Certification (K-12)",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "152",
+    "entry_title": "Technology and Operations Management",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,17,315,323",
+    "program_name": "Technology and Operations Management",
+    "keywords": "business, administration, information officer, computer, technology, programming, business systems, leadership, analytics, e-commerce",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "153",
+    "entry_title": "Theatre",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,11,314",
+    "program_name": "Theatre",
+    "keywords": "acting, theater, acting, directing, producing, technical, music, set, design, costume, theatre, performer, actor, actress, musician",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "154",
+    "entry_title": "Theatre (Business)",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,11,314,315",
+    "program_name": "Theatre (Business)",
+    "keywords": "arts management, promotion, marketing, advertising, business development, fundraising, production, theater, marketer, theatre,",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "155",
+    "entry_title": "Theology",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325,328",
+    "program_name": "Theology",
+    "keywords": "religion, ministry, church, Christian, bible, pastor, minister, doctrine",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "156",
+    "entry_title": "Three-Dimensional Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314",
+    "program_name": "Three-Dimensional Studies",
+    "keywords": "ceramics, paper, book, sculpture, furniture, fiber, arts, art, studio, sculptor, studio artist, artist, ceramic, bookmaker, designer, weaver, sculpt, wearable art, clothing, dye, dying, print, printmaking",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "157",
+    "entry_title": "Two-Dimensional Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "1,9,314",
+    "program_name": "Two-Dimensional Studies",
+    "keywords": "drawing, painting,  photography, studio, painting, paint, print, painter, print maker, illustrate, illustrator, draw, drawer, photographer, art, artist, 2D, two dimensional",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "158",
+    "entry_title": "U.S. Ethnic Studies",
+    "live": "1",
+    "category_name": "School of the Humanities",
+    "category_id": "4",
+    "program_name": "U.S. Ethnic Studies",
+    "keywords": "literature, history, ethnicity, sociology, culture",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "389",
+    "entry_title": "Undecided",
+    "live": "1",
+    "category_name": "Undecided",
+    "category_id": "332",
+    "program_name": "Undecided ",
+    "keywords": "undecided, undeclared, unsure, not sure, don't know, still undecided, no clue",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "159",
+    "entry_title": "Urban Studies",
+    "live": "1",
+    "category_name": "",
+    "category_id": "2,16,319,322,330",
+    "program_name": "Urban Studies",
+    "keywords": "economic development, research, culture, social issues, community service, politics, economics, social studies, anthropology, anthropologist, sociology, sociologist",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "160",
+    "entry_title": "Web Development",
+    "live": "1",
+    "category_name": "",
+    "category_id": "3,128,315,323",
+    "program_name": "Web Development",
+    "keywords": "webmaster, online, technology, computer, graphic design, HTML, programing, PHP, design, graphic designer, artist, web manager, web developer, website, web designer, programmer, programming",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "1195",
+    "entry_title": "Wind Conducting",
+    "live": "1",
+    "category_name": "",
+    "category_id": "",
+    "program_name": "Wind Conducting",
+    "keywords": "",
+    "grad_program": "yes"
+  },
+  {
+    "entry_id": "161",
+    "entry_title": "World Christianity",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,324,328",
+    "program_name": "World Christianity",
+    "keywords": "global, missionary, Latin America, Asia, religion, mission, missiology, christian, ministry, youth, youth pastor",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "162",
+    "entry_title": "World History",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,29,324,322",
+    "program_name": "World History",
+    "keywords": "global, past, Africa, Asia, middle east, India, history, historian",
+    "grad_program": ""
+  },
+  {
+    "entry_id": "164",
+    "entry_title": "Youth Ministries",
+    "live": "1",
+    "category_name": "",
+    "category_id": "4,26,325",
+    "program_name": "Youth Ministries",
+    "keywords": "pastor, religion, ministry, leadership, evangelism, church, worship, youth, youth pastor, youth leader, youth ministry",
+    "grad_program": ""
+  }
+]
