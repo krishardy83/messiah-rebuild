@@ -86,6 +86,10 @@
     @apply mb-4 font-title text-2xl font-bold leading-[0.8] md:text-3xl lg:text-4xl;
   }
 
+  .h4 {
+    @apply font-title text-lg font-bold uppercase md:text-xl;
+  }
+
   .paragraph {
     @apply leading-relaxed md:text-lg;
   }

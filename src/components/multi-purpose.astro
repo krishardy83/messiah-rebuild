@@ -31,14 +31,7 @@ const { title, subtitle, image, link, class: className, ...props } = Astro.props
     <div class="@md:w-2/3">
       {
         title ? (
-          <h3
-            class:list={[
-              "font-title uppercase text-xl font-bold text-primary-800",
-              subtitle ? null : "mb-4",
-            ]}
-          >
-            {title}
-          </h3>
+          <h3 class:list={["h4 text-primary-800", subtitle ? null : "mb-4"]}>{title}</h3>
         ) : null
       }
       {
@@ -51,7 +44,7 @@ const { title, subtitle, image, link, class: className, ...props } = Astro.props
 
       {
         link ? (
-          <a href={link.href} class="btn-tertiary mt-4 block w-max">
+          <a href={link.href} class="btn-tertiary mt-4 flex w-max">
             {link.label}
           </a>
         ) : null

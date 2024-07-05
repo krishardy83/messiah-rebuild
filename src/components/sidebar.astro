@@ -1,5 +1,7 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import Icon from "./icon.astro";
+import { cn } from "../lib/utils";
 
 interface Child {
   name: string;
@@ -8,18 +10,23 @@ interface Child {
   children?: Child[];
 }
 
-interface Props {
+interface Props extends HTMLAttributes<"aside"> {
   links: {
     title: string;
     children: Child[];
   }[];
 }
 
-const { links } = Astro.props;
+const { links, class: className, ...props } = Astro.props;
+const supplements = await Astro.slots.render("supplements");
 ---
 
 <aside
-  class="sidebar mb-6 flex-shrink-0 border-b border-gray-300 md:mb-0 md:w-[270px] md:border-b-0 md:border-r"
+  class={cn(
+    "sidebar mb-6 flex-shrink-0 border-b border-gray-300 md:mb-0 md:w-[270px] md:border-b-0 md:border-r",
+    className
+  )}
+  {...props}
 >
   <button type="button" class="btn-secondary w-full md:hidden" data-toggle data-target="#sidebar">
     <svg
@@ -45,9 +52,7 @@ const { links } = Astro.props;
     {
       links.map((link) => (
         <nav aria-label={link.title}>
-          <h2 class="mt-6 mb-2 uppercase mx-4 font-title text-xl font-bold text-primary-800">
-            {link.title}
-          </h2>
+          <h2 class="mt-6 mb-2 mx-4 h4 text-primary-800">{link.title}</h2>
 
           <ul>
             {link.children.map((level1) => (
@@ -102,6 +107,14 @@ const { links } = Astro.props;
           </ul>
         </nav>
       ))
+    }
+
+    {
+      supplements ? (
+        <div class="border border-gray-300 bg-gray-100 md:-mr-px mt-4 p-4">
+          <slot name="supplements" />
+        </div>
+      ) : null
     }
   </div>
 </aside>
