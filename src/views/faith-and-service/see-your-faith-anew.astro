@@ -1,0 +1,61 @@
+---
+const items = [
+  {
+    name: "Brendan Provan",
+    preview: "https://www.messiah.edu/images/Brendan_Provan_circle.jpg",
+    href: "https://www.youtube.com/watch?v=1In4YJfMEmY",
+  },
+  {
+    name: "Christina Muchmore",
+    preview: "https://www.messiah.edu/images/c_muchmore_circle.jpg",
+    href: "https://www.youtube.com/watch?v=2imjmqSaEF0",
+  },
+  {
+    name: "Luke Foster",
+    preview: "https://www.messiah.edu/images/luke_foster.jpg",
+    href: "https://www.youtube.com/watch?v=G_iE89ugEF8",
+  },
+  {
+    name: "Emily Bingham",
+    preview: "https://www.messiah.edu/images/emily_circle.jpg",
+    href: "https://www.youtube.com/watch?v=fVp67K5XPZ8",
+  },
+];
+---
+
+<section class="bg-gray-200">
+  <div class="wrapper py-24">
+    <h2 class="h2 text-primary-800 text-center">See your faith anew</h2>
+    <p class="paragraph text-center">
+      Listen to these stories about how students learn to see their faith in new and exciting ways
+      at Messiah.
+    </p>
+
+    <ul class="grid grid-cols-2 md:grid-cols-4 gap-8 my-12">
+      {
+        items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-image
+              class="group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
+            >
+              <img
+                src={item.preview}
+                alt=""
+                class="mb-2 rounded-full group-hover:opacity-75 border-4 border-white transition-opacity"
+              />
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  import { Fancybox } from "@fancyapps/ui";
+
+  Fancybox.bind("[data-image]");
+</script>

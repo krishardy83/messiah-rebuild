@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"section"> {
+  title?: string;
+  links?: {
+    label: string;
+    href: string;
+  }[];
+}
+
+const { title = "Messiah by the numbers", links, class: className, ...props } = Astro.props;
+---
+
+<section class={className} {...props}>
+  <div
+    class="relative before:absolute before:h-px before:bg-tertiary-500 before:left-0 before:right-0 before:top-1/2 mb-8"
+    {...props}
+  >
+    <h2
+      class="font-title text-tertiary-500 text-4xl text-center w-max bg-white px-4 relative mx-auto"
+    >
+      {title}
+    </h2>
+  </div>
+
+  <ul class="grid grid-cols-1 md:grid-cols-3 bg-tertiary-500 gap-px">
+    <slot />
+  </ul>
+
+  {
+    links ? (
+      <div class="flex gap-2 justify-center flex-wrap mt-8">
+        {links.map((link) => (
+          <a href={link.href} class="btn-tertiary">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    ) : null
+  }
+</section>

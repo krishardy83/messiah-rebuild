@@ -1,32 +1,27 @@
 ---
-import LinedHeading from "../../components/lined-heading.astro";
+import ByTheNumbers from "../../components/by-the-numbers.astro";
 ---
 
-<section class="wrapper py-24">
-  <LinedHeading>Messiah by the numbers</LinedHeading>
-
-  <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-tertiary-400">
-    <figure class="bg-white p-8 flex items-center">
-      <img src="/graphics/financial-aid-rate.png" alt="" />
-    </figure>
-    <figure class="bg-white p-8 flex items-center">
-      <img src="/graphics/class_employed.svg" alt="" />
-    </figure>
-    <figure class="bg-white p-8 flex items-center">
-      <img src="/graphics/class_size_2022.png" alt="" />
-    </figure>
-    <figure class="bg-white p-8 flex items-center">
-      <img src="/graphics/total_under_grad_students.svg" alt="" />
-    </figure>
-    <figure class="bg-white p-8 flex items-center">
-      <img src="/graphics/student_faculty_ratio.svg" alt="" />
-    </figure>
-    <figure class="bg-white p-8 flex items-center">
-      <img src="/graphics/under_grad_students.svg" alt="" />
-    </figure>
-  </div>
-
-  <div class="flex justify-center mt-8">
-    <a href="https://www.messiah.edu/info/20002/college_profile" class="btn-tertiary">Learn more</a>
-  </div>
-</section>
+<ByTheNumbers
+  class="wrapper py-24"
+  links={[{ label: "Learn more", href: "https://www.messiah.edu/info/20002/college_profile" }]}
+>
+  <li class="bg-white p-8 flex items-center">
+    <img src="/graphics/financial-aid-rate.png" alt="" />
+  </li>
+  <li class="bg-white p-8 flex items-center">
+    <img src="/graphics/class_employed.svg" alt="" />
+  </li>
+  <li class="bg-white p-8 flex items-center">
+    <img src="/graphics/class_size_2022.png" alt="" />
+  </li>
+  <li class="bg-white p-8 flex items-center">
+    <img src="/graphics/total_under_grad_students.svg" alt="" />
+  </li>
+  <li class="bg-white p-8 flex items-center">
+    <img src="/graphics/student_faculty_ratio.svg" alt="" />
+  </li>
+  <li class="bg-white p-8 flex items-center">
+    <img src="/graphics/under_grad_students.svg" alt="" />
+  </li>
+</ByTheNumbers>

@@ -1,0 +1,239 @@
+---
+import Icon from "../../components/icon.astro";
+
+const items = [
+  {
+    caption: "Local service",
+    description:
+      "Looking to serve those closest to you? Our local service outreach teams focus on the communities surrounding Messiah University.",
+    content: {
+      text: "Looking to serve those closest to you? Our local service outreach teams focus on the surrounding communities around Messiah such as Harrisburg, Mechanicsburg and Dillsburg. Our teams work with organizations focusing on such things as poverty, literacy, relationships, mentoring, homelessness, migrant partnerships and special needs. Most of these teams volunteer on a weekly basis.",
+      image: {
+        alt: "",
+        src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/local-service-img.jpg",
+      },
+      button: {
+        href: "https://www.messiah.edu/info/23669/local_service",
+        label: "See local opportunities",
+      },
+    },
+    preview: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/service-local.webp",
+    },
+  },
+  {
+    caption: "National service",
+    description:
+      "Put your faith into action by volunteering in communities across the nation through short-term service trips.",
+    content: {
+      text: "Each year, service trip teams spend their time volunteering in communities across the nation through short-term service trips. Through participation on a service trip team, you can put your faith into action to obtain a deeper understanding of what servanthood is and how to apply it to your own life. In the past, groups have taken trips to the Appalachia region to help with home repair and health assessment, and urban centers like Chicago, Bronx and Philadelphia to work with inner-city ministry groups. ",
+      image: {
+        alt: "",
+        src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/national-service-img.jpg",
+      },
+    },
+    preview: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/service-national.webp",
+    },
+  },
+  {
+    caption: "Global service",
+    description:
+      "Do you have a passion to serve others abroad? Opportunities for international service trips are abundant at Messiah.",
+    content: {
+      text: "Opportunities for international service trips are abundant at Messiah. Work with teams in Ecuador or Poland, among others with the Agapé Center. Combine your love of sports and ministry on an AROMA (A Revolution of Missional Athletes) trip to countries such as Uganda, El Salvador, Panama and others. Provide research assistance and real-world solutions to sites in Burkina Faso, Nicaragua or others through the Collaboratory.",
+      image: {
+        alt: "",
+        src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/global-service-img.jpg",
+      },
+      button: {
+        href: "https://www.messiah.edu/info/23671/global_service",
+        label: "See global opportunities",
+      },
+    },
+    preview: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/service-global.jpg",
+    },
+  },
+  {
+    caption: "Academics as service",
+    description:
+      "Students, professionals and partners from multiple disciplines collaborating to increase hope and transform lives.",
+    content: {
+      text: "The Collaboratory for Strategic Partnerships and Applied Research is a center for service, scholarship and project-based learning at Messiah University. It is a collaboration of students, faculty from a variety of majors that apply academic knowledge and live out their Christian faith through imaginative, hands-on problem solving with non-profit organizations, governments and business partners in our region and around the world.",
+      image: {
+        alt: "",
+        src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/academics-service-img.jpg",
+      },
+    },
+    preview: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/service-academics.webp",
+    },
+  },
+];
+---
+
+<section class="wrapper py-24 scroll-m-24" id="service-opportunities">
+  <h2 class="h2 text-primary-800 text-center">Service opportunities</h2>
+  <p class="text-center max-w-4xl mx-auto paragraph">
+    Messiah is committed to equipping you for a life of service and there are plenty of
+    opportunities to hone your passion for service during your time here. Each year, Messiah
+    students collectively volunteer thousands of hours to community service—locally, nationally and
+    around the globe. The University’s <a
+      href="https://www.messiah.edu/agape"
+      class="underline link">Agapé Center for Local and Global Engagement</a
+    > is the coordinating hub for service organizations and opportunities both on and off campus.
+  </p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8 relative">
+    {
+      items.map((item, index) => (
+        <figure class="relative">
+          <img src={item.preview.src} alt={item.preview.alt} class="w-full h-full object-cover" />
+
+          <figcaption class="absolute flex flex-col inset-0 text-white text-center">
+            <h4 class="h4 bg-primary-800/80 px-2 py-2">{item.caption}</h4>
+            <div class="bg-primary-800/80 flex-1 opacity-0 p-4 has-[:focus]:opacity-100 hover:opacity-100 transition-opacity duration-300 relative after:absolute after:h-px after:left-10 after:right-10 after:top-0 after:bg-white overflow-auto">
+              <p class="text-sm mb-4">{item.description}</p>
+              <button
+                type="button"
+                data-service-opportunities-trigger={`service-opportunities-tabpanel-${index}`}
+                class="bg-tertiary-400 inline-block px-4 py-1 hover:bg-gray-700 transition-colors"
+              >
+                Read more
+              </button>
+            </div>
+          </figcaption>
+        </figure>
+      ))
+    }
+
+    <dialog
+      data-service-opportunities-dialog
+      class="text-white bg-primary-800/80 backdrop-blur-sm absolute inset-0 w-full h-full overflow-y-auto p-12"
+    >
+      <button
+        type="button"
+        class="absolute right-12 top-12 hover:text-tertiary-400 transition-colors"
+        aria-label="close dialog"
+        data-service-opportunities-close
+      >
+        <Icon name="close" class="size-10" />
+      </button>
+
+      <div role="tablist" class="flex gap-x-8 gap-y-4 flex-wrap mt-8 justify-center">
+        {
+          items.map((item, index) => (
+            <button
+              class="font-title uppercase font-bold text-lg md:text-2xl border-b-2 border-spacing-2 border-transparent aria-selected:border-tertiary-400 aria-selected:text-tertiary-400"
+              type="button"
+              role="tab"
+              aria-selected={index === 0 ? "true" : "false"}
+              id={`service-opportunities-tab-${index}`}
+              aria-controls={`service-opportunities-tabpanel-${index}`}
+            >
+              {item.caption}
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        items.map((item, index) => (
+          <div
+            id={`service-opportunities-tabpanel-${index}`}
+            role="tabpanel"
+            data-tab-value={item.caption}
+            hidden={index === 0 ? undefined : ""}
+            aria-labelledby={`service-opportunities-tab-${index}`}
+          >
+            <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/3 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/3 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
+              {item.caption}
+            </h4>
+
+            <div class="flex gap-4">
+              <div>
+                <p class="paragraph mb-4">{item.content.text}</p>
+
+                {item.content.button ? (
+                  <a href={item.content.button.href} class="btn-tertiary">
+                    {item.content.button.label}
+                  </a>
+                ) : null}
+              </div>
+
+              {item.content.image ? (
+                <img
+                  src={item.content.image.src}
+                  alt={item.content.image.src}
+                  class="hidden md:block"
+                />
+              ) : null}
+            </div>
+          </div>
+        ))
+      }
+    </dialog>
+  </div>
+</section>
+
+<script>
+  let buttons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-service-opportunities-trigger]"
+  );
+  let dialog = document.querySelector<HTMLDialogElement>("[data-service-opportunities-dialog]");
+  let close = dialog?.querySelector<HTMLButtonElement>("[data-service-opportunities-close]");
+  let tabs = document.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
+  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
+
+  function handleSelectTab(tab: string) {
+    let button = Array.from(tabs).find((b) => b.getAttribute("aria-controls") === tab);
+
+    tabs.forEach((tab) => {
+      tab.setAttribute("aria-selected", "false");
+    });
+
+    panels.forEach((panel) => {
+      panel.setAttribute("hidden", "");
+
+      if (panel.getAttribute("id") === tab) {
+        panel.removeAttribute("hidden");
+        button?.setAttribute("aria-selected", "true");
+      }
+    });
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      let target = button.getAttribute("data-service-opportunities-trigger");
+
+      if (target) {
+        handleSelectTab(target);
+      }
+
+      dialog?.show();
+    });
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      dialog?.close();
+    }
+  });
+
+  close?.addEventListener("click", () => dialog?.close());
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", (event) => {
+      let target = (event.target as HTMLButtonElement).getAttribute("aria-controls");
+
+      if (target) {
+        handleSelectTab(target);
+      }
+    });
+  });
+</script>

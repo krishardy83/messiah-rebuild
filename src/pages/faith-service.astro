@@ -1,0 +1,62 @@
+---
+import ContinueExploring from "../components/continue-exploring.astro";
+import SingleColumn from "../layouts/single-column.astro";
+import PageTabNavigation from "../components/page-tab-navigation.astro";
+import FaithAndService from "../views/faith-and-service/faith-and-service.astro";
+import GrowYourFaith from "../views/faith-and-service/grow-your-faith.astro";
+import ServiceOpportunities from "../views/faith-and-service/service-opportunities.astro";
+import SeeYourFaithAnew from "../views/faith-and-service/see-your-faith-anew.astro";
+import FindYourChurch from "../views/faith-and-service/find-your-church.astro";
+import FaithInTheClassRoom from "../views/faith-and-service/faith-in-the-classroom.astro";
+---
+
+<SingleColumn
+  title="Faith and Service"
+  image="/images/faith-and-service-hero.webp"
+  subtitle="An Authentic Faith Community"
+  description="An Authentic Faith Community"
+>
+  <PageTabNavigation
+    tabs={[
+      { title: "Grow your faith", hash: "#grow-your-faith" },
+      { title: "Service opportunities", hash: "#service-opportunities" },
+      { title: "Find your church", hash: "#find-your-church" },
+      { title: "Faith in the classroom", hash: "#faith-in-the-classroom" },
+    ]}
+  />
+
+  <FaithAndService />
+
+  <GrowYourFaith />
+
+  <ServiceOpportunities />
+
+  <SeeYourFaithAnew />
+
+  <FindYourChurch />
+
+  <FaithInTheClassRoom />
+
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Campus ministries",
+        href: "https://www.messiah.edu/info/20051/college_ministries",
+      },
+      {
+        label: "Agapé Center for Local and Global Engagement",
+        href: "https://www.messiah.edu/agape",
+      },
+      {
+        label: "The collaboratory",
+        href: "https://www.messiah.edu/info/21317/collaboratory",
+      },
+      {
+        label: "Aroma missions",
+        href: "http://gomessiah.com/index.aspx?path=aroma",
+      },
+    ]}
+  />
+</SingleColumn>
