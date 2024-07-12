@@ -1,0 +1,105 @@
+---
+const items = [
+  {
+    name: "Carissa Weaver",
+    image: "https://www.messiah.edu/images/Carissa_Weaver.jpg",
+    quote:
+      "Messiah teams are so easy to support; the community involvement, the student excitement, and the appreciation from the team is evident with every sport.",
+  },
+  {
+    name: "Charles McKean",
+    image: "https://www.messiah.edu/images/Charles_McKean2.jpg",
+    quote:
+      "The basketball team has felt like a family to me. I feel like I'm part of the team. I want to get people out there, make this school proud, and make my Messiah family proud.",
+  },
+  {
+    name: "Aaron Gray",
+    image: "https://www.messiah.edu/images/Aaron_Gray.jpg",
+    quote:
+      "The student section is always chanting and it’s just an exciting environment to be in. Overall the atmosphere of these games have been exciting to be a part of for me.",
+  },
+  {
+    name: "Lyd Harris",
+    image: "https://www.messiah.edu/images/LydHarris_sml.jpg",
+    quote:
+      "I love Messiah athletics because the fans are so genuine, funny and supportive, and the players are every day people that many of us share classes with.",
+  },
+  {
+    name: "Joshua Darville",
+    image: "https://www.messiah.edu/images/Josh_Darville_1.jpg",
+    quote:
+      "Being an athlete and a fan is cool, supporting the other teams is like supporting family. The student section is a blessing- awesome and so humbling, they are the reason I play.",
+  },
+];
+---
+
+<section class="bg-[url(/images/game-day-bg.jpg)] bg-no-repeat bg-cover scroll-m-24" id="game-day">
+  <div class="wrapper py-24">
+    <h2 class="text-primary-800 h2 text-center">Game day experience</h2>
+
+    <div class="flex flex-col md:flex-row gap-8 mt-8">
+      <div class="md:w-1/2">
+        <p class="paragraph text-primary-800 mb-8">
+          As a Messiah student, you'll have many opportunities to be a spectator and become a loyal
+          Falcon fan, cheering on our 22 NCAA Division III teams at countless athletic events.
+          Whether you’re at the diamond cheering on the softball team or spending a Saturday
+          watching soccer or lacrosse, it’s a great way to spend time with friends and get in the
+          school spirit!
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="http://gomessiah.com/calendar.aspx" class="btn-secondary">Team schedules</a>
+          <a href="https://messiahugear.com/" class="btn-secondary">Falcon gear</a>
+        </div>
+      </div>
+
+      <figure class="md:w-1/2">
+        <img
+          src="https://www.messiah.edu/site/custom_scripts/styles/img/athletics/game-day2.jpg"
+          alt=""
+          class="w-full"
+        />
+      </figure>
+    </div>
+
+    <h3 class="text-primary-800 h3 text-center mt-12">And the crowd goes wild...</h3>
+
+    <div class="f-carousel mt-8 wrapper px-12" data-quotes-slider>
+      {
+        items.map((item) => (
+          <div class="f-carousel__slide px-4 md:w-1/2 lg:w-1/3 text-center">
+            <img
+              src={item.image}
+              alt={item.name}
+              class="w-52 aspect-square rounded-full bg-white p-1 object-cover mx-auto mb-8"
+            />
+            <blockquote class="flex flex-col-reverse gap-4 text-primary-800">
+              <p class="font-serif">{item.quote}</p>
+              <cite class="not-italic text-lg">{item.name}</cite>
+            </blockquote>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { Carousel } from "@fancyapps/ui";
+
+  const container = document.querySelector<HTMLDivElement>("[data-quotes-slider]");
+
+  new Carousel(container, {
+    infinite: true,
+    Dots: false,
+  });
+</script>
+
+<style is:global>
+  .f-carousel:is([data-quotes-slider]) {
+    --f-button-svg-width: 100px;
+    --f-button-svg-height: 100px;
+    --f-button-color: #fff;
+    --f-button-hover-color: #fff;
+  }
+</style>

@@ -1,15 +1,23 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
 
 interface Props extends HTMLAttributes<"section"> {
   title?: string;
+  gridClass?: string;
   links?: {
     label: string;
     href: string;
   }[];
 }
 
-const { title = "Messiah by the numbers", links, class: className, ...props } = Astro.props;
+const {
+  title = "Messiah by the numbers",
+  gridClass,
+  links,
+  class: className,
+  ...props
+} = Astro.props;
 ---
 
 <section class={className} {...props}>
@@ -24,7 +32,7 @@ const { title = "Messiah by the numbers", links, class: className, ...props } = 
     </h2>
   </div>
 
-  <ul class="grid grid-cols-1 md:grid-cols-3 bg-tertiary-500 gap-px">
+  <ul class={cn("grid grid-cols-1 md:grid-cols-3 bg-tertiary-500 gap-px", gridClass)}>
     <slot />
   </ul>
 

@@ -10,9 +10,9 @@ interface Props extends HTMLAttributes<"figure"> {
 const { src, caption, class: className, ...props } = Astro.props;
 ---
 
-<figure {...props} class={cn("not-prose", className)}>
+<figure {...props} class={cn("aspect-video not-prose", className)}>
   <div class="relative">
-    <img src={getYouTubePreview(src)} alt="" class="object-cover w-full aspect-video" />
+    <img src={getYouTubePreview(src)} alt="" class="object-cover w-full h-full" />
 
     <a
       data-embed

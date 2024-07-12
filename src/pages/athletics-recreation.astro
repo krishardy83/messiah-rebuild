@@ -1,0 +1,39 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import PageTabNavigation from "../components/page-tab-navigation.astro";
+import GetInTheGame from "../views/athletics-and-recreation/get-in-the-game.astro";
+import SportsMinistry from "../views/athletics-and-recreation/sports-ministry.astro";
+import SportsCamps from "../views/athletics-and-recreation/sports-camps.astro";
+import PhysicalFitness from "../views/athletics-and-recreation/physical-fitness.astro";
+import GameDayExperience from "../views/athletics-and-recreation/game-day-experience.astro";
+---
+
+<SingleColumn
+  title="Fear the Falcon"
+  image="/images/hero-bg-athletics.jpg"
+  subtitle="Athletics at Messiah"
+  description="Athletics at Messiah"
+  button={{
+    href: "http://www.gomessiah.com/",
+    label: "Visit gomessiah.com",
+  }}
+>
+  <PageTabNavigation
+    tabs={[
+      { title: "Physical fitness", hash: "#physical-fitness" },
+      { title: "Game day", hash: "#game-day" },
+      { title: "Sports camps", hash: "#sports-camps" },
+      { title: "Sports ministry", hash: "#sports-ministry" },
+    ]}
+  />
+
+  <GetInTheGame />
+
+  <PhysicalFitness />
+
+  <GameDayExperience />
+
+  <SportsCamps />
+
+  <SportsMinistry />
+</SingleColumn>

@@ -7,9 +7,13 @@ interface Props {
   subtitle?: string;
   description: string;
   image: string;
+  button?: {
+    label: string;
+    href: string;
+  };
 }
 
-const { title, description, subtitle, image } = Astro.props;
+const { title, description, subtitle, button, image } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -34,6 +38,13 @@ const { title, description, subtitle, image } = Astro.props;
             <p class="text-white uppercase font-title md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-none">
               {subtitle}
             </p>
+          ) : null
+        }
+        {
+          button ? (
+            <a href={button.href} class="btn-tertiary mt-8">
+              {button.label}
+            </a>
           ) : null
         }
       </div>
