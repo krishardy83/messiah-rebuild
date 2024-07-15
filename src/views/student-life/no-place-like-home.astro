@@ -1,0 +1,89 @@
+---
+import Youtube from "../../components/youtube.astro";
+import { cn } from "../../lib/utils";
+
+const images = [
+  {
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-1.jpg",
+    },
+  },
+  {
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-2.jpg",
+    },
+  },
+  {
+    quote:
+      "I love Messiah because when I first visited I knew it would be my home for the next four years. Messiah has everything I'm looking for...",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-4.jpg",
+    },
+  },
+  {
+    href: "https://www.youtube.com/watch?v=ywlFvRnDjFU",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-3.jpg",
+    },
+  },
+  {
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-5.jpg",
+    },
+  },
+  {
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-7.jpg",
+    },
+  },
+  {
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-6.jpg",
+    },
+  },
+];
+---
+
+<section class="bg-primary-800 text-white py-24 text-center scroll-m-24" id="welcome-home">
+  <div class="wrapper">
+    <h2 class="h2">There's no place like home.</h2>
+    <p class="paragraph max-w-4xl mx-auto">
+      At Messiah University, “home” is a universal term to students and alumni. From the very first
+      moment you drive onto campus as a new student, volunteers are ready to help you settle into
+      your residence hall. You’ll quickly become familiar with faces and spaces that will make
+      Messiah feel like home.
+    </p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-12">
+      {
+        images.map((image, index) => (
+          <figure
+            class={cn({
+              "col-span-2": index === 2 || index === 3,
+              "row-span-2": index === 3 || index === 5,
+            })}
+          >
+            {image.href ? (
+              <Youtube src={image.href} />
+            ) : (
+              <img src={image.image.src} alt={image.image.alt} class="w-full h-full object-cover" />
+            )}
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { Fancybox } from "@fancyapps/ui";
+
+  Fancybox.bind("[data-fancybox]");
+</script>

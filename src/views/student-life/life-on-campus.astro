@@ -1,0 +1,38 @@
+---
+import ByTheNumbers from "../../components/by-the-numbers.astro";
+import Youtube from "../../components/youtube.astro";
+---
+
+<section id="start" class="wrapper py-24 flex flex-col md:flex-row gap-12 lg:gap-24">
+  <div class="md:w-1/2">
+    <h2 class="h2 text-primary-800">Life on campus</h2>
+
+    <p class="paragraph">
+      College is more than just going to class and studying. You’ll receive an outstanding education
+      during your time at Messiah--but you’ll also experience fun, excitement and make lifelong
+      friendships. As an undergraduate residential or <a
+        class="underline link"
+        href="https://www.messiah.edu/commuters">commuter student</a
+      >, you’ll realize Messiah’s campus is buzzing with activity and that there’s always something
+      to do. In fact, many of these experiences become meaningful traditions for our students and
+      make Messiah a really hard place to leave when you graduate.
+    </p>
+  </div>
+
+  <Youtube class="md:w-1/2 mt-4" src="https://www.youtube.com/watch?v=A_6FnRK2sP0" />
+</section>
+
+<ByTheNumbers class="wrapper pb-24" title="Student life profile">
+  <li class="text-center sm:text-xl md:text-2xl bg-white py-12 md:py-0 md:px-12">
+    <img class="mx-auto mb-8 max-w-24" src="/icons/binoculars.png" alt="" />
+    <p><span class="text-tertiary-500">60+</span> Clubs and organizations</p>
+  </li>
+  <li class="text-center sm:text-xl md:text-2xl bg-white py-12 md:py-0 md:px-12">
+    <img class="mx-auto mb-8" src="/icons/students-hug.png" alt="" />
+    <p><span class="text-tertiary-500">2,586</span> Undergraduate students</p>
+  </li>
+  <li class="text-center sm:text-xl md:text-2xl bg-white py-12 md:py-0 md:px-12">
+    <img class="mx-auto mb-8 max-w-24" src="/icons/on-campus.png" alt="" />
+    <p><span class="text-tertiary-500">78%</span> of students live in on-campus housing</p>
+  </li>
+</ByTheNumbers>

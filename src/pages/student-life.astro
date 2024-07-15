@@ -1,0 +1,68 @@
+---
+import ContinueExploring from "../components/continue-exploring.astro";
+import SingleColumn from "../layouts/single-column.astro";
+import PageTabNavigation from "../components/page-tab-navigation.astro";
+import LifeOnCampus from "../views/student-life/life-on-campus.astro";
+import WhatToDo from "../views/student-life/what-to-do.astro";
+import NoPlaceLikeHome from "../views/student-life/no-place-like-home.astro";
+import ADiverseCommunity from "../views/student-life/a-diverse-community.astro";
+import HereToSupport from "../views/student-life/here-to-support.astro";
+import DiningFacilities from "../views/student-life/dining-facilities.astro";
+import LivingOnCampus from "../views/student-life/living-on-campus.astro";
+import Faq from "../views/student-life/faq.astro";
+---
+
+<SingleColumn
+  title="Home away from home"
+  image="/images/student-life-hero-5.jpg"
+  subtitle="Student life at Messiah"
+  description="Student life at Messiah"
+>
+  <PageTabNavigation
+    tabs={[
+      { title: "Welcome home", hash: "#welcome-home" },
+      { title: "Resident life & dining", hash: "#resident-life-dining" },
+      { title: "Diversity", hash: "#diversity" },
+      { title: "Support", hash: "#support" },
+    ]}
+  />
+
+  <LifeOnCampus />
+
+  <WhatToDo />
+
+  <NoPlaceLikeHome />
+
+  <LivingOnCampus />
+
+  <Faq />
+
+  <DiningFacilities />
+
+  <ADiverseCommunity />
+
+  <HereToSupport />
+
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Student success and engagement office",
+        href: "https://www.messiah.edu/info/20847/student_affairs",
+      },
+      {
+        label: "Behavioral expectations",
+        href: "https://www.messiah.edu/info/20722/expectations",
+      },
+      {
+        label: "Residence life office",
+        href: "http://www.messiah.edu/info/21460/residence_life",
+      },
+      {
+        label: "Live like a local",
+        href: "https://issuu.com/messiahcollegeadmissions/docs/23_1608_adm_booklet-_location_guide_final",
+      },
+    ]}
+  />
+</SingleColumn>

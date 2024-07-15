@@ -1,0 +1,50 @@
+---
+import Youtube from "../../components/youtube.astro";
+
+const videos = [
+  {
+    name: "Bittner",
+    href: "https://www.youtube.com/watch?v=BG-JF77WuXo",
+  },
+  {
+    name: "Naugle",
+    href: "https://www.youtube.com/watch?v=on5Bh3fOAhk",
+  },
+  {
+    name: "Witmer",
+    href: "https://www.youtube.com/watch?v=NN-dPu5Ugo0",
+  },
+];
+---
+
+<section
+  class="bg-[url(/images/on-campus-bg.jpg)] text-center bg-no-repeat bg-cover scroll-m-24"
+  id="resident-life-dining"
+>
+  <div class="wrapper py-24">
+    <h2 class="h2">Living on campus</h2>
+    <p class="max-w-4xl mx-auto paragraph">
+      Living on your own for the first time can be a big adjustment. <a
+        href="https://www.messiah.edu/info/21460/residence_life"
+        class="underline link">Residence Life</a
+      > is here to make that transition as smooth and fun as possible. As a first-year or transfer student,
+      you’ll have access to an intentional environment that helps you build lasting relationships with
+      peers who are experiencing the same things as you. Your resident director and resident assistants
+      work hard to host events and activities to help you get to know other students and form a sense
+      of “home.”
+    </p>
+
+    <h3 class="h3 text-primary-800 mt-8">First-year residence halls</h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {
+        videos.map((video) => (
+          <div class="bg-white flex flex-col-reverse p-1">
+            <h4 class="font-title uppercase font-bold py-1 text-xl">{video.name}</h4>
+            <Youtube src={video.href} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

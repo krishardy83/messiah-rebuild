@@ -1,0 +1,87 @@
+---
+const items = [
+  {
+    question:
+      "Are there specific behavioral guidelines I will be required to follow while enrolled at Messiah University?",
+    answer:
+      '<p class="paragraph">Yes, as a Christian university, Messiah communicates behavior expectations for students that focus on our relationship with God and each other, and the practical implications of community life. Before coming to Messiah, students are asked to review these expectations and agree to live by them if they choose to join the Messiah community. You can learn more about Messiah\'s community standards in our  <a href="https://www.messiah.edu/download/downloads/id/528/Current_Student_Handbook.pdf" class="link underline">student handbook</a> to see if Messiah University is a good fit for your values and the way of life you want during your college experience.</p>',
+  },
+  {
+    question: "Can first-year students have cars on campus?",
+    answer: `
+      <p class="paragraph mb-4">Yes, first-year students who live on campus are permitted to park a car on campus. Parking is available on a first-come, first-serve basis as designated by a student’s enrollment deposit date, and participation in the parking lottery.</p>
+      
+      <p class="paragraph">While the University strives to offer parking to all first-year students who would like it, the demand for on campus parking spaces may exceed the number of available spaces.</p>
+
+      <p class="paragraph">After the first year, any student may have a car on campus. Complete information about parking regulations at Messiah is available from the <a href="https://www.messiah.edu/info/20567/department_of_safety" class="link underline">Department of Safety Website</a>.</p>
+    `,
+  },
+  {
+    question: "How many students are enrolled at Messiah University?",
+    answer: `
+      <p class="paragraph mb-4">Messiah enrolls nearly 2,500 undergraduate and more than 700 online graduate students each year.</p>
+    `,
+  },
+  {
+    question: "Do I have to live on campus my first year?",
+    answer: `
+      <p class="paragraph mb-4">All single, full-time students under the age of 23 are required to live on campus. Campus housing is generally limited to students who are registered for at least 12 credit hours. Exceptions to the residency requirement are granted to students who meet the commuter criteria and have signed a commuter housing contract. Commuters are those students who meet one of these criteria:</p>
+
+      <ol class="list-decimal pl-6">
+        <li>The student is living locally with parents.</li>
+        <li>The student is living locally with family members (i.e. grandparents,
+        aunts/uncles).</li>
+        <li>The student is classified as having independent status by the Office of Financial Aid and is living locally.</li>
+        <li>The student has non-traditional status (23 years of age and over or married).</li>
+        <li>The student is married.</li>
+      </ol>              
+    `,
+  },
+];
+---
+
+<section class="bg-tertiary-200 text-primary-800 py-24 scroll-m-24">
+  <div class="wrapper">
+    <h2 class="h2 text-center">Frequently asked questions—you asked, we answered!</h2>
+
+    <dl class="f-carousel mt-12" data-faq-slider>
+      {
+        items.map((item) => (
+          <div class="f-carousel__slide px-12 md:px-24">
+            <dt class="font-title font-bold text-2xl border-b border-primary-400 pb-2 mb-2 pl-8 relative before:content-['Q:'] before:absolute before:top-0 before:left-0 before:font-bold before:font-title before:text-2xl">
+              {item.question}
+            </dt>
+            <dd
+              class="pl-8 relative before:content-['A:'] before:absolute before:top-0 before:left-0 before:font-bold before:font-title before:text-2xl"
+              set:html={item.answer}
+            />
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="flex gap-4 flex-wrap justify-center mt-8">
+      <a href="https://www.messiah.edu/info/21345/faqs" class="btn-tertiary">More FAQs</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { Carousel } from "@fancyapps/ui";
+
+  const container = document.querySelector<HTMLDivElement>("[data-faq-slider]");
+
+  new Carousel(container, {
+    infinite: true,
+    Dots: false,
+  });
+</script>
+
+<style is:global>
+  .f-carousel:is([data-faq-slider]) {
+    --f-button-svg-width: 100px;
+    --f-button-svg-height: 100px;
+    --f-button-color: #273d5e;
+    --f-button-hover-color: #273d5e;
+  }
+</style>

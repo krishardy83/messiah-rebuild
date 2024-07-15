@@ -1,0 +1,71 @@
+---
+import ImageHoverLink from "../../components/image-hover-link.astro";
+
+const items = [
+  {
+    caption: "Lottie Nelson",
+    description:
+      "With a wide range of fresh foods and menu options, Lottie Nelson Dining Hall, located on the second floor of Eisenhower, provides options for each meal of the day! A fruit and yogurt bar, create your own omelet station, make your own salad, made-to-order specialty sandwiches, homemade soups and other fresh and healthy menu options are available.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/hungry-1.jpg",
+    },
+  },
+  {
+    caption: "The Falcon",
+    description:
+      "On the go? The Falcon is the perfect choice for you! Located on the ground floor of Eisenhower, the Falcon offers freshly made food choices. From the popular pre-chapel breakfast sandwiches, toasted flatbreads, rice bowls and more, each option is freshly made ready for you within minutes (you can even order ahead!). Operating from 7:30 a.m. to 3:30 p.m, the Falcon serves as a quick and delicious alternative for breakfast or lunch.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/hungry-2.jpg",
+    },
+  },
+  {
+    caption: "Union Café",
+    description:
+      "In the mood to order pizza? The Union has a great variety of options such as pizzas, strombolis, salads, burgers, wraps, ice cream and more. Filled with booths and tables and cozy fireside seating, the Union is the ideal location to grab dinner and catch up with a friend after a long day of class. You can pre-order here, too!",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/hungry-3.jpg",
+    },
+  },
+  {
+    caption: "Café Diem",
+    description:
+      "Love coffee shops? Then stop by the Murray Library to pick up a good book and a fresh cup of coffee at Cafe Diem. Offering coffee, specialty drinks, pastries and additional grab n’ go items, it’s the perfect place to stop for that pick-me-up in between classes.",
+    image: {
+      alt: "",
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/hungry-4.jpg",
+    },
+  },
+];
+---
+
+<section class="wrapper py-24 scroll-m-24 text-center">
+  <h2 class="h2 text-primary-800">Hungry</h2>
+  <p class="max-w-4xl mx-auto paragraph">
+    Good food: an essential for college students. Messiah University provides a wide variety of
+    great-tasting and nutritious foods in enjoyable environments to socialize, study and of course,
+    eat. Our award-winning program offers fresh, tasty foods at each of our different locations. We
+    take food very seriously here, which is why we have four different meal plan-approved locations.
+    Bon Appétit!
+  </p>
+
+  <a href="https://www.messiah.edu/dining" class="btn-tertiary my-8">View dining services website</a
+  >
+
+  <h3 class="h3 text-primary-800">Dining facilities</h3>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8">
+    {
+      items.map((item) => (
+        <ImageHoverLink
+          class="max-w-none"
+          caption={item.caption}
+          description={item.description}
+          image={item.image}
+        />
+      ))
+    }
+  </div>
+</section>
