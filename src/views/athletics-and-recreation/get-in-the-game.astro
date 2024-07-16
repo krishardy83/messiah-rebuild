@@ -1,6 +1,6 @@
 ---
 import ByTheNumbers from "../../components/by-the-numbers.astro";
-import Icon from "../../components/icon.astro";
+import TabbedDialog from "../../components/tabbed-dialog.astro";
 import Youtube from "../../components/youtube.astro";
 
 const items = [
@@ -89,7 +89,7 @@ const items = [
           <button
             type="button"
             class="btn-tertiary"
-            data-get-in-the-game-trigger={`get-in-the-game-tabpanel-${index}`}
+            data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
           >
             {item.name}
           </button>
@@ -163,130 +163,44 @@ const items = [
   </figure>
 </div>
 
-<dialog
-  data-get-in-the-game-dialog
-  class="bg-primary-800/80 text-white backdrop-blur-sm fixed inset-0 w-full h-full overflow-y-auto z-30"
->
-  <div class="max-w-4xl mx-auto flex flex-col justify-center h-full">
-    <button
-      type="button"
-      class="self-end hover:text-tertiary-400 transition-colors"
-      aria-label="close dialog"
-      data-get-in-the-game-close
-    >
-      <Icon name="close" class="size-10" />
-    </button>
+<TabbedDialog tabs={items} class="z-30 bg-primary-800/80 text-white backdrop-blur-sm fixed">
+  {
+    items.map((item, index) => (
+      <div
+        id={`tabbed-dialog-tabpanel-${index}`}
+        role="tabpanel"
+        data-tab-value={item.name}
+        hidden={index === 0 ? undefined : ""}
+        aria-labelledby={`tabbed-dialog-tab-${index}`}
+      >
+        <div class="flex gap-12">
+          <figure class="flex-shrink-0">
+            <img src={item.image} alt="" class="bg-white p-1 rounded-full" />
+          </figure>
 
-    <div role="tablist" class="flex gap-x-8 gap-y-4 flex-wrap my-8 justify-center">
-      {
-        items.map((item, index) => (
-          <button
-            class="font-title uppercase font-bold text-lg md:text-2xl border-b-2 border-spacing-2 border-transparent aria-selected:border-tertiary-400 aria-selected:text-tertiary-400"
-            type="button"
-            role="tab"
-            aria-selected={index === 0 ? "true" : "false"}
-            id={`get-in-the-game-tab-${index}`}
-            aria-controls={`get-in-the-game-tabpanel-${index}`}
-          >
-            {item.name}
-          </button>
-        ))
-      }
-    </div>
+          <div class="w-full">
+            <p class="paragraph mb-4">{item.description}</p>
 
-    {
-      items.map((item, index) => (
-        <div
-          id={`get-in-the-game-tabpanel-${index}`}
-          role="tabpanel"
-          data-tab-value={item.name}
-          hidden={index === 0 ? undefined : ""}
-          aria-labelledby={`get-in-the-game-tab-${index}`}
-        >
-          <div class="flex gap-12">
-            <figure class="flex-shrink-0">
-              <img src={item.image} alt="" class="bg-white p-1 rounded-full" />
-            </figure>
+            {item.links ? (
+              <ul class="columns-2">
+                {item.links.map((link) => (
+                  <li>
+                    <a href={link.href} class="uppercase font-title text-xl font-bold link">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
 
-            <div class="w-full">
-              <p class="paragraph mb-4">{item.description}</p>
+            <hr class="my-8" />
 
-              {item.links ? (
-                <ul class="columns-2">
-                  {item.links.map((link) => (
-                    <li>
-                      <a href={link.href} class="uppercase font-title text-xl font-bold link">
-                        {link.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-
-              <hr class="my-8" />
-
-              <a href={item.button.href} class="btn-tertiary">
-                {item.button.label}
-              </a>
-            </div>
+            <a href={item.button.href} class="btn-tertiary">
+              {item.button.label}
+            </a>
           </div>
         </div>
-      ))
-    }
-  </div>
-</dialog>
-
-<script>
-  let buttons = document.querySelectorAll<HTMLButtonElement>("[data-get-in-the-game-trigger]");
-  let dialog = document.querySelector<HTMLDialogElement>("[data-get-in-the-game-dialog]");
-  let close = dialog?.querySelector<HTMLButtonElement>("[data-get-in-the-game-close]");
-  let tabs = document.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
-  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
-
-  function handleSelectTab(tab: string) {
-    let button = Array.from(tabs).find((b) => b.getAttribute("aria-controls") === tab);
-
-    tabs.forEach((tab) => {
-      tab.setAttribute("aria-selected", "false");
-    });
-
-    panels.forEach((panel) => {
-      panel.setAttribute("hidden", "");
-
-      if (panel.getAttribute("id") === tab) {
-        panel.removeAttribute("hidden");
-        button?.setAttribute("aria-selected", "true");
-      }
-    });
+      </div>
+    ))
   }
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      let target = button.getAttribute("data-get-in-the-game-trigger");
-
-      if (target) {
-        handleSelectTab(target);
-      }
-
-      dialog?.show();
-    });
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      dialog?.close();
-    }
-  });
-
-  close?.addEventListener("click", () => dialog?.close());
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", (event) => {
-      let target = (event.target as HTMLButtonElement).getAttribute("aria-controls");
-
-      if (target) {
-        handleSelectTab(target);
-      }
-    });
-  });
-</script>
+</TabbedDialog>

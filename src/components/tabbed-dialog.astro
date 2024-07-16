@@ -1,0 +1,108 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./icon.astro";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"dialog"> {
+  title?: string;
+  tabs: {
+    name: string;
+  }[];
+}
+
+const { title, tabs, class: className, ...props } = Astro.props;
+---
+
+<dialog
+  data-tabbed-dialog
+  class={cn("absolute inset-0 w-full h-full overflow-y-auto", className)}
+  {...props}
+>
+  <div class="wrapper py-24 text-white">
+    <header class="flex items-center justify-center relative">
+      {title ? <h3 class="text-center h2">{title}</h3> : null}
+      <button
+        type="button"
+        class="absolute right-0 hover:text-tertiary-400 transition-colors"
+        aria-label="close dialog"
+        data-tabbed-dialog-close
+      >
+        <Icon name="close" class="size-10" />
+      </button>
+    </header>
+
+    <div role="tablist" class="flex gap-x-8 gap-y-4 flex-wrap my-8 justify-center">
+      {
+        tabs.map((tab, index) => (
+          <button
+            class="font-title uppercase font-bold text-lg md:text-2xl border-b-2 border-spacing-2 border-transparent aria-selected:border-tertiary-400 aria-selected:text-tertiary-400"
+            type="button"
+            role="tab"
+            aria-selected={index === 0 ? "true" : "false"}
+            id={`tabbed-dialog-tab-${index}`}
+            aria-controls={`tabbed-dialog-tabpanel-${index}`}
+          >
+            {tab.name}
+          </button>
+        ))
+      }
+    </div>
+
+    <slot />
+  </div>
+</dialog>
+
+<script>
+  let buttons = document.querySelectorAll<HTMLButtonElement>("[data-tabbed-dialog-trigger]");
+  let dialog = document.querySelector<HTMLDialogElement>("[data-tabbed-dialog]");
+  let close = dialog?.querySelector<HTMLButtonElement>("[data-tabbed-dialog-close]");
+  let tabs = document.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
+  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
+
+  function handleSelectTab(tab: string) {
+    let button = Array.from(tabs).find((b) => b.getAttribute("aria-controls") === tab);
+
+    tabs.forEach((tab) => {
+      tab.setAttribute("aria-selected", "false");
+    });
+
+    panels.forEach((panel) => {
+      panel.setAttribute("hidden", "");
+
+      if (panel.getAttribute("id") === tab) {
+        panel.removeAttribute("hidden");
+        button?.setAttribute("aria-selected", "true");
+      }
+    });
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      let target = button.getAttribute("data-tabbed-dialog-trigger");
+
+      if (target) {
+        handleSelectTab(target);
+      }
+
+      dialog?.show();
+    });
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      dialog?.close();
+    }
+  });
+
+  close?.addEventListener("click", () => dialog?.close());
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", (event) => {
+      let target = (event.target as HTMLButtonElement).getAttribute("aria-controls");
+
+      if (target) {
+        handleSelectTab(target);
+      }
+    });
+  });
+</script>

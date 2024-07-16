@@ -1,5 +1,5 @@
 ---
-import Icon from "../../components/icon.astro";
+import TabbedDialog from "../../components/tabbed-dialog.astro";
 
 const items = [
   {
@@ -127,7 +127,7 @@ const items = [
         items.map((item, index) => (
           <li>
             <button
-              data-what-to-do-trigger={`grow-your-faith-tabpanel-${index}`}
+              data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
               type="button"
               class="text-white group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
             >
@@ -144,112 +144,27 @@ const items = [
     </ul>
   </div>
 
-  <dialog
-    data-what-to-do-dialog
-    class="bg-[linear-gradient(to_right,rgba(0,0,0,.4),rgba(0,0,0,.4)),url(/images/campus-bg.jpg)] bg-no-repeat bg-cover absolute inset-0 w-full h-full overflow-y-auto z-10"
+  <TabbedDialog
+    tabs={items}
+    title="What's there to do?"
+    class="bg-[linear-gradient(to_right,rgba(0,0,0,.4),rgba(0,0,0,.4)),url(/images/campus-bg.jpg)] bg-no-repeat bg-cover bg-primary-950"
   >
-    <div class="wrapper py-24 text-white">
-      <header class="flex items-center justify-center relative">
-        <h3 class="text-center h2">What's there to do?</h3>
-        <button
-          type="button"
-          class="absolute right-0 hover:text-tertiary-400 transition-colors"
-          aria-label="close dialog"
-          data-what-to-do-close
+    {
+      items.map((item, index) => (
+        <div
+          id={`tabbed-dialog-tabpanel-${index}`}
+          role="tabpanel"
+          data-tab-value={item.name}
+          hidden={index === 0 ? undefined : ""}
+          aria-labelledby={`tabbed-dialog-tab-${index}`}
         >
-          <Icon name="close" class="size-10" />
-        </button>
-      </header>
+          <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
+            {item.name}
+          </h4>
 
-      <div role="tablist" class="flex gap-x-8 gap-y-4 flex-wrap mt-8 justify-center">
-        {
-          items.map((item, index) => (
-            <button
-              class="font-title uppercase font-bold text-lg md:text-2xl border-b-2 border-spacing-2 border-transparent aria-selected:border-tertiary-400 aria-selected:text-tertiary-400"
-              type="button"
-              role="tab"
-              aria-selected={index === 0 ? "true" : "false"}
-              id={`grow-your-faith-tab-${index}`}
-              aria-controls={`grow-your-faith-tabpanel-${index}`}
-            >
-              {item.name}
-            </button>
-          ))
-        }
-      </div>
-
-      {
-        items.map((item, index) => (
-          <div
-            id={`grow-your-faith-tabpanel-${index}`}
-            role="tabpanel"
-            data-tab-value={item.name}
-            hidden={index === 0 ? undefined : ""}
-            aria-labelledby={`grow-your-faith-tab-${index}`}
-          >
-            <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
-              {item.name}
-            </h4>
-
-            <div set:html={item.content} />
-          </div>
-        ))
-      }
-    </div>
-  </dialog>
-</section>
-
-<script>
-  let buttons = document.querySelectorAll<HTMLButtonElement>("[data-what-to-do-trigger]");
-  let dialog = document.querySelector<HTMLDialogElement>("[data-what-to-do-dialog]");
-  let close = dialog?.querySelector<HTMLButtonElement>("[data-what-to-do-close]");
-  let tabs = document.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
-  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
-
-  function handleSelectTab(tab: string) {
-    let button = Array.from(tabs).find((b) => b.getAttribute("aria-controls") === tab);
-
-    tabs.forEach((tab) => {
-      tab.setAttribute("aria-selected", "false");
-    });
-
-    panels.forEach((panel) => {
-      panel.setAttribute("hidden", "");
-
-      if (panel.getAttribute("id") === tab) {
-        panel.removeAttribute("hidden");
-        button?.setAttribute("aria-selected", "true");
-      }
-    });
-  }
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      let target = button.getAttribute("data-what-to-do-trigger");
-
-      if (target) {
-        handleSelectTab(target);
-      }
-
-      dialog?.show();
-    });
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      dialog?.close();
+          <div set:html={item.content} />
+        </div>
+      ))
     }
-  });
-
-  close?.addEventListener("click", () => dialog?.close());
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", (event) => {
-      let target = (event.target as HTMLButtonElement).getAttribute("aria-controls");
-
-      if (target) {
-        handleSelectTab(target);
-      }
-    });
-  });
-</script>
+  </TabbedDialog>
+</section>
