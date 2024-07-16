@@ -4,34 +4,36 @@ import { cn, getYouTubePreview } from "../lib/utils";
 
 interface Props extends HTMLAttributes<"figure"> {
   src: string;
+  preview?: string;
+  alt?: string;
   caption?: string;
 }
 
-const { src, caption, class: className, ...props } = Astro.props;
+const { src, caption, preview, alt, class: className, ...props } = Astro.props;
+
+const imageUrl = preview || getYouTubePreview(src);
 ---
 
-<figure {...props} class={cn("aspect-video not-prose", className)}>
-  <div class="relative">
-    <img src={getYouTubePreview(src)} alt="" class="object-cover w-full h-full" />
+<figure {...props} class={cn("not-prose", className)}>
+  <a data-youtube-embed href={src} aria-label="play video" class="relative block group h-full">
+    <img
+      src={imageUrl}
+      loading="lazy"
+      alt={alt}
+      class="aspect-video object-cover bg-gray-100 w-full h-full"
+    />
 
-    <a
-      data-embed
-      href={src}
-      aria-label="play video"
-      class="absolute inset-0 flex items-center justify-center group"
+    <span
+      class="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 after:absolute after:bg-white after:h-6 after:w-6 after:block after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 group-hover:scale-110 transition-transform isolate after:-z-10 group-focus:scale-110"
     >
-      <span
-        class="relative after:absolute after:bg-white after:h-6 after:w-6 after:block after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 group-hover:scale-110 transition-transform"
-      >
-        <svg class="size-16 relative z-10" viewBox="0 0 32 32" aria-hidden="true">
-          <path
-            fill="#f00"
-            d="M31.327 8.273c-0.386-1.353-1.431-2.398-2.756-2.777l-0.028-0.007c-2.493-0.668-12.528-0.668-12.528-0.668s-10.009-0.013-12.528 0.668c-1.353 0.386-2.398 1.431-2.777 2.756l-0.007 0.028c-0.443 2.281-0.696 4.903-0.696 7.585 0 0.054 0 0.109 0 0.163l-0-0.008c-0 0.037-0 0.082-0 0.126 0 2.682 0.253 5.304 0.737 7.845l-0.041-0.26c0.386 1.353 1.431 2.398 2.756 2.777l0.028 0.007c2.491 0.669 12.528 0.669 12.528 0.669s10.008 0 12.528-0.669c1.353-0.386 2.398-1.431 2.777-2.756l0.007-0.028c0.425-2.233 0.668-4.803 0.668-7.429 0-0.099-0-0.198-0.001-0.297l0 0.015c0.001-0.092 0.001-0.201 0.001-0.31 0-2.626-0.243-5.196-0.708-7.687l0.040 0.258zM12.812 20.801v-9.591l8.352 4.803z"
-          ></path>
-        </svg>
-      </span>
-    </a>
-  </div>
+      <svg class="size-16" viewBox="0 0 32 32" aria-hidden="true">
+        <path
+          fill="#f00"
+          d="M31.327 8.273c-0.386-1.353-1.431-2.398-2.756-2.777l-0.028-0.007c-2.493-0.668-12.528-0.668-12.528-0.668s-10.009-0.013-12.528 0.668c-1.353 0.386-2.398 1.431-2.777 2.756l-0.007 0.028c-0.443 2.281-0.696 4.903-0.696 7.585 0 0.054 0 0.109 0 0.163l-0-0.008c-0 0.037-0 0.082-0 0.126 0 2.682 0.253 5.304 0.737 7.845l-0.041-0.26c0.386 1.353 1.431 2.398 2.756 2.777l0.028 0.007c2.491 0.669 12.528 0.669 12.528 0.669s10.008 0 12.528-0.669c1.353-0.386 2.398-1.431 2.777-2.756l0.007-0.028c0.425-2.233 0.668-4.803 0.668-7.429 0-0.099-0-0.198-0.001-0.297l0 0.015c0.001-0.092 0.001-0.201 0.001-0.31 0-2.626-0.243-5.196-0.708-7.687l0.040 0.258zM12.812 20.801v-9.591l8.352 4.803z"
+        ></path>
+      </svg>
+    </span>
+  </a>
 
   {caption ? <figcaption class="text-center mt-2 text-gray-500">{caption}</figcaption> : null}
 </figure>
@@ -39,5 +41,5 @@ const { src, caption, class: className, ...props } = Astro.props;
 <script>
   import { Fancybox } from "@fancyapps/ui";
 
-  Fancybox.bind("[data-embed]");
+  Fancybox.bind("[data-youtube-embed]");
 </script>

@@ -5,14 +5,26 @@ const videos = [
   {
     name: "Bittner",
     href: "https://www.youtube.com/watch?v=BG-JF77WuXo",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/on-campus-video-1.jpg",
+      alt: "",
+    },
   },
   {
     name: "Naugle",
     href: "https://www.youtube.com/watch?v=on5Bh3fOAhk",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/on-campus-video-2.jpg",
+      alt: "",
+    },
   },
   {
     name: "Witmer",
     href: "https://www.youtube.com/watch?v=NN-dPu5Ugo0",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/on-campus-video-3.jpg",
+      alt: "",
+    },
   },
 ];
 ---
@@ -41,7 +53,7 @@ const videos = [
         videos.map((video) => (
           <div class="bg-white flex flex-col-reverse p-1">
             <h4 class="font-title uppercase font-bold py-1 text-xl">{video.name}</h4>
-            <Youtube src={video.href} />
+            <Youtube src={video.href} preview={video.image.src} alt={video.image.alt} />
           </div>
         ))
       }

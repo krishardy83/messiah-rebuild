@@ -64,26 +64,31 @@ const images = [
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-12">
       {
         images.map((image, index) => (
-          <figure
+          <div
             class={cn({
               "col-span-2": index === 2 || index === 3,
               "row-span-2": index === 3 || index === 5,
             })}
           >
             {image.href ? (
-              <Youtube src={image.href} />
+              <Youtube
+                class="h-full"
+                src={image.href}
+                preview={image.image.src}
+                alt={image.image.alt}
+              />
             ) : (
-              <img src={image.image.src} alt={image.image.alt} class="w-full h-full object-cover" />
+              <figure>
+                <img
+                  src={image.image.src}
+                  alt={image.image.alt}
+                  class="w-full h-full object-cover"
+                />
+              </figure>
             )}
-          </figure>
+          </div>
         ))
       }
     </div>
   </div>
 </section>
-
-<script>
-  import { Fancybox } from "@fancyapps/ui";
-
-  Fancybox.bind("[data-fancybox]");
-</script>
