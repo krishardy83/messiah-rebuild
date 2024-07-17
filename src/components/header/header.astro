@@ -13,7 +13,7 @@ const { transparent } = Astro.props;
 ---
 
 <div
-  class="sticky -top-px before:absolute before:top-0 before:h-2 md:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 md:pt-4 pb-2 md:pb-6 z-30 group transition-colors border-b border-transparent data-[scrolling='true']:border-gray-300"
+  class="sticky -top-px before:absolute before:top-0 before:h-2 md:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 md:pt-4 pb-2 md:pb-6 z-30 group border-b border-transparent data-[scrolling='true']:border-gray-300 data-[scrolling='true']:-translate-y-14 transition-all"
   data-menu
 >
   <header class="mx-auto max-w-6xl px-4">
@@ -28,7 +28,7 @@ const { transparent } = Astro.props;
         href="/"
         aria-label="messiah university main page"
         class:list={[
-          "mr-auto mt-4",
+          "mr-auto mt-4 group-data-[scrolling='true']:opacity-0 transition-opacity",
           transparent
             ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
             : "text-primary-800",
@@ -73,7 +73,7 @@ const { transparent } = Astro.props;
         </ul>
 
         <ul
-          class="flex flex-col md:flex-row md:justify-end mt-6 md:mt-0 mb-4 md:items-center gap-6 md:gap-0"
+          class="flex flex-col md:flex-row md:justify-end mt-6 md:mt-0 mb-4 md:items-center gap-6 md:gap-0 group-data-[scrolling='true']:opacity-0 transition-opacity"
         >
           {
             topGroups.map((group, index) => (
@@ -204,17 +204,19 @@ const { transparent } = Astro.props;
     }
   }
 
+  function handleScroll() {
+    if (window.scrollY > 0) {
+      if (menu?.getAttribute("data-scrolling") !== "true") {
+        menu?.setAttribute("data-scrolling", "true");
+      }
+    } else {
+      menu?.setAttribute("data-scrolling", "false");
+    }
+  }
+
   document.addEventListener("click", handleClick);
   document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("scroll", handleScroll, { passive: true });
 
-  if (menu) {
-    let observer = new IntersectionObserver(
-      ([entry]) => {
-        entry?.target.setAttribute("data-scrolling", String(!entry.isIntersecting));
-      },
-      { threshold: 1 }
-    );
-
-    observer.observe(menu);
-  }
+  handleScroll();
 </script>
