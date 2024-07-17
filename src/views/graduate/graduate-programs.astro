@@ -1,0 +1,116 @@
+---
+import ImageHoverLink from "../../components/image-hover-link.astro";
+
+const items = [
+  {
+    name: "Athletic Training",
+    href: "https://www.messiah.edu/graduate/msat",
+    image: {
+      src: "https://www.messiah.edu/images/athletic_training_program_listing.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Business and Leadership",
+    href: "https://www.messiah.edu/info/22387/degrees_and_certificates",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-b-l.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Counseling",
+    href: "https://www.messiah.edu/info/23251/degrees_and_certificates",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-counseling.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Education",
+    href: "https://www.messiah.edu/info/23217/degrees_and_certificates",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-edu.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Higher Education Leadership",
+    href: "https://www.messiah.edu/info/23126/degree_programs",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/grad-higher-ed.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Music",
+    href: "https://www.messiah.edu/info/23276/degrees_and_tracks",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-conducting.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Nursing",
+    href: "https://www.messiah.edu/info/23125/degree_programs",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-nursing.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Nutrition and Dietetics",
+    href: "https://www.messiah.edu/graduate/dietetic-internship",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-dietetics.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Occupational Therapy",
+    href: "http://www.messiah.edu/mot",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-ot.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Physical Therapy",
+    href: "http://www.messiah.edu/grad-pt",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-dpt.jpg",
+      alt: "",
+    },
+  },
+  {
+    name: "Social Work",
+    href: "https://www.messiah.edu/homepage/5185/master_of_social_work_msw",
+    image: {
+      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-MSW-400.jpg",
+      alt: "",
+    },
+  },
+];
+---
+
+<section class="bg-[url(/patterns/pattern-bg.png)] py-24 scroll-m-24" id="our-programs">
+  <div class="wrapper">
+    <h2 class="text-primary-800 h2 text-center">Explore Messiah’s graduate programs</h2>
+
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-8">
+      {
+        items.map((item) => (
+          <ImageHoverLink
+            size="small"
+            caption={item.name}
+            image={item.image}
+            button={{
+              label: "Learn more",
+              href: item.href,
+            }}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,172 @@
+---
+import TabbedDialog from "../../components/tabbed-dialog.astro";
+
+const items = [
+  {
+    name: "Competitively priced",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/academics/academic-excellence-circle.png",
+    content: `
+      <img src="https://www.messiah.edu/site/custom_scripts/styles/img/academics/academic-excellence.jpg" alt="" class="float-right ml-4 mb-4 w-1/3">
+
+      <p class="mb-4 paragraph">Messiah University strives to keep our graduate programs competitively priced and accessible, and we offer a variety of financial aid and discount opportunities to our graduate students. Types of aid available include student loans, student employment, grants, private scholarships, veterans’ benefits, graduate programs discounts and employer assistance.</p>
+
+      <p class="mb-4 paragraph">No-fee tuition<br />
+      At Messiah University, most of our graduate programs feature no-fee tuition. The cost per credit is what you pay–there are no hidden fees for labs, courses, services or technology. We put the true cost of your program upfront so that you can accurately compare and plan for your graduate education.</p>
+
+      <div class="flex gap-2 flex-wrap mt-4"> 
+        <a class="btn-tertiary" href="https://www.messiah.edu/info/21313/financial_aid_for_graduate_programs">Financial aid</a>
+        <a class="btn-tertiary" href="https://www.messiah.edu/info/22941/tuition_and_fees">Tuition</a>
+      </div>
+    `,
+  },
+  {
+    name: "Academic excellence",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/academics/competitively-priced-circle-2.png",
+    content: `
+      <img src="https://www.messiah.edu/site/custom_scripts/styles/img/academics/competitively-priced-modal.jpg" alt="" class="float-right ml-4 mb-4 w-1/3">
+
+      <p class="mb-4 paragraph">Messiah University successfully integrates top-tier academics and Christian faith. To meet the need of working professionals, our curriculum and coursework is designed to be instantly relevant to your career.</p>
+    `,
+  },
+  {
+    name: "Faith commitment",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/academics/faith-commitment-circle.png",
+    content: `
+      <img src="https://www.messiah.edu/site/custom_scripts/styles/img/academics/faith-commitment.jpg" alt="" class="float-right ml-4 mb-4 w-1/3">
+
+      <p class="mb-4 paragraph">Messiah University is a Christian university of the liberal and applied arts and sciences with a mission of educating men and women for lives of service, leadership and reconciliation. As a graduate student, you will be called to view your career and education through the lens of faith as you experience our distinct Christian and values-based education.</p>
+    `,
+  },
+  {
+    name: "Exceptional faculty",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/academics/exceptional-faculty-circle.png",
+    content: `
+      <img src="https://www.messiah.edu/site/custom_scripts/styles/img/academics/exceptional-faculty.jpg" alt="" class="float-right ml-4 mb-4 w-1/3">
+
+      <p class="mb-4 paragraph">Our faculty creates a stimulating learning environment that will challenge and advance you in your area of expertise. Courses are taught by Messiah University faculty, who are effective Christian educators, practicing professionals, outstanding scholars, researchers, authors and sought-after experts in their fields.</p>
+    `,
+  },
+  {
+    name: "Flexible class formats",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/academics/flexible-class-circle.png",
+    content: `
+      <div class="flex flex-col sm:flex-row gap-4">
+        <p class="sm:w-3/4 paragraph">The majority of Messiah University’s graduate courses are conducted primarily online; however, some programs are fully online, others offer a hybrid format that combines online courses with several weeklong on-campus sessions, and a couple are full-time traditional programs.</p>
+
+        <img src="https://www.messiah.edu/site/custom_scripts/styles/img/academics/flexible-class.jpg" alt="" class="w-full sm:w-1/4 self-start">
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div>
+          <h4 class="h4 mb-4">Traditional</h4>
+          <p class="paragraph mb-4">Students meet at a physical location during scheduled meeting times for the duration of the course.</p>
+
+          <p class="paragraph mb-4">The following graduate programs are offered in a traditional format:</p>
+          
+          <ul class="list-disc pl-6">
+            <li>Occupational therapy</li>
+            <li>Physical therapy</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="h4 mb-4">Hybrid</h4>
+          <p class="paragraph mb-4">Most of Messiah’s graduate programs are conducted in a hybrid format which combines face-to-face meetings and online delivery.</p>
+
+          <p class="paragraph mb-4">The following graduate programs are offered in a hybrid format:</p>
+          
+          <ul class="list-disc pl-6 mb-4">
+            <li>Counseling</li>
+            <li>Education *</li>
+            <li>Higher education</li>
+            <li>Music conducting</li>
+            <li>Nursing</li>
+            <li>Dietetic internship</li>
+          </ul>
+
+          <p>* Students who pursue the PDE certification in special education (PreK-8 or 7-12) as a part of the M.Ed. degree or as a non-degree option must come to campus for some one-week intensive courses. All other education graduate programs can be completed entirely online.</p>
+        </div>
+        <div>
+          <h4 class="h4 mb-4">Online</h4>
+          <p class="paragraph mb-4">Students access all course materials online through a learning management system: there are no requirements for face-to-face sessions.</p>
+
+          <p class="paragraph mb-4">The following graduate programs are offered in an online format:</p>
+          
+          <ul class="list-disc pl-6 mb-4">
+            <li>Business and leadership</li>
+            <li>Education *</li>
+          </ul>
+
+          <p>* Students who pursue the PDE certification in special education (PreK-8 or 7-12) as a part of the M.Ed. degree or as a non-degree option must come to campus for some one-week intensive courses. All other education graduate programs can be completed entirely online.</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4 flex-wrap mt-8 justify-center"> 
+        <a class="btn-tertiary" href="https://www.messiah.edu/info/22871/program_and_class_format">Learn more about Messiah's Graduate class formats</a>
+      </div>
+    `,
+  },
+];
+---
+
+<section
+  class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover py-24 relative scroll-m-24"
+  id="why-messiah"
+>
+  <div class="wrapper">
+    <h2 class="text-white h2 text-center">Why Messiah?</h2>
+    <p class="text-white text-center paragraph mx-auto max-w-4xl">
+      Messiah’s graduate programs are designed to challenge your intellect, engage your faith and
+      fit your busy lifestyle.
+    </p>
+
+    <ul class="grid grid-cols-2 md:grid-cols-3 gap-8 my-16">
+      {
+        items.map((item, index) => (
+          <li>
+            <button
+              data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
+              type="button"
+              class="text-white group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
+            >
+              <img
+                src={item.preview}
+                alt=""
+                class="mb-2 rounded-full group-hover:opacity-75 transition-opacity"
+              />
+              {item.name}
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <TabbedDialog
+    tabs={items}
+    title="Why Messiah?"
+    class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover bg-primary-950"
+  >
+    {
+      items.map((item, index) => (
+        <div
+          id={`tabbed-dialog-tabpanel-${index}`}
+          role="tabpanel"
+          data-tab-value={item.name}
+          hidden={index === 0 ? undefined : ""}
+          aria-labelledby={`tabbed-dialog-tab-${index}`}
+        >
+          <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
+            {item.name}
+          </h4>
+
+          <div set:html={item.content} />
+        </div>
+      ))
+    }
+  </TabbedDialog>
+</section>

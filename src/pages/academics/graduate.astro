@@ -1,0 +1,53 @@
+---
+import ContinueExploring from "../../components/continue-exploring.astro";
+import PageTabNavigation from "../../components/page-tab-navigation.astro";
+import SingleColumn from "../../layouts/single-column.astro";
+import GraduatePrograms from "../../views/graduate/graduate-programs.astro";
+import Overview from "../../views/graduate/overview.astro";
+import SchoolOfProfessionals from "../../views/graduate/school-of-professionals.astro";
+import WhyMessiah from "../../views/graduate/why-messiah.astro";
+---
+
+<SingleColumn
+  title="Graduate Studies"
+  subtitle="Graduate-level academics at Messiah"
+  description="Graduate-level academics at Messiah"
+  image="/images/academics-hero-grad.jpg"
+>
+  <PageTabNavigation
+    tabs={[
+      { title: "Overview", hash: "#overview" },
+      { title: "Our programs", hash: "#our-programs" },
+      { title: "Why Messiah?", hash: "#why-messiah" },
+      { title: "Graduate School", hash: "#graduate-school" },
+    ]}
+  />
+
+  <Overview />
+
+  <GraduatePrograms />
+
+  <WhyMessiah />
+
+  <SchoolOfProfessionals />
+
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Graduate Catalog",
+        href: "https://www.messiah.edu/info/20108/academic_information/1306/academic_information",
+      },
+      { label: "Graduate Tuition", href: "https://www.messiah.edu/info/22941/tuition_and_fees" },
+      {
+        label: "Graduate Admissions",
+        href: "https://www.messiah.edu/info/21084/graduate_admissions",
+      },
+      {
+        label: "Graduate Student Services",
+        href: "https://www.messiah.edu/info/22865/student_services_and_information",
+      },
+    ]}
+  />
+</SingleColumn>
