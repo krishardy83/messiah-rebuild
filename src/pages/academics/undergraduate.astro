@@ -1,0 +1,62 @@
+---
+import ContinueExploring from "../../components/continue-exploring.astro";
+import PageTabNavigation from "../../components/page-tab-navigation.astro";
+import SingleColumn from "../../layouts/single-column.astro";
+import AcademicPrograms from "../../views/undergraduate/academic-programs.astro";
+import PathwayPrograms from "../../views/undergraduate/pathway-programs.astro";
+import Overview from "../../views/undergraduate/overview.astro";
+import AcademicSupport from "../../views/undergraduate/academic-support.astro";
+import AcademicOpportunities from "../../views/undergraduate/academic-opportunities.astro";
+---
+
+<SingleColumn
+  title="Academic distinction"
+  subtitle="Undergraduate programs at Messiah"
+  description="Undergraduate programs at Messiah"
+  image="/images/ug-academics-hero.webp"
+>
+  <PageTabNavigation
+    tabs={[
+      { title: "What do you want to study?", hash: "#what-to-study" },
+      { title: "Accelerated options", hash: "#accelerated-options" },
+      { title: "Academic opportunities", hash: "#academic-opportunities" },
+      { title: "Academic support", hash: "#academic-support" },
+    ]}
+  />
+
+  <Overview />
+
+  <AcademicPrograms />
+
+  <PathwayPrograms />
+
+  <AcademicOpportunities />
+
+  <AcademicSupport />
+
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      { href: "https://www.messiah.edu/info/21164/library", label: "Library" },
+      {
+        href: "https://www.messiah.edu/info/20032/academic_resources",
+        label: "Academic resources",
+      },
+      {
+        href: "https://www.messiah.edu/info/20029/schools_and_departments",
+        label: "Schools and departments",
+      },
+      { href: "https://www.messiah.edu/recognitions", label: "Academic recognitions" },
+      {
+        href: "https://www.messiah.edu/info/21764/college_wide_educational_objectives/2949/undergraduate",
+        label: "Learning outcomes",
+      },
+      { href: "https://www.messiah.edu/camps", label: "Academic summer camps" },
+      {
+        href: "https://www.messiah.edu/info/23318/undergraduate_research",
+        label: "Undergraduate Research",
+      },
+    ]}
+  />
+</SingleColumn>
