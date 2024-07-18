@@ -205,7 +205,7 @@ const { transparent } = Astro.props;
   }
 
   function handleScroll() {
-    if (window.scrollY > 0) {
+    if (window.scrollY > 200) {
       if (menu?.getAttribute("data-scrolling") !== "true") {
         menu?.setAttribute("data-scrolling", "true");
       }
