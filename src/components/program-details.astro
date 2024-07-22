@@ -1,0 +1,46 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  where: string[];
+  what: string[];
+  school: string[];
+}
+
+const { where, what, school, class: className, ...props } = Astro.props;
+---
+
+<div class="@container">
+  <div
+    class={cn(
+      "grid grid-cols-1 @md:grid-cols-3 gap-8 bg-white border border-gray-200 p-4",
+      className
+    )}
+    {...props}
+  >
+    <div>
+      <h4 class="h4">Where they work</h4>
+
+      <ol class="mt-4">
+        {where.map((item) => <li>{item}</li>)}
+      </ol>
+    </div>
+
+    <div>
+      <h4 class="h4">What they do</h4>
+
+      <ol class="mt-4">
+        {what.map((item) => <li>{item}</li>)}
+      </ol>
+    </div>
+
+    <div>
+      <h4 class="h4">Graduate school</h4>
+
+      <ol class="mt-4">
+        {school.map((item) => <li>{item}</li>)}
+      </ol>
+    </div>
+  </div>
+</div>

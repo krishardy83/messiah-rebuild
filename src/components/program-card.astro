@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+import ProgramList from "./program-list.astro";
+
+export type Program = "M" | "m" | "T" | "U";
+
+interface Props extends HTMLAttributes<"article"> {
+  title: string;
+  image: {
+    src: string;
+    alt?: string;
+  };
+  href: string;
+  programs: Program[];
+}
+
+const { title, image, href, programs, class: className, ...props } = Astro.props;
+---
+
+<article {...props} class={cn("border border-gray-300 bg-gray-100 relative group", className)}>
+  <img src={image.src} alt={image.alt} class="group-hover:opacity-75 transition-opacity" />
+  <h4 class="mt-2 mb-4 px-2">{title}</h4>
+
+  <ProgramList programs={programs} />
+
+  <a href={href} class="btn-tertiary w-full before:absolute before:inset-0">Read more</a>
+</article>

@@ -1,0 +1,157 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<div
+  role="tablist"
+  class="wrapper border-t border-gray-200 mt-12 items-center flex flex-col md:flex-row gap-x-8 md:gap-x-16 flex-wrap"
+>
+  <button
+    type="button"
+    role="tab"
+    class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+    aria-selected="true"
+    id="tab-overview"
+    aria-controls="tabpanel-overview">Overview</button
+  >
+  <button
+    type="button"
+    role="tab"
+    class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+    aria-selected="false"
+    tabindex="-1"
+    id="tab-courses"
+    aria-controls="tabpanel-courses">Coures & Curriculum</button
+  >
+  <button
+    type="button"
+    role="tab"
+    class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+    aria-selected="false"
+    tabindex="-1"
+    id="tab-outcomes"
+    aria-controls="tabpanel-outcomes">Alumni Outcomes</button
+  >
+  <button
+    type="button"
+    role="tab"
+    class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+    aria-selected="false"
+    tabindex="-1"
+    id="tab-careers"
+    aria-controls="tabpanel-careers">Career Preparation</button
+  >
+  <button
+    type="button"
+    role="tab"
+    class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+    aria-selected="false"
+    tabindex="-1"
+    id="tab-why-messiah"
+    aria-controls="tabpanel-why-messiah">Why Messiah?</button
+  >
+</div>
+
+<div class="bg-gray-50 border-t border-gray-200">
+  <div class="wrapper flex flex-col md:flex-row">
+    <div class="flex-1 py-8">
+      <div role="tabpanel" tabindex="0" id="tabpanel-overview" aria-labelledby="tab-overview">
+        <slot name="overview" />
+      </div>
+      <div role="tabpanel" tabindex="0" id="tabpanel-courses" hidden aria-labelledby="tab-courses">
+        <slot name="courses" />
+      </div>
+      <div
+        role="tabpanel"
+        tabindex="0"
+        id="tabpanel-outcomes"
+        hidden
+        aria-labelledby="tab-outcomes"
+      >
+        <slot name="outcomes" />
+      </div>
+      <div role="tabpanel" tabindex="0" id="tabpanel-careers" hidden aria-labelledby="tab-careers">
+        <slot name="careers" />
+      </div>
+      <div
+        role="tabpanel"
+        tabindex="0"
+        id="tabpanel-why-messiah"
+        hidden
+        aria-labelledby="tab-why-messiah"
+      >
+        <slot name="why-messiah" />
+      </div>
+    </div>
+
+    <aside class="md:border-l md:border-gray-200 md:ml-8 md:pl-8 md:max-w-sm w-full mb-8">
+      <nav class="space-y-2 mt-8 sticky top-24">
+        <a
+          href="https://www.messiah.edu/info/20197/department_of_business"
+          class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/view-homepage-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
+          ><span class="text-sm uppercase">Department of</span><span
+            class="font-bold text-xl uppercase">Business</span
+          ></a
+        >
+        <a
+          href="https://www.messiah.edu/info/20549/our_faculty"
+          class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/faculty-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
+          ><span class="text-sm uppercase">Meet the</span><span class="font-bold text-xl uppercase"
+            >Faculty</span
+          ></a
+        >
+        <a
+          href="https://www.messiah.edu/info/21807/our_facilities"
+          class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/view-homepage-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
+          ><span class="text-sm uppercase">View our</span><span class="font-bold text-xl uppercase"
+            >Facilities</span
+          ></a
+        >
+        <a href="https://www.messiah.edu/applytoday" class="btn-tertiary w-full justify-start"
+          ><Icon name="edit" /> Apply</a
+        >
+        <a
+          href="https://www.messiah.edu/info/21344/tuition_and_aid"
+          class="btn-secondary w-full justify-start"><Icon name="money" /> Tuition</a
+        >
+        <a
+          href="http://www.messiah.edu/info/21379/types_of_aid"
+          class="btn-secondary w-full justify-start"><Icon name="library" /> Scholarships</a
+        >
+      </nav>
+    </aside>
+  </div>
+</div>
+
+<script>
+  let buttons = document.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") {
+      console.log(document.activeElement);
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    let trigger = event.target as HTMLElement;
+
+    if (trigger.getAttribute("role") === "tab") {
+      panels.forEach((panel) => {
+        panel.setAttribute("hidden", "");
+
+        if (panel.getAttribute("id") === trigger.getAttribute("aria-controls")) {
+          panel.removeAttribute("hidden");
+        }
+      });
+
+      buttons.forEach((button) => {
+        button.setAttribute("aria-selected", "false");
+
+        if (button.getAttribute("id") === trigger.getAttribute("id")) {
+          button.setAttribute("aria-selected", "true");
+        }
+      });
+    }
+  });
+</script>

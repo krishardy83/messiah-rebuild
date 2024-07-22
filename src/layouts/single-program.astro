@@ -1,0 +1,42 @@
+---
+import type { Program } from "../components/program-card.astro";
+import ProgramList from "../components/program-list.astro";
+import BaseLayout from "./base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  badge: string;
+  programs: Program[];
+  image: string;
+}
+
+const { title, description, badge, programs, image } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <header
+    class={`relative bg-[image:var(--bg-banner)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-48 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent`}
+    style={{ "--bg-banner": `url(${image})` }}
+    aria-hidden="true"
+  >
+    <div
+      class="max-w-6xl mx-auto px-4 h-[70vw] min-h-[400px] max-h-[900px] flex items-end pb-4 pd:mb-0"
+    >
+      <div class="md:w-1/2 relative z-10 md:mb-20">
+        <div class="flex gap-8 items-center mb-4">
+          <h1 class="font-title font-bold text-5xl text-white uppercase mb-0">
+            {title}
+          </h1>
+          <span class="bg-white text-primary-800 font-title font-bold text-3xl px-2">{badge}</span>
+        </div>
+
+        <ProgramList programs={programs} showText />
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <slot />
+  </main>
+</BaseLayout>

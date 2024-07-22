@@ -1,0 +1,79 @@
+---
+import ProgramCard, { type Program } from "../../components/program-card.astro";
+
+async function getRelatedPrograms() {
+  const slug = Astro.url.pathname.split("/").at(2);
+
+  if (!slug) {
+    return [];
+  }
+
+  const response = await fetch("https://www.messiah.edu/site/a/cache/ug-related-programs.json");
+  const programs = await response.json();
+
+  const thisProgram = programs.items.find((program: any) => program.url_slug === slug);
+
+  if (!thisProgram) {
+    return [];
+  }
+
+  return programs.items.filter((program: any) => {
+    const ids = thisProgram.related_programs.split(",");
+
+    return ids.includes(program.entry_id);
+  });
+}
+
+function getProgramTypes(program: any) {
+  const types: Program[] = [];
+
+  if (program.major === "Yes") {
+    types.push("M");
+  }
+
+  if (program.minor === "Yes") {
+    types.push("m");
+  }
+
+  if (program.teaching_certification === "Yes") {
+    types.push("T");
+  }
+
+  if (program.undergrad_certificates === "Yes") {
+    types.push("U");
+  }
+
+  return types;
+}
+
+const relatedPrograms = await getRelatedPrograms();
+---
+
+<h3 class="h3">Programs related to Accounting</h3>
+
+<div class="f-carousel" data-related-programs-slider>
+  {
+    relatedPrograms.map((relatedProgram: any) => (
+      <div class="px-2 f-carousel__slide w-1/2 lg:w-1/4">
+        <ProgramCard
+          title={relatedProgram.entry_title}
+          image={{ src: `https://www.messiah.edu/images/${relatedProgram.thumbnail_small}` }}
+          href={relatedProgram.program_url}
+          programs={getProgramTypes(relatedProgram)}
+        />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import { Carousel } from "@fancyapps/ui";
+
+  const container = document.querySelector<HTMLDivElement>("[data-related-programs-slider]");
+
+  new Carousel(container, {
+    infinite: true,
+    Dots: true,
+    Navigation: false,
+  });
+</script>

@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+export type Program = "M" | "m" | "T" | "U";
+
+interface Props extends HTMLAttributes<"article"> {
+  programs: Program[];
+  showText?: boolean;
+}
+
+const { programs, showText = false, class: className, ...props } = Astro.props;
+
+const colorMap = {
+  M: "#273d5e",
+  m: "#4d87a9",
+  T: "#e37b65",
+  U: "#e37b65",
+};
+
+const textMap = {
+  M: "Major",
+  m: "Minor",
+  T: "Teaching",
+  U: "Undergraduate",
+};
+---
+
+<ul
+  class={cn(
+    "flex mb-4 px-2",
+    {
+      "gap-2": !showText,
+      "gap-8": showText,
+    },
+    className
+  )}
+  {...props}
+>
+  {
+    programs.map((program) => (
+      <li class="flex items-center gap-2 text-white" style={{ "--background": colorMap[program] }}>
+        <span class="flex items-center justify-center shrink-0 rounded-full size-6 text-sm bg-[var(--background)]">
+          {program}
+        </span>
+        {showText ? <span>{textMap[program]}</span> : null}
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,105 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"nav"> {
+  value: number;
+}
+
+const { value, class: className, ...props } = Astro.props;
+---
+
+<div class="@container">
+  <div
+    class={cn(
+      "bg-[url(/images/grad_stats_background.jpg)] bg-cover flex gap-8 p-8 items-center flex-wrap @md:flex-nowrap",
+      className
+    )}
+    {...props}
+  >
+    <p class="text-white font-bold text-2xl">
+      <slot />
+    </p>
+
+    <div
+      class="counter relative after:content-[counter(num)] after:absolute after:left-1/2 after:top-1/2 w-max after:-translate-x-1/2 after:-translate-y-1/2 after:text-5xl after:text-white"
+    >
+      <svg
+        width="200"
+        height="200"
+        viewBox="0 0 200 200"
+        class="circular-progress"
+        style={{ "--value": value }}
+      >
+        <circle class="bg stroke-white"></circle>
+        <circle class="fg stroke-tertiary-400 -rotate-90 stroke-2"></circle>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  .counter {
+    counter-reset: num var(--num);
+    animation: counter-animation 2s ease-out 0s 1 forwards;
+  }
+
+  @property --num {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+  }
+
+  @keyframes counter-animation {
+    from {
+      --num: 0;
+    }
+    to {
+      --num: 96;
+    }
+  }
+
+  .circular-progress {
+    --size: 200px;
+    --half-size: calc(var(--size) / 2);
+    --stroke-width: 10px;
+    --radius: calc((var(--size) - var(--stroke-width)) / 2);
+    --circumference: calc(var(--radius) * pi * 2);
+    --dash: calc((var(--progress) * var(--circumference)) / 100);
+    animation: progress-animation 2s ease-out 0s 1 forwards;
+  }
+
+  .circular-progress circle {
+    cx: var(--half-size);
+    cy: var(--half-size);
+    r: var(--radius);
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .circular-progress circle.bg {
+    stroke-width: calc(var(--stroke-width) - 1px);
+  }
+
+  .circular-progress circle.fg {
+    transform-origin: var(--half-size) var(--half-size);
+    stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+    transition: stroke-dasharray 0.3s ease-out 0s;
+    stroke-width: var(--stroke-width);
+  }
+
+  @property --progress {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+  }
+
+  @keyframes progress-animation {
+    from {
+      --progress: 0;
+    }
+    to {
+      --progress: 96;
+    }
+  }
+</style>
