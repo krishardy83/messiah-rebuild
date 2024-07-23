@@ -35,16 +35,16 @@ export const topGroups: TopGroup[] = [
 export const bottomGroups: BottomGroup[] = [
   {
     title: "About",
-    href: "/",
+    href: "/about",
     description: "A passion for Christian community and our shared faith make us who we are.",
     children: [
       [
         { title: "Overview", href: "/about" },
-        { title: "Who we are", href: "/" },
-        { title: "Our campus", href: "/" },
-        { title: "Faith community", href: "/" },
-        { title: "See anew", href: "/" },
-        { title: "Our history", href: "/" },
+        { title: "Who we are", href: "/about#overview" },
+        { title: "Our campus", href: "/about#our-campus" },
+        { title: "Faith community", href: "/about#faith-community" },
+        { title: "See anew", href: "/about#see-anew" },
+        { title: "Our history", href: "/about#our-history" },
       ],
       [
         { title: "Recognitions", href: "/" },
@@ -63,19 +63,19 @@ export const bottomGroups: BottomGroup[] = [
       "Messiah University is nationally recognized for its integration of top-tier academics and Christian faith. ",
     children: [
       [
-        { title: "Undergraduate", href: "/", heading: true },
+        { title: "Undergraduate", href: "/academics/undergraduate", heading: true },
         { title: "Majors and minors", href: "/" },
-        { title: "Accelerated options", href: "/" },
-        { title: "Academics opportunities", href: "/" },
-        { title: "Academic support", href: "/" },
+        { title: "Accelerated options", href: "/academics/undergraduate#accelerated-options" },
+        { title: "Academics opportunities", href: "/academics/undergraduate#academic-opportunities" },
+        { title: "Academic support", href: "/academics/undergraduate#academic-support" },
         { title: "Careers and outcomes", href: "/" },
         { title: "Study abroad", href: "/" },
       ],
       [
-        { title: "Graduate", href: "/", heading: true },
-        { title: "Degrees and certificates", href: "/" },
-        { title: "Academic distinctives", href: "/" },
-        { title: "School of Graduate and Professional Studies", href: "/" },
+        { title: "Graduate", href: "/academics/graduate", heading: true },
+        { title: "Degrees and certificates", href: "/academics/graduate#our-programs" },
+        { title: "Academic distinctives", href: "/academics/graduate#why-messiah" },
+        { title: "School of Graduate and Professional Studies", href: "/academics/graduate#graduate-school" },
         { title: "Career development", href: "/" },
       ],
       [
@@ -124,7 +124,7 @@ export const bottomGroups: BottomGroup[] = [
   },
   {
     title: "Athletics",
-    href: "/",
+    href: "/athletics-recreation",
     description:
       "Athletics serve as an exciting piece of our community and provide a common bond for school spirit. ",
     children: [
@@ -136,48 +136,48 @@ export const bottomGroups: BottomGroup[] = [
         { title: "Sports camps", href: "/" },
       ],
       [
-        { title: "Sports & Recreation", href: "/", heading: true },
-        { title: "Club & rec sports", href: "/" },
-        { title: "Physical fitness", href: "/" },
-        { title: "Game day", href: "/" },
-        { title: "Sports ministry", href: "/" },
+        { title: "Sports & Recreation", href: "/athletics-recreation", heading: true },
+        { title: "Club & rec sports", href: "/athletics-recreation#overview" },
+        { title: "Physical fitness", href: "/athletics-recreation#physical-fitness" },
+        { title: "Game day", href: "/athletics-recreation#game-day" },
+        { title: "Sports ministry", href: "/athletics-recreation#sports-ministry" },
       ],
     ],
   },
   {
     title: "Faith & Service",
-    href: "/",
+    href: "/faith-service",
     description:
       "Our motto, 'Christ Preeminent', shapes every experience you'll have as a student at Messiah. ",
     children: [
       [
-        { title: "Overview", href: "/" },
-        { title: "Grow your faith", href: "/" },
-        { title: "Service opportunities", href: "/" },
+        { title: "Overview", href: "/faith-service" },
+        { title: "Grow your faith", href: "/faith-service#grow-your-faith" },
+        { title: "Service opportunities", href: "/faith-service#service-opportunities" },
       ],
       [
-        { title: "Find a church", href: "/" },
-        { title: "Faith in the classroom", href: "/" },
+        { title: "Find a church", href: "/faith-service#find-your-church" },
+        { title: "Faith in the classroom", href: "/faith-service#faith-in-the-classroom" },
       ],
     ],
   },
   {
     title: "Student Life",
-    href: "/",
+    href: "/student-life",
     description:
       "Messiah’s campus is an active, busy place where you’ll have fun and make lifelong friendships. ",
     children: [
       [
-        { title: "Life on campus", href: "/" },
-        { title: "Things to do", href: "/" },
-        { title: "Your new home", href: "/" },
-        { title: "Living on campus", href: "/" },
+        { title: "Life on campus", href: "/student-life#overview" },
+        { title: "Things to do", href: "/student-life#things-to-do" },
+        { title: "Your new home", href: "/student-life#things-to-do" },
+        { title: "Living on campus", href: "/student-life#resident-life-dining" },
       ],
       [
         { title: "Frequently asked questions", href: "/" },
-        { title: "Dining facilities", href: "/" },
+        { title: "Dining facilities", href: "/student-life#diversity" },
         { title: "A diverse community", href: "/" },
-        { title: "Student support ", href: "/" },
+        { title: "Student support ", href: "/student-life#support" },
       ],
     ],
   },
