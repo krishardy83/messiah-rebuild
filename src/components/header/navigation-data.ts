@@ -39,7 +39,7 @@ export const bottomGroups: BottomGroup[] = [
     description: "A passion for Christian community and our shared faith make us who we are.",
     children: [
       [
-        { title: "Overview", href: "/" },
+        { title: "Overview", href: "/about" },
         { title: "Who we are", href: "/" },
         { title: "Our campus", href: "/" },
         { title: "Faith community", href: "/" },
