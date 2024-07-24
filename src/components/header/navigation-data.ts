@@ -40,7 +40,7 @@ export const bottomGroups: BottomGroup[] = [
     children: [
       [
         { title: "Overview", href: "/about" },
-        { title: "Who we are", href: "/about#overview" },
+        { title: "Who we are", href: "/about#start" },
         { title: "Our campus", href: "/about#our-campus" },
         { title: "Faith community", href: "/about#faith-community" },
         { title: "See anew", href: "/about#see-anew" },
@@ -137,7 +137,7 @@ export const bottomGroups: BottomGroup[] = [
       ],
       [
         { title: "Sports & Recreation", href: "/athletics-recreation", heading: true },
-        { title: "Club & rec sports", href: "/athletics-recreation#overview" },
+        { title: "Club & rec sports", href: "/athletics-recreation#start" },
         { title: "Physical fitness", href: "/athletics-recreation#physical-fitness" },
         { title: "Game day", href: "/athletics-recreation#game-day" },
         { title: "Sports ministry", href: "/athletics-recreation#sports-ministry" },
