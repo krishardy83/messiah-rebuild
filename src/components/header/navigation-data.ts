@@ -1,5 +1,32 @@
-import type { BottomGroup } from "./bottom-group.astro";
-import type { TopGroup } from "./top-group.astro";
+export interface BottomGroup {
+  title: string;
+  href: string;
+  description: string;
+  children: {
+    title: string;
+    href: string;
+    heading?: boolean;
+  }[][];
+}
+
+export interface TopGroup {
+  title: string;
+  children: (
+    | {
+        title: string;
+        href: string;
+        type: "button";
+      }
+    | {
+        title: string;
+        href: string;
+        type: "link";
+      }
+    | {
+        type: "separator";
+      }
+  )[];
+}
 
 export const topGroups: TopGroup[] = [
   {
@@ -66,7 +93,10 @@ export const bottomGroups: BottomGroup[] = [
         { title: "Undergraduate", href: "/academics/undergraduate", heading: true },
         { title: "Majors and minors", href: "/" },
         { title: "Accelerated options", href: "/academics/undergraduate#accelerated-options" },
-        { title: "Academics opportunities", href: "/academics/undergraduate#academic-opportunities" },
+        {
+          title: "Academics opportunities",
+          href: "/academics/undergraduate#academic-opportunities",
+        },
         { title: "Academic support", href: "/academics/undergraduate#academic-support" },
         { title: "Careers and outcomes", href: "/" },
         { title: "Study abroad", href: "/" },
@@ -75,7 +105,10 @@ export const bottomGroups: BottomGroup[] = [
         { title: "Graduate", href: "/academics/graduate", heading: true },
         { title: "Degrees and certificates", href: "/academics/graduate#our-programs" },
         { title: "Academic distinctives", href: "/academics/graduate#why-messiah" },
-        { title: "School of Graduate and Professional Studies", href: "/academics/graduate#graduate-school" },
+        {
+          title: "School of Graduate and Professional Studies",
+          href: "/academics/graduate#graduate-school",
+        },
         { title: "Career development", href: "/" },
       ],
       [

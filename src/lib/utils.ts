@@ -38,3 +38,7 @@ export function getTime(date: Date) {
     date,
   );
 }
+
+export function slugify(str: string) {
+  return str.toLowerCase().replace(/[\W_\s]+/g, "-");
+}

@@ -1,0 +1,277 @@
+---
+import { slugify } from "../../lib/utils";
+import Icon from "../icon.astro";
+import Logo from "../logo.astro";
+import SearchForm from "./search-form.astro";
+import { bottomGroups, topGroups } from "./navigation-data";
+
+interface Props {
+  transparent: boolean;
+}
+
+const { transparent } = Astro.props;
+---
+
+<div
+  class="sticky -top-px before:absolute before:top-0 before:h-2 md:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 md:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 md:pt-4 pb-2 md:pb-6 z-30 group border-b border-transparent md:data-[scrolling='true']:border-gray-300 md:data-[scrolling='true']:-translate-y-12 transition-all"
+  data-menu
+>
+  <header class="mx-auto max-w-6xl px-4">
+    <nav class="flex items-end flex-wrap">
+      <a
+        href="/"
+        aria-label="home page"
+        class:list={[
+          "mr-auto mt-4 group-data-[scrolling='true']:opacity-0 transition-opacity",
+          transparent
+            ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
+            : "text-primary-800",
+        ]}
+      >
+        <Logo />
+      </a>
+
+      <div class="flex-col justify-end transition-opacity grow hidden md:flex" data-menu-wrapper>
+        <ul
+          class="flex justify-end mb-4 items-center group-data-[scrolling='true']:opacity-0 transition-opacity"
+        >
+          {
+            topGroups.map((group) => (
+              <li class="relative">
+                <button
+                  type="button"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  id={`group-button-${slugify(group.title)}`}
+                  aria-controls={`group-${slugify(group.title)}`}
+                  class:list={[
+                    "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white flex items-center gap-x-2 group",
+                    transparent
+                      ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                      : "text-primary-800",
+                  ]}
+                >
+                  {group.title}
+
+                  <Icon
+                    name="chevron-down"
+                    class="size-4 pointer-events-none group-aria-expanded:rotate-180 transition-transform"
+                  />
+                </button>
+
+                <div
+                  id={`group-${slugify(group.title)}`}
+                  class="opacity-0 hidden absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
+                  role="region"
+                  aria-labelledby={`group-button-${slugify(group.title)}`}
+                  aria-hidden="true"
+                >
+                  <ul class="flex flex-col gap-2">
+                    {group.children.map((child) => {
+                      if (child.type === "separator") {
+                        return <li role="separator" class="w-full h-px bg-primary-500 my-4" />;
+                      }
+
+                      return (
+                        <li>
+                          <a
+                            href={child.href}
+                            class:list={[
+                              child.type === "button" ? "btn-quaternary w-full" : "link text-lg",
+                            ]}
+                          >
+                            {child.title}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </li>
+            ))
+          }
+
+          <li>
+            <a
+              href="/"
+              class:list={[
+                "md:uppercase hover:text-tertiary-400 md:px-4 md:py-3 text-lg md:text-base block transition-colors",
+                transparent
+                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  : "text-primary-800",
+              ]}
+            >
+              Give
+            </a>
+          </li>
+
+          <SearchForm transparent={transparent} />
+        </ul>
+
+        <ul class="flex gap-6 justify-end">
+          {
+            bottomGroups.map((group) => (
+              <li>
+                <button
+                  type="button"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  id={`group-button-${slugify(group.title)}`}
+                  aria-controls={`group-${slugify(group.title)}`}
+                  class:list={[
+                    "text-base group lg:text-lg xl:text-xl flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
+                    transparent
+                      ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                      : "text-primary-800",
+                  ]}
+                >
+                  {group.title}
+
+                  <Icon
+                    name="chevron-down"
+                    class="size-4 group-aria-expanded:rotate-180 pointer-events-none transition-transform"
+                  />
+                </button>
+
+                <div
+                  id={`group-${slugify(group.title)}`}
+                  class="opacity-0 hidden absolute left-0 mt-6 w-full bg-gray-100 py-12 transition-opacity duration-300 z-30"
+                  role="region"
+                  aria-labelledby={`group-button-${slugify(group.title)}`}
+                  aria-hidden="true"
+                >
+                  <div class="mx-auto flex max-w-6xl gap-12 px-4">
+                    <div class="w-2/5 border-r border-gray-300 pr-12">
+                      <p class="mb-4 font-serif text-2xl font-bold text-primary-800">
+                        {group.description}
+                      </p>
+
+                      <a href={group.href} class="btn-quaternary">
+                        Start here
+                      </a>
+                    </div>
+
+                    {group.children.map((child) => (
+                      <ul class="flex-1 space-y-1">
+                        {child.map((link) => (
+                          <li>
+                            <a
+                              href={link.href}
+                              class:list={[
+                                "link",
+                                {
+                                  "text-primary-800 font-title uppercase font-bold text-xl":
+                                    link.heading,
+                                },
+                              ]}
+                            >
+                              {link.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    ))}
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </nav>
+  </header>
+</div>
+
+<script>
+  const menu = document.querySelector<HTMLDivElement>("[data-menu]");
+
+  function hide(button: HTMLButtonElement) {
+    let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
+
+    if (group) {
+      group.classList.add("opacity-0");
+      button.setAttribute("aria-expanded", "false");
+      group.setAttribute("aria-hidden", "true");
+      group.addEventListener(
+        "transitionend",
+        () => {
+          group.classList.add("hidden");
+        },
+        { once: true }
+      );
+    }
+  }
+
+  function show(button: HTMLButtonElement) {
+    let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
+
+    if (group) {
+      group.classList.remove("hidden");
+      button.setAttribute("aria-expanded", "true");
+      group.setAttribute("aria-hidden", "false");
+
+      setTimeout(() => {
+        group.classList.remove("opacity-0");
+      });
+    }
+  }
+
+  function hideActive() {
+    let active = getActive();
+
+    if (active) {
+      hide(active);
+      active.focus();
+    }
+  }
+
+  function handleToggleGroup(button: HTMLButtonElement) {
+    if (button.getAttribute("aria-expanded") === "false") {
+      hideActive();
+      show(button);
+    } else {
+      hide(button);
+    }
+  }
+
+  function getActive() {
+    return menu?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
+  }
+
+  function handleClick(event: MouseEvent) {
+    let element = event.target as HTMLElement;
+    let active = getActive();
+
+    if (element.hasAttribute("aria-controls")) {
+      handleToggleGroup(element as HTMLButtonElement);
+    }
+
+    if (!element.closest("[data-menu]") && active) {
+      hideActive();
+    }
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    let active = getActive();
+
+    if (event.key === "Escape" && active) {
+      hideActive();
+    }
+  }
+
+  function handleScroll() {
+    if (window.scrollY > 200) {
+      if (menu?.getAttribute("data-scrolling") !== "true") {
+        menu?.setAttribute("data-scrolling", "true");
+      }
+    } else {
+      menu?.setAttribute("data-scrolling", "false");
+    }
+  }
+
+  document.addEventListener("click", handleClick);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("scroll", handleScroll, { passive: true });
+
+  handleScroll();
+</script>

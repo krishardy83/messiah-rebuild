@@ -1,0 +1,265 @@
+---
+import { slugify } from "../../lib/utils";
+import Icon from "../icon.astro";
+import Logo from "../logo.astro";
+import { bottomGroups, topGroups } from "./navigation-data";
+---
+
+<button
+  type="button"
+  aria-label="open page menu"
+  data-mobile-menu-trigger
+  class="group/trigger h-12 w-12 text-white bg-primary-800 md:hidden fixed z-50 top-10 right-0"
+>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute left-2 top-4 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:top-6 group-[.is-open]/trigger:rotate-[135deg]"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute left-2 top-6 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:-left-16 group-[.is-open]/trigger:opacity-0"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute left-2 top-8 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:top-6 group-[.is-open]/trigger:-rotate-[135deg]"
+  ></span>
+</button>
+
+<div
+  class="bg-primary-800 text-white fixed inset-0 z-40 hidden md:hidden opacity-0 py-10 px-4 transition-opacity duration-300 overflow-y-auto"
+  data-mobile-menu-content
+>
+  <Logo />
+
+  <search class="my-4">
+    <form class="relative">
+      <input
+        type="search"
+        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
+        placeholder="What are you searching for?"
+        name="s"
+      />
+      <button
+        type="submit"
+        aria-label="submit search form"
+        class="absolute right-0 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+      >
+        <Icon name="search" class="size-5 pointer-events-none" />
+      </button>
+    </form>
+  </search>
+
+  <nav>
+    <ul>
+      {
+        bottomGroups.map((group) => (
+          <li>
+            <button
+              type="button"
+              aria-expanded="false"
+              aria-haspopup="true"
+              data-mobile-group-trigger
+              id={`mobile-group-button-${slugify(group.title)}`}
+              aria-controls={`mobile-group-${slugify(group.title)}`}
+              class="text-xl group py-4 flex items-center gap-x-2 font-bold hover:text-tertiary-400 transition-colors"
+            >
+              {group.title}
+
+              <Icon
+                name="chevron-down"
+                class="size-4 group-aria-expanded:rotate-180 pointer-events-none transition-transform"
+              />
+            </button>
+
+            <div
+              id={`mobile-group-${slugify(group.title)}`}
+              class="overflow-hidden h-[--height] transition-all duration-300"
+              role="region"
+              aria-labelledby={`mobile-group-button-${slugify(group.title)}`}
+              hidden
+            >
+              {group.children.map((child) => (
+                <ul class="ml-4 flex flex-col gap-2 mb-2">
+                  {child.map((link) => (
+                    <li>
+                      <a
+                        href={link.href}
+                        class:list={[
+                          "link",
+                          {
+                            "font-title uppercase font-bold text-xl block mt-4": link.heading,
+                          },
+                        ]}
+                      >
+                        {link.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+          </li>
+        ))
+      }
+      {
+        topGroups.map((group) => (
+          <li>
+            <button
+              type="button"
+              aria-expanded="false"
+              aria-haspopup="true"
+              data-mobile-group-trigger
+              id={`mobile-group-button-${slugify(group.title)}`}
+              aria-controls={`mobile-group-${slugify(group.title)}`}
+              class="text-lg group py-4 flex items-center gap-x-2 hover:text-tertiary-400 transition-colors"
+            >
+              {group.title}
+
+              <Icon
+                name="chevron-down"
+                class="size-4 group-aria-expanded:rotate-180 pointer-events-none transition-transform"
+              />
+            </button>
+
+            <div
+              id={`mobile-group-${slugify(group.title)}`}
+              class="overflow-hidden h-[--height] transition-all duration-300"
+              role="region"
+              aria-labelledby={`mobile-group-button-${slugify(group.title)}`}
+              hidden
+            >
+              <ul class="ml-4 flex flex-col gap-2 mb-2">
+                {group.children.map((link) => {
+                  if (link.type === "separator") {
+                    return null;
+                  }
+
+                  return (
+                    <li>
+                      <a href={link.href} class="link">
+                        {link.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<script>
+  let content = document.querySelector<HTMLDivElement>("[data-mobile-menu-content]")!;
+  let trigger = document.querySelector<HTMLDivElement>("[data-mobile-menu-trigger]")!;
+
+  let open = false;
+  let previouslySelected: HTMLElement | null = null;
+
+  function closeMenu() {
+    trigger.classList.remove("is-open");
+    document.body.classList.remove("overflow-hidden");
+    content.classList.add("opacity-0");
+
+    content.addEventListener(
+      "transitionend",
+      () => {
+        content.classList.add("hidden");
+      },
+      { once: true }
+    );
+
+    previouslySelected?.focus();
+
+    open = false;
+  }
+
+  function openMenu() {
+    previouslySelected = document.activeElement as HTMLElement;
+
+    trigger.classList.add("is-open");
+    document.body.classList.add("overflow-hidden");
+    content.classList.remove("hidden");
+
+    setTimeout(() => {
+      content.classList.remove("opacity-0");
+    });
+
+    open = true;
+  }
+
+  function handleToggleGroup(trigger: HTMLElement) {
+    let group = content.querySelector<HTMLDivElement>(`#${trigger.getAttribute("aria-controls")}`)!;
+
+    if (trigger.getAttribute("aria-expanded") === "true") {
+      group.style.setProperty("--height", group.getAttribute("data-collapsed-height"));
+
+      group.addEventListener(
+        "transitionend",
+        () => {
+          group.removeAttribute("data-collapsed-height");
+          group.removeAttribute("style");
+          group.setAttribute("hidden", "true");
+        },
+        { once: true }
+      );
+
+      trigger.setAttribute("aria-expanded", "false");
+    } else {
+      group.setAttribute("data-collapsed-height", group.scrollHeight + "px");
+      group.style.setProperty("--height", group.scrollHeight + "px");
+
+      requestAnimationFrame(() => {
+        group.style.setProperty("--height", group.scrollHeight + "px");
+      });
+
+      group.removeAttribute("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function handleClick(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+
+    if (target.hasAttribute("data-mobile-menu-trigger")) {
+      if (open) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+
+    if (target.hasAttribute("data-mobile-group-trigger")) {
+      handleToggleGroup(target);
+    }
+  }
+
+  function handleKeyDown(event: KeyboardEvent) {
+    if (event.key === "Tab") {
+      const focusable = content.querySelectorAll<HTMLElement>(
+        'button, input, [role="region"]:not([hidden]) a'
+      )!;
+
+      if (event.shiftKey) {
+        if (document.activeElement === trigger) {
+          event.preventDefault();
+          focusable[focusable.length - 1]?.focus();
+        }
+      } else {
+        if (document.activeElement === focusable[focusable.length - 1]) {
+          event.preventDefault();
+          trigger.focus();
+        }
+      }
+    }
+
+    if (event.key === "Escape" && open) {
+      closeMenu();
+    }
+  }
+
+  document.addEventListener("click", handleClick);
+  document.addEventListener("keydown", handleKeyDown);
+</script>

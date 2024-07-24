@@ -1,6 +1,7 @@
 ---
 import Footer from "../components/footer.astro";
-import Header from "../components/header/header.astro";
+import DesktopMenu from "../components/header/desktop-menu.astro";
+import MobileMenu from "../components/header/mobile-menu.astro";
 import "../styles/base.css";
 
 interface Props {
@@ -25,7 +26,15 @@ const { title, description, transparent = true } = Astro.props;
     </title>
   </head>
   <body class="font-sans text-gray-700">
-    <Header transparent={transparent} />
+    <a
+      href="#content"
+      class="btn-primary fixed left-1/2 top-0 -translate-x-1/2 z-50 -translate-y-full focus:translate-y-0"
+      >Skip to content</a
+    >
+
+    <DesktopMenu transparent={transparent} />
+
+    <MobileMenu />
 
     <slot />
 
