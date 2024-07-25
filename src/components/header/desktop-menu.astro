@@ -2,7 +2,6 @@
 import { slugify } from "../../lib/utils";
 import Icon from "../icon.astro";
 import Logo from "../logo.astro";
-import SearchForm from "./search-form.astro";
 import { bottomGroups, topGroups } from "./navigation-data";
 
 interface Props {
@@ -13,7 +12,7 @@ const { transparent } = Astro.props;
 ---
 
 <div
-  class="sticky -top-px before:absolute before:top-0 before:h-2 md:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 md:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 md:pt-4 pb-2 md:pb-6 z-30 group border-b border-transparent md:data-[scrolling='true']:border-gray-300 md:data-[scrolling='true']:-translate-y-12 transition-all"
+  class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[scrolling='true']:-translate-y-12 transition-all"
   data-menu
 >
   <header class="mx-auto max-w-6xl px-4">
@@ -31,7 +30,7 @@ const { transparent } = Astro.props;
         <Logo />
       </a>
 
-      <div class="flex-col justify-end transition-opacity grow hidden md:flex" data-menu-wrapper>
+      <div class="flex-col justify-end transition-opacity grow hidden lg:flex" data-menu-wrapper>
         <ul
           class="flex justify-end mb-4 items-center group-data-[scrolling='true']:opacity-0 transition-opacity"
         >
@@ -95,9 +94,9 @@ const { transparent } = Astro.props;
             <a
               href="/"
               class:list={[
-                "md:uppercase hover:text-tertiary-400 md:px-4 md:py-3 text-lg md:text-base block transition-colors",
+                "uppercase hover:text-tertiary-400 px-4 py-3 block transition-colors",
                 transparent
-                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                   : "text-primary-800",
               ]}
             >
@@ -105,7 +104,24 @@ const { transparent } = Astro.props;
             </a>
           </li>
 
-          <SearchForm transparent={transparent} />
+          <li>
+            <button
+              type="button"
+              aria-label="show search form"
+              aria-expanded="false"
+              aria-haspopup="true"
+              id="search-form-toggle"
+              aria-controls="search-form"
+              class:list={[
+                "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
+                transparent
+                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  : "text-primary-800",
+              ]}
+            >
+              <Icon name="search" class="size-5 pointer-events-none" />
+            </button>
+          </li>
         </ul>
 
         <ul class="flex gap-6 justify-end">
@@ -176,10 +192,53 @@ const { transparent } = Astro.props;
               </li>
             ))
           }
+
+          <li class="hidden group-data-[scrolling='true']:block">
+            <button
+              type="button"
+              aria-label="show search form"
+              aria-expanded="false"
+              aria-haspopup="true"
+              id="search-form-toggle"
+              aria-controls="search-form"
+              class:list={[
+                "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
+                transparent
+                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  : "text-primary-800",
+              ]}
+            >
+              <Icon name="search" class="size-5 pointer-events-none" />
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
   </header>
+
+  <search
+    id="search-form"
+    aria-labelledby="search-form-toggle"
+    aria-hidden="true"
+    class="opacity-0 hidden absolute left-0 top-0 right-0 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10"
+  >
+    <form class="max-w-6xl mx-auto px-4 flex relative">
+      <input
+        type="search"
+        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
+        placeholder="What are you searching for?"
+        name="s"
+        autofocus
+      />
+      <button
+        type="submit"
+        aria-label="submit search form"
+        class="absolute right-4 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+      >
+        <Icon name="search" class="size-5 pointer-events-none" />
+      </button>
+    </form>
+  </search>
 </div>
 
 <script>
