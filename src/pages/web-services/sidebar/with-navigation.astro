@@ -1,0 +1,80 @@
+---
+import Sidebar from "../../../components/sidebar.astro";
+import WithoutHero from "../../../layouts/without-hero.astro";
+
+const sidebarLinks = [
+  {
+    title: "Example Title",
+    children: [
+      { href: "/", name: "Regular entry" },
+      {
+        href: "/",
+        name: "Two levels deep",
+        active: true,
+        children: [{ href: "/", name: "Second level" }],
+      },
+      {
+        href: "/",
+        name: "Three levels deep",
+        children: [
+          { href: "/", name: "Second level active", active: true },
+          {
+            href: "/",
+            name: "Second level with children",
+            children: [
+              { href: "/", name: "Third level" },
+              { href: "/", name: "Third level active", active: true },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Another Section",
+    children: [
+      { href: "/", name: "Sign up for training" },
+      { href: "/", name: "Request access to edit site" },
+    ],
+  },
+];
+---
+
+<WithoutHero
+  title="Sidebar Example"
+  description="Example of the mocked-out sidebar"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Sidebar Example", href: "/" },
+  ]}
+>
+  <div class="flex flex-col md:flex-row">
+    <Sidebar links={sidebarLinks}>
+      <Fragment slot="supplements">
+        <h4 class="text-primary-800 h4 mb-2">Example navigation</h4>
+
+        <ul class="list-disc space-y-1 ml-4">
+          <li><a href="/" class="link">Example Link</a></li>
+          <li><a href="/" class="link">Facebook</a></li>
+          <li><a href="/" class="link">Twitter</a></li>
+          <li><a href="/" class="link">LinkedIn</a></li>
+        </ul>
+      </Fragment>
+    </Sidebar>
+
+    <article class="md:px-10 md:py-8 rich-text">
+      <p>This page shows the sidebar with a navigation example.</p>
+
+      <ul>
+        <li>Navigation example</li>
+        <li><a href="/web-services/sidebar/with-contact">Contact example</a></li>
+        <li><a href="/web-services/sidebar/with-more-info">More info example</a></li>
+        <li><a href="/web-services/sidebar/with-social-media">Social media example</a></li>
+        <li><a href="/web-services/sidebar/with-blue-button">Blue button example</a></li>
+      </ul>
+    </article>
+  </div>
+</WithoutHero>

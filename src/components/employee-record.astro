@@ -37,24 +37,20 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         {
           email ? (
             <li class="flex items-center gap-2">
-              <>
-                <Icon name="envelope" />
-                <a class="link text-primary-800" href={`mailto:${email}`}>
-                  {email}
-                </a>
-              </>
+              <Icon name="envelope" />
+              <a class="link text-primary-800" href={`mailto:${email}`}>
+                {email}
+              </a>
             </li>
           ) : null
         }
         {
           phone ? (
             <li class="flex items-center gap-2">
-              <>
-                <Icon name="phone" />
-                <a class="link text-primary-800" href={`tel:${phone}`}>
-                  {phone}
-                </a>
-              </>
+              <Icon name="phone" />
+              <a class="link text-primary-800" href={`tel:${phone}`}>
+                {phone}
+              </a>
             </li>
           ) : null
         }
@@ -69,12 +65,10 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         {
           url ? (
             <li class="flex items-center gap-2">
-              <>
-                <Icon name="globe" />
-                <a class="link text-primary-800" href={url}>
-                  {url}
-                </a>
-              </>
+              <Icon name="globe" />
+              <a class="link text-primary-800" href={url}>
+                {url}
+              </a>
             </li>
           ) : null
         }

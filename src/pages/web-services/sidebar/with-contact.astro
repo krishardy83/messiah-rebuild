@@ -1,0 +1,113 @@
+---
+import Icon from "../../../components/icon.astro";
+import Sidebar from "../../../components/sidebar.astro";
+import WithoutHero from "../../../layouts/without-hero.astro";
+
+const sidebarLinks = [
+  {
+    title: "Example Title",
+    children: [
+      { href: "/", name: "Regular entry" },
+      {
+        href: "/",
+        name: "Two levels deep",
+        active: true,
+        children: [{ href: "/", name: "Second level" }],
+      },
+      {
+        href: "/",
+        name: "Three levels deep",
+        children: [
+          { href: "/", name: "Second level active", active: true },
+          {
+            href: "/",
+            name: "Second level with children",
+            children: [
+              { href: "/", name: "Third level" },
+              { href: "/", name: "Third level active", active: true },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Another Section",
+    children: [
+      { href: "/", name: "Sign up for training" },
+      { href: "/", name: "Request access to edit site" },
+    ],
+  },
+];
+---
+
+<WithoutHero
+  title="Sidebar Example"
+  description="Example of the mocked-out sidebar"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Sidebar Example", href: "/" },
+  ]}
+>
+  <div class="flex flex-col md:flex-row">
+    <Sidebar links={sidebarLinks}>
+      <Fragment slot="supplements">
+        <figure class="mb-2">
+          <img src="https://www.messiah.edu/images/186_090512_TENNISON.jpg" alt="" />
+        </figure>
+
+        <h4 class="text-primary-800 h4 mb-2">Contact name</h4>
+
+        <p>
+          Nulla dolor lorem, accumsan id magna vitae, lobortis luctus odio. Proin vestibulum eu ante
+          sit amet semper. Nam eget imperdiet quam. Mauris sapien dolor, pulvinar vel blandit in,
+          porttitor ac elit. Pellentesque a justo quis augue dictum volutpat ac ut eros. Duis mi
+          lectus, viverra ut dolor.
+        </p>
+
+        <ul class="border-y space-y-2 border-gray-300 py-2 my-2">
+          <li class="flex items-center gap-2">
+            <Icon name="envelope" />
+            <a class="link text-primary-800" href="mailto:name@messiah.edu"> name@messiah.edu </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="phone" />
+            <a class="link text-primary-800" href="tel:$717-766-2511"> 717-766-2511 </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="printer" />
+            717-766-2500
+          </li>
+        </ul>
+
+        <h4 class="text-primary-800 h4">Additional links</h4>
+
+        <ul class="space-y-2 my-2">
+          <li class="flex items-center gap-2">
+            <Icon name="globe" />
+            <a class="link text-primary-800" href="https://example.org">example.org</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="globe" />
+            <a class="link text-primary-800" href="https://example.org">example.org</a>
+          </li>
+        </ul>
+      </Fragment>
+    </Sidebar>
+
+    <article class="md:px-10 md:py-8 rich-text">
+      <p>This page shows the sidebar with a contact example.</p>
+
+      <ul>
+        <li><a href="/web-services/sidebar/with-navigation">Navigation example</a></li>
+        <li>Contact example</li>
+        <li><a href="/web-services/sidebar/with-more-info">More info example</a></li>
+        <li><a href="/web-services/sidebar/with-social-media">Social media example</a></li>
+        <li><a href="/web-services/sidebar/with-blue-button">Blue button example</a></li>
+      </ul>
+    </article>
+  </div>
+</WithoutHero>
