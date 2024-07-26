@@ -77,6 +77,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  [x-cloak] {
+    display: none !important;
+  }
+}
+
 @layer utilities {
   .h1 {
     @apply font-title text-3xl font-bold uppercase text-white md:text-4xl lg:text-6xl xl:text-8xl;
