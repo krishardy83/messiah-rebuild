@@ -23,7 +23,7 @@ import SingleColumn from "../layouts/single-column.astro";
     <Accordion
       title="I am a <strong>high school student or an entry-level degree seeker</strong> and would like to be a <strong>licensed physical therapist</strong>"
       id="entry-level"
-      image="https://www.messiah.edu/site/custom_scripts/styles/img/ico/read.png"
+      image={{ src: "https://www.messiah.edu/site/custom_scripts/styles/img/ico/read.png" }}
     >
       <article class="flex flex-col md:flex-row gap-4 md:gap-8">
         <figure class="shrink-0">
@@ -57,6 +57,7 @@ import SingleColumn from "../layouts/single-column.astro";
         <figure class="shrink-0">
           <img
             src="https://www.messiah.edu/site/custom_scripts/styles/img/pt-thumbnail.jpg"
+            }}
             alt=""
             class="md:max-w-64 w-full sm:w-auto"
           />
@@ -96,7 +97,7 @@ import SingleColumn from "../layouts/single-column.astro";
     <Accordion
       title="I have a <strong>bachelor's degree in a related field</strong> and would like to be a <strong>licensed physical therapist</strong>"
       id="bachelors-degree"
-      image="https://www.messiah.edu/site/custom_scripts/styles/img/ico/graduated.png"
+      image={{ src: "https://www.messiah.edu/site/custom_scripts/styles/img/ico/graduated.png" }}
     >
       <article class="flex flex-col md:flex-row gap-4 md:gap-8 p-4">
         <figure class="shrink-0">
@@ -132,7 +133,7 @@ import SingleColumn from "../layouts/single-column.astro";
 
     <Accordion
       title="I am a <strong>licensed physical therapist</strong> and would like to <strong>pursue a career in academic teaching/research</strong>"
-      image="https://www.messiah.edu/site/custom_scripts/styles/img/ico/teach2.png"
+      image={{ src: "https://www.messiah.edu/site/custom_scripts/styles/img/ico/teach2.png" }}
     >
       <article class="flex flex-col md:flex-row gap-4 md:gap-8 p-4">
         <figure class="shrink-0">
@@ -166,7 +167,7 @@ import SingleColumn from "../layouts/single-column.astro";
 
     <Accordion
       title="I am a <strong>licensed physical therapist</strong> seeking <strong>continuing education courses</strong>"
-      image="https://www.messiah.edu/images/open_book_2.png"
+      image={{ src: "https://www.messiah.edu/images/open_book_2.png" }}
       id="continuing-education"
     >
       <article class="flex flex-col md:flex-row gap-4 md:gap-8 p-4">

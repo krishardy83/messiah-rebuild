@@ -1,19 +1,27 @@
 ---
-import { createId } from "../lib/utils";
+import type { HTMLAttributes } from "astro/types";
+import { cn, createId } from "../lib/utils";
 import Icon from "./icon.astro";
 
-interface Props {
+interface Props extends HTMLAttributes<"div"> {
   title: string;
   subtitle?: string;
   id?: string;
-  image?: string;
+  image?: {
+    src: string;
+    size?: number;
+  };
 }
 
-const { title, id, subtitle, image } = Astro.props;
+const { title, id, subtitle, image, class: className, ...props } = Astro.props;
 const accordionId = id || createId();
 ---
 
-<div class="not-prose border border-gray-300 mb-4" x-data="{ show: false }">
+<div
+  class={cn("not-prose border border-gray-300 mb-4", className)}
+  {...props}
+  x-data="{ show: false }"
+>
   <h3>
     <button
       type="button"
@@ -25,7 +33,13 @@ const accordionId = id || createId();
     >
       {
         image ? (
-          <img src={image} alt="" aria-hidden="true" width="75" height="75" class="size-14" />
+          <img
+            src={image.src}
+            alt=""
+            aria-hidden="true"
+            width={image.size || 56}
+            height={image.size || 56}
+          />
         ) : null
       }
 
