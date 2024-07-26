@@ -47,7 +47,9 @@ const supplements = await Astro.slots.render("supplements");
   </button>
 
   <div class="mb-6 mt-4 hidden md:mb-0 md:mt-0 md:block" id="sidebar">
-    <slot />
+    <div class="flex flex-col gap-1">
+      <slot />
+    </div>
 
     {
       links.map((link) => (
