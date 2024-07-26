@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"article"> {
+  image: {
+    src: string;
+    alt?: string;
+  };
+  title: string;
+  links?: {
+    href: string;
+    label: string;
+  }[];
+}
+
+const { image, title, links, class: className, ...props } = Astro.props;
+---
+
+<article class={cn("flex flex-col md:flex-row gap-4 md:gap-8", className)} {...props}>
+  <figure class="shrink-0">
+    <img src={image.src} alt={image.alt || ""} class="md:max-w-64 w-full sm:w-auto" />
+  </figure>
+
+  <div>
+    <h4 class="h3">{title}</h4>
+
+    <p class="mb-4">
+      <slot />
+    </p>
+
+    {
+      links ? (
+        <div class="flex flex-wrap gap-2">
+          {links.map((link) => (
+            <a class="btn-quaternary" href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      ) : null
+    }
+  </div>
+</article>
