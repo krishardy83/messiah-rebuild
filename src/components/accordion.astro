@@ -6,103 +6,54 @@ interface Props {
   title: string;
   subtitle?: string;
   id?: string;
+  image?: string;
 }
 
-const { title, id, subtitle } = Astro.props;
+const { title, id, subtitle, image } = Astro.props;
 const accordionId = id || createId();
 ---
 
-<div class="not-prose border border-gray-300 mb-4">
-  <button
-    data-accordion
-    type="button"
-    aria-expanded="false"
-    aria-controls={accordionId}
-    id={`button-${accordionId}`}
-    class="flex gap-x-4 text-left relative items-center aria-expanded:bg-white bg-gray-100 w-full pl-4 pr-14 py-4 transition-colors group flex-wrap"
-  >
-    <span class="text-primary-800 font-bold font-sans text-lg mr-auto">{title}</span>
-    {
-      subtitle ? (
-        <span class="text-tertiary-500 font-title uppercase font-bold">{subtitle}</span>
-      ) : null
-    }
+<div class="not-prose border border-gray-300 mb-4" x-data="{ show: false }">
+  <h3>
+    <button
+      type="button"
+      aria-controls={accordionId}
+      id={`button-${accordionId}`}
+      class="flex gap-x-4 text-left relative items-center aria-expanded:bg-white bg-gray-100 w-full pl-4 pr-14 py-4 transition-colors group"
+      :aria-expanded="show"
+      @click="show = !show"
+    >
+      {
+        image ? (
+          <img src={image} alt="" aria-hidden="true" width="75" height="75" class="size-14" />
+        ) : null
+      }
 
-    <Icon
-      name="chevron-down"
-      class="size-5 absolute right-4 top-1/2 -translate-y-1/2 group-aria-expanded:rotate-180 shrink-0"
-    />
-  </button>
+      <span class="text-primary-800 font-sans text-lg md:text-xl mr-auto" set:html={title} />
+      {
+        subtitle ? (
+          <span class="text-tertiary-500 font-title uppercase font-bold">{subtitle}</span>
+        ) : null
+      }
+
+      <Icon
+        name="chevron-down"
+        class="size-5 absolute right-4 top-1/2 -translate-y-1/2 group-aria-expanded:rotate-180 shrink-0 transition-transform duration-300"
+      />
+    </button>
+  </h3>
 
   <div
-    hidden
-    class="border-t border-gray-300 p-4"
     role="region"
     id={accordionId}
     aria-labelledby={`button-${accordionId}`}
+    :style="show && { height: $el.scrollHeight + 'px' }"
+    class="overflow-hidden transition-all ease-out duration-500 border-t border-gray-300"
+    :class="show ? 'h-auto' : 'h-0 invisible'"
+    x-cloak
   >
-    <slot />
+    <div class="p-4">
+      <slot />
+    </div>
   </div>
 </div>
-
-<script>
-  let url = new URL(window.location.href);
-
-  function toggleAccordion(button: HTMLButtonElement) {
-    let region = document.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
-
-    if (!region) {
-      return;
-    }
-
-    let tabs = url.searchParams.get("tabs")?.split(",") || [];
-
-    if (button.getAttribute("aria-expanded") === "true") {
-      button.setAttribute("aria-expanded", "false");
-      region.setAttribute("hidden", "true");
-
-      let newUrlSearchParams = tabs.filter((tab) => tab !== button.getAttribute("aria-controls"));
-
-      if (newUrlSearchParams.length === 0) {
-        url.searchParams.delete("tabs");
-      } else {
-        url.searchParams.set("tabs", newUrlSearchParams.join(","));
-      }
-    } else {
-      button.setAttribute("aria-expanded", "true");
-      region.removeAttribute("hidden");
-
-      url.searchParams.set("tabs", [...tabs, button.getAttribute("aria-controls")].join(","));
-    }
-
-    window.history.pushState(null, "", url);
-  }
-
-  function handleClick(event: MouseEvent) {
-    let element = event.target as HTMLElement | null;
-    let button = element?.closest<HTMLButtonElement>("[aria-controls]");
-
-    if (button) {
-      toggleAccordion(button);
-    }
-  }
-
-  function handleLoad() {
-    const tabs = url.searchParams.get("tabs")?.split(",") || [];
-
-    tabs.forEach((tab) => {
-      let button = document.querySelector<HTMLButtonElement>(`[aria-controls="${tab}"]`);
-      let region = document.querySelector<HTMLDivElement>(`#${tab}`);
-
-      if (button && region) {
-        button.setAttribute("aria-expanded", "true");
-        region.removeAttribute("hidden");
-      }
-    });
-  }
-
-  window.addEventListener("DOMContentLoaded", handleLoad);
-  document.querySelectorAll<HTMLButtonElement>("[data-accordion]").forEach((button) => {
-    button.addEventListener("click", handleClick);
-  });
-</script>
