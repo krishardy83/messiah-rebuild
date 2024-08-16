@@ -6,24 +6,20 @@ const sidebarLinks = [
   {
     title: "Example Title",
     children: [
-      { href: "/", name: "Regular entry" },
+      { href: "/", name: "Page 1 regular" },
       {
         href: "/",
-        name: "Two levels deep",
+        name: "Page 2 with a long name",
       },
       {
         href: "/",
-        name: "Three levels deep",
+        name: "Page 3 with a really long name that breaks to two lines",
         active: true,
         children: [
           { href: "/", name: "Second level" },
           {
             href: "/",
-            name: "Second level active with children", active: true,
-            children: [
-              { href: "/", name: "Third level" },
-              { href: "/", name: "Third level active", active: true },
-            ],
+            name: "Second level active with children",
           },
         ],
       },
@@ -50,15 +46,7 @@ const sidebarLinks = [
     </Sidebar>
 
     <article class="md:px-10 md:py-8 rich-text">
-      <p>This page shows the sidebar with a blue button example.</p>
-
-      <ul>
-        <li><a href="/web-services/sidebar/with-navigation">Navigation example</a></li>
-        <li><a href="/web-services/sidebar/with-contact">Contact example</a></li>
-        <li><a href="/web-services/sidebar/with-more-info">More info example</a></li>
-        <li><a href="/web-services/sidebar/with-social-media-button">Social media example</a></li>
-        <li>Blue button example</li>
-      </ul>
+      <p>This page shows the sidebar when a level 1 page is being viewed. In this example the level 1 page does have sub-pages.</p>
     </article>
   </div>
 </WithoutHero>

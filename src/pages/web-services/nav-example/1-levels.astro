@@ -1,0 +1,45 @@
+---
+import Sidebar from "../../../components/sidebar.astro";
+import WithoutHero from "../../../layouts/without-hero.astro";
+
+const sidebarLinks = [
+  {
+    title: "Example Title",
+    children: [
+      { href: "/", name: "Page 1 regular" },
+      {
+        href: "/",
+        name: "Page 2 with a long name ",
+      },
+      {
+        href: "/",
+        name: "Page 3 with a really long name that breaks to two lines",
+      },
+    ],
+  },
+];
+---
+
+<WithoutHero
+  title="Sidebar Example"
+  description="Example of the mocked-out sidebar"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Sidebar Example", href: "/" },
+  ]}
+>
+  <div class="flex flex-col md:flex-row">
+    <Sidebar links={sidebarLinks}>
+      <a href="/" class="btn-primary w-full">First button</a>
+      <a href="/" class="btn-primary w-full">Second button</a>
+    </Sidebar>
+
+    <article class="md:px-10 md:py-8 rich-text">
+      <p>This page shows the state of the left nav when viewing a sub-site homepage</p>
+
+    </article>
+  </div>
+</WithoutHero>

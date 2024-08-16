@@ -21,8 +21,8 @@ const sidebarLinks = [
             href: "/",
             name: "Second level active with children", active: true,
             children: [
-              { href: "/", name: "Third level" },
-              { href: "/", name: "Third level active", active: true },
+              { href: "/", name: "Third level active", active: true  },
+              { href: "/", name: "Third level"},
             ],
           },
         ],
@@ -50,15 +50,9 @@ const sidebarLinks = [
     </Sidebar>
 
     <article class="md:px-10 md:py-8 rich-text">
-      <p>This page shows the sidebar with a blue button example.</p>
+      <p>This page shows the left nav when a user has clicked a page 3 levels deep.</p>
 
-      <ul>
-        <li><a href="/web-services/sidebar/with-navigation">Navigation example</a></li>
-        <li><a href="/web-services/sidebar/with-contact">Contact example</a></li>
-        <li><a href="/web-services/sidebar/with-more-info">More info example</a></li>
-        <li><a href="/web-services/sidebar/with-social-media-button">Social media example</a></li>
-        <li>Blue button example</li>
-      </ul>
+
     </article>
   </div>
 </WithoutHero>
