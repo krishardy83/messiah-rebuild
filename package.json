@@ -16,6 +16,7 @@
     "alpinejs": "^3.14.1",
     "astro": "^4.10.2",
     "clsx": "^2.1.1",
+    "lite-youtube-embed": "^0.3.3",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.4",
     "tailwind-merge": "^2.3.0",

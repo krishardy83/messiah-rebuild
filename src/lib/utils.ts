@@ -19,12 +19,6 @@ export function createId(length: number = 5) {
   return result;
 }
 
-export function getYouTubePreview(url: string) {
-  let { searchParams } = new URL(url);
-
-  return `https://img.youtube.com/vi/${searchParams.get("v")}/hqdefault.jpg`;
-}
-
 export function getMonth(date: Date) {
   return Intl.DateTimeFormat("en-US", { month: "short" }).format(date);
 }

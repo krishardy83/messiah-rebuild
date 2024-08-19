@@ -2,7 +2,7 @@
 import Youtube from "../../components/youtube.astro";
 import { cn } from "../../lib/utils";
 
-const images = [
+const entries = [
   {
     image: {
       alt: "",
@@ -24,7 +24,7 @@ const images = [
     },
   },
   {
-    href: "https://www.youtube.com/watch?v=ywlFvRnDjFU",
+    videoId: "https://www.youtube.com/watch?v=ywlFvRnDjFU",
     image: {
       alt: "",
       src: "https://www.messiah.edu/site/custom_scripts/styles/img/student-life/like-home-3.jpg",
@@ -63,30 +63,30 @@ const images = [
 
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-12">
       {
-        images.map((image, index) => (
+        entries.map((entry, index) => (
           <div
             class={cn({
               "col-span-2": index === 2 || index === 3,
               "row-span-2": index === 3 || index === 5,
             })}
           >
-            {image.href ? (
+            {entry.videoId ? (
               <Youtube
                 class="h-full"
-                src={image.href}
-                preview={image.image.src}
-                alt={image.image.alt}
+                videoId={entry.videoId}
+                preview={entry.image.src}
+                alt={entry.image.alt}
               />
             ) : (
               <figure class="relative">
                 <img
-                  src={image.image.src}
-                  alt={image.image.alt}
+                  src={entry.image.src}
+                  alt={entry.image.alt}
                   class="w-full h-full object-cover"
                 />
-                {image.quote ? (
+                {entry.quote ? (
                   <figcaption class="absolute before:content-['“'] before:text-5xl before:flex before:items-center before:justify-center before:text-white before:absolute before:left-4 before:top-4 inset-0 bg-tertiary-400/90 p-8 flex items-center justify-center text-primary-800">
-                    {image.quote}
+                    {entry.quote}
                   </figcaption>
                 ) : null}
               </figure>

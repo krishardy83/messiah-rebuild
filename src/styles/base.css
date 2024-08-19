@@ -1,5 +1,6 @@
 @import "@fancyapps/ui/dist/fancybox/fancybox.css";
 @import "@fancyapps/ui/dist/carousel/carousel.css";
+@import "lite-youtube-embed/src/lite-yt-embed.css";
 
 @font-face {
   font-family: Aptifer Sans;

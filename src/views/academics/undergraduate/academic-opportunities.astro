@@ -10,7 +10,7 @@ const items = [
       "From your first year to senior year, our career professionals help you determine your strengths, select a major, weigh your options, network with professionals, find internships and research graduate school and employment opportunities.",
     video: {
       image: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/ao-50-career.jpg",
-      href: "https://www.youtube.com/watch?v=noqir6a6BRg",
+      id: "noqir6a6BRg",
       alt: "",
     },
     buttons: [
@@ -197,7 +197,12 @@ const items = [
             ) : null}
 
             {item.video ? (
-              <Youtube src={item.video.href} preview={item.video.image} alt={item.video.alt} />
+              <Youtube
+                videoId={item.video.id}
+                litebox
+                preview={item.video.image}
+                alt={item.video.alt}
+              />
             ) : null}
           </div>
         </div>
