@@ -20,7 +20,7 @@ const accordionId = id || createId();
 <div
   class={cn("not-prose border border-gray-300 mb-4", className)}
   {...props}
-  x-data="{ show: false }"
+  x-data={`{ show: location.search.includes('${accordionId}') }`}
 >
   <h3>
     <button
@@ -64,7 +64,6 @@ const accordionId = id || createId();
     :style="show && { height: $el.scrollHeight + 'px' }"
     class="overflow-hidden transition-all ease-out duration-500 border-t border-gray-300"
     :class="show ? 'h-auto' : 'h-0 invisible'"
-    x-cloak
   >
     <div class="p-4">
       <slot />
