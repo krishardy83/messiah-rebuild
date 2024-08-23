@@ -32,7 +32,7 @@ const { transparent } = Astro.props;
 
       <div class="flex-col justify-end transition-opacity grow hidden lg:flex" data-menu-wrapper>
         <ul
-          class="flex justify-end mb-4 items-center group-data-[scrolling='true']:opacity-0 transition-opacity"
+          class="flex justify-end mb-4 items-center group-data-[scrolling='true']:opacity-0 transition-opacity leading-none"
         >
           {
             topGroups.map((group) => (
@@ -44,7 +44,7 @@ const { transparent } = Astro.props;
                   id={`group-button-${slugify(group.title)}`}
                   aria-controls={`group-${slugify(group.title)}`}
                   class:list={[
-                    "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white flex items-center gap-x-2 group",
+                    "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white flex items-center gap-x-2 group text-sm",
                     transparent
                       ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                       : "text-primary-800",
@@ -135,7 +135,7 @@ const { transparent } = Astro.props;
                   id={`group-button-${slugify(group.title)}`}
                   aria-controls={`group-${slugify(group.title)}`}
                   class:list={[
-                    "text-base group lg:text-lg xl:text-xl flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
+                    "text-base group lg:text-lg flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
                     transparent
                       ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                       : "text-primary-800",

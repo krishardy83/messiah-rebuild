@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        title: ["Priori Sans", ...fontFamily.serif],
-        sans: ["Aptifer Sans", ...fontFamily.sans],
-        serif: ["ITC Mendoza Roman", ...fontFamily.serif],
+        title: ["priori-sans", ...fontFamily.serif],
+        sans: ["noto-sans", ...fontFamily.sans],
+        serif: ["vollkorn", ...fontFamily.serif],
       },
       colors: {
         primary: {
