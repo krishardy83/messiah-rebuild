@@ -1,0 +1,83 @@
+---
+import Youtube from "../../components/youtube.astro";
+---
+
+<section class="max-w-[1600px] mx-auto px-4 pt-16 md:pt-24">
+  <h2 class="h2 text-primary-800 text-center">Student Stories and Resources</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+    <article class="relative bg-tertiary-600 text-white p-8 pt-16">
+      <img
+        src="https://www.messiah.edu/site/custom_scripts/styles/img/tuition/icon-student-blog.svg"
+        alt=""
+        class="top-0 left-1/2 absolute -translate-x-1/2 -translate-y-1/2 w-16 lg:w-auto"
+        aria-hidden="true"
+      />
+      <h3 class="text-tertiary-300 font-bold uppercase h4 mb-2">FAFSA</h3>
+      <p class="font-bold uppercase h4 mb-2">Applying for financial aid?</p>
+      <p class="mb-4">
+        The U.S. Department of Education recently changed the Free Application for Federal Student
+        Aid (FAFSA). Check out Messiah's FAFSA changes webpage for details and watch this video
+        series to learn more.
+      </p>
+      <a
+        href="https://www.messiah.edu/homepage/5160/2024-25_fafsa_changes"
+        class="btn btn-secondary text-primary-800 w-full mb-2">Messiah's FAFSA changes</a
+      >
+      <a
+        href="https://www.youtube.com/playlist?list=PLtr3wy4M_CJ2Hrd0UwCAWJOgOPu8l_ZLf"
+        class="btn btn-secondary text-primary-800 w-full">FAFSA video series</a
+      >
+    </article>
+    <article class="relative bg-primary-800 text-white p-8 pt-16">
+      <img
+        src="https://www.messiah.edu/site/custom_scripts/styles/img/tuition/icon-in-her-words.png"
+        alt=""
+        class="top-0 left-1/2 absolute -translate-x-1/2 -translate-y-1/2 w-16 lg:w-auto"
+        aria-hidden="true"
+      />
+      <h3 class="text-tertiary-300 font-bold uppercase h4 mb-2">What students are saying</h3>
+      <blockquote>
+        <p class="mb-4 before:content-['“'] after:content-['”']">
+          Messiah is worth the investment of my time and resources because it provides an education
+          that lasts for a lifetime through excellent teaching and persistent care for the
+          well-being and overall success of each student.
+        </p>
+
+        <cite class="font-bold uppercase not-italic text-sm">Abigail Chang '24</cite>
+      </blockquote>
+    </article>
+    <article class="relative bg-tertiary-600 text-white p-8 pt-16">
+      <img
+        src="https://www.messiah.edu/site/custom_scripts/styles/img/tuition/icon-watch.svg"
+        alt=""
+        class="top-0 left-1/2 absolute -translate-x-1/2 -translate-y-1/2 w-16 lg:w-auto"
+        aria-hidden="true"
+      />
+      <h3 class="text-tertiary-300 font-bold uppercase h4 mb-2">Watch</h3>
+      <p class="font-bold uppercase h4 mb-2">Hear from our students</p>
+      <Youtube videoId="U8QiaTyA08M" />
+    </article>
+    <article class="relative bg-primary-800 text-white p-8 pt-16">
+      <img
+        src="https://www.messiah.edu/site/custom_scripts/styles/img/tuition/icon-parents.svg"
+        alt=""
+        class="top-0 left-1/2 absolute -translate-x-1/2 -translate-y-1/2 w-16 lg:w-auto"
+        aria-hidden="true"
+      />
+      <h3 class="text-tertiary-300 font-bold uppercase h4 mb-2">What parents are saying</h3>
+      <blockquote>
+        <p class="mb-4 before:content-['“'] after:content-['”']">
+          The high quality of education and strong Christian stance, which Messiah holds to, were
+          reasons that inspired our daughter to select this outstanding college. The opportunity to
+          attend Messiah was made possible financially by campus scholarships that eased the burden
+          of private college tuition.
+        </p>
+
+        <cite class="font-bold uppercase not-italic text-sm"
+          >Lloyd and Kathy Myhre, parents of a Messiah graduate</cite
+        >
+      </blockquote>
+    </article>
+  </div>
+</section>

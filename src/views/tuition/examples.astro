@@ -1,0 +1,207 @@
+---
+const people = [
+  {
+    name: "Caleb",
+    description:
+      "Caleb is the oldest of four siblings. His household income is nearly $60,000 per year and his Student Aid Index (SAI), as calculated by the FAFSA, is $839.",
+    basicTuition: "$41,300",
+    basicFees: "$940",
+    housing: "$6,590",
+    food: "$5,800",
+    totalTuition: "$54,630",
+    giftAids: {
+      total: "-$35,492",
+      items: [
+        "Provost Scholarship — $16,000",
+        "Dean’s Scholarship — $1,000",
+        "Messiah University Grant — $5,937",
+        "Pell Grant — $6,555",
+        "PA State Grant — $5,000",
+        "SEOG — $1,000",
+      ],
+    },
+    federalLoans: "-$5,500",
+    totalAid: "-$40,992",
+    final: "$13,638",
+  },
+  {
+    name: "Madison",
+    description:
+      "Madison has one younger sibling with a household income of about $110,000 per year and her Student Aid Index (SAI), as calculated by the FAFSA, is $21,997.",
+    basicTuition: "$41,300",
+    basicFees: "$940",
+    housing: "$6,590",
+    food: "$5,800",
+    totalTuition: "$54,630",
+    giftAids: {
+      total: "-$22,489",
+      items: [
+        "Provost Scholarship — $16,000",
+        "Dean’s Scholarship — $1,000",
+        "Messiah University Grant — $5,937",
+        "Pell Grant — $0",
+        "PA State Grant — $0",
+      ],
+    },
+    federalLoans: "-$5,500",
+    totalAid: "-$27,989",
+    final: "$26,641",
+  },
+  {
+    name: "Jordan",
+    description:
+      "Jordan has two younger siblings with a household income of about $170,000 per year and total family non-retirement assets (student and parents) of about $45,000. Jordan’s Student Aid Index (SAI), as calculated by the FAFSA, is $46,687.",
+    basicTuition: "$41,300",
+    basicFees: "$940",
+    housing: "$6,590",
+    food: "$5,800",
+    totalTuition: "$54,630",
+    giftAids: {
+      total: "-$17,000",
+      items: [
+        "Provost Scholarship — $16,000",
+        "Dean’s Scholarship — $1,000",
+        "Messiah University Grant — $0",
+        "Pell Grant — $0",
+        "PA State Grant — $0",
+      ],
+    },
+    federalLoans: "-$5,500",
+    totalAid: "-$22,500",
+    final: "$32,130",
+  },
+];
+---
+
+<section class="max-w-6xl mx-auto px-4 py-16 md:py-24">
+  <h2 class="h2 text-primary-800 text-center">Examples of Financial Aid</h2>
+
+  <div role="tablist" class="flex gap-2 my-8 flex-col md:flex-row">
+    {
+      people.map((person, index) => (
+        <button
+          type="button"
+          role="tab"
+          class="font-title uppercase font-bold text-2xl flex-1 text-gray-400 py-4 md:py-8 border-b-4 border-gray-300 aria-selected:border-primary-800 aria-selected:text-primary-800"
+          aria-selected={index === 0}
+          id={`tab-${person.name.toLowerCase()}`}
+          aria-controls={`tabpanel-${person.name.toLowerCase()}`}
+        >
+          Meet {person.name}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    people.map((person, index) => (
+      <div
+        role="tabpanel"
+        tabindex="0"
+        id={`tabpanel-${person.name.toLowerCase()}`}
+        aria-labelledby={`tab-${person.name.toLowerCase()}`}
+        hidden={index !== 0}
+      >
+        <p class="paragraph mb-4">{person.description}</p>
+
+        <h3 class="h3 text-primary-800">
+          Tuition and Fees – <span class="font-normal">2024-2025 Academic Year</span>
+        </h3>
+
+        <ul class="mb-8">
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Basic tuition</span>
+            <span class="font-bold ml-auto">{person.basicTuition}</span>
+          </li>
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Basic fees</span>
+            <span class="text-base">
+              (minimum amount Student Government Association and student service fees)
+            </span>
+            <span class="font-bold ml-auto">{person.basicFees}</span>
+          </li>
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Housing</span>
+            <span class="text-base">(double occupancy)</span>
+            <span class="font-bold ml-auto">{person.housing}</span>
+          </li>
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Food</span>
+            <span class="text-base">(maximum costs)</span>
+            <span class="font-bold ml-auto">{person.food}</span>
+          </li>
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Total tuition, fees, housing, and food</span>
+            <span class="font-bold ml-auto">{person.totalTuition}</span>
+          </li>
+          <li class="border-t border-tertiary-300 text-xl py-3">
+            <div class="flex items-center gap-4 mb-2">
+              <span class="font-bold">Total gift aid</span>
+              <span class="font-bold ml-auto">{person.giftAids.total}</span>
+            </div>
+            <ul class="ml-8 text-base">
+              {person.giftAids.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </li>
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Federal loans</span>
+            <span class="font-bold ml-auto">{person.federalLoans}</span>
+          </li>
+          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+            <span class="font-bold">Total Aid</span>
+            <span class="font-bold ml-auto">{person.totalAid}</span>
+          </li>
+          <li class="flex items-center gap-4 border-t-4 border-tertiary-300 py-3 font-bold text-primary-800 uppercase md:text-2xl">
+            <span>{person.name}'s cost after financial aid</span>
+            <span class="ml-auto">{person.final}</span>
+          </li>
+        </ul>
+
+        <p class="paragraph mb-4">
+          *Students in these examples are from the highest academic tiers. Please keep in mind that
+          these are only a few sample cases. Each student’s financial information is reviewed on an
+          individual basis. Financial aid packages may differ from those listed above.
+        </p>
+
+        <p class="paragraph">
+          For the best estimate of your cost, please use our Net Price Calculator.
+        </p>
+      </div>
+    ))
+  }
+</section>
+
+<script>
+  let buttons = document.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") {
+      console.log(document.activeElement);
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    let trigger = event.target as HTMLElement;
+
+    if (trigger.getAttribute("role") === "tab") {
+      panels.forEach((panel) => {
+        panel.setAttribute("hidden", "");
+
+        if (panel.getAttribute("id") === trigger.getAttribute("aria-controls")) {
+          panel.removeAttribute("hidden");
+        }
+      });
+
+      buttons.forEach((button) => {
+        button.setAttribute("aria-selected", "false");
+
+        if (button.getAttribute("id") === trigger.getAttribute("id")) {
+          button.setAttribute("aria-selected", "true");
+        }
+      });
+    }
+  });
+</script>
