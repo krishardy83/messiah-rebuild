@@ -1,0 +1,227 @@
+---
+import Icon from "../../components/icon.astro";
+
+const items = [
+  {
+    title: "Open House",
+    logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/open-house-ico.svg",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/modal-open-house.jpg",
+    introduction:
+      "Spend the day with us to discover all possibilities Messiah offers. Explore diverse academic offerings with faculty, tour campus with a current student, and immerse yourself in our tight-knit community.",
+    buttons: [
+      {
+        label: "Learn more",
+        url: "https://www.messiah.edu/info/21371/open_house",
+      },
+    ],
+    infoBox: {
+      title: "Reasons to attend:",
+      reasons: [
+        "Tour our scenic campus with a student ambassador.",
+        "Enjoy a delicious complimentary lunch in the dining hall.",
+        "Discover how to invest in your future with our financial aid team.",
+        "Explore the options in your area of academic interest.",
+      ],
+    },
+  },
+  {
+    title: "Spotlight Day",
+    logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/spotlight-ico.svg",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/modal-spotlight.jpg",
+    introduction:
+      "Immerse yourself in a day-long experience tailored to your academic passions. Explore specific majors, engage with current students and faculty – even attend a class! Choose this event if you have a clear direction in your chosen area of study.",
+    buttons: [
+      {
+        label: "Learn more",
+        url: "https://www.messiah.edu/info/21375/spotlight_days",
+      },
+    ],
+    infoBox: {
+      title: "Reasons to attend:",
+      reasons: [
+        "Complimentary lunch",
+        "Ideal for juniors, seniors & transfers",
+        "Dive deeper into your academic interest",
+        "Focused time with your department",
+        "Take a campus tour",
+      ],
+    },
+  },
+  {
+    title: "Individual Visit",
+    logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/individual-ico.svg",
+    image: "https://www.messiah.edu/images/individual_visit.jpg",
+    introduction:
+      "Visiting campus for an Individual Visit lets you customize your Messiah campus experience. You can build a visit day to help explore your interests and continue growing your knowledge and understanding of the Messiah community. The date, time, length and schedule of your visit is up to you!",
+    buttons: [
+      {
+        url: "https://www.messiah.edu/campus-visit",
+        label: "Pick the date and time that work best for you",
+      },
+      {
+        url: "https://www.messiah.edu/saturday-visit",
+        label: "View upcoming Saturday visit opportunities",
+      },
+    ],
+    infoBox: {
+      title: "Opportunities during an individual visit:",
+      reasons: [
+        "Personalized visit based on your interests",
+        "Enjoy a campus tour with a current student",
+        "Meet individually with an Admissions representative",
+        "Meet with faculty, staff or coaches",
+        "Attend a class or chapel",
+      ],
+    },
+  },
+  {
+    title: "Falcon Friday",
+    logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/friday-ico.svg",
+    image: "https://www.messiah.edu/images/falcon_friday_badge.jpg",
+    introduction:
+      "Visit us in the summer for a quick “fly by” of Messiah! Check out our rigorous academic programs and spiritual growth opportunities — and stick around for an ice cream social. This is a great first look of campus!",
+    buttons: [
+      {
+        label: "Learn more",
+        url: "https://www.messiah.edu/homepage/3764/falcon_friday",
+      },
+    ],
+    infoBox: {
+      title: "Reasons to attend:",
+      reasons: [
+        "Take a tour of campus",
+        "Spend time with a current student panel",
+        "Learn about the admissions process",
+        "Find out more about your academic interest",
+      ],
+    },
+  },
+  {
+    title: "Accepted Student Preview Day",
+    logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/aspd-ico.svg",
+    image: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/modal-aspd.jpg",
+    introduction:
+      "Accepted student days are designed to guide students and their families through the questions and next steps of joining the Messiah University community, and they include orientation information, campus tours, lunch, financial aid sessions and more!",
+    buttons: [
+      {
+        label: "Learn more",
+        url: "https://www.messiah.edu/info/21370/accepted_student_preview_days",
+      },
+    ],
+    infoBox: {
+      title:
+        "Each academic program will be represented at the Accepted Student Preview Day for you to:",
+      reasons: [
+        "Experience academic advising led by faculty in your department",
+        "Connect with other accepted students",
+        "Engage with student life and learn how to register for classes",
+        "Information session for parents",
+      ],
+    },
+  },
+  {
+    title: "On-Demand Virtual Resources",
+    logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/virtual-ico.svg",
+    image: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/virtual-event.jpg",
+    introduction:
+      "We would love to connect with you virtually! View our virtual tours, watch pre-recorded sessions, scroll through photo galleries of our campus and register to meet with a member of our campus community from the comfort of your own home.",
+    buttons: [
+      {
+        label: "Learn more",
+        url: "https://www.messiah.edu/virtual-visit",
+      },
+    ],
+  },
+];
+---
+
+<section
+  class="py-24 bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover relative"
+  x-data="{ show: false, item: null }"
+  @keyup.escape.window="show = false"
+>
+  <header class="text-center max-w-6xl mx-auto px-4 mb-16">
+    <h2 class="h2 text-primary-800">Explore your visit options!</h2>
+    <p class="paragraph mb-8 max-w-2xl mx-auto">
+      We have multiple in-person and virtual visit options available. Browse the events below or
+      click the blue button to use a guided help tool to find the right event for you. We can’t wait
+      to show you all the reasons Messiah is an awesome place to call home!
+    </p>
+
+    <button class="btn-primary">I need help finding the right visit option</button>
+  </header>
+
+  <ul class="flex flex-wrap gap-8 justify-center max-w-6xl mx-auto px-4">
+    {
+      items.map((item, index) => (
+        <li class="max-w-[25%]">
+          <button
+            data-id={`item-${index}`}
+            @click="show = true; item = $el.getAttribute('data-id')"
+            type="button"
+            class="text-center font-title font-bold text-xl sm:text-2xl md:text-3xl group"
+          >
+            <img
+              src={item.logo}
+              alt={item.title}
+              class="mb-2 mx-auto rounded-full group-hover:bg-tertiary-200 transition-colors"
+              width="200"
+              height="200"
+            />
+            {item.title}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+
+  <dialog
+    :open="show"
+    class="bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover absolute inset-0 w-full h-full overflow-y-auto p-12"
+  >
+    <button
+      type="button"
+      class="absolute right-12 top-12 hover:text-tertiary-400 transition-colors"
+      aria-label="close dialog"
+      @click="show = false"
+    >
+      <Icon name="close" class="size-10" />
+    </button>
+
+    <div class="mx-auto max-w-3xl px-4 py-24">
+      {
+        items.map((item, index) => (
+          <template id={`item-${index}`} x-if="$el.getAttribute('id') === item">
+            <div>
+              <img src={item.image} alt={item.title} class="w-full mb-4" width="736" height="280" />
+              <h3 class="h3 text-primary-800">{item.title}</h3>
+              <p class="mb-4">{item.introduction}</p>
+
+              <div class="flex gap-2 mb-8 flex-wrap">
+                {item.buttons.map((button) => (
+                  <a href={button.url} class="btn btn-primary">
+                    {button.label}
+                  </a>
+                ))}
+              </div>
+
+              {item.infoBox ? (
+                <div>
+                  <h4 class="h4 text-primary-800 mb-2">{item.infoBox.title}</h4>
+
+                  <ul class="list-disc pl-6">
+                    {item.infoBox.reasons.map((reason) => (
+                      <li>{reason}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </div>
+          </template>
+        ))
+      }
+    </div>
+  </dialog>
+</section>

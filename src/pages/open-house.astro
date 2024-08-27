@@ -1,0 +1,23 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import About from "../views/open-house/about.astro";
+import Contact from "../views/open-house/contact.astro";
+import Information from "../views/open-house/information.astro";
+import Upcoming from "../views/open-house/upcoming.astro";
+import Scholarships from "../views/open-house/scholarships.astro";
+import VisitOptions from "../views/open-house/visit-options.astro";
+---
+
+<SingleColumn
+  title="Open House"
+  image="/images/open-house-hero.jpg"
+  subtitle="Experience Messiah in person. We would love to meet you!"
+  description="Experience Messiah in person. We would love to meet you!"
+>
+  <About />
+  <Information />
+  <Upcoming />
+  <Scholarships />
+  <VisitOptions />
+  <Contact />
+</SingleColumn>
