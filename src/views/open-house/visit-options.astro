@@ -3,6 +3,7 @@ import Icon from "../../components/icon.astro";
 
 const items = [
   {
+    id: "open-house",
     title: "Open House",
     logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/open-house-ico.svg",
     image:
@@ -26,6 +27,7 @@ const items = [
     },
   },
   {
+    id: "spotlight-day",
     title: "Spotlight Day",
     logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/spotlight-ico.svg",
     image:
@@ -50,6 +52,7 @@ const items = [
     },
   },
   {
+    id: "individual-visit",
     title: "Individual Visit",
     logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/individual-ico.svg",
     image: "https://www.messiah.edu/images/individual_visit.jpg",
@@ -77,6 +80,7 @@ const items = [
     },
   },
   {
+    id: "falcon-day",
     title: "Falcon Friday",
     logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/friday-ico.svg",
     image: "https://www.messiah.edu/images/falcon_friday_badge.jpg",
@@ -99,6 +103,7 @@ const items = [
     },
   },
   {
+    id: "accepted-student-preview-day",
     title: "Accepted Student Preview Day",
     logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/aspd-ico.svg",
     image: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/modal-aspd.jpg",
@@ -122,6 +127,7 @@ const items = [
     },
   },
   {
+    id: "on-demand-virtual-resources",
     title: "On-Demand Virtual Resources",
     logo: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/virtual-ico.svg",
     image: "https://www.messiah.edu/site/custom_scripts/styles/img/campus-visit/virtual-event.jpg",
@@ -135,12 +141,105 @@ const items = [
     ],
   },
 ];
+
+const questions = [
+  {
+    id: "1",
+    question: "Are you currently in High School?",
+    answers: [
+      {
+        label: "Yes",
+        finished: false,
+        next: "2",
+      },
+      {
+        label: "No",
+        finished: false,
+        next: "5",
+      },
+    ],
+  },
+  {
+    id: "2",
+    question: "What grade are you in?",
+    answers: [
+      {
+        label: "Freshman / 9th",
+        finished: true,
+        next: ["open-house", "falcon-friday"],
+      },
+      {
+        label: "Sophomore / 10th",
+        finished: true,
+        next: ["open-house", "falcon-friday"],
+      },
+      {
+        label: "Junior / 11th",
+        finished: true,
+        next: ["open-house", "spotlight-days", "individual-visit", "falcon-friday"],
+      },
+      {
+        label: "Senior / 12th",
+        finished: false,
+        next: "3",
+      },
+    ],
+  },
+  {
+    id: "3",
+    question: "Have you applied to Messiah University?",
+    answers: [
+      {
+        label: "Yes",
+        finished: false,
+        next: "4",
+      },
+      {
+        label: "No",
+        finished: true,
+        next: ["open-house", "spotlight-days", "individual-visit", "falcon-friday"],
+      },
+    ],
+  },
+  {
+    id: "4",
+    question: "Have you been accepted to Messiah University?",
+    answers: [
+      {
+        label: "Yes",
+        finished: true,
+        next: ["spotlight-days", "individual-visit", "accepted-student-preview-day"],
+      },
+      {
+        label: "Not yet",
+        finished: true,
+        next: ["open-house", "spotlight-days", "individual-visit", "falcon-friday"],
+      },
+    ],
+  },
+  {
+    id: "5",
+    question: "Are you currently in college?",
+    answers: [
+      {
+        label: "Yes",
+        finished: false,
+        next: "3",
+      },
+      {
+        label: "No",
+        finished: true,
+        next: ["open-house", "spotlight-days", "individual-visit", "falcon-friday"],
+      },
+    ],
+  },
+];
 ---
 
 <section
   class="py-24 bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover relative"
-  x-data="{ show: false, item: null }"
-  @keyup.escape.window="show = false"
+  x-data="survey"
+  @keyup.escape.window="isDialogVisible = false"
 >
   <header class="text-center max-w-6xl mx-auto px-4 mb-16">
     <h2 class="h2 text-primary-800">Explore your visit options!</h2>
@@ -150,16 +249,56 @@ const items = [
       to show you all the reasons Messiah is an awesome place to call home!
     </p>
 
-    <button class="btn-primary">I need help finding the right visit option</button>
+    <button class="btn-primary" x-show="!isSurveyVisible" @click="startSurvey">
+      I need help finding the right visit option
+    </button>
+
+    <template x-if="isSurveyVisible">
+      <div class="bg-primary-800 max-w-xl p-8 mx-auto">
+        {
+          questions.map((question) => (
+            <template x-if="slide === $el.getAttribute('id')" id={`question-${question.id}`}>
+              <div>
+                <p class="text-white mb-4">{question.question}</p>
+                <div class="flex flex-wrap gap-2 justify-center">
+                  {question.answers.map((answer) => (
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      @click="nextSlide"
+                      data-next={answer.next}
+                      data-finished={String(answer.finished)}
+                    >
+                      {answer.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </template>
+          ))
+        }
+
+        <template x-if="slide === 'results'">
+          <div>
+            <p class="text-white mb-4">
+              Okay, based on your response, we recommend you checking out the events listed below.
+            </p>
+            <button type="button" class="btn btn-secondary" @click="clearSurvey">
+              Clear filter
+            </button>
+          </div>
+        </template>
+      </div>
+    </template>
   </header>
 
   <ul class="flex flex-wrap gap-8 justify-center max-w-6xl mx-auto px-4">
     {
-      items.map((item, index) => (
-        <li class="max-w-[25%]">
+      items.map((item) => (
+        <li class="max-w-[25%]" x-show={`isVisible('${item.id}')`}>
           <button
-            data-id={`item-${index}`}
-            @click="show = true; item = $el.getAttribute('data-id')"
+            data-id={item.id}
+            @click="isDialogVisible = true; item = $el.getAttribute('data-id')"
             type="button"
             class="text-center font-title font-bold text-xl sm:text-2xl md:text-3xl group"
           >
@@ -178,22 +317,22 @@ const items = [
   </ul>
 
   <dialog
-    :open="show"
+    :open="isDialogVisible"
     class="bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover absolute inset-0 w-full h-full overflow-y-auto p-12"
   >
     <button
       type="button"
       class="absolute right-12 top-12 hover:text-tertiary-400 transition-colors"
       aria-label="close dialog"
-      @click="show = false"
+      @click="isDialogVisible = false"
     >
       <Icon name="close" class="size-10" />
     </button>
 
     <div class="mx-auto max-w-3xl px-4 py-24">
       {
-        items.map((item, index) => (
-          <template id={`item-${index}`} x-if="$el.getAttribute('id') === item">
+        items.map((item) => (
+          <template id={item.id} x-if="$el.getAttribute('id') === item">
             <div>
               <img src={item.image} alt={item.title} class="w-full mb-4" width="736" height="280" />
               <h3 class="h3 text-primary-800">{item.title}</h3>
@@ -225,3 +364,47 @@ const items = [
     </div>
   </dialog>
 </section>
+
+<script>
+  import Alpine from "alpinejs";
+
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("survey", () => ({
+      isDialogVisible: false,
+      isSurveyVisible: false,
+      slide: "question-1",
+      item: null,
+      filter: [] as string[],
+
+      startSurvey() {
+        this.isSurveyVisible = true;
+      },
+
+      nextSlide() {
+        const next = this.$el.getAttribute("data-next");
+        const finished = this.$el.getAttribute("data-finished");
+
+        if (finished === "false") {
+          this.slide = `question-${next}`;
+        } else {
+          this.filter = next?.split(",") || [];
+          this.slide = "results";
+        }
+      },
+
+      clearSurvey() {
+        this.isSurveyVisible = false;
+        this.filter = [];
+        this.slide = "question-1";
+      },
+
+      isVisible(id: string) {
+        if (this.isSurveyVisible) {
+          return this.filter.includes(id);
+        }
+
+        return true;
+      },
+    }));
+  });
+</script>
