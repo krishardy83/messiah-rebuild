@@ -40,7 +40,9 @@ const { title, subtitle, image, link, class: className, ...props } = Astro.props
         ) : null
       }
 
-      <slot />
+      <div class="text-sm">
+        <slot />
+      </div>
 
       {
         link ? (

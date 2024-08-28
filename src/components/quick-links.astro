@@ -25,7 +25,10 @@ const { title, variant = "link", links, class: className, ...props } = Astro.pro
           {variant === "link" ? <Icon name="chevron-right" class="size-4" /> : null}
           <a
             href={link.href}
-            class:list={["link", variant === "button" ? "btn bg-white shadow-md w-full" : null]}
+            class:list={[
+              "link",
+              variant === "button" ? "btn bg-white shadow-md w-full" : "text-sm",
+            ]}
           >
             {link.label}
           </a>

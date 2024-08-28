@@ -55,7 +55,11 @@ function getYouTubePoster(videoId: string) {
     )
   }
 
-  {caption ? <figcaption class="text-center mt-2 text-gray-500">{caption}</figcaption> : null}
+  {
+    caption ? (
+      <figcaption class="text-center mt-2 text-gray-500 text-sm">{caption}</figcaption>
+    ) : null
+  }
 </figure>
 
 <script>

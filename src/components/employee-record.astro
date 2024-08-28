@@ -33,11 +33,11 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
       <h3 class="h4 text-primary-800">{name}</h3>
       <p class="text-tertiary-500 font-title uppercase font-bold">{job}</p>
 
-      <ul class="border-y space-y-2 border-gray-300 py-2 my-2">
+      <ul class="border-y space-y-2 border-gray-300 py-2 my-2 text-sm">
         {
           email ? (
             <li class="flex items-center gap-2">
-              <Icon name="envelope" />
+              <Icon name="envelope" class="size-5" />
               <a class="link text-primary-800" href={`mailto:${email}`}>
                 {email}
               </a>
@@ -47,7 +47,7 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         {
           phone ? (
             <li class="flex items-center gap-2">
-              <Icon name="phone" />
+              <Icon name="phone" class="size-5" />
               <a class="link text-primary-800" href={`tel:${phone}`}>
                 {phone}
               </a>
@@ -57,7 +57,7 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         {
           fax ? (
             <li class="flex items-center gap-2">
-              <Icon name="printer" />
+              <Icon name="printer" class="size-5" />
               {fax}
             </li>
           ) : null
@@ -65,7 +65,7 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         {
           url ? (
             <li class="flex items-center gap-2">
-              <Icon name="globe" />
+              <Icon name="globe" class="size-5" />
               <a class="link text-primary-800" href={url}>
                 {url}
               </a>
@@ -74,7 +74,9 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         }
       </ul>
 
-      <slot />
+      <div class="text-sm">
+        <slot />
+      </div>
     </div>
   </div>
 </article>

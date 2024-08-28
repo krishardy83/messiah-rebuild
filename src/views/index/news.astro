@@ -41,7 +41,7 @@ const items = [
       {
         items.map((item) => (
           <NewsPreview title={item.title} image={item.image} url={item.url}>
-            {item.description}
+            <p class="text-sm">{item.description}</p>
           </NewsPreview>
         ))
       }

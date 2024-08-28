@@ -10,7 +10,8 @@ const { class: className, ...props } = Astro.props;
 
 <nav {...props} class={cn("bg-white w-60", className)}>
   <h3 class="text-primary-800 leading-tight px-4 py-2">
-    <span class="uppercase font-title text-lg font-bold block">Next steps</span> for Undergrad students
+    <span class="uppercase font-title text-lg font-bold block">Next steps</span>
+    <span class="text-sm">for Undergrad students</span>
   </h3>
 
   <ul>
@@ -60,7 +61,7 @@ const { class: className, ...props } = Astro.props;
       <a href="/" class="bg-gray-800 text-white py-2 px-4 flex gap-4 justify-between items-center">
         <span>
           <span class="font-title uppercase font-bold block">Switch to</span>
-          Graduate programs
+          <span class="text-sm">Graduate programs</span>
         </span>
         <Icon name="switch" class="size-5" />
       </a>

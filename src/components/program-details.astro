@@ -22,7 +22,7 @@ const { where, what, school, class: className, ...props } = Astro.props;
     <div>
       <h4 class="h4">Where they work</h4>
 
-      <ol class="mt-4">
+      <ol class="mt-4 text-sm">
         {where.map((item) => <li>{item}</li>)}
       </ol>
     </div>
@@ -30,7 +30,7 @@ const { where, what, school, class: className, ...props } = Astro.props;
     <div>
       <h4 class="h4">What they do</h4>
 
-      <ol class="mt-4">
+      <ol class="mt- text-sm">
         {what.map((item) => <li>{item}</li>)}
       </ol>
     </div>
@@ -38,7 +38,7 @@ const { where, what, school, class: className, ...props } = Astro.props;
     <div>
       <h4 class="h4">Graduate school</h4>
 
-      <ol class="mt-4">
+      <ol class="mt-4 text-sm">
         {school.map((item) => <li>{item}</li>)}
       </ol>
     </div>

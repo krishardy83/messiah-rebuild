@@ -65,7 +65,7 @@ const { transparent } = Astro.props;
                   aria-labelledby={`group-button-${slugify(group.title)}`}
                   aria-hidden="true"
                 >
-                  <ul class="flex flex-col gap-2">
+                  <ul class="flex flex-col">
                     {group.children.map((child) => {
                       if (child.type === "separator") {
                         return <li role="separator" class="w-full h-px bg-primary-500 my-4" />;
@@ -76,7 +76,9 @@ const { transparent } = Astro.props;
                           <a
                             href={child.href}
                             class:list={[
-                              child.type === "button" ? "btn-quaternary w-full" : "link text-lg",
+                              child.type === "button"
+                                ? "btn-quaternary w-full mb-2"
+                                : "link my-2 block",
                             ]}
                           >
                             {child.title}
@@ -168,7 +170,7 @@ const { transparent } = Astro.props;
                     </div>
 
                     {group.children.map((child) => (
-                      <ul class="flex-1 space-y-1">
+                      <ul class="flex-1 space-y-1 text-sm">
                         {child.map((link) => (
                           <li>
                             <a
