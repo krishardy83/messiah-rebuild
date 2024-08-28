@@ -10,7 +10,6 @@ export default {
       fontFamily: {
         title: ["priori-sans", ...fontFamily.serif],
         sans: ["noto-sans", ...fontFamily.sans],
-        serif: ["vollkorn", ...fontFamily.serif],
       },
       colors: {
         primary: {
