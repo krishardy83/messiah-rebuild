@@ -254,7 +254,16 @@ const questions = [
     </button>
 
     <template x-if="isSurveyVisible">
-      <div class="bg-primary-800 max-w-xl p-8 mx-auto">
+      <div class="bg-primary-800 max-w-xl p-8 mx-auto relative">
+        <button
+          type="button"
+          class="absolute text-white top-2 right-2 link"
+          aria-label="close dialog"
+          @click="clearSurvey"
+        >
+          <Icon name="close" class="size-8" />
+        </button>
+
         {
           questions.map((question) => (
             <template x-if="slide === $el.getAttribute('id')" id={`question-${question.id}`}>
