@@ -1,0 +1,36 @@
+---
+const items = [
+  {
+    content:
+      "I will never forget my first tour at Messiah where my tour guide showed me the amazing community and opportunities that Messiah has to offer and ever since then I always knew that I wanted to be able to do the same for future students. The tour is what really sold me for the school and I even came back to visit campus 3 times in the next 2 months!",
+    author: "Coby Bracken '23",
+  },
+  {
+    content:
+      "From the moment I got to campus to the moment I left, I could not stop smiling; something just felt right. Every person I met was beyond helpful, warm, and welcoming. I felt like I had known everyone for years. I could see faith was actually lived out on campus.",
+    author: "Sarah Davis '22",
+  },
+  {
+    content:
+      "When I first stepped on campus, I was immediately greeted by enthusiastic and excited faces. The difference between the campus visit at Messiah College and some of the other campuses I visited was amazing. I immediately felt welcomed on to the campus and knew that I wanted to come to Messiah right away.",
+    author: "Katie Linn '23",
+  },
+];
+---
+
+<section class="py-24 text-center bg-primary-800 text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="h2">Student quotes</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-16 items-start">
+      {
+        items.map((item) => (
+          <blockquote class="flex flex-col-reverse max-w-xl lg:max-w-none mx-auto">
+            <p>{item.content}</p>
+            <cite class="mb-4 block">{item.author}</cite>
+          </blockquote>
+        ))
+      }
+    </div>
+  </div>
+</section>

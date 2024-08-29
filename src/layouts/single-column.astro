@@ -7,13 +7,13 @@ interface Props {
   subtitle?: string;
   description: string;
   image: string;
-  button?: {
+  buttons?: {
     label: string;
     href: string;
-  };
+  }[];
 }
 
-const { title, description, subtitle, button, image } = Astro.props;
+const { title, description, subtitle, buttons, image } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -40,11 +40,16 @@ const { title, description, subtitle, button, image } = Astro.props;
             </p>
           ) : null
         }
+
         {
-          button ? (
-            <a href={button.href} class="btn-quaternary mt-8">
-              {button.label}
-            </a>
+          buttons ? (
+            <div class="flex flex-wrap gap-2 mt-8">
+              {buttons.map((button) => (
+                <a href={button.href} class="btn-secondary">
+                  {button.label}
+                </a>
+              ))}
+            </div>
           ) : null
         }
       </div>

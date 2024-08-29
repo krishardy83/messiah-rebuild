@@ -1,0 +1,54 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import VisitOptions from "../components/visit-options.astro";
+import Scholarship from "../views/visit/scholarship.astro";
+import ContinueExploring from "../components/continue-exploring.astro";
+import StudentQuotes from "../views/visit/student-quotes.astro";
+---
+
+<SingleColumn
+  title="Visit Campus"
+  image="/images/visit-campus.jpg"
+  subtitle="Experience Messiah for yourself!"
+  description="Experience Messiah for yourself!"
+  buttons={[
+    {
+      href: "https://tour.messiah.edu/?_gl=1*1wykflf*_gcl_au*MTc0NTQ5NjM1Ni4xNzI0NDI2NzU5*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcyNDk0MjQxNi4xNjUuMS4xNzI0OTQyNzQyLjYwLjAuMA..",
+      label: "Virtual tour",
+    },
+  ]}
+>
+  <VisitOptions />
+  <Scholarship />
+  <StudentQuotes />
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Lodging",
+        href: "http://www.messiah.edu/info/21321/lodging",
+      },
+      {
+        label: "Transportation and directions",
+        href: "http://www.messiah.edu/info/21343/visit_campus/13/directions",
+      },
+      {
+        label: "Area information",
+        href: "http://www.messiah.edu/info/20240/area_information",
+      },
+      {
+        label: "Campus map",
+        href: "http://www.messiah.edu/map/",
+      },
+      {
+        label: "Travel assistance program",
+        href: "https://www.messiah.edu/homepage/4982/travel_assistance_program_for_campus_visits",
+      },
+      {
+        label: "Live like a local",
+        href: "https://issuu.com/messiahcollegeadmissions/docs/23_1608_adm_booklet-_location_guide_final",
+      },
+    ]}
+  />
+</SingleColumn>
