@@ -1,56 +1,55 @@
 ---
 import Icon from "../../components/icon.astro";
-
-const dates = [
-  {
-    name: "September 27, 2024",
-    button: {
-      label: "Register",
-      url: "https://mcadmissions.messiah.edu/register/?id=73ca23f4-b34e-4338-b766-43fd09a4faea&_gl=1*581x73*_gcl_au*MTc0NTQ5NjM1Ni4xNzI0NDI2NzU5*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcyNDc3ODMyNS4xNTcuMS4xNzI0Nzc4OTI2LjYwLjAuMA..",
-    },
-  },
-  {
-    name: "November 9, 2024",
-    button: {
-      label: "Register",
-      url: "https://mcadmissions.messiah.edu/register/?id=e90259c9-cdaa-4434-a250-f3be74635b99&_gl=1*581x73*_gcl_au*MTc0NTQ5NjM1Ni4xNzI0NDI2NzU5*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcyNDc3ODMyNS4xNTcuMS4xNzI0Nzc4OTI2LjYwLjAuMA..",
-    },
-  },
-  {
-    name: "February 17, 2025",
-    button: {
-      label: "Save the date",
-      url: "https://mcadmissions.messiah.edu/register/?id=bce846db-2880-4f01-9a62-f4b56cb54143&_gl=1*581x73*_gcl_au*MTc0NTQ5NjM1Ni4xNzI0NDI2NzU5*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcyNDc3ODMyNS4xNTcuMS4xNzI0Nzc4OTI2LjYwLjAuMA..",
-    },
-  },
-  {
-    name: "April 25, 2025",
-    button: {
-      label: "Save the date",
-      url: "https://mcadmissions.messiah.edu/register/?id=e4d28b96-59a0-4f58-89e7-c8046275fa42&_gl=1*581x73*_gcl_au*MTc0NTQ5NjM1Ni4xNzI0NDI2NzU5*_ga*MTE2NTA5Nzk3LjE3MTQ0MDI1ODE.*_ga_11QNM61CQ5*MTcyNDc3ODMyNS4xNTcuMS4xNzI0Nzc4OTI2LjYwLjAuMA..",
-    },
-  },
-];
 ---
 
-<section class="max-w-6xl mx-auto px-4 py-24">
+<section class="max-w-6xl mx-auto px-4 py-24" x-data="dates">
   <h2 class="h2 text-primary-800">Join us for an upcoming Open House</h2>
 
   <ol class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
-    {
-      dates.map((date) => (
-        <li>
-          <a
-            href={date.button.url}
-            class="border-4 border-tertiary-300 flex flex-col p-4 h-32 hover:bg-tertiary-300 group transition-colors focus-visible:bg-tertiary-300"
+    <template x-for="date in dates">
+      <li>
+        <a
+          :href="date.URL"
+          class="border-4 border-tertiary-300 flex flex-col p-4 h-32 hover:bg-tertiary-300 group transition-colors focus-visible:bg-tertiary-300"
+        >
+          <span class="font-title uppercase font-bold text-2xl" x-text="getTitle(date.StartDate)"
+          ></span>
+          <span
+            class="flex items-center gap-2 mt-auto opacity-0 group-hover:opacity-100 transition-all translate-y-6 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0"
           >
-            <span class="font-title uppercase font-bold text-2xl">{date.name}</span>
-            <span class="flex items-center gap-2 mt-auto opacity-0 group-hover:opacity-100 transition-all translate-y-6 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0">
-              {date.button.label} <Icon name="chevron-right" class="size-4" />
-            </span>
-          </a>
-        </li>
-      ))
-    }
+            Register <Icon name="chevron-right" class="size-4" />
+          </span>
+        </a>
+      </li>
+    </template>
   </ol>
 </section>
+
+<script>
+  import Alpine from "alpinejs";
+
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("dates", () => ({
+      dates: [],
+
+      init() {
+        fetch(
+          "https://mcadmissions.messiah.edu/manage/query/run?id=0434b8c1-17f7-46f3-b3de-0eadbed101a6&cmd=service&output=json&h=df7ae7ad-1295-43c4-8184-e338f28d06d4"
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            this.dates = data.row;
+            console.log(data.row);
+          });
+      },
+
+      getTitle(start: string) {
+        return new Intl.DateTimeFormat("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        }).format(new Date(start));
+      },
+    }));
+  });
+</script>
