@@ -249,7 +249,7 @@ const questions = [
       to show you all the reasons Messiah is an awesome place to call home!
     </p>
 
-    <button class="btn-primary" x-show="!isSurveyVisible" @click="startSurvey">
+    <button class="btn-tertiary" x-show="!isSurveyVisible" @click="startSurvey">
       I need help finding the right visit option
     </button>
 
@@ -273,7 +273,7 @@ const questions = [
                   {question.answers.map((answer) => (
                     <button
                       type="button"
-                      class="btn btn-secondary"
+                      class="btn btn-quaternary"
                       @click="nextSlide"
                       data-next={answer.next}
                       data-finished={String(answer.finished)}
@@ -292,7 +292,7 @@ const questions = [
             <p class="text-white mb-4">
               Okay, based on your response, we recommend you checking out the events listed below.
             </p>
-            <button type="button" class="btn btn-secondary" @click="clearSurvey">
+            <button type="button" class="btn btn-quaternary" @click="clearSurvey">
               Clear filter
             </button>
           </div>
@@ -349,7 +349,7 @@ const questions = [
 
               <div class="flex gap-2 mb-8 flex-wrap">
                 {item.buttons.map((button) => (
-                  <a href={button.url} class="btn btn-primary">
+                  <a href={button.url} class="btn btn-tertiary">
                     {button.label}
                   </a>
                 ))}

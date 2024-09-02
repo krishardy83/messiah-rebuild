@@ -33,7 +33,7 @@ const { image, title, links, class: className, ...props } = Astro.props;
       links ? (
         <div class="flex flex-wrap gap-2">
           {links.map((link) => (
-            <a class="btn-quaternary" href={link.href}>
+            <a class="btn-primary" href={link.href}>
               {link.label}
             </a>
           ))}

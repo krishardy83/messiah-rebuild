@@ -15,7 +15,6 @@ const sidebarLinks = [
         href: "/",
         name: "Page 3 with a really long name that breaks to two lines",
         active: true,
-        
       },
     ],
   },
@@ -35,14 +34,15 @@ const sidebarLinks = [
 >
   <div class="flex flex-col md:flex-row">
     <Sidebar links={sidebarLinks}>
-      <a href="/" class="btn-primary w-full">First button</a>
-      <a href="/" class="btn-primary w-full">Second button</a>
+      <a href="/" class="btn-tertiary w-full">First button</a>
+      <a href="/" class="btn-tertiary w-full">Second button</a>
     </Sidebar>
 
     <article class="md:px-10 md:py-8 rich-text">
-      <p>This page shows the sidebar when a level 1 page is being viewed. In this example, the level 1 page has no sub-pages</p>
-
-    
+      <p>
+        This page shows the sidebar when a level 1 page is being viewed. In this example, the level
+        1 page has no sub-pages
+      </p>
     </article>
   </div>
 </WithoutHero>

@@ -40,19 +40,19 @@
   }
 
   .btn-primary {
-    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800;
+    @apply btn from-button-from to-button-to bg-gradient-to-r text-white hover:opacity-80;
   }
 
   .btn-secondary {
-    @apply btn bg-gray-100 hover:bg-gray-200 focus-visible:bg-gray-200;
+    @apply btn bg-gradient-to-r from-tertiary-500 to-secondary-500 text-white hover:opacity-80;
   }
 
   .btn-tertiary {
-    @apply btn bg-gradient-to-r from-primary-600 to-primary-400 text-white hover:opacity-80;
+    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800;
   }
 
   .btn-quaternary {
-    @apply btn bg-gradient-to-r from-tertiary-500 to-secondary-500 text-white hover:opacity-80;
+    @apply btn bg-gray-100 text-primary-800 hover:bg-gray-200 focus-visible:bg-gray-200;
   }
 
   .link {

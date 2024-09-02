@@ -19,8 +19,8 @@ const sidebarLinks = [
           { href: "/", name: "Second level" },
           {
             href: "/",
-            name: "Second level active with children", active: true,
-         
+            name: "Second level active with children",
+            active: true,
           },
         ],
       },
@@ -42,14 +42,12 @@ const sidebarLinks = [
 >
   <div class="flex flex-col md:flex-row">
     <Sidebar links={sidebarLinks}>
-      <a href="/" class="btn-primary w-full">First button</a>
-      <a href="/" class="btn-primary w-full">Second button</a>
+      <a href="/" class="btn-tertiary w-full">First button</a>
+      <a href="/" class="btn-tertiary w-full">Second button</a>
     </Sidebar>
 
     <article class="md:px-10 md:py-8 rich-text">
       <p>This page shows the left nav when a use has clicked a page 3 levels deep.</p>
-
-      
     </article>
   </div>
 </WithoutHero>
