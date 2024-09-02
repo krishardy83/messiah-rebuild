@@ -301,10 +301,10 @@ const questions = [
     </template>
   </header>
 
-  <ul class="flex flex-wrap gap-8 justify-center max-w-6xl mx-auto px-4">
+  <ul class="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
     {
       items.map((item) => (
-        <li class="max-w-[25%]" x-show={`isVisible('${item.id}')`}>
+        <li class="text-center" x-show={`isVisible('${item.id}')`}>
           <button
             data-id={item.id}
             @click="isDialogVisible = true; item = $el.getAttribute('data-id')"
@@ -327,18 +327,18 @@ const questions = [
 
   <dialog
     :open="isDialogVisible"
-    class="bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover absolute inset-0 w-full h-full overflow-y-auto p-12"
+    class="bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover absolute inset-0 w-full h-full overflow-y-auto"
   >
-    <button
-      type="button"
-      class="absolute right-12 top-12 hover:text-tertiary-400 transition-colors"
-      aria-label="close dialog"
-      @click="isDialogVisible = false"
-    >
-      <Icon name="close" class="size-10" />
-    </button>
+    <div class="mx-auto max-w-3xl px-4 py-24 relative">
+      <button
+        type="button"
+        class="absolute right-4 top-12 hover:text-tertiary-400 transition-colors"
+        aria-label="close dialog"
+        @click="isDialogVisible = false"
+      >
+        <Icon name="close" class="size-10" />
+      </button>
 
-    <div class="mx-auto max-w-3xl px-4 py-24">
       {
         items.map((item) => (
           <template id={item.id} x-if="$el.getAttribute('id') === item">
