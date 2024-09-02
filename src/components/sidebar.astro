@@ -26,9 +26,10 @@ const supplements = await Astro.slots.render("supplements");
     "sidebar mb-6 flex-shrink-0 border-b border-gray-300 md:mb-0 md:w-[270px] md:border-b-0 md:border-r",
     className
   )}
+  x-data="{ visible: false }"
   {...props}
 >
-  <button type="button" class="btn-quaternary w-full md:hidden" data-toggle data-target="#sidebar">
+  <button type="button" class="btn-quaternary w-full md:hidden" @click="visible = !visible">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -42,11 +43,10 @@ const supplements = await Astro.slots.render("supplements");
         stroke-linejoin="round"
         d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
     </svg>
-
-    Show sidebar
+    <span x-text="visible ? 'Hide navigation' : 'Show navigation'"></span>
   </button>
 
-  <div class="mb-6 mt-4 hidden md:mb-0 md:mt-0 md:block" id="sidebar">
+  <div class="mb-6 mt-4 md:mb-0 md:mt-0" :class="visible ? '' : 'hidden md:block'">
     <div class="flex flex-col gap-1">
       <slot />
     </div>
@@ -120,15 +120,3 @@ const supplements = await Astro.slots.render("supplements");
     }
   </div>
 </aside>
-
-<script>
-  let toggle = document.querySelector<HTMLButtonElement>("[data-toggle]");
-
-  if (toggle) {
-    toggle.addEventListener("click", () => {
-      let target = document.querySelector<HTMLDivElement>(toggle.dataset.target as string);
-
-      target?.classList.toggle("hidden");
-    });
-  }
-</script>
