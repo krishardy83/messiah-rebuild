@@ -1,5 +1,5 @@
 ---
-import Icon from "../../components/icon.astro";
+import RequestInformation from "../../components/request-information.astro";
 ---
 
 <section class="wrapper pt-12 md:pt-24 relative">
@@ -10,86 +10,5 @@ import Icon from "../../components/icon.astro";
     auditing–all within a Christian perspective.
   </p>
 
-  <form
-    class="bg-primary-400/80 backdrop-blur-sm md:max-w-xs p-8 md:absolute md:right-0 md:bottom-0 mt-8 md:mt-0"
-    data-information-dialog-trigger
-  >
-    <h3 class="h4 text-white mb-4">Request information</h3>
-
-    <input
-      type="text"
-      aria-label="first name"
-      class="bg-white w-full h-12 px-4 mb-4"
-      placeholder="First name"
-      required
-      name="firstname"
-    />
-    <input
-      type="text"
-      aria-label="last name"
-      class="bg-white w-full h-12 px-4 mb-4"
-      placeholder="Last name"
-      required
-      name="lastname"
-    />
-    <input
-      type="email"
-      aria-label="email"
-      class="bg-white w-full h-12 px-4 mb-4"
-      placeholder="Email"
-      required
-      name="email"
-    />
-
-    <button type="submit" class="btn-quaternary w-full">Next</button>
-  </form>
+  <RequestInformation class="hidden md:block" />
 </section>
-
-<dialog
-  data-information-dialog
-  class="backdrop:bg-primary-800/80 backdrop:backdrop-blur-sm bg-transparent overflow-y-auto w-[75vw] max-w-5xl"
->
-  <div class="wrapper py-24 text-white">
-    <header class="flex items-center justify-center relative mb-8">
-      <h3 class="text-center h3 text-white !mb-0">Request information</h3>
-      <button
-        type="button"
-        class="absolute right-0 hover:text-tertiary-400 transition-colors"
-        aria-label="close dialog"
-        data-information-close
-      >
-        <Icon name="close" class="size-10" />
-      </button>
-    </header>
-
-    <div id="form_4e43ee1d-9bbf-4512-87e6-fa97fd9ae72c">Loading...</div>
-  </div>
-</dialog>
-
-<!-- <script
-  async
-  src="https://mcadmissions.messiah.edu/register/?id=4e43ee1d-9bbf-4512-87e6-fa97fd9ae72c&output=embed&div=form_4e43ee1d-9bbf-4512-87e6-fa97fd9ae72c"
-></script> -->
-
-<script>
-  let form = document.querySelector<HTMLFormElement>("[data-information-dialog-trigger]");
-  let dialog = document.querySelector<HTMLDialogElement>("[data-information-dialog]");
-  let close = dialog?.querySelector<HTMLButtonElement>("[data-information-close]");
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      dialog?.close();
-    }
-  });
-
-  close?.addEventListener("click", () => {
-    dialog?.close();
-  });
-
-  form?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    dialog?.showModal();
-
-    // const formData = new FormData(event.target as HTMLFormElement);
-  });
-</script>
