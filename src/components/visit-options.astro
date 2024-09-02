@@ -237,7 +237,7 @@ const questions = [
 ---
 
 <section
-  class="py-24 bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover relative"
+  class="py-24 bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover"
   x-data="survey"
   @keyup.escape.window="isDialogVisible = false"
 >
@@ -327,12 +327,12 @@ const questions = [
 
   <dialog
     :open="isDialogVisible"
-    class="bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover absolute inset-0 w-full h-full overflow-y-auto"
+    class="hidden open:flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
   >
-    <div class="mx-auto max-w-3xl px-4 py-24 relative">
+    <div class="max-w-3xl bg-white py-20 relative overflow-y-auto">
       <button
         type="button"
-        class="absolute right-4 top-12 hover:text-tertiary-400 transition-colors"
+        class="absolute left-4 lg:left-auto lg:right-4 top-5 hover:text-tertiary-400 transition-colors"
         aria-label="close dialog"
         @click="isDialogVisible = false"
       >
@@ -344,28 +344,30 @@ const questions = [
           <template id={item.id} x-if="$el.getAttribute('id') === item">
             <div>
               <img src={item.image} alt={item.title} class="w-full mb-4" width="736" height="280" />
-              <h3 class="h3 text-primary-800">{item.title}</h3>
-              <p class="mb-4">{item.introduction}</p>
+              <div class="py-4 px-8">
+                <h3 class="h3 text-primary-800">{item.title}</h3>
+                <p class="mb-4">{item.introduction}</p>
 
-              <div class="flex gap-2 mb-8 flex-wrap">
-                {item.buttons.map((button) => (
-                  <a href={button.url} class="btn btn-tertiary">
-                    {button.label}
-                  </a>
-                ))}
-              </div>
-
-              {item.infoBox ? (
-                <div>
-                  <h4 class="h4 text-primary-800 mb-2">{item.infoBox.title}</h4>
-
-                  <ul class="list-disc pl-6">
-                    {item.infoBox.reasons.map((reason) => (
-                      <li>{reason}</li>
-                    ))}
-                  </ul>
+                <div class="flex gap-2 mb-8 flex-wrap">
+                  {item.buttons.map((button) => (
+                    <a href={button.url} class="btn btn-tertiary">
+                      {button.label}
+                    </a>
+                  ))}
                 </div>
-              ) : null}
+
+                {item.infoBox ? (
+                  <div class="bg-gray-100 border border-gray-300 p-4">
+                    <h4 class="h4 text-primary-800 mb-2">{item.infoBox.title}</h4>
+
+                    <ul class="list-disc pl-6">
+                      {item.infoBox.reasons.map((reason) => (
+                        <li>{reason}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
             </div>
           </template>
         ))
