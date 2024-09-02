@@ -22,15 +22,38 @@ const items = [
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="h2">Student quotes</h2>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 mt-16 items-start">
+    <div class="f-carousel mt-16" data-quotes-slider>
       {
         items.map((item) => (
-          <blockquote class="flex flex-col-reverse max-w-xl lg:max-w-none mx-auto">
-            <p>{item.content}</p>
-            <cite class="mb-4 block">{item.author}</cite>
-          </blockquote>
+          <div class="f-carousel__slide px-16 md:px-4 w-full text-center">
+            <blockquote class="max-w-xl mx-auto">
+              <p>{item.content}</p>
+              <cite class="mt-4 block">- {item.author}</cite>
+            </blockquote>
+          </div>
         ))
       }
     </div>
   </div>
 </section>
+
+<script>
+  import { Carousel } from "@fancyapps/ui";
+
+  const container = document.querySelector<HTMLDivElement>("[data-quotes-slider]");
+
+  new Carousel(container, {
+    infinite: true,
+    Dots: false,
+    transition: "slide",
+  });
+</script>
+
+<style is:global>
+  .f-carousel:is([data-quotes-slider]) {
+    --f-button-svg-width: 100px;
+    --f-button-svg-height: 100px;
+    --f-button-color: #fff;
+    --f-button-hover-color: #fff;
+  }
+</style>
