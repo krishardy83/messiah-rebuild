@@ -3,6 +3,12 @@ import { slugify } from "../../lib/utils";
 import Icon from "../icon.astro";
 import Logo from "../logo.astro";
 import { bottomGroups, topGroups } from "./navigation-data";
+
+interface Props {
+  transparent: boolean;
+}
+
+const { transparent } = Astro.props;
 ---
 
 <button
@@ -24,6 +30,17 @@ import { bottomGroups, topGroups } from "./navigation-data";
     class="pointer-events-none absolute left-2 top-8 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:top-6 group-[.is-open]/trigger:-rotate-[135deg]"
   ></span>
 </button>
+
+<a
+  href="/"
+  aria-label="home page"
+  class:list={[
+    "block relative z-10 ml-4 mt-2 transition-opacity lg:hidden",
+    transparent ? "text-white" : "text-primary-800",
+  ]}
+>
+  <Logo />
+</a>
 
 <div
   class="bg-primary-800 text-white fixed inset-0 z-40 hidden lg:hidden opacity-0 py-10 px-4 transition-opacity duration-300 overflow-y-auto"

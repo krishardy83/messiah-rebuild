@@ -12,7 +12,7 @@ const { transparent } = Astro.props;
 ---
 
 <div
-  class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[scrolling='true']:-translate-y-12 transition-all"
+  class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[compress='true']:-translate-y-12 transition-all"
   data-menu
 >
   <header class="mx-auto max-w-6xl px-4">
@@ -21,7 +21,7 @@ const { transparent } = Astro.props;
         href="/"
         aria-label="home page"
         class:list={[
-          "mr-auto mt-4 group-data-[scrolling='true']:opacity-0 transition-opacity",
+          "hidden lg:block mr-auto mt-4 group-data-[compress='true']:opacity-0 transition-opacity",
           transparent
             ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
             : "text-primary-800",
@@ -32,7 +32,7 @@ const { transparent } = Astro.props;
 
       <div class="flex-col justify-end transition-opacity grow hidden lg:flex" data-menu-wrapper>
         <ul
-          class="flex justify-end mb-4 items-center group-data-[scrolling='true']:opacity-0 transition-opacity leading-none"
+          class="flex justify-end mb-4 items-center group-data-[compress='true']:opacity-0 transition-opacity leading-none"
         >
           {
             topGroups.map((group) => (
@@ -193,7 +193,7 @@ const { transparent } = Astro.props;
             ))
           }
 
-          <li class="hidden group-data-[scrolling='true']:block">
+          <li class="hidden group-data-[compress='true']:block">
             <button
               type="button"
               aria-label="show search form"
@@ -220,7 +220,7 @@ const { transparent } = Astro.props;
     id="search-form"
     aria-labelledby="search-form-toggle"
     aria-hidden="true"
-    class="opacity-0 hidden absolute left-0 top-0 right-0 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10"
+    class="opacity-0 hidden absolute left-0 top-0 right-0 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
   >
     <form class="max-w-6xl mx-auto px-4 flex relative">
       <input
@@ -319,12 +319,20 @@ const { transparent } = Astro.props;
   }
 
   function handleScroll() {
-    if (window.scrollY > 200) {
+    if (window.scrollY > 0) {
       if (menu?.getAttribute("data-scrolling") !== "true") {
         menu?.setAttribute("data-scrolling", "true");
       }
     } else {
       menu?.setAttribute("data-scrolling", "false");
+    }
+
+    if (window.scrollY > 450) {
+      if (menu?.getAttribute("data-compress") !== "true") {
+        menu?.setAttribute("data-compress", "true");
+      }
+    } else {
+      menu?.setAttribute("data-compress", "false");
     }
   }
 
