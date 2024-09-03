@@ -1,0 +1,42 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import FinancialAidResources from "../views/fin-aid/financial-aid-resources.astro";
+import Header from "../views/fin-aid/header.astro";
+import Tabs from "../views/fin-aid/tabs.astro";
+import Contact from "../views/fin-aid/contact.astro";
+import ContinueExploring from "../components/continue-exploring.astro";
+---
+
+<SingleColumn
+  title="Financial Aid Options"
+  description="Scholarships, grants and other assistance"
+  subtitle="Scholarships, grants and other assistance"
+  image="/images/fin-aid-90.webp"
+>
+  <Header />
+  <Tabs />
+  <FinancialAidResources />
+  <Contact />
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Are you passionate about Racial Reconciliation?",
+        href: "https://www.messiah.edu/info/20700/multicultural_student_programs/3768/racial_reconciliation",
+      },
+      {
+        label: "Outside Scholarship Information",
+        href: "https://www.messiah.edu/info/24068/outside_scholarship_information",
+      },
+      {
+        label: "Free Scholarship Search Services",
+        href: "https://www.messiah.edu/info/21388/merit-based_assistance/2343/free_scholarship_search_services",
+      },
+      {
+        label: "FAFSA changes",
+        href: "https://www.messiah.edu/homepage/5160/2024-25_fafsa_changes",
+      },
+    ]}
+  />
+</SingleColumn>

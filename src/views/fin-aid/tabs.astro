@@ -1,0 +1,159 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<div x-data="tabs" class="wrapper">
+  <div class="flex flex-col md:flex-row flex-wrap border-b border-gray-300">
+    <template x-for="filter in filters">
+      <button
+        type="button"
+        role="switch"
+        :aria-selected="checked === filter.id"
+        class="text-primary-800 font-sans flex p-4 items-center text-lg md:text-xl gap-4 border-b-4 whitespace-nowrap flex-1 justify-center"
+        @click="checked = filter.id"
+        :class="checked === filter.id ? 'border-tertiary-400' : 'border-white'"
+      >
+        <template x-if="filter.icon">
+          <img :src="filter.icon" alt="" aria-hidden="true" width="32" height="32" />
+        </template>
+        <span x-text="filter.label"></span>
+      </button>
+    </template>
+  </div>
+
+  <template x-if="description">
+    <p class="text-center mt-8" x-text="description"></p>
+  </template>
+
+  <ul class="mt-8">
+    <template x-for="entry in filteredEntries">
+      <li class="border-b border-gray-300 last-of-type:border-b-0">
+        <button
+          type="button"
+          @click="isDialogVisible = true; activeEntry = entry"
+          class="flex items-center gap-4 p-4 transition-colors hover:bg-gray-100 w-full"
+        >
+          <img :src="entry.icon" alt="" aria-hidden="true" width="32" height="32" />
+          <span x-text="entry.entry_title"></span>
+          <Icon name="chevron-right" class="ml-auto" />
+        </button>
+      </li>
+    </template>
+  </ul>
+
+  <dialog
+    :open="isDialogVisible"
+    class="hidden open:flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
+  >
+    <div class="max-w-3xl w-full bg-white py-20 relative overflow-y-auto">
+      <button
+        type="button"
+        class="absolute left-4 lg:left-auto lg:right-4 top-5 hover:text-tertiary-400 transition-colors"
+        aria-label="close dialog"
+        @click="isDialogVisible = false"
+      >
+        <Icon name="close" class="size-10" />
+      </button>
+
+      <template x-if="activeEntry">
+        <div class="py-4 px-8">
+          <header class="flex gap-4 items-center mb-8">
+            <img :src="activeEntry.icon" alt="" aria-hidden="true" width="32" height="32" />
+            <h3
+              x-text="activeEntry.entry_title"
+              class="font-title text-2xl md:text-3xl lg:text-4xl text-primary-800"
+            >
+            </h3>
+          </header>
+
+          <div x-html="activeEntry.description" class="prose"></div>
+
+          <template x-if="activeEntry.read_more_link">
+            <a
+              class="btn btn-primary mt-8"
+              x-text="activeEntry.read_more_link_text"
+              :href="activeEntry.read_more_link"></a>
+          </template>
+        </div>
+      </template>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  import Alpine from "alpinejs";
+
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("tabs", () => ({
+      entries: [] as { entry_name: string; category_name: string }[],
+
+      isDialogVisible: false,
+
+      activeEntry: null,
+
+      filters: [
+        {
+          id: "Scholarships",
+          label: "Scholarships",
+          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/graduation-cap-new.svg",
+        },
+        {
+          id: "Grants",
+          label: "Grants",
+          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/grants-new.svg",
+          description:
+            "The grants listed below are available to U.S. citizens and permanent residents only.",
+        },
+        {
+          id: "Federal Loans",
+          label: "Federal Loans",
+          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/fel-loan-new.svg",
+        },
+        {
+          id: "Other Assistance",
+          label: "Other Assistance",
+          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/hand-shake.svg",
+        },
+        {
+          id: null,
+          label: "All Aid",
+          description:
+            "The grants listed below are available to U.S. citizens and permanent residents only.",
+        },
+      ],
+
+      checked: "Scholarships",
+
+      init() {
+        fetch("https://www.messiah.edu/site/a/cache/fin-aid.json")
+          .then((response) => response.json())
+          .then((data) => {
+            this.entries = data.items;
+            console.log(data.items);
+          });
+      },
+
+      entriesWithIcon() {
+        return this.entries.map((entry) => {
+          const filter = this.filters.find((filter) => filter.id === entry.category_name);
+
+          return { ...entry, icon: filter?.icon || null };
+        });
+      },
+
+      filteredEntries() {
+        if (!this.checked) {
+          return this.entriesWithIcon();
+        }
+
+        return this.entriesWithIcon().filter((entry) => entry.category_name === this.checked);
+      },
+
+      description() {
+        const active = this.filters.find((filter) => filter.id === this.checked);
+
+        return active?.description;
+      },
+    }));
+  });
+</script>

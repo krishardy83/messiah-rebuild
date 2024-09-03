@@ -1,0 +1,85 @@
+---
+import Icon from "../../components/icon.astro";
+
+const options = [
+  {
+    href: "http://www.messiah.edu/homepage/1636/financial_aid_information_for_accepted_students",
+    label: "Accepted students",
+  },
+  {
+    href: "http://www.messiah.edu/homepage/1637/financial_aid_information_for_transfer_students",
+    label: "Transfer students",
+  },
+  {
+    href: "http://www.messiah.edu/info/21341/international_students/2295/cost_and_aid",
+    label: "International students",
+  },
+  {
+    href: "http://www.messiah.edu/homepage/1639/financial_aid_information_for_current_students",
+    label: "Current students",
+  },
+  {
+    href: "http://www.messiah.edu/info/21313/financial_aid_for_graduate_programs",
+    label: "Graduate students",
+  },
+  {
+    href: "http://www.messiah.edu/info/21314/financial_aid_for_undergraduate_programs/2397/financial_aid_information_for_veterans",
+    label: "Veterans",
+  },
+  {
+    href: "http://www.messiah.edu/info/21314/financial_aid_for_undergraduate_programs/2398/financial_aid_information_for_parents",
+    label: "Parents",
+  },
+];
+---
+
+<header class="wrapper py-24">
+  <h2 class="h2 text-primary-800 text-center">
+    We are committed to making Messiah accessible and affordable for all students and their
+    families.
+  </h2>
+  <p class="paragraph text-center">
+    We’re serious about this. If Messiah is the right university for you, we will work hard with you
+    toward meeting the cost. Connect with us if you have questions about the Financial Aid
+    opportunities listed below.
+  </p>
+
+  <div class="flex gap-2 justify-center mt-12">
+    <a href="https://www.messiah.edu/info/21344/tuition_and_aid" class="btn btn-primary"
+      >View tuition and fees</a
+    >
+
+    <div
+      class="relative"
+      x-data="{ visible: false }"
+      @click.outside="visible = false"
+      @keyup.window.escape="visible = false"
+    >
+      <button
+        type="button"
+        class="btn-quaternary"
+        aria-haspopup="listbox"
+        :aria-expanded="visible"
+        @click="visible = !visible"
+        >Information for
+        <Icon name="bars" />
+      </button>
+
+      <ul
+        :hidden="!visible"
+        role="listbox"
+        class="absolute top-full bg-gray-100 text-primary-800 font-title font-bold w-full text-lg"
+      >
+        {
+          options.map((option) => (
+            <li role="option">
+              <a class="py-2 px-4 block transition-colors hover:bg-gray-200" href={option.href}>
+                {option.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</header>
