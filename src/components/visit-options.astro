@@ -239,7 +239,7 @@ const questions = [
 <section
   class="py-24 bg-[url(/images/visits-section.jpg)] bg-no-repeat bg-cover"
   x-data="survey"
-  @keyup.escape.window="isDialogVisible = false"
+  x-effect="document.body.classList.toggle('overflow-hidden', isDialogVisible)"
 >
   <header class="text-center max-w-6xl mx-auto px-4 mb-16">
     <h2 class="h2 text-primary-800">Explore your visit options!</h2>
@@ -327,6 +327,7 @@ const questions = [
 
   <dialog
     :open="isDialogVisible"
+    @keyup.window.escape="isDialogVisible = false"
     class="hidden open:flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
   >
     <div class="max-w-3xl bg-white py-20 relative overflow-y-auto">

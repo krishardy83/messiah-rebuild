@@ -2,7 +2,11 @@
 import Icon from "../../components/icon.astro";
 ---
 
-<div x-data="tabs" class="wrapper">
+<div
+  x-data="tabs"
+  class="wrapper"
+  x-effect="document.body.classList.toggle('overflow-hidden', isDialogVisible)"
+>
   <div class="flex flex-col md:flex-row flex-wrap border-b border-gray-300">
     <template x-for="filter in filters">
       <button
@@ -10,7 +14,7 @@ import Icon from "../../components/icon.astro";
         role="switch"
         :aria-selected="checked === filter.id"
         class="text-primary-800 font-sans flex p-4 items-center text-lg md:text-xl gap-4 border-b-4 whitespace-nowrap flex-1 justify-center"
-        @click="checked = filter.id"
+        @click="setActiveTab(filter.id)"
         :class="checked === filter.id ? 'border-tertiary-400' : 'border-white'"
       >
         <template x-if="filter.icon">
@@ -25,13 +29,13 @@ import Icon from "../../components/icon.astro";
     <p class="text-center mt-8" x-text="description"></p>
   </template>
 
-  <ul class="mt-8">
+  <ul class="mt-8 scroll-m-16" id="aid-entries">
     <template x-for="entry in filteredEntries">
       <li class="border-b border-gray-300 last-of-type:border-b-0">
         <button
           type="button"
           @click="isDialogVisible = true; activeEntry = entry"
-          class="flex items-center gap-4 p-4 transition-colors hover:bg-gray-100 w-full"
+          class="flex items-center text-left gap-4 p-4 transition-colors hover:bg-gray-100 w-full"
         >
           <img :src="entry.icon" alt="" aria-hidden="true" width="32" height="32" />
           <span x-text="entry.entry_title"></span>
@@ -43,6 +47,7 @@ import Icon from "../../components/icon.astro";
 
   <dialog
     :open="isDialogVisible"
+    @keyup.window.escape="isDialogVisible = false"
     class="hidden open:flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
   >
     <div class="max-w-3xl w-full bg-white py-20 relative overflow-y-auto">
@@ -82,6 +87,17 @@ import Icon from "../../components/icon.astro";
 
 <script>
   import Alpine from "alpinejs";
+
+  function isInViewport(element: HTMLElement) {
+    const rect = element.getBoundingClientRect();
+
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 
   document.addEventListener("alpine:init", () => {
     Alpine.data("tabs", () => ({
@@ -129,7 +145,6 @@ import Icon from "../../components/icon.astro";
           .then((response) => response.json())
           .then((data) => {
             this.entries = data.items;
-            console.log(data.items);
           });
       },
 
@@ -153,6 +168,16 @@ import Icon from "../../components/icon.astro";
         const active = this.filters.find((filter) => filter.id === this.checked);
 
         return active?.description;
+      },
+
+      setActiveTab(filterId: string) {
+        this.checked = filterId;
+
+        const list = document.getElementById("aid-entries");
+
+        if (list && !isInViewport(list)) {
+          list.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       },
     }));
   });
