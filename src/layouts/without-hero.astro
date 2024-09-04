@@ -5,17 +5,18 @@ import BaseLayout from "./base.astro";
 interface Props {
   title: string;
   description: string;
+  analyticsKey?: string;
   breadcrumbs: {
     name: string;
     href: string;
   }[];
 }
 
-const { title, description, breadcrumbs } = Astro.props;
+const { title, description, analyticsKey, breadcrumbs } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} transparent={false}>
-  <main id="content">
+  <main id="content" data-analytics={analyticsKey}>
     <header class="bg-gray-100">
       <h1
         class="px-6 max-w-6xl mx-auto font-title py-8 tracking-widest text-3xl md:text-4xl text-primary-800 leading-none"

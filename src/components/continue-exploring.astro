@@ -13,7 +13,7 @@ interface Props extends HTMLAttributes<"nav"> {
 const { title, links, class: className, ...props } = Astro.props;
 ---
 
-<nav {...props} class={cn("py-12", className)}>
+<nav data-analytics="continue-exploring" {...props} class={cn("py-12", className)}>
   {
     title ? (
       <h3 class="mb-8 text-center font-title text-4xl font-bold text-primary-800">{title}</h3>

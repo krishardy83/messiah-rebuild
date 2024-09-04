@@ -10,7 +10,7 @@ interface Props extends HTMLAttributes<"figure"> {
 const { src, caption, class: className, ...props } = Astro.props;
 ---
 
-<figure {...props} class={cn("not-prose", className)}>
+<figure data-analytics="image" {...props} class={cn("not-prose", className)}>
   <a data-image data-caption={caption} href={src}>
     <img src={src} alt="" />
   </a>

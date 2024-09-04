@@ -16,6 +16,7 @@ const { title, events, class: className, ...props } = Astro.props;
 ---
 
 <section
+  data-analytics="event-list"
   {...props}
   class={cn("@container not-prose border border-gray-300 bg-gray-100", className)}
 >

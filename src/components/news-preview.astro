@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<"article"> {
 const { title, url, image, class: className, ...props } = Astro.props;
 ---
 
-<article {...props} class={cn("relative not-prose", className)}>
+<article data-analytics="news-preview" {...props} class={cn("relative not-prose", className)}>
   <figure class="mb-4 aspect-video bg-white p-1 shadow-md">
     <img src={image} alt="" class="object-cover w-full h-full" />
   </figure>

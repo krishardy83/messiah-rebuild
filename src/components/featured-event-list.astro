@@ -16,7 +16,7 @@ interface Props extends HTMLAttributes<"div"> {
 const { title, events, class: className, ...props } = Astro.props;
 ---
 
-<div {...props} class={cn("@container not-prose", className)}>
+<div data-analytics="featured-event-list" {...props} class={cn("@container not-prose", className)}>
   <h3 class="font-title mb-4 uppercase text-xl font-bold text-primary-800">{title}</h3>
 
   {

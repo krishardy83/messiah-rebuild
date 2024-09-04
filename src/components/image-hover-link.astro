@@ -27,7 +27,11 @@ const {
 } = Astro.props;
 ---
 
-<figure class={cn("relative max-w-max not-prose group", className)} tabindex="0">
+<figure
+  data-analytics="image-hover-link"
+  class={cn("relative max-w-max not-prose group", className)}
+  tabindex="0"
+>
   <img {...props} src={image.src} alt={image.alt} class="w-full h-full object-cover" />
 
   <figcaption

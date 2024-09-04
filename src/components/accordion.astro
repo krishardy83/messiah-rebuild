@@ -18,6 +18,7 @@ const accordionId = id || createId();
 ---
 
 <div
+  data-analytics="accordion"
   class={cn("not-prose border border-gray-300 mb-4", className)}
   {...props}
   x-data={`{ show: location.search.includes('${accordionId}') }`}

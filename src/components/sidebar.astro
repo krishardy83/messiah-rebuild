@@ -22,6 +22,7 @@ const supplements = await Astro.slots.render("supplements");
 ---
 
 <aside
+  data-analytics="sidebar"
   class={cn(
     "sidebar mb-6 flex-shrink-0 border-b border-gray-300 md:mb-0 md:w-[270px] md:border-b-0 md:border-r",
     className

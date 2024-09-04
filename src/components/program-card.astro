@@ -18,7 +18,11 @@ interface Props extends HTMLAttributes<"article"> {
 const { title, image, href, programs, class: className, ...props } = Astro.props;
 ---
 
-<article {...props} class={cn("border border-gray-300 bg-gray-100 relative group", className)}>
+<article
+  data-analytics="program-card"
+  {...props}
+  class={cn("border border-gray-300 bg-gray-100 relative group", className)}
+>
   <img src={image.src} alt={image.alt} class="group-hover:opacity-75 transition-opacity" />
   <h4 class="mt-2 mb-4 px-2">{title}</h4>
 

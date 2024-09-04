@@ -9,6 +9,7 @@ const { class: className, ...props } = Astro.props;
 ---
 
 <form
+  data-analytics="request-information"
   class={cn(
     "bg-primary-400/80 backdrop-blur-sm md:max-w-xs p-8 md:absolute md:right-0 md:bottom-0 mt-8 md:mt-0",
     className

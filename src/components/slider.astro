@@ -12,7 +12,7 @@ interface Props extends HTMLAttributes<"div"> {
 const { slides, class: className, ...props } = Astro.props;
 ---
 
-<div class="relative">
+<div class="relative" data-analytics="slider">
   <div class={cn("f-carousel", className)} {...props} data-slider>
     {
       slides.map((slide) => (

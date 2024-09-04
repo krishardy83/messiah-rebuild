@@ -16,6 +16,7 @@ const { title, subtitle, image, link, class: className, ...props } = Astro.props
 ---
 
 <article
+  data-analytics="multi-purpose"
   {...props}
   class={cn("@container not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}
 >

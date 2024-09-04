@@ -14,6 +14,7 @@ const { title, tabs, class: className, ...props } = Astro.props;
 ---
 
 <dialog
+  data-analytics="tabbed-dialog"
   data-tabbed-dialog
   class={cn("absolute inset-0 w-full h-full overflow-y-auto", className)}
   {...props}

@@ -9,7 +9,11 @@ interface Props extends HTMLAttributes<"div"> {
 const { title, class: className, ...props } = Astro.props;
 ---
 
-<div {...props} class={cn("not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}>
+<div
+  data-analytics="card"
+  {...props}
+  class={cn("not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}
+>
   <h3 class="mb-2 h4 text-primary-800">{title}</h3>
 
   <div class="text-sm">

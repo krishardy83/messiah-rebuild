@@ -7,15 +7,17 @@ interface Props {
   title: string;
   description: string;
   badge: string;
+  analyticsKey?: string;
   programs: Program[];
   image: string;
 }
 
-const { title, description, badge, programs, image } = Astro.props;
+const { title, description, analyticsKey, badge, programs, image } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
   <header
+    data-analytics={`${analyticsKey}-header`}
     class={`relative bg-[image:var(--bg-banner)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-48 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent`}
     style={{ "--bg-banner": `url(${image})` }}
     aria-hidden="true"
@@ -36,7 +38,7 @@ const { title, description, badge, programs, image } = Astro.props;
     </div>
   </header>
 
-  <main id="content">
+  <main id="content" data-analytics={analyticsKey}>
     <slot />
   </main>
 </BaseLayout>

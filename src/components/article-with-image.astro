@@ -17,7 +17,11 @@ interface Props extends HTMLAttributes<"article"> {
 const { image, title, links, class: className, ...props } = Astro.props;
 ---
 
-<article class={cn("flex flex-col md:flex-row gap-4 md:gap-8", className)} {...props}>
+<article
+  data-analytics="article-with-image"
+  class={cn("flex flex-col md:flex-row gap-4 md:gap-8", className)}
+  {...props}
+>
   <figure class="shrink-0">
     <img src={image.src} alt={image.alt || ""} class="md:max-w-64 w-full sm:w-auto" />
   </figure>
