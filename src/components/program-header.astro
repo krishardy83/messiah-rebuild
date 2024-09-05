@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"section"> {
+  title: string;
+  description: string;
+}
+
+const { title, description, class: className, ...props } = Astro.props;
+---
+
+<section class={cn("wrapper pt-12 md:pt-24 relative", className)} {...props}>
+  <h2 class="h3 text-primary-800 md:w-2/3">{title}</h2>
+  <p class="paragraph md:w-1/2 lg:w-2/3">{description}</p>
+
+  <slot />
+</section>

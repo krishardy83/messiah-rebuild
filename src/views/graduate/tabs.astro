@@ -1,0 +1,110 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import type { HTMLAttributes } from "astro/types";
+import Icon from "../../components/icon.astro";
+
+interface Props extends HTMLAttributes<"div"> {
+  tabs: {
+    label: string;
+    id: string;
+    Component: AstroComponentFactory
+  }[];
+}
+
+const { tabs, class: className, ...props } = Astro.props;
+---
+
+<div class={className} x-data="tabs" {...props}>
+  <div
+    role="tablist"
+    class="wrapper border-t border-gray-200 mt-12 items-center flex flex-col md:flex-row gap-x-8 md:gap-x-16 flex-wrap"
+  >
+  {tabs.map((tab) => (
+    <button
+      type="button"
+      role="tab"
+      class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+      id={`tab-${tab.id}`}
+      aria-controls={`tabpanel-${tab.id}`}
+      @click={`setActiveTab('${tab.id}')`}
+      :aria-selected={`active === '${tab.id}'`}
+      :tabindex={`active === '${tab.id}' ? undefined : '-1'`}
+    >
+      {tab.label}
+    </button>
+  ))}
+  </div>
+
+  <div class="bg-gray-50 border-t border-gray-200" id="tab-content">
+    <div class="wrapper flex flex-col md:flex-row">
+      <div class="flex-1 py-8">
+        {tabs.map((tab) => (
+          <div
+            role="tabpanel"
+            tabindex="0"
+            id={`tabpanel-${tab.id}`}
+            aria-labelledby={`tab-${tab.id}`}
+            x-cloak
+            x-show={`active === '${tab.id}'`}
+          >
+            <tab.Component />
+          </div>
+        ))}
+      </div>
+
+      <aside class="md:border-l md:border-gray-200 md:ml-8 md:pl-8 md:max-w-sm w-full mb-8">
+        <nav class="space-y-2 mt-8 sticky top-24">
+          <a
+            href="https://www.messiah.edu/info/20437/business_and_leadership_mba_ma"
+            class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/view-homepage-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
+            ><span class="text-sm uppercase">View homepage</span><span
+              class="font-bold text-xl uppercase">Graduate program in Business and Leadership</span
+            ></a
+          >
+          <a
+            href="https://www.messiah.edu/info/20549/our_faculty"
+            class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/faculty-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
+            ><span class="text-sm uppercase">Meet the</span><span
+              class="font-bold text-xl uppercase">Faculty</span
+            ></a
+          >
+          <a
+            href="#"
+            class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/view-homepage-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
+            ><span class="text-sm uppercase">View</span><span class="font-bold text-xl uppercase"
+              >Related Programs</span
+            ></a
+          >
+          <a href="https://www.messiah.edu/applytoday" class="btn-primary w-full justify-start"
+            ><Icon name="edit" /> Apply</a
+          >
+          <a
+            href="#"
+            class="btn-primary w-full justify-start"><Icon name="chat" /> Chat</a
+          >
+        </nav>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+  import Alpine from "alpinejs";
+  import { isInViewport } from "../../lib/utils";
+
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("tabs", () => ({
+      active: 'overview',
+
+      setActiveTab(tab: string) {
+        this.active = tab;
+
+        const content = document.getElementById("tab-content");
+
+        if (content && !isInViewport(content)) {
+          content.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      },
+    }));
+  });
+</script>

@@ -87,17 +87,7 @@ import Icon from "../../components/icon.astro";
 
 <script>
   import Alpine from "alpinejs";
-
-  function isInViewport(element: HTMLElement) {
-    const rect = element.getBoundingClientRect();
-
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-  }
+  import { isInViewport } from "../../lib/utils";
 
   document.addEventListener("alpine:init", () => {
     Alpine.data("tabs", () => ({

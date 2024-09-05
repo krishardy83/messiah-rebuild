@@ -4,9 +4,10 @@ import Stats from "../../components/stats.astro";
 import Youtube from "../../components/youtube.astro";
 import ProgramDetails from "../../components/program-details.astro";
 import SingleProgram from "../../layouts/single-program.astro";
-import Header from "../../views/undergraduate/header.astro";
 import RelatedPrograms from "../../views/undergraduate/related-programs.astro";
 import TabNavigation from "../../views/undergraduate/tab-navigation.astro";
+import ProgramHeader from "../../components/program-header.astro";
+import RequestInformation from "../../components/request-information.astro";
 ---
 
 <SingleProgram
@@ -17,7 +18,13 @@ import TabNavigation from "../../views/undergraduate/tab-navigation.astro";
   programs={["M", "m"]}
   analyticsKey="undergraduate/accounting-major"
 >
-  <Header />
+  <ProgramHeader
+    class="relative"
+    title="Accounting Major in Pennsylvania"
+    description="Prepare to become a Certified Public Accountant as you earn your bachelor's degree in accounting; enter the financial, corporate, personal or tax accounting field; or pursue auditing - all within a Christian perspective."
+  >
+    <RequestInformation class="hidden md:block" />
+  </ProgramHeader>
 
   <TabNavigation>
     <Fragment slot="overview">

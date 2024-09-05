@@ -1,0 +1,31 @@
+---
+import SingleProgram from "../../layouts/single-program.astro";
+import Tabs from "../../views/graduate/tabs.astro";
+import Header from "../../views/graduate/header.astro";
+import WhyMessiah from "../../views/graduate/why-messiah.astro";
+import NextSteps from "../../views/graduate/next-steps.astro";
+import Tuition from "../../views/graduate/tuition.astro";
+import Courses from "../../views/graduate/courses.astro";
+import Overview from "../../views/graduate/overview.astro";
+---
+
+<SingleProgram
+  title="Digital Marketing"
+  subtitle="Master of Business Administration"
+  image="/images/several_students.jpg"
+  description="Master of Business Administration"
+  programs={["C", "O"]}
+  analyticsKey="undergraduate/digital-marketing"
+>
+  <Header />
+
+  <Tabs
+    tabs={[
+      { label: "Overview", id: "overview", Component: Overview },
+      { label: "Courses & Curriculum", id: "courses", Component: Courses },
+      { label: "Tuition & Aid", id: "tuition", Component: Tuition },
+      { label: "Next steps", id: "next-steps", Component: NextSteps },
+      { label: "Why Messiah?", id: "why-messiah", Component: WhyMessiah },
+    ]}
+  />
+</SingleProgram>

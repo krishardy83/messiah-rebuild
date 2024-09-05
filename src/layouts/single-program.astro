@@ -1,18 +1,19 @@
 ---
-import type { Program } from "../components/program-card.astro";
-import ProgramList from "../components/program-list.astro";
+import ProgramList, { type Program } from "../components/program-list.astro";
+import { cn } from "../lib/utils";
 import BaseLayout from "./base.astro";
 
 interface Props {
   title: string;
+  subtitle?: string;
   description: string;
-  badge: string;
+  badge?: string;
   analyticsKey?: string;
   programs: Program[];
   image: string;
 }
 
-const { title, description, analyticsKey, badge, programs, image } = Astro.props;
+const { title, description, analyticsKey, subtitle, badge, programs, image } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,12 +27,25 @@ const { title, description, analyticsKey, badge, programs, image } = Astro.props
       class="max-w-6xl mx-auto px-4 h-[70vw] min-h-[400px] max-h-[900px] flex items-end pb-4 pd:mb-0"
     >
       <div class="md:w-1/2 relative z-10 md:mb-20">
-        <div class="flex gap-8 items-center mb-4">
+        <div
+          class={cn("flex gap-8 items-center", {
+            "mb-4": !subtitle,
+          })}
+        >
           <h1 class="font-title font-bold text-5xl text-white uppercase mb-0">
             {title}
           </h1>
-          <span class="bg-white text-primary-800 font-title font-bold text-3xl px-2">{badge}</span>
+
+          {
+            badge ? (
+              <span class="bg-white text-primary-800 font-title font-bold text-3xl px-2">
+                {badge}
+              </span>
+            ) : null
+          }
         </div>
+
+        {subtitle ? <p class="mb-4 text-white text-lg">{subtitle}</p> : null}
 
         <ProgramList programs={programs} showText />
       </div>

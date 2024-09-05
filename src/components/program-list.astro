@@ -1,8 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { ComponentProps, HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
+import Icon from "./icon.astro";
 
-export type Program = "M" | "m" | "T" | "U";
+export type Program = "M" | "m" | "T" | "U" | "C" | "O";
 
 interface Props extends HTMLAttributes<"article"> {
   programs: Program[];
@@ -16,6 +17,8 @@ const colorMap = {
   m: "#4d87a9",
   T: "#e37b65",
   U: "#e37b65",
+  C: "#6697B8",
+  O: "transparent",
 };
 
 const textMap = {
@@ -23,6 +26,17 @@ const textMap = {
   m: "Minor",
   T: "Teaching",
   U: "Undergraduate",
+  C: "Concentration",
+  O: "Online",
+};
+
+const iconMap: { [K in Program]: ComponentProps<typeof Icon>["name"] | null } = {
+  M: null,
+  m: null,
+  T: null,
+  U: null,
+  C: null,
+  O: "computer",
 };
 ---
 
@@ -42,7 +56,7 @@ const textMap = {
     programs.map((program) => (
       <li class="flex items-center gap-2 text-white" style={{ "--background": colorMap[program] }}>
         <span class="flex items-center justify-center shrink-0 rounded-full size-6 text-sm bg-[var(--background)]">
-          {program}
+          {iconMap[program] ? <Icon name={iconMap[program]} /> : program}
         </span>
         {showText ? <span>{textMap[program]}</span> : null}
       </li>
