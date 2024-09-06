@@ -56,7 +56,7 @@ const iconMap: { [K in Program]: ComponentProps<typeof Icon>["name"] | null } = 
     programs.map((program) => (
       <li class="flex items-center gap-2 text-white" style={{ "--background": colorMap[program] }}>
         <span class="flex items-center justify-center shrink-0 rounded-full size-6 text-sm bg-[var(--background)]">
-          {iconMap[program] ? <Icon name={iconMap[program]} /> : program}
+          {iconMap[program] ? <Icon name={iconMap[program]!} /> : program}
         </span>
         {showText ? <span>{textMap[program]}</span> : null}
       </li>
