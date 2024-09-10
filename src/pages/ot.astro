@@ -1,7 +1,8 @@
 ---
-import ArticleWithImage from "../components/article-with-image.astro";
-import Youtube from "../components/youtube.astro";
 import SingleColumn from "../layouts/single-column.astro";
+import Header from "../views/ot/header.astro";
+import Tabs from "../views/ot/tabs.astro";
+import VideoFooter from "../views/ot/video-footer.astro";
 ---
 
 <SingleColumn
@@ -11,152 +12,11 @@ import SingleColumn from "../layouts/single-column.astro";
   image="/images/child_adult.jpg"
   analyticsKey="ot"
 >
-  <section class="wrapper py-24">
-    <header class="text-center mb-12">
-      <h2 class="h2 text-primary-800">Pursue Your Degree in Occupational Therapy</h2>
+  <div class="wrapper py-24">
+    <Header />
 
-      <p class="paragraph">Choose between the two student types below to get started.</p>
-    </header>
+    <Tabs />
 
-    <div x-data="{ active: 'tab-1' }">
-      <div role="tablist" class="flex flex-col md:flex-row border-b border-gray-300">
-        <button
-          class="text-primary-800 font-sans flex p-4 md:flex-col items-center flex-1 text-lg md:text-xl gap-4 border-b-4 text-left md:text-center"
-          id="tab-1"
-          type="button"
-          role="tab"
-          aria-controls="tabpanel-1"
-          @click="active = 'tab-1'"
-          :aria-selected="active === 'tab-1'"
-          :tabindex="active === 'tab-1' ? undefined : '-1'"
-          :class="{ 'border-tertiary-400': active === 'tab-1', 'border-white': active !== 'tab-1' }"
-        >
-          <img
-            src="https://www.messiah.edu/site/custom_scripts/styles/img/reading-book.png"
-            alt=""
-            aria-hidden="true"
-            width="56"
-            height="56"
-          />
-          I am a high school student or an entry-level degree seeker</button
-        >
-        <button
-          class="text-primary-800 font-sans flex md:flex-col items-center p-4 flex-1 text-lg md:text-xl gap-4 border-b-4 text-left md:text-center"
-          id="tab-2"
-          type="button"
-          role="tab"
-          aria-controls="tabpanel-2"
-          tabindex="-1"
-          @click="active = 'tab-2'"
-          :aria-selected="active === 'tab-2'"
-          :tabindex="active === 'tab-2' ? undefined : '-1'"
-          :class="{ 'border-tertiary-400': active === 'tab-2', 'border-white': active !== 'tab-2' }"
-        >
-          <img
-            src="https://www.messiah.edu/site/custom_scripts/styles/img/student-7.png"
-            alt=""
-            aria-hidden="true"
-            width="56"
-            height="56"
-          />
-          I have a bachelor’s degree in a related field
-        </button>
-      </div>
-
-      <div
-        id="tabpanel-1"
-        role="tabpanel"
-        class="my-8"
-        tabindex="0"
-        aria-labelledby="tab-1"
-        x-cloak
-        x-show="active === 'tab-1'"
-      >
-        <ArticleWithImage
-          class="mb-8"
-          title="Accelerated Occupational Therapy Program"
-          image={{ src: "https://www.messiah.edu/images/ot_accelerated_1.jpeg" }}
-          links={[
-            {
-              href: "https://www.messiah.edu/occupational-therapy-accelerated-program",
-              label: "Read more",
-            },
-          ]}
-        >
-          Messiah's Early Assurance Program allows up to five Messiah undergraduate students to
-          obtain a guaranteed acceptance into its Master of Occupational Therapy program during
-          their senior year of high school. Learn more about the Early Assurance Program.
-        </ArticleWithImage>
-
-        <ArticleWithImage
-          class="mb-8"
-          title="Early Assurance Program (EAP)"
-          image={{ src: "https://www.messiah.edu/images/ot_eap.jpg" }}
-          links={[
-            {
-              href: "https://www.messiah.edu/info/23282/early_assurance_program",
-              label: "Read more",
-            },
-          ]}
-        >
-          Prepare for occupational therapy school through a personalized, rigorous advising pathway
-          within a major you choose. Work one-on-one with our dedicated pre-health advisor to get
-          answers to your questions; explore a career path that matches your passions and skills;
-          and to help ensure you complete the prerequisite courses and application materials
-          required for acceptance into graduate school.
-        </ArticleWithImage>
-
-        <ArticleWithImage
-          title="Pre-OT specialized advising option"
-          image={{ src: "https://www.messiah.edu/site/custom_scripts/styles/img/pre-ot.jpg" }}
-          links={[
-            {
-              href: "https://www.messiah.edu/undergraduate/pre-occupational-therapy",
-              label: "Read more",
-            },
-          ]}
-        >
-          Messiah’s five-year accelerated program is designed for academically qualified first-year
-          students who are confident they want to become occupational therapists. The program allows
-          entering first-year students to complete undergraduate and graduate degrees at Messiah
-          University, one of the top private Christian schools in the U.S., in less time than would
-          be required to complete both of these degrees separately.
-        </ArticleWithImage>
-      </div>
-
-      <div
-        class="mt-8"
-        id="tabpanel-2"
-        role="tabpanel"
-        tabindex="0"
-        aria-labelledby="tab-2"
-        x-cloak
-        x-show="active === 'tab-2'"
-      >
-        <ArticleWithImage
-          title="Master of Occupational Therapy"
-          image={{ src: "https://www.messiah.edu/images/mot_thumb.jpg" }}
-          links={[
-            {
-              href: "https://www.messiah.edu/graduate/master-occupational-therapy",
-              label: "Read more",
-            },
-          ]}
-        >
-          Messiah's Master of Occupational Therapy program will prepare you to be a competent,
-          in-demand occupational therapist and a leader in your field. It is an accredited
-          full-time, 80-credit, residential program located in Mechanicsburg, Pennsylvania,
-          featuring a state-of-the-art educational facility designed to meet the needs of
-          occupational therapy students.
-        </ArticleWithImage>
-      </div>
-    </div>
-
-    <p class="h3 text-center mt-24">
-      Messiah University’s Master of Occupational Therapy is accredited by the Accreditation Council
-      for Occupational Therapy Education (ACOTE)
-    </p>
-
-    <Youtube videoId="F1aidcZOMI4" litebox class="md:w-2/3 md:mx-auto" />
-  </section>
+    <VideoFooter />
+  </div>
 </SingleColumn>

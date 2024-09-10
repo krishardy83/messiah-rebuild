@@ -1,0 +1,86 @@
+---
+import Accordion from "../../components/accordion.astro";
+
+const accordions = [
+  {
+    id: "dual-enrollment",
+    title: "Dual enrollment in education-specific courses",
+    icon: "https://www.messiah.edu/images/exchange.png",
+    content: `
+    <p>
+      High school students can earn college credit by taking two education courses via dual enrollment from Messiah University:
+    </p>
+
+    <ul>
+      <li>Fall semester—EDUC 209 (3 credits) Principles and Structures of Mathematics</li>
+      <li>Spring semester—EDUC 203 (3 credits) Educational Psychology</li>
+    </ul>
+
+    <p>
+      Courses will be offered for the entire semester (15 weeks), and students have the option of taking classes online or in-person. To learn more about dual enrollment at Messiah University visit <a href="http://www.messiah.edu/dual">www.messiah.edu/dual</a></p>`,
+  },
+  {
+    id: "events-focused",
+    title: "Events focused on education and teaching hosted at Messiah University's campus",
+    icon: "https://www.messiah.edu/images/calendar.png",
+    content: `
+      <p>Students receive invitations to events on Messiah University's campus such as:</p>
+
+      <ul>
+        <li>Experiencing Education Overnight</li>
+        <li>Events sponsored by the Education Association of Messiah University</li>
+        <li>The Teacher Education Commissioning Program</li>
+        <li>Other guest speakers and/or education-focused honors projects</li>
+      </ul>`,
+  },
+  {
+    id: "experiential-learning",
+    title: "Experiential learning led by the school district where the student is enrolled",
+    icon: "https://www.messiah.edu/images/customer__2_.png",
+    content: `
+      <ul>
+        <li>
+          Educator for Tomorrow students assist in district classrooms (minimum of 15 hours)
+          <ul>
+            <li>
+              In most cases, students will serve as a teacher's assistant with activities including observing and assisting teachers and then reflecting upon their experience.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Messiah University provides <a
+            href="https://docs.google.com/document/d/1CwomfsMeUhGFfNxEnPN_dnD92PPWfkRaIUb-SrlVfv8/edit">
+          the experiential learning template</a> to the student’s school district
+        </li>
+        <li>
+          The student's school district designs, administers and oversees the experiential component.
+          <ul>
+            <li>
+              In many cases school districts have an existing program that can be utilized to meet this requirement.&nbsp; The Messiah Education Department Faculty will follow-up with students and/or school district personnel to answer questions. Students will submit documentation to the Messiah Education Department verifying that they have met the requirement. Students will not be earning Messiah University credit for this experience; however, their school district may award credit per the district guidelines.
+            </li>
+          </ul>
+        </li>
+      </ul>`,
+  },
+];
+---
+
+<h3 class="h3 text-primary-800">What is the Educators for Tomorrow program?</h3>
+
+<p class="paragraph mb-4">
+  <strong>Educators for Tomorrow</strong> students participate in a one-year cohort program, with a fall
+  start date, which includes these three different program components:
+</p>
+
+{
+  accordions.map((accordion) => (
+    <Accordion
+      allowProse
+      title={accordion.title}
+      id={accordion.id}
+      image={{ size: 24, src: accordion.icon }}
+    >
+      <div class="rich-text" set:html={accordion.content} />
+    </Accordion>
+  ))
+}

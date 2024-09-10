@@ -7,19 +7,20 @@ interface Props extends HTMLAttributes<"div"> {
   title: string;
   subtitle?: string;
   id?: string;
+  allowProse?: boolean;
   image?: {
     src: string;
     size?: number;
   };
 }
 
-const { title, id, subtitle, image, class: className, ...props } = Astro.props;
+const { title, id, subtitle, allowProse = false, image, class: className, ...props } = Astro.props;
 const accordionId = id || createId();
 ---
 
 <div
   data-analytics="accordion"
-  class={cn("not-prose border border-gray-300 mb-4", className)}
+  class={cn("border border-gray-300 mb-4", { "not-prose": !allowProse }, className)}
   {...props}
   x-data={`{ show: location.search.includes('${accordionId}') }`}
 >

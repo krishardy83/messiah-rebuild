@@ -1,0 +1,115 @@
+---
+const tabs = [
+  {
+    title: "I am a high school student or an entry-level degree seeker",
+    icon: "https://www.messiah.edu/site/custom_scripts/styles/img/reading-book.png",
+    entries: [
+      {
+        title: "Accelerated Occupational Therapy Program",
+        description:
+          "Messiah's Early Assurance Program allows up to five Messiah undergraduate students to obtain a guaranteed acceptance into its Master of Occupational Therapy program during their senior year of high school. Learn more about the Early Assurance Program.",
+        href: "https://www.messiah.edu/occupational-therapy-accelerated-program",
+        image: {
+          src: "https://www.messiah.edu/images/ot_accelerated_1.jpeg",
+          alt: "",
+        }
+      },
+      {
+        title: "Early Assurance Program (EAP)",
+        description:
+          "Prepare for occupational therapy school through a personalized, rigorous advising pathway within a major you choose. Work one-on-one with our dedicated pre-health advisor to get answers to your questions; explore a career path that matches your passions and skills; and to help ensure you complete the prerequisite courses and application materials required for acceptance into graduate school.",
+        href: "https://www.messiah.edu/info/23282/early_assurance_program",
+        image: {
+          src: "https://www.messiah.edu/images/ot_eap.jpg",
+          alt: "",
+        }
+      },
+      {
+        title: "Pre-OT specialized advising option",
+        description:
+          "Messiah's five-year accelerated program is designed for academically qualified first-year students who are confident they want to become occupational therapists. The program allows entering first-year students to complete undergraduate and graduate degrees at Messiah University, one of the top private Christian schools in the U.S., in less time than would be required to complete both of these degrees separately.",
+        href: "https://www.messiah.edu/undergraduate/pre-occupational-therapy",
+        image: {
+          src: "https://www.messiah.edu/site/custom_scripts/styles/img/pre-ot.jpg",
+          alt: "",
+        }
+      },
+    ],
+  },
+  {
+    title: "I have a bachelor's degree in a related field",
+    icon: "https://www.messiah.edu/site/custom_scripts/styles/img/student-7.png",
+    entries: [
+      {
+        title: "Master of Occupational Therapy",
+        description:
+          "Messiah's Master of Occupational Therapy program will prepare you to be a competent, in-demand occupational therapist and a leader in your field. It is an accredited full-time, 80-credit, residential program located in Mechanicsburg, Pennsylvania, featuring a state-of-the-art educational facility designed to meet the needs of occupational therapy students.",
+        href: "https://www.messiah.edu/graduate/master-occupational-therapy",
+        image: {
+          src: "https://www.messiah.edu/images/mot_thumb.jpg",
+          alt: "",
+        }
+      },
+    ],
+  },
+];
+---
+
+<div x-data="{ active: 'tab-1' }">
+  <div role="tablist" class="flex flex-col md:flex-row border-b border-gray-300">
+    {tabs.map(((tab, index) => (
+      <button
+        class="text-primary-800 font-sans flex p-4 md:flex-col items-center flex-1 text-lg md:text-xl gap-4 border-b-4 text-left md:text-center"
+        id={`tab-${index + 1}`}
+        type="button"
+        role="tab"
+        aria-controls={`tabpanel-${index + 1}`}
+        @click={`active = 'tab-${index + 1}'`}
+        :aria-selected={`active === 'tab-${index + 1}'`}
+        :tabindex={`active === 'tab-${index + 1}' ? undefined : '-1'`}
+        :class={`{ 'border-tertiary-400': active === 'tab-${index + 1}', 'border-white': active !== 'tab-${index + 1}' }`}
+      >
+        <img
+          src={tab.icon}
+          alt=""
+          aria-hidden="true"
+          width="56"
+          height="56"
+        />
+        {tab.title}
+      </button>
+    )))}
+  </div>
+
+  {tabs.map((tab, index) => (
+    <div
+      id={`tabpanel-${index + 1}`}
+      role="tabpanel"
+      class="my-8"
+      tabindex="0"
+      aria-labelledby={`tab-${index + 1}`}
+      x-cloak
+      x-show={`active === 'tab-${index + 1}'`}
+    >
+      {tab.entries.map((entry) => (
+        <article class="flex flex-col md:flex-row gap-4 md:gap-8 mb-8">
+          <figure class="shrink-0">
+            <img src={entry.image.src} alt={entry.image.alt} class="md:max-w-64 w-full h-full object-cover" />
+          </figure>
+
+          <div>
+            <h4 class="h3">{entry.title}</h4>
+
+            <p class="mb-4">
+              {entry.description}
+            </p>
+
+            <a class="btn-primary" href={entry.href}>
+              Read more
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  ))}
+</div>

@@ -1,0 +1,36 @@
+---
+import Accordion from "../../components/accordion.astro";
+
+const accordions = [
+  {
+    id: "institutional-reputation",
+    title: "Institutional reputation",
+    icon: "https://www.messiah.edu/images/icon_book_outline.png",
+    content:
+      "Messiah is known for the quality of its teacher education program and preparing students to be successful, effective teachers regionally, nationally and internationally.",
+  },
+  {
+    id: "schedule-flexibility",
+    title: "Schedule flexibility",
+    icon: "https://www.messiah.edu/images/shape_2x_2.png",
+    content: "Messiah offers both in-person and online dual enrollment courses.",
+  },
+  {
+    id: "college-credit",
+    title: "Earn college credit",
+    icon: "https://www.messiah.edu/images/backpack_outline.png",
+    content:
+      "Messiah provides the capacity to get a head start on earning college credit with college-level education-focused courses offered at a deeply discounted cost.",
+  },
+];
+---
+
+<h3 class="h3 text-primary-800">Why partner with Messiah University?</h3>
+
+{
+  accordions.map((accordion) => (
+    <Accordion title={accordion.title} id={accordion.id} image={{ size: 24, src: accordion.icon }}>
+      <p>{accordion.content}</p>
+    </Accordion>
+  ))
+}
