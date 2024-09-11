@@ -201,6 +201,7 @@ export const bottomGroups: BottomGroup[] = [
       "Messiah’s campus is an active, busy place where you’ll have fun and make lifelong friendships. ",
     children: [
       [
+        { title: "Overview", href: "/student-life" },
         { title: "Life on campus", href: "/student-life#overview" },
         { title: "Things to do", href: "/student-life#things-to-do" },
         { title: "Your new home", href: "/student-life#things-to-do" },
