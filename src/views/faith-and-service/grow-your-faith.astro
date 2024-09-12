@@ -1,71 +1,20 @@
 ---
 import Youtube from "../../components/youtube.astro";
 import TabbedDialog from "../../components/tabbed-dialog.astro";
+import Icon from "../../components/icon.astro";
 
 const items = [
   {
     name: "Chapel",
     preview: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/gyf-1.webp",
-    content: `
-      <img src="https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/chapel-img.webp" alt="" class="float-right ml-4 mb-4 w-1/3">
-
-      <p class="mb-4 paragraph">Chapel is a central expression of our identity as a Christ-centered community with a deep commitment to spiritual growth and academic excellence. It is a required cocurricular opportunity that exposes you to various forms of worship, speakers and ideas.</p>
-
-      <p class="mb-4 paragraph">Chapel is offered on <strong>Tuesday morning, Tuesday evening</strong> and <strong>Thursday morning</strong> and is designed to strengthen biblical literacy and faith formation within the Messiah University community.</p>
-
-      <p class="mb-4 paragraph">Some chapels are marked by dynamic student-led worship music, prayer and a brief message from a speaker such as student chaplain, campus pastor, academic scholar, notable leader or individuals from outside organizations.</p>
-
-      <p class="mb-4 paragraph">Other chapels feature a more intimate, contemplative setting of worship and intellectual reflection on the Christian faith and life. Another chapel option is a small group atmosphere in which students commit to meet for five-six weeks to discuss and explore a specific topic or book or learn about and engage in a spiritual discipline. These chapels are led by Messiah educators and other invited guests.</p>
-
-      <p class="paragraph"><strong>Students are expected to attend 14 approved chapel opportunities each semester.</strong> You are free to choose the chapels in which you will participate to fulfill that requirement. For all chapels, you will record your attendance electronically with your student I.D. card.</p>
-
-      <div class="flex gap-2 flex-wrap mt-4"> 
-        <a class="btn-quaternary" href="https://www.messiah.edu/info/20052/chapel">Find out more about chapel</a>
-        <a class="btn-quaternary" href="https://www.messiah.edu/info/21000/chapel_schedule">Chapel schedule</a>
-      </div>
-    `,
   },
   {
     name: "Student-led worship",
     preview: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/gyf-2.webp",
-    content: `
-      <p class="mb-4 paragraph">At Messiah, you'll have the opportunity to grow your faith and become a spiritual leader. One area where you can combine the two is through student-led worship. Choose from leading or participating in groups ranging from student chaplains and small group Bible studies, to music ministry groups, dance ministries and other worship arts. Our student ministry leaders strive to help the entire campus community commit to a life of faithful discovery and service to Jesus Christ. At Messiah, you’ll find there are numerous ways to learn and grow together with your friends and classmates.</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div>
-          <h4 class="h4 mb-4">Acclamation</h4>
-          <p class="paragraph">Acclamation Dance Ministry provides an outlet for students who share an interest in dance as both a medium of worship and an opportunity for ministry to others through creative expression.</p>
-        </div>
-        <div>
-          <h4 class="h4 mb-4">Powerhouse</h4>
-          <p class="paragraph mb-4">On Thursday evenings, students pack out Hostetter Chapel eagerly anticipating the time of corporate worship and reflection known as Powerhouse. Though attendance is purely optional, Powerhouse never fails to fill the chapel with students ready to worship God together.</p>
-
-          <p class="paragraph mb-4">Powerhouse began as a small student-led Bible study. Today, Powerhouse is still primarily student-initiated and student-led, but has grown to include a team of worship leaders who have devoted their talents to honoring and responding to God through music. It is more than just another weekly event that students add to their schedules. It is a diverse community of worshipers who come together weekly to praise and worship God in a powerful way through shared music and prayer. 
-          </p>
-
-          <a href="https://www.messiah.edu/info/20055/worship/2940/powerhouse" class="btn-quaternary">Read more</a>
-        </div>
-        <div>
-          <h4 class="h4 mb-4">Seven</h4>
-          <p class="paragraph mb-4">A cross-section of Messiah University students forms Seven, a group of musicians who share not only musical talent and skill but a heart to share Jesus through musical worship and creativity. Seven collaborates to write music, perform concerts and lead worship in a variety of settings and contexts, both on and off campus.</p>
-
-          <a href="https://www.messiah.edu/homepage/728/seven" class="btn-quaternary">Read more</a>
-        </div>
-      </div>
-    `,
   },
   {
     name: "Small groups and bible studies",
     preview: "https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/gyf-3.webp",
-    content: `
-      <img src="https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/small-group.jpg" alt="" class="float-right ml-4 mb-4 w-1/3">
-
-      <p class="mb-4 paragraph">Small groups and Bible studies give you the opportunity to connect with your peers in a more informal setting. The University’s main small-group ministry on campus, propelled by student leaders, is Koinonia--dedicated to small group ministry, leadership training and relationship building. A core team provides leadership, structure, accountability and intergenerational contact in order to equip students to create and run their own small group Bible studies. You can create your own group or join an existing group.</p>
-
-      <div class="flex gap-2 flex-wrap mt-4"> 
-        <a class="btn-quaternary" href="https://www.messiah.edu/info/20053/opportunities">View a full list of opportunities to get involved</a>
-      </div>
-    `,
   },
 ];
 ---
@@ -80,7 +29,7 @@ const items = [
       At Messiah, we want you to grow in your faith and have a passion for Christian community. Join
       a small group. Find a personal mentor. Challenge yourself in a campus ministry role. From the
       first day you step on campus to your last, we hope your time at Messiah is a time of growth
-      for you spiritually and academically, and a time where you’ll learn to explore and deepen your
+      for you spiritually and academically, and a time where you'll learn to explore and deepen your
       core convictions and Christian beliefs. <a
         href="https://www.messiah.edu/info/20051/college_ministries"
         class="underline link">The Office of Campus Ministries</a
@@ -122,22 +71,255 @@ const items = [
     title="Grow your faith"
     class="bg-[linear-gradient(to_right,rgba(0,0,0,.4),rgba(0,0,0,.4)),url(/images/grow-your-faith-bg.jpg)] bg-no-repeat bg-cover bg-primary-950"
   >
-    {
-      items.map((item, index) => (
-        <div
-          id={`tabbed-dialog-tabpanel-${index}`}
-          role="tabpanel"
-          data-tab-value={item.name}
-          hidden={index === 0 ? undefined : ""}
-          aria-labelledby={`tabbed-dialog-tab-${index}`}
-        >
-          <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
-            {item.name}
-          </h4>
+    <div
+      id="tabbed-dialog-tabpanel-0"
+      role="tabpanel"
+      data-tab-value="Chapel"
+      aria-labelledby="tabbed-dialog-tab-0"
+    >
+      <h4
+        class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block"
+      >
+        Chapel
+      </h4>
 
-          <div set:html={item.content} />
+      <img
+        src="https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/chapel-img.webp"
+        alt=""
+        class="float-right ml-4 mb-4 w-1/3"
+      />
+
+      <p class="mb-4 paragraph">
+        Chapel is a central expression of our identity as a Christ-centered community with a deep
+        commitment to spiritual growth and academic excellence. It is a required cocurricular
+        opportunity that exposes you to various forms of worship, speakers and ideas.
+      </p>
+
+      <p class="mb-4 paragraph">
+        Chapel is offered on <strong>Tuesday morning, Tuesday evening</strong> and <strong
+          >Thursday morning</strong
+        > and is designed to strengthen biblical literacy and faith formation within the Messiah University
+        community.
+      </p>
+
+      <p class="mb-4 paragraph">
+        Some chapels are marked by dynamic student-led worship music, prayer and a brief message
+        from a speaker such as student chaplain, campus pastor, academic scholar, notable leader or
+        individuals from outside organizations.
+      </p>
+
+      <p class="mb-4 paragraph">
+        Other chapels feature a more intimate, contemplative setting of worship and intellectual
+        reflection on the Christian faith and life. Another chapel option is a small group
+        atmosphere in which students commit to meet for five-six weeks to discuss and explore a
+        specific topic or book or learn about and engage in a spiritual discipline. These chapels
+        are led by Messiah educators and other invited guests.
+      </p>
+
+      <p class="paragraph">
+        <strong
+          >Students are expected to attend 14 approved chapel opportunities each semester.</strong
+        > You are free to choose the chapels in which you will participate to fulfill that requirement.
+        For all chapels, you will record your attendance electronically with your student I.D. card.
+      </p>
+
+      <div class="flex gap-2 flex-wrap mt-4">
+        <a class="btn-quaternary" href="https://www.messiah.edu/info/20052/chapel"
+          >Find out more about chapel</a
+        >
+        <a class="btn-quaternary" href="https://www.messiah.edu/info/21000/chapel_schedule"
+          >Chapel schedule</a
+        >
+      </div>
+    </div>
+
+    <div
+      id="tabbed-dialog-tabpanel-1"
+      role="tabpanel"
+      hidden
+      data-tab-value="Student-led worship"
+      aria-labelledby="tabbed-dialog-tab-1"
+    >
+      <h4
+        class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block"
+      >
+        Student-led worship
+      </h4>
+
+      <p class="mb-8 paragraph">
+        At Messiah, you'll have the opportunity to grow your faith and become a spiritual leader.
+        One area where you can combine the two is through student-led worship. Choose from leading
+        or participating in groups ranging from student chaplains and small group Bible studies, to
+        music ministry groups, dance ministries and other worship arts. Our student ministry leaders
+        strive to help the entire campus community commit to a life of faithful discovery and
+        service to Jesus Christ. At Messiah, you’ll find there are numerous ways to learn and grow
+        together with your friends and classmates.
+      </p>
+
+      <div x-data={`{ show: false }`} class="border-y border-white">
+        <h3>
+          <button
+            type="button"
+            aria-controls="acclamation"
+            id="button-acclamation"
+            class="flex gap-x-4 text-left relative items-center w-full pl-4 pr-14 py-4 group"
+            :aria-expanded="show"
+            @click="show = !show"
+          >
+            <span class="font-sans text-lg md:text-xl mr-auto">Acclamation</span>
+
+            <Icon
+              name="chevron-down"
+              class="size-6 absolute right-4 top-1/2 -translate-y-1/2 group-aria-expanded:rotate-180 shrink-0 transition-transform duration-300"
+            />
+          </button>
+        </h3>
+
+        <div
+          role="region"
+          id="acclamation"
+          aria-labelledby="button-acclamation"
+          :style="show && { height: $el.scrollHeight + 'px' }"
+          class="overflow-hidden transition-all ease-out duration-500"
+          :class="show ? 'h-auto' : 'h-0 invisible'"
+        >
+          <div class="p-4">
+            <p class="paragraph">
+              Acclamation Dance Ministry provides an outlet for students who share an interest in
+              dance as both a medium of worship and an opportunity for ministry to others through
+              creative expression.
+            </p>
+          </div>
         </div>
-      ))
-    }
+      </div>
+
+      <div x-data={`{ show: false }`}>
+        <h3>
+          <button
+            type="button"
+            aria-controls="powerhouse"
+            id="button-powerhouse"
+            class="flex gap-x-4 text-left relative items-center w-full pl-4 pr-14 py-4 group"
+            :aria-expanded="show"
+            @click="show = !show"
+          >
+            <span class="font-sans text-lg md:text-xl mr-auto">Powerhouse</span>
+
+            <Icon
+              name="chevron-down"
+              class="size-6 absolute right-4 top-1/2 -translate-y-1/2 group-aria-expanded:rotate-180 shrink-0 transition-transform duration-300"
+            />
+          </button>
+        </h3>
+
+        <div
+          role="region"
+          id="powerhouse"
+          aria-labelledby="button-powerhouse"
+          :style="show && { height: $el.scrollHeight + 'px' }"
+          class="overflow-hidden transition-all ease-out duration-500"
+          :class="show ? 'h-auto' : 'h-0 invisible'"
+        >
+          <div class="p-4">
+            <p class="paragraph mb-4">
+              On Thursday evenings, students pack out Hostetter Chapel eagerly anticipating the time
+              of corporate worship and reflection known as Powerhouse. Though attendance is purely
+              optional, Powerhouse never fails to fill the chapel with students ready to worship God
+              together.
+            </p>
+
+            <p class="paragraph mb-4">
+              Powerhouse began as a small student-led Bible study. Today, Powerhouse is still
+              primarily student-initiated and student-led, but has grown to include a team of
+              worship leaders who have devoted their talents to honoring and responding to God
+              through music. It is more than just another weekly event that students add to their
+              schedules. It is a diverse community of worshipers who come together weekly to praise
+              and worship God in a powerful way through shared music and prayer.
+            </p>
+
+            <a
+              href="https://www.messiah.edu/info/20055/worship/2940/powerhouse"
+              class="btn-quaternary">Read more</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div x-data={`{ show: false }`} class="border-y border-white">
+        <h3>
+          <button
+            type="button"
+            aria-controls="seven"
+            id="button-seven"
+            class="flex gap-x-4 text-left relative items-center w-full pl-4 pr-14 py-4 group"
+            :aria-expanded="show"
+            @click="show = !show"
+          >
+            <span class="font-sans text-lg md:text-xl mr-auto">Seven</span>
+
+            <Icon
+              name="chevron-down"
+              class="size-6 absolute right-4 top-1/2 -translate-y-1/2 group-aria-expanded:rotate-180 shrink-0 transition-transform duration-300"
+            />
+          </button>
+        </h3>
+
+        <div
+          role="region"
+          id="seven"
+          aria-labelledby="button-seven"
+          :style="show && { height: $el.scrollHeight + 'px' }"
+          class="overflow-hidden transition-all ease-out duration-500"
+          :class="show ? 'h-auto' : 'h-0 invisible'"
+        >
+          <div class="p-4">
+            <p class="paragraph mb-4">
+              A cross-section of Messiah University students forms Seven, a group of musicians who
+              share not only musical talent and skill but a heart to share Jesus through musical
+              worship and creativity. Seven collaborates to write music, perform concerts and lead
+              worship in a variety of settings and contexts, both on and off campus.
+            </p>
+
+            <a href="https://www.messiah.edu/homepage/728/seven" class="btn-quaternary">Read more</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="tabbed-dialog-tabpanel-2"
+      role="tabpanel"
+      hidden
+      data-tab-value="Small groups and bible studies"
+      aria-labelledby="tabbed-dialog-tab-2"
+    >
+      <h4
+        class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block"
+      >
+        Small groups and bible studies
+      </h4>
+
+      <img
+        src="https://www.messiah.edu/site/custom_scripts/styles/img/faith-and-service/small-group.jpg"
+        alt=""
+        class="float-right ml-4 mb-4 w-1/3"
+      />
+
+      <p class="mb-4 paragraph">
+        Small groups and Bible studies give you the opportunity to connect with your peers in a more
+        informal setting. The University’s main small-group ministry on campus, propelled by student
+        leaders, is Koinonia--dedicated to small group ministry, leadership training and
+        relationship building. A core team provides leadership, structure, accountability and
+        intergenerational contact in order to equip students to create and run their own small group
+        Bible studies. You can create your own group or join an existing group.
+      </p>
+
+      <div class="flex gap-2 flex-wrap mt-4">
+        <a class="btn-quaternary" href="https://www.messiah.edu/info/20053/opportunities"
+          >View a full list of opportunities to get involved</a
+        >
+      </div>
+    </div>
   </TabbedDialog>
 </section>
