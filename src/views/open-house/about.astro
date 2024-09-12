@@ -2,36 +2,36 @@
 import Icon from "../../components/icon.astro";
 ---
 
-<section class="max-w-6xl mx-auto px-4 py-24 flex flex-col md:flex-row gap-8 md:gap-16">
-  <div>
-    <h2 class="h2 text-primary-800">
-      Attending an Open House is a great way to discover if Messiah is the right fit for you!
-    </h2>
+<section class="relative max-w-6xl mx-auto px-4 py-24">
+  <h2 class="h2 text-primary-800 md:w-1/2 lg:w-2/3">
+    Attending an Open House is a great way to discover if Messiah is the right fit for you!
+  </h2>
 
-    <p class="paragraph">
-      Spend the day with us to discover all possibilities Messiah offers. Explore diverse academic
-      offerings with faculty, tour campus with a current student, and immerse yourself in our
-      tight-knit community.
-    </p>
-  </div>
+  <p class="paragraph md:w-1/2 lg:2/3">
+    Spend the day with us to discover all possibilities Messiah offers. Explore diverse academic
+    offerings with faculty, tour campus with a current student, and immerse yourself in our
+    tight-knit community.
+  </p>
 
-  <div class="bg-primary-800 p-8 md:w-max shrink-0">
-    <h3 class="h3 text-white uppercase">Sneak Peek</h3>
+  <div
+    class="md:backdrop-blur-sm md:bg-primary-800/80 md:text-white mt-8 md:mt-0 md:p-8 md:w-max md:absolute md:right-4 md:bottom-24"
+  >
+    <h3 class="h3 uppercase">Sneak Peek</h3>
 
     <ul class="flex flex-col gap-4 mt-8">
-      <li class="flex text-white items-center gap-2">
+      <li class="flex items-center gap-2">
         <Icon class="size-8" name="shopping-bag" />
         Complimentary lunch
       </li>
-      <li class="flex text-white items-center gap-2">
+      <li class="flex items-center gap-2">
         <Icon class="size-8" name="chevron-right" />
         Great first visit to campus
       </li>
-      <li class="flex text-white items-center gap-2">
+      <li class="flex items-center gap-2">
         <Icon class="size-8" name="info" />
         Attend a variety of sessions
       </li>
-      <li class="flex text-white items-center gap-2">
+      <li class="flex items-center gap-2">
         <Icon class="size-8" name="marker" />
         Take a campus tour
       </li>
