@@ -1,6 +1,6 @@
 export interface BottomGroup {
   title: string;
-  href: string;
+  href?: string;
   description: string;
   children: {
     title: string;
@@ -85,7 +85,6 @@ export const bottomGroups: BottomGroup[] = [
   },
   {
     title: "Academics",
-    href: "/",
     description:
       "Messiah University is nationally recognized for its integration of top-tier academics and Christian faith. ",
     children: [
@@ -123,7 +122,6 @@ export const bottomGroups: BottomGroup[] = [
   },
   {
     title: "Admissions",
-    href: "/",
     description:
       "We educate strong servant leaders who combine professional expertise with a reconciling spirit. ",
     children: [
