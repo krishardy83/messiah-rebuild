@@ -29,7 +29,7 @@ const {
 
 <figure
   data-analytics="image-hover-link"
-  class={cn("relative max-w-max not-prose group", className)}
+  class={cn("@container relative not-prose group", className)}
   tabindex="0"
 >
   <img {...props} src={image.src} alt={image.alt} class="w-full h-full object-cover" />
@@ -38,15 +38,17 @@ const {
     class={cn(
       "absolute left-0 top-0 duration-300 group-hover:w-full group-hover:h-full group-focus:w-full group-focus:h-full group-focus-within:w-full group-focus-within:h-full transition-all bg-primary-800/80 text-center group-hover:overflow-y-auto group-focus:overflow-y-auto group-focus-within:overflow-y-auto",
       {
-        "group-hover:p-8 group-focus:p-8 group-focus-within:p-8 h-12 w-1/2": size === "large",
-        "group-hover:p-4 group-focus:p-4 group-focus-within:p-4 h-11 w-full": size === "small",
+        "group-hover:p-4 @md:group-hover:p-8 group-focus-within:p-4 @md:group-focus-within:p-8 h-12":
+          size === "large",
+        "group-hover:p-2 @xs:group-hover:p-4 group-focus-within:p-2 @xs:group-focus-within:p-4 h-11":
+          size === "small",
       }
     )}
   >
     <h4
-      class={cn("font-title font-bold uppercase w-max mx-auto text-white py-2", {
-        "text-2xl px-12": size === "large",
-        "text-lg px-4": size === "small",
+      class={cn("font-title font-bold uppercase mx-auto text-white py-2 leading-none", {
+        "text-lg px-4 @sm:text-2xl @sm:px-12": size === "large",
+        "@xs:text-lg px-4": size === "small",
       })}
     >
       {caption}
@@ -58,7 +60,8 @@ const {
           class={cn(
             "text-white mb-4 border-t border-white pt-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100 transition-opacity",
             {
-              "text-sm": size === "small",
+              "text-xs @sm:text-sm": size === "small",
+              "text-sm @sm:text-base": size === "large",
             }
           )}
         >
@@ -70,7 +73,7 @@ const {
     {
       button ? (
         <a
-          class="btn-quaternary w-max mx-auto opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100"
+          class="btn-quaternary h-auto py-2 @sm:py-0 px-2 @sm:h-12 @sm:w-max mx-auto opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100"
           href={button.href}
         >
           {button.label}
