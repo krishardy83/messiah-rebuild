@@ -56,76 +56,44 @@ const sidebarLinks = [
         > homepage.
       </p>
 
-      <ImageHoverLink
-        class="mb-4"
-        caption="Example image hover link"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in."
-        image={{
-          src: "/images/image-hover-widget-example.jpg",
-          alt: "Example image",
-        }}
-        button={{
-          label: "Example Button Link Text",
-          href: "/",
-        }}
-      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        {
+          new Array(6).fill(null).map(() => (
+            <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/image-hover-widget-example.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+          ))
+        }
+      </div>
 
-      <div class="grid grid-cols-2 gap-4">
-        <ImageHoverLink
-          size="small"
-          caption="Example image hover link"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in."
-          image={{
-            src: "/images/image-hover-widget-example.jpg",
-            alt: "Example image",
-          }}
-          button={{
-            label: "Example Button Link Text",
-            href: "/",
-          }}
-        />
-
-        <ImageHoverLink
-          size="small"
-          caption="Example image hover link"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in."
-          image={{
-            src: "/images/image-hover-widget-example.jpg",
-            alt: "Example image",
-          }}
-          button={{
-            label: "Example Button Link Text",
-            href: "/",
-          }}
-        />
-
-        <ImageHoverLink
-          size="small"
-          caption="Example image hover link"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in."
-          image={{
-            src: "/images/image-hover-widget-example.jpg",
-            alt: "Example image",
-          }}
-          button={{
-            label: "Example Button Link Text",
-            href: "/",
-          }}
-        />
-
-        <ImageHoverLink
-          size="small"
-          caption="Example image hover link"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in."
-          image={{
-            src: "/images/image-hover-widget-example.jpg",
-            alt: "Example image",
-          }}
-          button={{
-            label: "Example Button Link Text",
-            href: "/",
-          }}
-        />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {
+          new Array(4).fill(null).map(() => (
+            <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/image-hover-widget-example.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+          ))
+        }
       </div>
     </article>
   </div>
