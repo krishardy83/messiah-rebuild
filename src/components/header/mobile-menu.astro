@@ -15,7 +15,7 @@ const { transparent } = Astro.props;
   type="button"
   aria-label="open page menu"
   data-mobile-menu-trigger
-  class="group/trigger h-12 w-12 text-white bg-primary-800 lg:hidden fixed z-50 top-12 right-0"
+  class="group/trigger h-12 w-12 text-white bg-primary-800 xl:hidden fixed z-50 top-12 right-0"
 >
   <span
     aria-hidden="true"
@@ -35,7 +35,7 @@ const { transparent } = Astro.props;
   href="/"
   aria-label="home page"
   class:list={[
-    "block relative z-10 ml-4 mt-2 transition-opacity lg:hidden",
+    "block relative z-10 ml-4 mt-2 transition-opacity xl:hidden",
     transparent ? "text-white" : "text-primary-800",
   ]}
 >
@@ -43,7 +43,7 @@ const { transparent } = Astro.props;
 </a>
 
 <div
-  class="bg-primary-800 text-white fixed inset-0 z-40 hidden lg:hidden opacity-0 py-10 px-4 transition-opacity duration-300 overflow-y-auto"
+  class="bg-primary-800 text-white fixed inset-0 z-40 hidden xl:hidden opacity-0 py-10 px-4 transition-opacity duration-300 overflow-y-auto"
   data-mobile-menu-content
 >
   <Logo />

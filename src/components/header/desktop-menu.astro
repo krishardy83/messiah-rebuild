@@ -12,7 +12,7 @@ const { transparent } = Astro.props;
 ---
 
 <div
-  class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[compress='true']:-translate-y-12 transition-all"
+  class="sticky -top-px before:absolute before:top-0 before:h-2 xl:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 xl:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 xl:pt-4 pb-2 xl:pb-6 z-30 group border-b border-transparent xl:data-[scrolling='true']:border-gray-300 xl:data-[compress='true']:-translate-y-12 transition-all"
   data-menu
 >
   <header class="mx-auto max-w-6xl px-4">
@@ -21,7 +21,7 @@ const { transparent } = Astro.props;
         href="/"
         aria-label="home page"
         class:list={[
-          "hidden lg:block mr-auto mt-4 group-data-[compress='true']:opacity-0 transition-opacity",
+          "hidden xl:block mr-auto mt-4 group-data-[compress='true']:opacity-0 transition-opacity",
           transparent
             ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
             : "text-primary-800",
@@ -30,7 +30,7 @@ const { transparent } = Astro.props;
         <Logo />
       </a>
 
-      <div class="flex-col justify-end transition-opacity grow hidden lg:flex" data-menu-wrapper>
+      <div class="flex-col justify-end transition-opacity grow hidden xl:flex" data-menu-wrapper>
         <ul
           class="flex justify-end mb-4 items-center group-data-[compress='true']:opacity-0 transition-opacity leading-none"
         >
@@ -137,7 +137,7 @@ const { transparent } = Astro.props;
                   id={`group-button-${slugify(group.title)}`}
                   aria-controls={`group-${slugify(group.title)}`}
                   class:list={[
-                    "text-base group lg:text-lg flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
+                    "text-base group xl:text-lg flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
                     transparent
                       ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                       : "text-primary-800",
