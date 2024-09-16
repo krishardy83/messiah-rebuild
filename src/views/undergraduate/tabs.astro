@@ -2,7 +2,7 @@
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import type { HTMLAttributes } from "astro/types";
 import Icon from "../../components/icon.astro";
-import RequestInformationForm from "../../components/request-information-form.astro";
+import RequestInformation from "../../components/request-information.astro";
 
 interface Props extends HTMLAttributes<"div"> {
   tabs: {
@@ -85,7 +85,7 @@ const { tabs, class: className, ...props } = Astro.props;
           >
         </nav>
 
-        <RequestInformationForm />
+        <RequestInformation class="md:hidden" />
       </aside>
     </div>
   </div>
