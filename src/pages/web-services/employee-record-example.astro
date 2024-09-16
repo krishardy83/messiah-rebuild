@@ -40,44 +40,82 @@ const sidebarLinks = [
     <Sidebar links={sidebarLinks} />
 
     <article class="md:px-10 md:py-8 rich-text">
+      <h2>
+        This element can only be used at 100% width and in 3 column grids. See examples below.
+      </h2>
       <p>
-        The <b>employee record widget</b> can be used to organize your staff or office listing. It provides
-        a consistent look to your page and offers several field options such as email, phone, website.
-        The content area allows you to list publications, additional titles, or links.
+        Bacon ipsum dolor amet turkey hamburger turducken swine kielbasa salami. Corned beef meatloaf sirloin kevin, pork chop andouille tenderloin cow ham hock pancetta pork loin drumstick hamburger leberkas. Shankle chislic turducken ham porchetta t-bone jowl spare ribs. Boudin chislic frankfurter corned beef kielbasa, t-bone burgdoggen ground round.
       </p>
+      <h3>
+        Example of 3 column grid below:
+      </h3>
 
-      <p>This widget is best used at 100% width.</p>
-
-      <p>If you would rather use a two column format:</p>
-
-      <ul>
-        <li>Go into the widget</li>
-        <li>Click 'settings'</li>
-        <li>Select 'Employee Widget narrow' from the 'styles' drop-down and</li>
-      </ul>
-
-      <p>
-        For a real-world example of the 100% width version, please visit the <a
-          href="https://www.messiah.edu/info/20045/who_we_are">Marketing and Communications staff</a
-        > page.
-      </p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <EmployeeRecord
+          name="Natalie Frank"
+          job="Communications specialist"
+          image="/images/headshot-1.jpg"
+        >
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
+        <EmployeeRecord
+        name="Jen Romanchak"
+        job="Web services manager"
+        image="/images/headshot-2.jpg"
+      >
+        <a href="#" class="btn-primary">Read bio</a>
+      </EmployeeRecord>
+        <EmployeeRecord
+          name="Kris Hardy"
+          job="President of Messiah University"
+          image="/images/headshot-1.jpg"
+        >
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
+        <EmployeeRecord
+        name="Kim Phipps"
+        job="President of Messiah University with a long title"
+        image="/images/headshot-3.jpg"
+      >
+      <a href="#" class="btn-primary">Read bio</a>
+      </EmployeeRecord>
+        <EmployeeRecord
+        name="Kris Hardy"
+        job="President of Messiah University"
+        image="/images/headshot-2.jpg"
+      >
+        <a href="#" class="btn-primary">Read bio</a>
+      </EmployeeRecord>
         <EmployeeRecord
           name="Kim Phipps"
           job="President of Messiah University"
-          image="/images/kim-phipps.jpg"
+          image="/images/headshot-3.jpg"
         >
-          <a href="#" class="link underline">Read bio</a>
+        <a href="#" class="btn-primary">Read bio</a>
         </EmployeeRecord>
         <EmployeeRecord
-          name="Kim Phipps"
-          job="President of Messiah University"
-          image="/images/kim-phipps.jpg"
-        >
-          <a href="#" class="link underline">Read bio</a>
-        </EmployeeRecord>
+        name="Kim Phipps"
+        job="Web Boss"
+        image="/images/headshot-3.jpg"
+      >
+      <a href="#" class="btn-primary">Read bio</a>
+      </EmployeeRecord>
+        <EmployeeRecord
+        name="Kris Hardy"
+        job="President of Messiah University with a really really long title that's long"
+        image="/images/headshot-2.jpg"
+      >
+        <a href="#" class="btn-primary">Read bio</a>
+      </EmployeeRecord>
+
       </div>
+
+      <p>
+        Bacon ipsum dolor amet turkey hamburger turducken swine kielbasa salami. Corned beef meatloaf sirloin kevin, pork chop andouille tenderloin cow ham hock pancetta pork loin drumstick hamburger leberkas. Shankle chislic turducken ham porchetta t-bone jowl spare ribs. Boudin chislic frankfurter corned beef kielbasa, t-bone burgdoggen ground round.
+      </p>
+      <h3>
+        Example of 100% width below:
+      </h3>
 
       <EmployeeRecord
         name="Kim Phipps"
@@ -86,14 +124,41 @@ const sidebarLinks = [
         phone="717-123-4567"
         fax="717-987-6543"
         url="http://messiah.edu"
-        image="/images/kim-phipps.jpg"
+        image="/images/headshot-1.jpg"
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        labore et dolore magna aliqua. 
       </EmployeeRecord>
+      <EmployeeRecord
+      name="Kim Phipps"
+      job="President of Messiah University"
+      email="example@messiah.edu"
+      phone="717-123-4567"
+      image="/images/headshot-2.jpg"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </EmployeeRecord>
+    <EmployeeRecord
+    name="Kim Phipps"
+    job="President of Messiah University with a really really long job title that spans two lines and could break things"
+    image="/images/headshot-3.jpg"
+  >
+  <p>  
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  <p>
+    <a href="#" class="btn-primary my-4">Read bio</a>
+  </p>
+  </EmployeeRecord>
+
     </article>
   </div>
 </WithoutHero>
