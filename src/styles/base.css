@@ -40,7 +40,7 @@
   }
 
   .btn-primary {
-    @apply btn from-button-from to-button-to bg-gradient-to-r text-white hover:opacity-80;
+    @apply btn bg-gradient-to-r from-button-from to-button-to text-white hover:opacity-80;
   }
 
   .btn-secondary {
@@ -60,7 +60,7 @@
   }
 
   .rich-text {
-    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:uppercase prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-tertiary-500 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-hr:my-8;
+    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:uppercase prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-tertiary-500 prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-hr:my-8;
   }
 
   .wrapper {

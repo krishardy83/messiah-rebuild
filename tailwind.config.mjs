@@ -1,4 +1,4 @@
-import { fontFamily } from "tailwindcss/defaultTheme";
+import theme, { fontFamily, colors } from "tailwindcss/defaultTheme";
 import typography from "@tailwindcss/typography";
 import containerQueries from "@tailwindcss/container-queries";
 
@@ -7,6 +7,36 @@ export default {
   content: ["./src/**/*.{astro,html,js,mdx,ts,tsx}"],
   theme: {
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            a: {
+              fontWeight: 600,
+
+              "&:is([class*=btn-])": {
+                color: "white",
+                textDecoration: "none",
+              },
+
+              "&:is(.btn-primary, .btn-secondary):hover": {
+                color: "white",
+              },
+
+              "&:is(.btn-tertiary):hover": {
+                color: "#273d5e",
+              },
+
+              "&:is(.btn-quaternary)": {
+                color: "#273d5e",
+
+                "&:hover": {
+                  color: "#273d5e",
+                },
+              },
+            },
+          },
+        },
+      },
       fontFamily: {
         title: ["priori-sans", ...fontFamily.serif],
         sans: ["noto-sans", ...fontFamily.sans],
