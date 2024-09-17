@@ -40,13 +40,64 @@ const sidebarLinks = [
     <Sidebar links={sidebarLinks} />
 
     <article class="md:px-10 md:py-8 rich-text">
-      <p>
-        The <b>dropdown widget</b> allows users to create a drop down list of links. It can also be customized
-        with an image and content.
-      </p>
+  
+      <h2>This element can display as 2/5 width </h2>
+
+      <div class="grid grid-cols-5 gap-4 mt-4 mb-12">
+    
+        <div class="col-span-3">
+          <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.
+          </p> 
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+            sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+            est laborum.
+            </p> 
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+              ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+              sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+              est laborum.
+              </p> 
+           <a href="#" class="btn-tertiary">Button link</a>
+        </div>
+        <Dropdown
+        class="col-span-2"
+        title="Dropdown widget example"
+        image={{
+          src: "/images/dropdown-widget-example.jpg",
+          alt: "example image",
+        }}
+        options={[
+          { name: "Example Link 1", href: "/example-1" },
+          { name: "Example Link 2", href: "/example-2" },
+          { name: "Example Link 3", href: "/example-3" },
+        ]}
+      >
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+      </Dropdown>
+    
+      </div>
+
+      <h3>This element can be used in grids of 2 like below: </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
 
       <Dropdown
-        class="w-1/2"
         title="Dropdown widget example"
         image={{
           src: "/images/dropdown-widget-example.jpg",
@@ -67,6 +118,59 @@ const sidebarLinks = [
           est laborum.
         </p>
       </Dropdown>
-    </article>
+      <Dropdown
+      title="Dropdown widget example"
+      image={{
+        src: "/images/dropdown-widget-example.jpg",
+        alt: "example image",
+      }}
+      options={[
+        { name: "Example Link 1", href: "/example-1" },
+        { name: "Example Link 2", href: "/example-2" },
+        { name: "Example Link 3", href: "/example-3" },
+      ]}
+        >
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+        est laborum.
+      </p>
+    </Dropdown>
   </div>
+
+    <h3 class="py-4">All elements except the title and links are optional </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+
+    <Dropdown
+      title="Dropdown widget example"
+      options={[
+        { name: "Example Link 1", href: "/example-1" },
+        { name: "Example Link 2", href: "/example-2" },
+        { name: "Example Link 3", href: "/example-3" },
+      ]}
+    >
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+      ut labore
+      </p>
+
+    </Dropdown>
+    <Dropdown
+    title="Dropdown widget example that's really long"
+    options={[
+      { name: "Example Link 1", href: "/example-1" },
+      { name: "Example Link 2", href: "/example-2" },
+      { name: "Example Link 3", href: "/example-3" },
+    ]}
+  >
+
+  </Dropdown>
+</div>
+
+    </article>
+
 </WithoutHero>
