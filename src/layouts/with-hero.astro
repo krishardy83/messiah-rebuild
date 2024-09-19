@@ -18,7 +18,7 @@ const { title, description, analyticsKey, image, breadcrumbs } = Astro.props;
 
 <BaseLayout title={title} description={description}>
   <div
-    class={`h-[40vw] relative min-h-[270px] max-h-[800px] border-b-8 border-tertiary-400 bg-[image:var(--bg-banner)] bg-cover bg-no-repeat after:absolute after:bottom-0 after:left-0 after:right-0 after:top-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-48`}
+    class={`h-[50vw] relative min-h-[270px] max-h-[1000px] border-b-8 border-tertiary-400 bg-[image:var(--bg-banner)] bg-cover bg-no-repeat after:absolute after:bottom-0 after:left-0 after:right-0 after:top-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-48`}
     style={{ "--bg-banner": `url(${image})` }}
     aria-hidden="true"
   >
