@@ -14,7 +14,6 @@ const sidebarLinks = [
       { href: "/", name: "Website governance" },
     ],
   },
-  
 ];
 ---
 
@@ -30,19 +29,21 @@ const sidebarLinks = [
     { name: "Employee Record Example", href: "/" },
   ]}
 >
-  <div class="flex flex-col md:flex-row">
+  <div class="flex flex-col lg:flex-row">
     <Sidebar links={sidebarLinks} />
 
     <article class="md:px-10 md:py-8 rich-text">
       <h2>
-        This element can only be used at 100% width and in 3 column grids. See examples below. Employee images should be 500px wide by 550px tall.
+        This element can only be used at 100% width and in 3 column grids. See examples below.
+        Employee images should be 500px wide by 550px tall.
       </h2>
       <p>
-        Bacon ipsum dolor amet turkey hamburger turducken swine kielbasa salami. Corned beef meatloaf sirloin kevin, pork chop andouille tenderloin cow ham hock pancetta pork loin drumstick hamburger leberkas. Shankle chislic turducken ham porchetta t-bone jowl spare ribs. Boudin chislic frankfurter corned beef kielbasa, t-bone burgdoggen ground round.
+        Bacon ipsum dolor amet turkey hamburger turducken swine kielbasa salami. Corned beef
+        meatloaf sirloin kevin, pork chop andouille tenderloin cow ham hock pancetta pork loin
+        drumstick hamburger leberkas. Shankle chislic turducken ham porchetta t-bone jowl spare
+        ribs. Boudin chislic frankfurter corned beef kielbasa, t-bone burgdoggen ground round.
       </p>
-      <h3>
-        Example of 3 column grid below:
-      </h3>
+      <h3>Example of 3 column grid below:</h3>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         <EmployeeRecord
@@ -53,12 +54,12 @@ const sidebarLinks = [
           <a href="#" class="btn-primary">Read bio</a>
         </EmployeeRecord>
         <EmployeeRecord
-        name="Jen Romanchak"
-        job="Web services manager"
-        image="/images/headshot-2.jpg"
-      >
-        <a href="#" class="btn-primary">Read bio</a>
-      </EmployeeRecord>
+          name="Jen Romanchak"
+          job="Web services manager"
+          image="/images/headshot-2.jpg"
+        >
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
         <EmployeeRecord
           name="Kris Hardy"
           job="President of Messiah University"
@@ -67,49 +68,45 @@ const sidebarLinks = [
           <a href="#" class="btn-primary">Read bio</a>
         </EmployeeRecord>
         <EmployeeRecord
-        name="Kim Phipps"
-        job="President of Messiah University with a long title"
-        image="/images/headshot-3.jpg"
-      >
-      <a href="#" class="btn-primary">Read bio</a>
-      </EmployeeRecord>
+          name="Kim Phipps"
+          job="President of Messiah University with a long title"
+          image="/images/headshot-3.jpg"
+        >
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
         <EmployeeRecord
-        name="Kris Hardy"
-        job="President of Messiah University"
-        image="/images/headshot-2.jpg"
-      >
-        <a href="#" class="btn-primary">Read bio</a>
-      </EmployeeRecord>
+          name="Kris Hardy"
+          job="President of Messiah University"
+          image="/images/headshot-2.jpg"
+        >
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
         <EmployeeRecord
           name="Kim Phipps"
           job="President of Messiah University"
           image="/images/headshot-3.jpg"
         >
-        <a href="#" class="btn-primary">Read bio</a>
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
+        <EmployeeRecord name="Kim Phipps" job="Web Boss" image="/images/headshot-3.jpg">
+          <a href="#" class="btn-primary">Read bio</a>
         </EmployeeRecord>
         <EmployeeRecord
-        name="Kim Phipps"
-        job="Web Boss"
-        image="/images/headshot-3.jpg"
-      >
-      <a href="#" class="btn-primary">Read bio</a>
-      </EmployeeRecord>
-        <EmployeeRecord
-        name="Kris Hardy"
-        job="President of Messiah University with a really really long title that's long"
-        image="/images/headshot-2.jpg"
-      >
-        <a href="#" class="btn-primary">Read bio</a>
-      </EmployeeRecord>
-
+          name="Kris Hardy"
+          job="President of Messiah University with a really really long title that's long"
+          image="/images/headshot-2.jpg"
+        >
+          <a href="#" class="btn-primary">Read bio</a>
+        </EmployeeRecord>
       </div>
 
       <p>
-        Bacon ipsum dolor amet turkey hamburger turducken swine kielbasa salami. Corned beef meatloaf sirloin kevin, pork chop andouille tenderloin cow ham hock pancetta pork loin drumstick hamburger leberkas. Shankle chislic turducken ham porchetta t-bone jowl spare ribs. Boudin chislic frankfurter corned beef kielbasa, t-bone burgdoggen ground round.
+        Bacon ipsum dolor amet turkey hamburger turducken swine kielbasa salami. Corned beef
+        meatloaf sirloin kevin, pork chop andouille tenderloin cow ham hock pancetta pork loin
+        drumstick hamburger leberkas. Shankle chislic turducken ham porchetta t-bone jowl spare
+        ribs. Boudin chislic frankfurter corned beef kielbasa, t-bone burgdoggen ground round.
       </p>
-      <h3>
-        Example of 100% width below:
-      </h3>
+      <h3>Example of 100% width below:</h3>
 
       <EmployeeRecord
         name="Kim Phipps"
@@ -121,38 +118,38 @@ const sidebarLinks = [
         image="/images/headshot-1.jpg"
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. 
+        labore et dolore magna aliqua.
       </EmployeeRecord>
       <EmployeeRecord
-      name="Kim Phipps"
-      job="President of Messiah University"
-      email="example@messiah.edu"
-      phone="717-123-4567"
-      image="/images/headshot-2.jpg"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </EmployeeRecord>
-    <EmployeeRecord
-    name="Kim Phipps"
-    job="President of Messiah University with a really really long job title that spans two lines and could break things"
-    image="/images/headshot-3.jpg"
-  >
-  <p>  
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </p>
-  <p>
-    <a href="#" class="btn-primary my-4">Read bio</a>
-  </p>
-  </EmployeeRecord>
-
+        name="Kim Phipps"
+        job="President of Messiah University"
+        email="example@messiah.edu"
+        phone="717-123-4567"
+        image="/images/headshot-2.jpg"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </EmployeeRecord>
+      <EmployeeRecord
+        name="Kim Phipps"
+        job="President of Messiah University with a really really long job title that spans two lines and could break things"
+        image="/images/headshot-3.jpg"
+      >
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.
+        </p>
+        <p>
+          <a href="#" class="btn-primary my-4">Read bio</a>
+        </p>
+      </EmployeeRecord>
     </article>
   </div>
 </WithoutHero>

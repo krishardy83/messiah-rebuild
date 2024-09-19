@@ -14,7 +14,6 @@ const sidebarLinks = [
       { href: "/", name: "Website governance" },
     ],
   },
-
 ];
 ---
 
@@ -30,14 +29,14 @@ const sidebarLinks = [
     { name: "Dropdown Example", href: "/" },
   ]}
 >
-  <div class="flex flex-col md:flex-row">
+  <div class="flex flex-col lg:flex-row">
     <Sidebar links={sidebarLinks} />
 
     <article class="md:px-10 md:py-8 rich-text">
       <h2>This element can display as 2/5 width</h2>
 
-      <div class="grid grid-cols-5 gap-4 mt-4 mb-12 items-start">
-        <div class="col-span-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-4 mb-12 items-start">
+        <div class="lg:col-span-3">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -66,7 +65,7 @@ const sidebarLinks = [
         </div>
 
         <Dropdown
-          class="col-span-2"
+          class="lg:col-span-2"
           title="Dropdown widget example"
           image={{
             src: "/images/dropdown-widget-example.jpg",
