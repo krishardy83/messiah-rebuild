@@ -55,7 +55,9 @@ const supplements = await Astro.slots.render("supplements");
     {
       links.map((link) => (
         <nav aria-label={link.title}>
-          <h2 class="mt-6 mb-2 mx-4 h4 text-primary-800">{link.title}</h2>
+          <h2 class="mt-8 mb-2 mx-4 font-title text-xl font-bold uppercase md:text-2xl text-primary-800">
+            {link.title}
+          </h2>
 
           <ul>
             {link.children.map((level1) => (
@@ -63,7 +65,7 @@ const supplements = await Astro.slots.render("supplements");
                 <a
                   href={level1.href}
                   class:list={[
-                    "block py-1 px-4",
+                    "block py-2 px-4",
                     level1.active ? "bg-primary-800 text-white" : "link",
                   ]}
                 >
