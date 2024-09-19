@@ -24,13 +24,13 @@ const supplements = await Astro.slots.render("supplements");
 <aside
   data-analytics="sidebar"
   class={cn(
-    "sidebar mb-6 flex-shrink-0 border-b border-gray-300 md:mb-0 md:w-[270px] md:border-b-0 md:border-r",
+    "sidebar mb-6 flex-shrink-0 border-b border-gray-300 lg:mb-0 lg:w-[270px] lg:border-b-0 lg:border-r",
     className
   )}
   x-data="{ visible: false }"
   {...props}
 >
-  <button type="button" class="btn-quaternary w-full md:hidden" @click="visible = !visible">
+  <button type="button" class="btn-quaternary w-full lg:hidden" @click="visible = !visible">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -47,7 +47,7 @@ const supplements = await Astro.slots.render("supplements");
     <span x-text="visible ? 'Hide navigation' : 'Show navigation'"></span>
   </button>
 
-  <div class="mb-6 mt-4 md:mb-0 md:mt-0" :class="visible ? '' : 'hidden md:block'">
+  <div class="mb-6 mt-4 lg:mb-0 lg:mt-0" :class="visible ? '' : 'hidden lg:block'">
     <div class="flex flex-col gap-1">
       <slot />
     </div>
@@ -114,7 +114,7 @@ const supplements = await Astro.slots.render("supplements");
 
     {
       supplements ? (
-        <div class="border border-gray-300 bg-gray-100 md:-mr-px mt-4 p-4">
+        <div class="border border-gray-300 bg-gray-100 lg:-mr-px mt-4 p-4">
           <slot name="supplements" />
         </div>
       ) : null
