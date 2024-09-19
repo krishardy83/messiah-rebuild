@@ -36,7 +36,7 @@ const { tabs, class: className, ...props } = Astro.props;
   ))}
   </div>
 
-  <div class="bg-gray-50 border-t border-gray-200" id="tab-content">
+  <div class="shadow-[inset_0_30px_30px_-30px_rgba(0,0,0,.2)]" id="tab-content">
     <div class="wrapper flex flex-col md:flex-row">
       <div class="flex-1 py-8">
         {tabs.map((tab) => (
