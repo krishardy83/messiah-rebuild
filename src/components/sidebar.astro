@@ -114,12 +114,6 @@ const supplements = await Astro.slots.render("supplements");
       ))
     }
 
-    {
-      supplements ? (
-        <div class="border border-gray-300 bg-gray-100 lg:-mr-px mt-4 p-4">
-          <slot name="supplements" />
-        </div>
-      ) : null
-    }
+    {supplements ? <slot name="supplements" /> : null}
   </div>
 </aside>

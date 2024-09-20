@@ -49,44 +49,46 @@ const sidebarLinks = [
   <div class="flex flex-col lg:flex-row">
     <Sidebar links={sidebarLinks}>
       <Fragment slot="supplements">
-        <figure class="mb-2">
-          <img src="https://www.messiah.edu/images/186_090512_TENNISON.jpg" alt="" />
-        </figure>
+        <div class="bg-gray-50 border border-gray-300 mt-4 p-4 lg:-mr-px">
+          <figure class="mb-2">
+            <img src="https://www.messiah.edu/images/186_090512_TENNISON.jpg" alt="" />
+          </figure>
 
-        <h4 class="text-primary-800 h4 mb-2">Contact our department</h4>
+          <h4 class="text-primary-800 h4 mb-2">Contact our department</h4>
 
-        <p class="text-sm">
-          Nulla dolor lorem, accumsan id magna vitae, lobortis luctus odio. Proin vestibulum eu ante
-          sit amet semper.
-        </p>
+          <p class="text-sm">
+            Nulla dolor lorem, accumsan id magna vitae, lobortis luctus odio. Proin vestibulum eu
+            ante sit amet semper.
+          </p>
 
-        <ul class="border-y space-y-2 border-gray-300 py-2 my-2 text-sm">
-          <li class="flex items-center gap-2">
-            <Icon name="envelope" />
-            <a class="link text-primary-800" href="mailto:name@messiah.edu"> name@messiah.edu </a>
-          </li>
-          <li class="flex items-center gap-2">
-            <Icon name="phone" />
-            <a class="link text-primary-800" href="tel:$717-766-2511"> 717-766-2511 </a>
-          </li>
-          <li class="flex items-center gap-2">
-            <Icon name="printer" />
-            717-766-2500
-          </li>
-        </ul>
+          <ul class="border-y space-y-2 border-gray-300 py-2 my-2 text-sm">
+            <li class="flex items-center gap-2">
+              <Icon name="envelope" />
+              <a class="link text-primary-800" href="mailto:name@messiah.edu"> name@messiah.edu </a>
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="phone" />
+              <a class="link text-primary-800" href="tel:$717-766-2511"> 717-766-2511 </a>
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="printer" />
+              717-766-2500
+            </li>
+          </ul>
 
-        <h4 class="text-primary-800 h4">Additional links</h4>
+          <h4 class="text-primary-800 h4">Additional links</h4>
 
-        <ul class="space-y-2 my-2 text-sm">
-          <li class="flex items-center gap-2">
-            <Icon name="globe" />
-            <a class="link text-primary-800" href="https://example.org">example.org</a>
-          </li>
-          <li class="flex items-center gap-2">
-            <Icon name="globe" />
-            <a class="link text-primary-800" href="https://example.org">example.org</a>
-          </li>
-        </ul>
+          <ul class="space-y-2 my-2 text-sm">
+            <li class="flex items-center gap-2">
+              <Icon name="globe" />
+              <a class="link text-primary-800" href="https://example.org">example.org</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <Icon name="globe" />
+              <a class="link text-primary-800" href="https://example.org">example.org</a>
+            </li>
+          </ul>
+        </div>
       </Fragment>
     </Sidebar>
 
