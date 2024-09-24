@@ -2,6 +2,7 @@
 import Dropdown from "../../components/dropdown.astro";
 import Sidebar from "../../components/sidebar.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
+import MultiPurpose from "../../components/multi-purpose.astro";
 
 const sidebarLinks = [
   {
@@ -63,9 +64,16 @@ const sidebarLinks = [
           </p>
           <a href="#" class="btn-tertiary">Button link</a>
         </div>
-
-        <Dropdown
-          class="content-grid-right"
+        <div class="content-grid-right"> 
+          <MultiPurpose
+          title="Multi-purpose example heading"
+          subtitle="Example subtitle"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. 
+        </MultiPurpose>
+          <Dropdown
+          class=""
           title="Dropdown widget example"
           image={{
             src: "/images/dropdown-widget-example.jpg",
@@ -83,6 +91,7 @@ const sidebarLinks = [
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </p>
         </Dropdown>
+        </div>
       </div>
 
       <h3>This element can be used in grids of 2 like below:</h3>
