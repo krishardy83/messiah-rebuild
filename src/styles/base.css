@@ -82,6 +82,6 @@
   }
 
   .content-grid-right {
-    @apply lg:col-span-2;
+    @apply flex flex-col gap-4 lg:col-span-2;
   }
 }
