@@ -1,5 +1,6 @@
 ---
 import Breadcrumbs from "../components/breadcrumbs.astro";
+import CtaSidebarLinks from "../components/cta-sidebar-links.astro";
 import BaseLayout from "./base.astro";
 
 interface Props {
@@ -25,6 +26,8 @@ const { title, description, analyticsKey, breadcrumbs } = Astro.props;
       </h1>
     </header>
   </main>
+
+  <CtaSidebarLinks />
 
   <div class="relative mx-auto max-w-6xl">
     <div class="bg-white px-6 py-4">

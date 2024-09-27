@@ -1,0 +1,31 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"ul"> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<ul
+  {...props}
+  class={cn(
+    "bg-primary-800 text-white uppercase fixed right-0 top-64 z-10 py-1 hidden md:block",
+    className
+  )}
+>
+  <li>
+    <a class="block px-4 py-1 hover:underline text-sm" href="https://www.messiah.edu/applytoday"
+      >Apply</a
+    >
+  </li>
+  <li>
+    <a class="block px-4 py-1 hover:underline text-sm" href="https://www.messiah.edu/visit">Visit</a
+    >
+  </li>
+  <li>
+    <a class="block px-4 py-1 hover:underline text-sm" href="https://www.messiah.edu/request"
+      >Give</a
+    >
+  </li>
+</ul>

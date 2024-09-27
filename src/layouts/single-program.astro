@@ -1,4 +1,5 @@
 ---
+import CtaSidebarLinks from "../components/cta-sidebar-links.astro";
 import ProgramList, { type Program } from "../components/program-list.astro";
 import { cn } from "../lib/utils";
 import BaseLayout from "./base.astro";
@@ -49,6 +50,8 @@ const { title, description, analyticsKey, subtitle, badge, programs, image } = A
       </div>
     </div>
   </header>
+
+  <CtaSidebarLinks />
 
   <main id="content" data-analytics={analyticsKey}>
     <slot />
