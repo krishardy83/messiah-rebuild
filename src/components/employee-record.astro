@@ -11,9 +11,21 @@ interface Props extends HTMLAttributes<"article"> {
   phone?: string;
   fax?: string;
   url?: string;
+  bioUrl?: string;
 }
 
-const { name, job, image, email, phone, fax, url, class: className, ...props } = Astro.props;
+const {
+  name,
+  job,
+  image,
+  email,
+  phone,
+  fax,
+  url,
+  class: className,
+  bioUrl,
+  ...props
+} = Astro.props;
 ---
 
 <article
@@ -21,7 +33,7 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
   {...props}
   class={cn("@container not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}
 >
-  <div class="flex flex-col @md:flex-row gap-4">
+  <div class="flex flex-col @md:flex-row gap-4 h-full">
     {
       image ? (
         <figure class="@md:w-1/3">
@@ -30,7 +42,7 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
       ) : null
     }
 
-    <div class:list={[image ? "@md:w-2/3" : null]}>
+    <div class:list={["flex flex-col flex-1", image ? "@md:w-2/3" : null]}>
       <h3 class="h4 text-primary-800">{name}</h3>
       <p class="text-tertiary-500 leading-none mb-2 font-title uppercase font-bold">{job}</p>
 
@@ -71,9 +83,21 @@ const { name, job, image, email, phone, fax, url, class: className, ...props } =
         ) : null
       }
 
-      <div class="text-sm">
-        <slot />
-      </div>
+      {
+        bioUrl ? (
+          <a class="btn-primary mt-auto" href={bioUrl}>
+            Read bio
+          </a>
+        ) : null
+      }
+
+      {
+        Astro.slots.has("default") ? (
+          <div class="text-sm">
+            <slot />
+          </div>
+        ) : null
+      }
     </div>
   </div>
 </article>
