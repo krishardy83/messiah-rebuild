@@ -6,13 +6,14 @@ interface Props extends HTMLAttributes<"figure"> {
   src: string;
   thumbnail?: string;
   caption?: string;
+  galleryId?: string;
 }
 
-const { src, thumbnail = src, caption, class: className, ...props } = Astro.props;
+const { src, thumbnail = src, caption, galleryId, class: className, ...props } = Astro.props;
 ---
 
 <figure data-analytics="image" {...props} class={cn("not-prose", className)}>
-  <a data-image data-caption={caption} href={src}>
+  <a data-image data-caption={caption} href={src} data-fancybox={galleryId}>
     <img src={src} alt="" />
   </a>
 </figure>
