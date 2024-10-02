@@ -46,7 +46,9 @@ const { transparent } = Astro.props;
   class="bg-primary-800 text-white fixed inset-0 z-40 hidden lg:hidden opacity-0 py-10 px-4 transition-opacity duration-300 overflow-y-auto"
   data-mobile-menu-content
 >
-  <Logo />
+  <a href="/" aria-label="home page">
+    <Logo />
+  </a>
 
   <search class="my-4">
     <form class="relative">
@@ -78,19 +80,16 @@ const { transparent } = Astro.props;
               data-mobile-group-trigger
               id={`mobile-group-button-${slugify(group.title)}`}
               aria-controls={`mobile-group-${slugify(group.title)}`}
-              class="text-xl group py-4 flex items-center gap-x-2 font-bold hover:text-tertiary-400 transition-colors"
+              class="text-xl group py-4 flex items-center w-full border-b border-white/50 justify-between gap-x-2 font-bold hover:text-tertiary-400 transition-colors"
             >
               {group.title}
 
-              <Icon
-                name="chevron-down"
-                class="size-4 group-aria-expanded:rotate-180 pointer-events-none transition-transform"
-              />
+              <span class="size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
             </button>
 
             <div
               id={`mobile-group-${slugify(group.title)}`}
-              class="overflow-hidden h-[--height] transition-all duration-300"
+              class="mt-4 overflow-hidden h-[--height] transition-all duration-300"
               role="region"
               aria-labelledby={`mobile-group-button-${slugify(group.title)}`}
               hidden
@@ -118,49 +117,29 @@ const { transparent } = Astro.props;
           </li>
         ))
       }
+    </ul>
+    <ul class="flex gap-4 flex-col sm:flex-row mt-4">
       {
         topGroups.map((group) => (
-          <li>
-            <button
-              type="button"
-              aria-expanded="false"
-              aria-haspopup="true"
-              data-mobile-group-trigger
-              id={`mobile-group-button-${slugify(group.title)}`}
-              aria-controls={`mobile-group-${slugify(group.title)}`}
-              class="text-lg group py-4 flex items-center gap-x-2 hover:text-tertiary-400 transition-colors"
-            >
+          <li class="border border-tertiary-300 p-4 sm:w-1/2">
+            <span class="font-title uppercase font-bold text-xl text-tertiary-300 mb-2 block">
               {group.title}
+            </span>
+            <ul class="flex flex-col gap-2 mb-2">
+              {group.children.map((link) => {
+                if (link.type === "separator") {
+                  return null;
+                }
 
-              <Icon
-                name="chevron-down"
-                class="size-4 group-aria-expanded:rotate-180 pointer-events-none transition-transform"
-              />
-            </button>
-
-            <div
-              id={`mobile-group-${slugify(group.title)}`}
-              class="overflow-hidden h-[--height] transition-all duration-300"
-              role="region"
-              aria-labelledby={`mobile-group-button-${slugify(group.title)}`}
-              hidden
-            >
-              <ul class="ml-4 flex flex-col gap-2 mb-2">
-                {group.children.map((link) => {
-                  if (link.type === "separator") {
-                    return null;
-                  }
-
-                  return (
-                    <li>
-                      <a href={link.href} class="link">
-                        {link.title}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+                return (
+                  <li>
+                    <a href={link.href} class="link">
+                      {link.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </li>
         ))
       }
