@@ -12,6 +12,7 @@ interface Props extends HTMLAttributes<"article"> {
   fax?: string;
   url?: string;
   bioUrl?: string;
+  spacingBottom?: boolean;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   phone,
   fax,
   url,
+  spacingBottom,
   class: className,
   bioUrl,
   ...props
@@ -31,7 +33,9 @@ const {
 <article
   data-analytics="employee-record"
   {...props}
-  class={cn("@container not-prose border border-gray-300 bg-gray-100 px-6 py-4", className)}
+  class={cn("@container not-prose border border-gray-300 bg-gray-100 px-6 py-4", className, {
+    "!mb-12": spacingBottom,
+  })}
 >
   <div class="flex flex-col @md:flex-row gap-4 h-full">
     {
