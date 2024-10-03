@@ -84,4 +84,16 @@
   .content-grid-right {
     @apply flex flex-col gap-4 lg:col-span-2;
   }
+
+  .grid-4 {
+    @apply mb-4 grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4;
+  }
+
+  .grid-3 {
+    @apply mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .grid-2 {
+    @apply mb-4 grid grid-cols-1 gap-4 md:grid-cols-2;
+  }
 }
