@@ -37,18 +37,17 @@ const sidebarLinks = [
 >
   <div class="flex flex-col lg:flex-row">
     <Sidebar links={sidebarLinks} />
-
-    <article class="md:px-10 md:py-8 rich-text">
       <Announcement class="mb-2" icon="megaphone">
         <b>Don't worry, this is just a testsing page</b>
       </Announcement>
+      <article class="md:px-10 md:py-8 rich-text"></article>
       <h2>Testing a short heading</h2>
       <p>
         Bacon ipsum dolor amet pig ground round prosciutto andouille pork loin ribeye tongue turducken swine pork chop ham hock jerky. Frankfurter kevin pancetta, shank bacon corned beef alcatra. Andouille buffalo frankfurter, drumstick porchetta ham hock chislic ham ground round kevin salami. Sirloin ball tip meatloaf tail ham hock. Andouille shoulder sausage fatback.
       </p>
       <h3>Another H3 heading</h3>
 
-    
+    </article>
 
       <Accordion
         id="example-1"
@@ -109,6 +108,7 @@ const sidebarLinks = [
       
       <div class="content-grid">
         <div class="content-grid-left">
+          <article class="md:px-10 md:py-8 rich-text">
           <h2>Okay, lets test a "content combo" pattern</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -123,7 +123,9 @@ const sidebarLinks = [
           sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
           est laborum.</p>
             <p><a href="#" class="btn-primary my-4">Hey, it's a button</a></p>
+          </article> 
         </div>
+          
         <div class="content-grid-right">
 
           <MultiPurpose
@@ -139,11 +141,13 @@ const sidebarLinks = [
 
         </div>
       </div>
+      <article class="md:px-10 md:py-8 rich-text">
       <h2>Back to a full width layout </h2>
       <p>
         Bacon ipsum dolor amet pig ground round prosciutto andouille pork loin ribeye tongue turducken swine pork chop ham hock jerky. Frankfurter kevin pancetta, shank bacon corned beef alcatra. Andouille buffalo frankfurter, drumstick porchetta ham hock chislic ham ground round kevin salami. Sirloin ball tip meatloaf tail ham hock. Andouille shoulder sausage fatback.
       </p>
       <h3>Okay, lets try a grid layout</h3>
+      </article>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">  
         <Image
           thumbnail="/images/659601213-thumbnail-1.jpg"
@@ -182,6 +186,7 @@ const sidebarLinks = [
         />
         
         </div>
+        <article class="md:px-10 md:py-8 rich-text"></article>
         <h2>Okay, lets test a "content combo" pattern</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -197,7 +202,7 @@ const sidebarLinks = [
           est laborum.</p>
             <p><a href="#" class="btn-primary my-4">Hey, it's a button</a></p>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">  
-
+        </article>
           
         <ImageHoverLink
               size="small"
@@ -265,11 +270,5 @@ const sidebarLinks = [
               }}
             />
             </div>
-        
-        
-
-      
-
-    </article>
   </div>
 </WithoutHero>
