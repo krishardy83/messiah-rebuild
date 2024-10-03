@@ -5,28 +5,25 @@ import MultiPurpose from "../../components/multi-purpose.astro";
 import Image from "../../components/image.astro";
 import EmployeeRecord from "../../components/employee-record.astro";
 import ImageHoverLink from "../../components/image-hover-link.astro";
-import Sidebar from "../../components/sidebar.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
-
-
-const sidebarLinks = [
-  {
-    title: "Web Services",
-    children: [
-      { href: "/", name: "FAQ's" },
-      { href: "/", name: "Project planning" },
-      { href: "/", name: "Services provided" },
-      { href: "/", name: "Support & training" },
-      { href: "/", name: "Website governance" },
-    ],
-  },
-];
 ---
 
 <WithoutHero
   title="Accordion Example"
   description="Example of an accordion widget"
   analyticsKey="web-services/accordion-example"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Campus Directory", href: "/" },
@@ -35,64 +32,85 @@ const sidebarLinks = [
     { name: "Accordion", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks} />
-      <Announcement class="mb-2" icon="megaphone">
-        <b>Don't worry, this is just a testsing page</b>
-      </Announcement>
-      <article class="md:px-10 md:py-8 rich-text"></article>
-      <h2>Testing a short heading</h2>
-      <p>
-        Bacon ipsum dolor amet pig ground round prosciutto andouille pork loin ribeye tongue turducken swine pork chop ham hock jerky. Frankfurter kevin pancetta, shank bacon corned beef alcatra. Andouille buffalo frankfurter, drumstick porchetta ham hock chislic ham ground round kevin salami. Sirloin ball tip meatloaf tail ham hock. Andouille shoulder sausage fatback.
-      </p>
-      <h3>Another H3 heading</h3>
+  <Announcement class="mb-2" icon="megaphone">
+    <b>Don't worry, this is just a testsing page</b>
+  </Announcement>
+  <div class="rich-text">
+    <h2>Testing a short heading</h2>
+    <p>
+      Bacon ipsum dolor amet pig ground round prosciutto andouille pork loin ribeye tongue turducken
+      swine pork chop ham hock jerky. Frankfurter kevin pancetta, shank bacon corned beef alcatra.
+      Andouille buffalo frankfurter, drumstick porchetta ham hock chislic ham ground round kevin
+      salami. Sirloin ball tip meatloaf tail ham hock. Andouille shoulder sausage fatback.
+    </p>
 
-    </article>
+    <h3>Another H3 heading</h3>
+  </div>
 
-      <Accordion
-        id="example-1"
-        title="Example Accordion Heading"
-        subtitle="Example subheading - content within"
-      >
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
-          adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
-          voluptatum necessitatibus voluptate alias harum reprehenderit odit!
-        </p>
+  <Accordion
+    id="example-1"
+    title="Example Accordion Heading"
+    subtitle="Example subheading - content within"
+  >
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
 
-        <ul class="list-disc pl-6 mt-4">
-          <li>Matthew</li>
-          <li>Mark</li>
-          <li>Luke</li>
-          <li>John</li>
-        </ul>
-      </Accordion>
-      <Accordion title="Example Accordion Heading">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
-          adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
-          voluptatum necessitatibus voluptate alias harum reprehenderit odit!
-        </p>
+    <ul class="list-disc pl-6 mt-4">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </Accordion>
+  <Accordion title="Example Accordion Heading">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
 
-        <ul class="list-disc pl-6 mt-4">
-          <li>Matthew</li>
-          <li>Mark</li>
-          <li>Luke</li>
-          <li>John</li>
-        </ul>
-      </Accordion>
-      <h2>Need help, contact Kris, he is really nice</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
-        adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
-        voluptatum necessitatibus voluptate alias harum reprehenderit odit!
-      </p>
-      <EmployeeRecord
-        class=""
-        name="Kris Hardy"
-        job="President of Messiah University with a really really long job title that spans two lines and could break things"
-        image="/images/headshot-3.jpg"
-      >
+    <ul class="list-disc pl-6 mt-4">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </Accordion>
+
+  <div class="rich-text">
+    <h2>Need help, contact Kris, he is really nice</h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
+  </div>
+
+  <EmployeeRecord
+    class=""
+    name="Kris Hardy"
+    job="President of Messiah University with a really really long job title that spans two lines and could break things"
+    image="/images/headshot-3.jpg"
+  >
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+      <a href="#" class="btn-primary my-4">Read bio</a>
+    </p>
+  </EmployeeRecord>
+
+  <div class="content-grid">
+    <div class="content-grid-left">
+      <div class="rich-text">
+        <h2>Okay, lets test a "content combo" pattern</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
@@ -102,173 +120,161 @@ const sidebarLinks = [
           est laborum.
         </p>
         <p>
-          <a href="#" class="btn-primary my-4">Read bio</a>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.
         </p>
-      </EmployeeRecord>
-      
-      <div class="content-grid">
-        <div class="content-grid-left">
-          <article class="md:px-10 md:py-8 rich-text">
-          <h2>Okay, lets test a "content combo" pattern</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
-            <p><a href="#" class="btn-primary my-4">Hey, it's a button</a></p>
-          </article> 
-        </div>
-          
-        <div class="content-grid-right">
-
-          <MultiPurpose
-          title="Multi-purpose example heading"
-          subtitle="Example subtitle"
-          link={{ href: "/", label: "Example link" }}
-          image="/images/students.jpg"
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat.
-        </MultiPurpose>
-
-        </div>
+        <p><a href="#" class="btn-primary">Hey, it's a button</a></p>
       </div>
-      <article class="md:px-10 md:py-8 rich-text">
-      <h2>Back to a full width layout </h2>
-      <p>
-        Bacon ipsum dolor amet pig ground round prosciutto andouille pork loin ribeye tongue turducken swine pork chop ham hock jerky. Frankfurter kevin pancetta, shank bacon corned beef alcatra. Andouille buffalo frankfurter, drumstick porchetta ham hock chislic ham ground round kevin salami. Sirloin ball tip meatloaf tail ham hock. Andouille shoulder sausage fatback.
-      </p>
-      <h3>Okay, lets try a grid layout</h3>
-      </article>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">  
-        <Image
-          thumbnail="/images/659601213-thumbnail-1.jpg"
-          src="/images/659601213-image-1.jpg"
-          galleryId="example"
-        />
-        <Image
-          thumbnail="/images/659601219-thumbnail-2.jpg"
-          src="/images/659601219-image-2.jpg"
-          galleryId="example"
-        />
-        <Image
-          thumbnail="/images/659601213-thumbnail-1.jpg"
-          src="/images/659601213-image-1.jpg"
-          galleryId="example"
-        />
-        <Image
-          thumbnail="/images/headshot-3.jpg"
-          src="/images/headshot-3.jpg"
-          galleryId="example"
-        />
-        <Image
-        thumbnail="/images/academic-support-bg2.jpg"
-        src="/images/academic-support-bg2.jpg"
-        galleryId="example"
-      />
-        <Image
-          thumbnail="/images/659601213-thumbnail-1.jpg"
-          src="/images/659601213-image-1.jpg"
-          galleryId="example"
-        />
-        <Image
-          thumbnail="/images/headshot-3.jpg"
-          src="/images/659601213-image-1.jpg"
-          galleryId="example"
-        />
-        
-        </div>
-        <article class="md:px-10 md:py-8 rich-text"></article>
-        <h2>Okay, lets test a "content combo" pattern</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.</p>
-            <p><a href="#" class="btn-primary my-4">Hey, it's a button</a></p>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">  
-        </article>
-          
-        <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/image-hover-widget-example.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-            <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/659601213-image-1.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-            <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/659601213-image-1.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-            <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/headshot-3.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-            <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/659601213-image-1.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-            </div>
+    </div>
+
+    <div class="content-grid-right">
+      <MultiPurpose
+        title="Multi-purpose example heading"
+        subtitle="Example subtitle"
+        link={{ href: "/", label: "Example link" }}
+        image="/images/students.jpg"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat.
+      </MultiPurpose>
+    </div>
+  </div>
+
+  <div class="rich-text">
+    <h2>Back to a full width layout</h2>
+    <p>
+      Bacon ipsum dolor amet pig ground round prosciutto andouille pork loin ribeye tongue turducken
+      swine pork chop ham hock jerky. Frankfurter kevin pancetta, shank bacon corned beef alcatra.
+      Andouille buffalo frankfurter, drumstick porchetta ham hock chislic ham ground round kevin
+      salami. Sirloin ball tip meatloaf tail ham hock. Andouille shoulder sausage fatback.
+    </p>
+
+    <h3>Okay, lets try a grid layout</h3>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+    <Image
+      thumbnail="/images/659601203-thumbnail-1.jpg"
+      src="/images/659601213-image-1.jpg"
+      galleryId="example"
+    />
+    <Image
+      thumbnail="/images/659601200-thumbnail-2.jpg"
+      src="/images/659601219-image-2.jpg"
+      galleryId="example"
+    />
+    <Image
+      thumbnail="/images/659601203-thumbnail-1.jpg"
+      src="/images/659601213-image-1.jpg"
+      galleryId="example"
+    />
+    <Image thumbnail="/images/headshot-3.jpg" src="/images/headshot-3.jpg" galleryId="example" />
+    <Image
+      thumbnail="/images/academic-support-bg2.jpg"
+      src="/images/academic-support-bg2.jpg"
+      galleryId="example"
+    />
+    <Image
+      thumbnail="/images/659601203-thumbnail-1.jpg"
+      src="/images/659601213-image-1.jpg"
+      galleryId="example"
+    />
+    <Image
+      thumbnail="/images/headshot-3.jpg"
+      src="/images/659601213-image-1.jpg"
+      galleryId="example"
+    />
+  </div>
+
+  <div class="rich-text">
+    <h2>Okay, lets test a "content combo" pattern</h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p><a href="#" class="btn-primary">Hey, it's a button</a></p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+    <ImageHoverLink
+      size="small"
+      caption="Example image hover link"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      image={{
+        src: "/images/image-hover-widget-example.jpg",
+        alt: "Example image",
+      }}
+      button={{
+        label: "Example Button Link Text",
+        href: "/",
+      }}
+    />
+    <ImageHoverLink
+      size="small"
+      caption="Example image hover link"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      image={{
+        src: "/images/659601213-image-1.jpg",
+        alt: "Example image",
+      }}
+      button={{
+        label: "Example Button Link Text",
+        href: "/",
+      }}
+    />
+    <ImageHoverLink
+      size="small"
+      caption="Example image hover link"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      image={{
+        src: "/images/659601213-image-1.jpg",
+        alt: "Example image",
+      }}
+      button={{
+        label: "Example Button Link Text",
+        href: "/",
+      }}
+    />
+    <ImageHoverLink
+      size="small"
+      caption="Example image hover link"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      image={{
+        src: "/images/headshot-3.jpg",
+        alt: "Example image",
+      }}
+      button={{
+        label: "Example Button Link Text",
+        href: "/",
+      }}
+    />
+    <ImageHoverLink
+      size="small"
+      caption="Example image hover link"
+      description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      image={{
+        src: "/images/659601213-image-1.jpg",
+        alt: "Example image",
+      }}
+      button={{
+        label: "Example Button Link Text",
+        href: "/",
+      }}
+    />
   </div>
 </WithoutHero>

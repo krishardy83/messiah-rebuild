@@ -36,61 +36,61 @@ const sidebarLinks = [
     { name: "Web Services", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks}>
-      <a href="/" class="btn-tertiary w-full">Submit a web services ticket</a>
-    </Sidebar>
+  <Sidebar links={sidebarLinks} slot="sidebar">
+    <a href="/" class="btn-tertiary w-full">Submit a web services ticket</a>
+  </Sidebar>
 
-    <article class="md:px-10 md:py-8 rich-text">
-      <h2>Welcome to Web Services</h2>
+  <div class="rich-text">
+    <h2>Welcome to Web Services</h2>
 
-      <p>
-        The Web Services Office at Messiah University, housed within the Office of Marketing and
-        Communications, functions as the central hub overseeing the University's external website
-        and associated web services. The office operates under the leadership of the Director of Web
-        and Digital Marketing, with day-to-day management entrusted to the Web Services Manager.
-      </p>
+    <p>
+      The Web Services Office at Messiah University, housed within the Office of Marketing and
+      Communications, functions as the central hub overseeing the University's external website and
+      associated web services. The office operates under the leadership of the Director of Web and
+      Digital Marketing, with day-to-day management entrusted to the Web Services Manager.
+    </p>
 
-      <p>
-        Our basic web design and consulting services are generally provided at no cost to campus
-        clients. However, should the need arise for services beyond our internal capabilities,
-        collaboration with an external vendor may be required, incurring additional expenses.
-      </p>
+    <p>
+      Our basic web design and consulting services are generally provided at no cost to campus
+      clients. However, should the need arise for services beyond our internal capabilities,
+      collaboration with an external vendor may be required, incurring additional expenses.
+    </p>
+  </div>
 
-      <Card title="Need web help?">
-        <p class="mb-4">
-          The Web Services Team is responsible for overseeing the management of our helpdesk ticket
-          program.
-        </p>
+  <Card title="Need web help?">
+    <p class="mb-4">
+      The Web Services Team is responsible for overseeing the management of our helpdesk ticket
+      program.
+    </p>
 
-        <p class="mb-4">
-          If you encounter any issues on the Messiah University website, or if you need assistance
-          with your website, please submit a helpdesk ticket by clicking the button below and we
-          will address your concerns at the earliest opportunity.
-        </p>
+    <p class="mb-4">
+      If you encounter any issues on the Messiah University website, or if you need assistance with
+      your website, please submit a helpdesk ticket by clicking the button below and we will address
+      your concerns at the earliest opportunity.
+    </p>
 
-        <p class="mb-4">We are readily available and happy to assist you!</p>
+    <p class="mb-4">We are readily available and happy to assist you!</p>
 
-        <a href="/" class="btn-tertiary not-prose">I need help with my website!</a>
-      </Card>
+    <a href="/" class="btn-tertiary not-prose">I need help with my website!</a>
+  </Card>
 
-      <hr />
+  <div class="rich-text">
+    <hr />
 
-      <h2>Helpful resources to get you started</h2>
+    <h2>Helpful resources to get you started</h2>
 
-      <p>
-        From time to time, you might have a straightforward question but might not be sure where to
-        look. Find our web services FAQs and handy Jadu tutorials here for your convenience.
-      </p>
+    <p>
+      From time to time, you might have a straightforward question but might not be sure where to
+      look. Find our web services FAQs and handy Jadu tutorials here for your convenience.
+    </p>
 
-      <ul class="not-prose flex gap-4">
-        <li>
-          <a href="/" class="btn-tertiary">FAQ's</a>
-        </li>
-        <li>
-          <a href="/" class="btn-tertiary">Jadu tutorials</a>
-        </li>
-      </ul>
-    </article>
+    <ul class="not-prose flex gap-4">
+      <li>
+        <a href="/" class="btn-tertiary">FAQ's</a>
+      </li>
+      <li>
+        <a href="/" class="btn-tertiary">Jadu tutorials</a>
+      </li>
+    </ul>
   </div>
 </WithHero>

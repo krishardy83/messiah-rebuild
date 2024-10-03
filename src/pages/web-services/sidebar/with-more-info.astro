@@ -45,37 +45,35 @@ const sidebarLinks = [
     { name: "Sidebar Example", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks}>
-      <Fragment slot="supplements">
-        <div class="bg-gray-50 border border-gray-300 mt-4 p-4 lg:-mr-px">
-          <figure class="mb-2">
-            <img src="https://www.messiah.edu/images/186_090512_TENNISON.jpg" alt="" />
-          </figure>
-          <h4 class="text-primary-800 h4 mb-2">Further info</h4>
+  <Sidebar links={sidebarLinks} slot="sidebar">
+    <Fragment slot="supplements">
+      <div class="bg-gray-50 border border-gray-300 mt-4 p-4 lg:-mr-px">
+        <figure class="mb-2">
+          <img src="https://www.messiah.edu/images/186_090512_TENNISON.jpg" alt="" />
+        </figure>
+        <h4 class="text-primary-800 h4 mb-2">Further info</h4>
 
-          <p class="mb-4">
-            Nulla dolor lorem, accumsan id magna vitae, lobortis luctus odio. Proin vestibulum eu
-            ante sit amet semper. Nam eget imperdiet quam. Mauris sapien dolor, pulvinar vel blandit
-            in, porttitor ac elit. Pellentesque a justo quis augue dictum volutpat ac ut eros. Duis
-            mi lectus, viverra ut dolor.
-          </p>
+        <p class="mb-4">
+          Nulla dolor lorem, accumsan id magna vitae, lobortis luctus odio. Proin vestibulum eu ante
+          sit amet semper. Nam eget imperdiet quam. Mauris sapien dolor, pulvinar vel blandit in,
+          porttitor ac elit. Pellentesque a justo quis augue dictum volutpat ac ut eros. Duis mi
+          lectus, viverra ut dolor.
+        </p>
 
-          <a href="/" class="btn-tertiary">Example link</a>
-        </div>
-      </Fragment>
-    </Sidebar>
+        <a href="/" class="btn-tertiary">Example link</a>
+      </div>
+    </Fragment>
+  </Sidebar>
 
-    <article class="md:px-10 md:py-8 rich-text">
-      <p>This page shows the sidebar with a more info example.</p>
+  <div class="rich-text">
+    <p>This page shows the sidebar with a more info example.</p>
 
-      <ul>
-        <li><a href="/web-services/sidebar/with-navigation">Navigation example</a></li>
-        <li><a href="/web-services/sidebar/with-contact">Contact example</a></li>
-        <li>More info example</li>
-        <li><a href="/web-services/sidebar/with-social-media">Social media example</a></li>
-        <li><a href="/web-services/sidebar/with-blue-button">Blue button example</a></li>
-      </ul>
-    </article>
+    <ul>
+      <li><a href="/web-services/sidebar/with-navigation">Navigation example</a></li>
+      <li><a href="/web-services/sidebar/with-contact">Contact example</a></li>
+      <li>More info example</li>
+      <li><a href="/web-services/sidebar/with-social-media">Social media example</a></li>
+      <li><a href="/web-services/sidebar/with-blue-button">Blue button example</a></li>
+    </ul>
   </div>
 </WithoutHero>

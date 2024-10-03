@@ -1,26 +1,24 @@
 ---
 import Quote from "../../components/quote.astro";
-import Sidebar from "../../components/sidebar.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
-
-const sidebarLinks = [
-  {
-    title: "Web Services",
-    children: [
-      { href: "/", name: "FAQ's" },
-      { href: "/", name: "Project planning" },
-      { href: "/", name: "Services provided" },
-      { href: "/", name: "Support & training" },
-      { href: "/", name: "Website governance" },
-    ],
-  },
-];
 ---
 
 <WithoutHero
   title="Quote Widget"
   description="Example of a quote widget"
   analyticsKey="web-services/quote-example"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Campus Directory", href: "/" },
@@ -29,40 +27,36 @@ const sidebarLinks = [
     { name: "Quote Widget", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks} />
+  <div class="rich-text">
+    <p>
+      The <b>quote widget</b> allows you to have an image, a heading, subheading, content and a linked
+      button. There are two versions of the quote widget as displayed here.
+    </p>
 
-    <article class="md:px-10 md:py-8 rich-text">
-      <p>
-        The <b>quote widget</b> allows you to have an image, a heading, subheading, content and a linked
-        button. There are two versions of the quote widget as displayed here.
-      </p>
-
-      <ul>
-        <li>Quote - Narrow is 30% of the page</li>
-        <li>Quote - 100% width can be expanded to fit the width of the page</li>
-      </ul>
-
-      <div class="w-1/3">
-        <Quote
-          author="John Doe"
-          quote="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-          image="/images/zachariah-gibson.jpg"
-          class="mb-8"
-        />
-      </div>
-
-      <Quote
-        author="Jane Doe"
-        quote="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        image="/images/zachariah-gibson.jpg"
-        class="mb-8"
-      />
-
-      <Quote
-        author="Jane Doe"
-        quote="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-      />
-    </article>
+    <ul>
+      <li>Quote - Narrow is 30% of the page</li>
+      <li>Quote - 100% width can be expanded to fit the width of the page</li>
+    </ul>
   </div>
+
+  <div class="w-1/3">
+    <Quote
+      author="John Doe"
+      quote="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      image="/images/zachariah-gibson.jpg"
+      class="mb-8"
+    />
+  </div>
+
+  <Quote
+    author="Jane Doe"
+    quote="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    image="/images/zachariah-gibson.jpg"
+    class="mb-8"
+  />
+
+  <Quote
+    author="Jane Doe"
+    quote="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  />
 </WithoutHero>

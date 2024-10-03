@@ -1,7 +1,9 @@
 ---
+import type { ComponentProps } from "astro/types";
 import Breadcrumbs from "../components/breadcrumbs.astro";
 import CtaSidebarLinks from "../components/cta-sidebar-links.astro";
 import BaseLayout from "./base.astro";
+import Sidebar from "../components/sidebar.astro";
 
 interface Props {
   title: string;
@@ -12,9 +14,10 @@ interface Props {
     name: string;
     href: string;
   }[];
+  sidebarLinks?: ComponentProps<typeof Sidebar>["links"];
 }
 
-const { title, description, analyticsKey, image, breadcrumbs } = Astro.props;
+const { title, description, analyticsKey, sidebarLinks, image, breadcrumbs } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -37,7 +40,15 @@ const { title, description, analyticsKey, image, breadcrumbs } = Astro.props;
     <div class="bg-white px-6 py-4">
       <Breadcrumbs links={breadcrumbs} />
 
-      <slot />
+      <div class="flex flex-col lg:flex-row">
+        <!-- Either render a default sidebar with the links or render the slot -->
+        {sidebarLinks ? <Sidebar links={sidebarLinks} /> : null}
+        {Astro.slots.has("sidebar") ? <slot name="sidebar" /> : null}
+
+        <div class="space-y-4 md:px-10 md:py-8">
+          <slot />
+        </div>
+      </div>
     </div>
   </main>
 </BaseLayout>

@@ -1,26 +1,24 @@
 ---
 import Accordion from "../../components/accordion.astro";
-import Sidebar from "../../components/sidebar.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
-
-const sidebarLinks = [
-  {
-    title: "Web Services",
-    children: [
-      { href: "/", name: "FAQ's" },
-      { href: "/", name: "Project planning" },
-      { href: "/", name: "Services provided" },
-      { href: "/", name: "Support & training" },
-      { href: "/", name: "Website governance" },
-    ],
-  },
-];
 ---
 
 <WithoutHero
   title="Accordion Example"
   description="Example of an accordion widget"
   analyticsKey="web-services/accordion-example"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Campus Directory", href: "/" },
@@ -29,55 +27,48 @@ const sidebarLinks = [
     { name: "Accordion", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks} />
+  <p>
+    The <b>accordion widget</b> is ideal for long pages with headings and subheadings, organizing content
+    into digestible sections for quick navigation without the need to read through the entire page.
+  </p>
 
-    <article class="md:px-10 md:py-8 rich-text">
-      <p>
-        The <b>accordion widget</b> is ideal for long pages with headings and subheadings, organizing
-        content into digestible sections for quick navigation without the need to read through the entire
-        page.
-      </p>
+  <p>
+    It's recommended to limit combined accordions to five per row and place one accordion per row
+    for optimal usability.
+  </p>
 
-      <p>
-        It's recommended to limit combined accordions to five per row and place one accordion per
-        row for optimal usability.
-      </p>
+  <p>Check out the Web Services Jadu 102 page for a real-world example.</p>
 
-      <p>Check out the Web Services Jadu 102 page for a real-world example.</p>
+  <Accordion
+    id="example-1"
+    title="Example Accordion Heading"
+    subtitle="Example subheading - content within"
+  >
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
 
-      <Accordion
-        id="example-1"
-        title="Example Accordion Heading"
-        subtitle="Example subheading - content within"
-      >
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
-          adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
-          voluptatum necessitatibus voluptate alias harum reprehenderit odit!
-        </p>
+    <ul class="list-disc pl-6 mt-4">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </Accordion>
+  <Accordion title="Example Accordion Heading">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
 
-        <ul class="list-disc pl-6 mt-4">
-          <li>Matthew</li>
-          <li>Mark</li>
-          <li>Luke</li>
-          <li>John</li>
-        </ul>
-      </Accordion>
-      <Accordion title="Example Accordion Heading">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis
-          adipisci dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora
-          voluptatum necessitatibus voluptate alias harum reprehenderit odit!
-        </p>
-
-        <ul class="list-disc pl-6 mt-4">
-          <li>Matthew</li>
-          <li>Mark</li>
-          <li>Luke</li>
-          <li>John</li>
-        </ul>
-      </Accordion>
-    </article>
-  </div>
+    <ul class="list-disc pl-6 mt-4">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </Accordion>
 </WithoutHero>

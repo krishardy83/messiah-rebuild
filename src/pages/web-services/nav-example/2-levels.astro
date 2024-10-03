@@ -33,17 +33,15 @@ const sidebarLinks = [
     { name: "Sidebar Example", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks}>
-      <a href="/" class="btn-tertiary w-full">First button</a>
-      <a href="/" class="btn-tertiary w-full">Second button</a>
-    </Sidebar>
+  <Sidebar links={sidebarLinks} slot="sidebar">
+    <a href="/" class="btn-tertiary w-full">First button</a>
+    <a href="/" class="btn-tertiary w-full">Second button</a>
+  </Sidebar>
 
-    <article class="md:px-10 md:py-8 rich-text">
-      <p>
-        This page shows the sidebar when a level 1 page is being viewed. In this example, the level
-        1 page has no sub-pages
-      </p>
-    </article>
+  <div class="rich-text">
+    <p>
+      This page shows the sidebar when a level 1 page is being viewed. In this example, the level 1
+      page has no sub-pages
+    </p>
   </div>
 </WithoutHero>

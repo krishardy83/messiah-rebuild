@@ -12,9 +12,9 @@ interface Props extends HTMLAttributes<"figure"> {
 const { src, thumbnail = src, caption, galleryId, class: className, ...props } = Astro.props;
 ---
 
-<figure data-analytics="image" {...props} class={cn("not-prose", className)}>
+<figure data-analytics="image" {...props} class={cn("not-prose aspect-[4/3]", className)}>
   <a data-image data-caption={caption} href={src} data-fancybox={galleryId}>
-    <img src={thumbnail} alt="" />
+    <img src={thumbnail} class="w-full h-full object-cover" alt="" />
   </a>
 </figure>
 

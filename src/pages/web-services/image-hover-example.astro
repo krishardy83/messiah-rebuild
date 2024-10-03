@@ -1,26 +1,24 @@
 ---
 import ImageHoverLink from "../../components/image-hover-link.astro";
-import Sidebar from "../../components/sidebar.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
-
-const sidebarLinks = [
-  {
-    title: "Web Services",
-    children: [
-      { href: "/", name: "FAQ's" },
-      { href: "/", name: "Project planning" },
-      { href: "/", name: "Services provided" },
-      { href: "/", name: "Support & training" },
-      { href: "/", name: "Website governance" },
-    ],
-  },
-];
 ---
 
 <WithoutHero
   title="Image Hover Link Example"
   analyticsKey="web-services/image-hover-example"
   description="Example of a image hover link widget"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Campus Directory", href: "/" },
@@ -29,65 +27,60 @@ const sidebarLinks = [
     { name: "Image Hover Link Example", href: "/" },
   ]}
 >
-  <div class="flex flex-col lg:flex-row">
-    <Sidebar links={sidebarLinks} />
+  <div class="rich-text"></div>
+  <p>
+    The <b>image hover link widget</b> displays an image and allows you to provide additional details
+    and an optional link.
+  </p>
 
-    <article class="md:px-10 md:py-8 rich-text">
-      <p>
-        The <b>image hover link widget</b> displays an image and allows you to provide additional details
-        and an optional link.
-      </p>
+  <p>
+    If you choose to use multiple image hover link widgets, make your images the same size. We find
+    that an image scaled to 400 x 285 fits nicely 2 across.
+  </p>
 
-      <p>
-        If you choose to use multiple image hover link widgets, make your images the same size. We
-        find that an image scaled to 400 x 285 fits nicely 2 across.
-      </p>
+  <p>
+    For a real-world example of this widget, visit the <a
+      href="https://www.messiah.edu/collaboratory/">Collaboratory</a
+    > homepage.
+  </p>
 
-      <p>
-        For a real-world example of this widget, visit the <a
-          href="https://www.messiah.edu/collaboratory/">Collaboratory</a
-        > homepage.
-      </p>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+    {
+      new Array(6).fill(null).map(() => (
+        <ImageHoverLink
+          size="small"
+          caption="Example image hover link"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          image={{
+            src: "/images/image-hover-widget-example.jpg",
+            alt: "Example image",
+          }}
+          button={{
+            label: "Example Button Link Text",
+            href: "/",
+          }}
+        />
+      ))
+    }
+  </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-        {
-          new Array(6).fill(null).map(() => (
-            <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/image-hover-widget-example.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-          ))
-        }
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {
-          new Array(4).fill(null).map(() => (
-            <ImageHoverLink
-              size="small"
-              caption="Example image hover link"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              image={{
-                src: "/images/image-hover-widget-example.jpg",
-                alt: "Example image",
-              }}
-              button={{
-                label: "Example Button Link Text",
-                href: "/",
-              }}
-            />
-          ))
-        }
-      </div>
-    </article>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {
+      new Array(4).fill(null).map(() => (
+        <ImageHoverLink
+          size="small"
+          caption="Example image hover link"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          image={{
+            src: "/images/image-hover-widget-example.jpg",
+            alt: "Example image",
+          }}
+          button={{
+            label: "Example Button Link Text",
+            href: "/",
+          }}
+        />
+      ))
+    }
   </div>
 </WithoutHero>
