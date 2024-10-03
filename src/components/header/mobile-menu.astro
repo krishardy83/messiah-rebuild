@@ -54,14 +54,14 @@ const { transparent } = Astro.props;
     <form class="relative">
       <input
         type="search"
-        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
+        class="border border-white w-full px-4 py-2 bg-transparent placeholder:text-white"
         placeholder="What are you searching for?"
         name="s"
       />
       <button
         type="submit"
         aria-label="submit search form"
-        class="absolute right-0 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+        class="absolute right-0 top-0 text-white transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
       >
         <Icon name="search" class="size-5 pointer-events-none" />
       </button>
@@ -84,7 +84,7 @@ const { transparent } = Astro.props;
             >
               {group.title}
 
-              <span class="size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
+              <span class="pointer-events-none size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
             </button>
 
             <div
