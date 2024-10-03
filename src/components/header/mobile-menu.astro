@@ -15,19 +15,20 @@ const { transparent } = Astro.props;
   type="button"
   aria-label="open page menu"
   data-mobile-menu-trigger
-  class="group/trigger h-12 w-12 text-white bg-primary-800 lg:hidden fixed z-50 top-12 right-0"
+  aria-expanded="false"
+  class="group/trigger h-12 w-12 text-white bg-primary-800 lg:hidden fixed z-50 top-12 right-0 aria-expanded:bg-white aria-expanded:text-primary-800 transition-colors"
 >
   <span
     aria-hidden="true"
-    class="pointer-events-none absolute left-2 top-4 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:top-6 group-[.is-open]/trigger:rotate-[135deg]"
+    class="pointer-events-none absolute left-2 top-4 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:top-6 group-aria-expanded/trigger:rotate-[135deg]"
   ></span>
   <span
     aria-hidden="true"
-    class="pointer-events-none absolute left-2 top-6 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:-left-16 group-[.is-open]/trigger:opacity-0"
+    class="pointer-events-none absolute left-2 top-6 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:-left-16 group-aria-expanded/trigger:opacity-0"
   ></span>
   <span
     aria-hidden="true"
-    class="pointer-events-none absolute left-2 top-8 block h-0.5 right-2 bg-current transition-all ease-in-out group-[.is-open]/trigger:top-6 group-[.is-open]/trigger:-rotate-[135deg]"
+    class="pointer-events-none absolute left-2 top-8 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:top-6 group-aria-expanded/trigger:-rotate-[135deg]"
   ></span>
 </button>
 
@@ -54,14 +55,14 @@ const { transparent } = Astro.props;
     <form class="relative">
       <input
         type="search"
-        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
+        class="border border-white w-full px-4 py-2 bg-transparent placeholder:text-white"
         placeholder="What are you searching for?"
         name="s"
       />
       <button
         type="submit"
         aria-label="submit search form"
-        class="absolute right-0 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+        class="absolute right-0 top-0 text-white transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
       >
         <Icon name="search" class="size-5 pointer-events-none" />
       </button>
@@ -84,7 +85,7 @@ const { transparent } = Astro.props;
             >
               {group.title}
 
-              <span class="size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
+              <span class="pointer-events-none size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
             </button>
 
             <div
@@ -172,7 +173,7 @@ const { transparent } = Astro.props;
   let previouslySelected: HTMLElement | null = null;
 
   function closeMenu() {
-    trigger.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
     document.body.classList.remove("overflow-hidden");
     content.classList.add("opacity-0");
 
@@ -192,7 +193,7 @@ const { transparent } = Astro.props;
   function openMenu() {
     previouslySelected = document.activeElement as HTMLElement;
 
-    trigger.classList.add("is-open");
+    trigger.setAttribute("aria-expanded", "true");
     document.body.classList.add("overflow-hidden");
     content.classList.remove("hidden");
 

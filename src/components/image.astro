@@ -14,7 +14,7 @@ const { src, thumbnail = src, caption, galleryId, class: className, ...props } =
 
 <figure data-analytics="image" {...props} class={cn("not-prose", className)}>
   <a data-image data-caption={caption} href={src} data-fancybox={galleryId}>
-    <img src={src} alt="" />
+    <img src={thumbnail} alt="" />
   </a>
 </figure>
 
