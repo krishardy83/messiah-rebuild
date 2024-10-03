@@ -4,6 +4,7 @@ import Announcement from "../../components/announcement.astro";
 import MultiPurpose from "../../components/multi-purpose.astro";
 import Image from "../../components/image.astro";
 import EmployeeRecord from "../../components/employee-record.astro";
+import ImageHoverLink from "../../components/image-hover-link.astro";
 import Sidebar from "../../components/sidebar.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
 
@@ -160,23 +161,110 @@ const sidebarLinks = [
           galleryId="example"
         />
         <Image
-          thumbnail="/images/659601219-thumbnail-2.jpg"
-          src="/images/659601219-image-2.jpg"
+          thumbnail="/images/headshot-3.jpg"
+          src="/images/headshot-3.jpg"
           galleryId="example"
         />
+        <Image
+        thumbnail="/images/academic-support-bg2.jpg"
+        src="/images/academic-support-bg2.jpg"
+        galleryId="example"
+      />
         <Image
           thumbnail="/images/659601213-thumbnail-1.jpg"
           src="/images/659601213-image-1.jpg"
           galleryId="example"
         />
         <Image
-          thumbnail="/images/659601219-thumbnail-2.jpg"
-          src="/images/659601219-image-2.jpg"
+          thumbnail="/images/headshot-3.jpg"
+          src="/images/659601213-image-1.jpg"
           galleryId="example"
         />
-        </div>
         
-    
+        </div>
+        <h2>Okay, lets test a "content combo" pattern</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.</p>
+            <p><a href="#" class="btn-primary my-4">Hey, it's a button</a></p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">  
+
+          
+        <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/image-hover-widget-example.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+            <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/659601213-image-1.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+            <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/659601213-image-1.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+            <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/headshot-3.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+            <ImageHoverLink
+              size="small"
+              caption="Example image hover link"
+              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              image={{
+                src: "/images/659601213-image-1.jpg",
+                alt: "Example image",
+              }}
+              button={{
+                label: "Example Button Link Text",
+                href: "/",
+              }}
+            />
+            </div>
         
         
 
