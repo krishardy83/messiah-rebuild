@@ -35,31 +35,51 @@ import WithoutHero from "../../layouts/without-hero.astro";
     </p>
   </div>
 
-  <div class="w-1/2 mb-4">
-    <Image src="/images/nursing-rotating.jpg" caption="This is an example caption" />
-  </div>
-
-  <Image src="/images/chemistry-acs.jpg" class="mb-4" />
-
   <h3 class="h4">Example without gallery</h3>
 
-  <div class="grid grid-cols-2 gap-4 mb-4">
+  <div class="grid-3">
+    <Image thumbnail="/images/659601203-thumbnail-1.jpg" src="/images/659601213-image-1.jpg" caption="Bacon ipsum dolor amet beef ribs pork belly shankle jowl meatball meatloaf pig ham hock drumstick rump filet mignon brisket." />
+    <Image thumbnail="/images/659601200-thumbnail-2.jpg" src="/images/659601219-image-2.jpg" />
+    <Image thumbnail="/images/659601203-thumbnail-1.jpg" src="/images/659601213-image-1.jpg"  />
+    <Image thumbnail="/images/659601200-thumbnail-2.jpg" src="/images/659601219-image-2.jpg" />
     <Image thumbnail="/images/659601203-thumbnail-1.jpg" src="/images/659601213-image-1.jpg" />
     <Image thumbnail="/images/659601200-thumbnail-2.jpg" src="/images/659601219-image-2.jpg" />
   </div>
 
   <h3 class="h4">Example with gallery</h3>
 
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid-2">
     <Image
       thumbnail="/images/659601203-thumbnail-1.jpg"
       src="/images/659601213-image-1.jpg"
       galleryId="example"
+      caption="Bacon ipsum dolor amet beef ribs pork belly shankle jowl meatball meatloaf pig ham hock drumstick rump filet mignon brisket."
     />
     <Image
       thumbnail="/images/659601200-thumbnail-2.jpg"
       src="/images/659601219-image-2.jpg"
       galleryId="example"
+      caption="Bacon ipsum dolor amet beef ribs pork belly shankle jowl meatball meatloaf pig ham hock drumstick rump filet mignon brisket."
     />
+    <Image
+    thumbnail="/images/659601203-thumbnail-1.jpg"
+    src="/images/659601213-image-1.jpg"
+    galleryId="example"
+  />
+  <Image
+    thumbnail="/images/659601200-thumbnail-2.jpg"
+    src="/images/659601219-image-2.jpg"
+    galleryId="example"
+  />
+  <Image
+  thumbnail="/images/659601203-thumbnail-1.jpg"
+  src="/images/659601213-image-1.jpg"
+  galleryId="example"
+/>
+<Image
+  thumbnail="/images/659601200-thumbnail-2.jpg"
+  src="/images/659601219-image-2.jpg"
+  galleryId="example"
+/>
   </div>
 </WithoutHero>
