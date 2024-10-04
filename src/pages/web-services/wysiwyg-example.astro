@@ -1,0 +1,76 @@
+---
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="WYSIWYG Example"
+  description="Example of a quote widget"
+  analyticsKey="web-services/wysiwyg-example"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Quote Widget", href: "/" },
+  ]}
+>
+<div class="rich-text">
+  <h2>Here is what a standard heading looks like</h2>
+  <p>
+    Bacon ipsum dolor amet turducken shoulder meatloaf, <a href="#">pork loin boudin kevin landjaeger.</a> Shoulder salami chislic, rump chuck pork chop kevin short loin t-bone frankfurter spare ribs cow. Ground round frankfurter porchetta pancetta tenderloin picanha short loin kevin. Swine sausage boudin cupim tenderloin chislic kielbasa ground round. Chicken pork loin pancetta, hamburger short ribs turducken sirloin drumstick kielbasa pork chop leberkas short loin chislic burgdoggen.
+  </p>
+  <h3>Here is what a sub-heading looks like</h3>
+  <p>
+    Bacon ipsum dolor amet turducken shoulder meatloaf, pork loin boudin kevin landjaeger. Shoulder salami chislic, rump chuck pork chop kevin short loin t-bone frankfurter spare ribs cow. Ground round frankfurter porchetta pancetta tenderloin picanha short loin kevin. Swine sausage boudin cupim tenderloin chislic kielbasa ground round. Chicken pork loin pancetta, hamburger short ribs turducken sirloin drumstick kielbasa pork chop leberkas short loin chislic burgdoggen.
+  </p>
+  <p>
+    <img src="/images/headshot-1.jpg" alt="Headshot" class="float-right w-full md:w-1/2 lg:w-1/3 mt-4 mx-4">
+    Bacon ipsum dolor amet turducken shoulder meatloaf, pork loin boudin kevin landjaeger. Shoulder salami chislic, rump chuck pork chop kevin short loin t-bone frankfurter spare ribs cow. Ground round frankfurter porchetta pancetta tenderloin picanha short loin kevin. Swine sausage boudin cupim tenderloin chislic kielbasa ground round. Chicken pork loin pancetta, hamburger short ribs turducken sirloin drumstick kielbasa pork chop leberkas short loin chislic burgdoggen.
+  </p>
+  <p>
+    <h2> Another H2 heading goes here</h2>
+    Bacon ipsum dolor amet turducken shoulder meatloaf, pork loin boudin kevin landjaeger. Shoulder salami chislic, rump chuck pork chop kevin short loin t-bone frankfurter spare ribs cow. Ground round frankfurter porchetta pancetta tenderloin picanha short loin kevin. Swine sausage boudin cupim tenderloin chislic kielbasa ground round. Chicken pork loin pancetta, hamburger short ribs turducken sirloin drumstick kielbasa pork chop leberkas short loin chislic burgdoggen.
+  </p>
+  <p>
+    <ul>
+      <li>Bacon ipsum dolor amet turducken shoulder meatloaf</li>
+      <li>Pork loin boudin kevin landjaeger</li>
+      <li>Shoulder salami chislic</li>
+      <li>Ground round frankfurter porchetta pancetta tenderloin picanha short loin kevin.</li>
+      <li>Swine sausage boudin cupim tenderloin chislic kielbasa ground round. Chicken pork loin pancetta, hamburger short ribs turducken sirloin drumstick kielbasa pork chop leberkas short loin chislic burgdoggen.</li>
+    </ul>
+  </p>
+  <p>
+    <h3>What about an ordered list?</h3>
+    Bacon ipsum dolor amet turducken shoulder meatloaf, pork loin boudin kevin landjaeger. 
+    <ol>
+      <li>Bacon ipsum dolor amet turducken shoulder meatloaf</li>
+      <li>Pork loin boudin kevin landjaeger</li>
+      <li>Shoulder salami chislic</li>
+      <li>Ground round frankfurter porchetta pancetta tenderloin picanha short loin kevin.</li>
+      <li>Swine sausage boudin cupim tenderloin chislic kielbasa ground round. Chicken pork loin pancetta, hamburger short ribs turducken sirloin drumstick kielbasa pork chop leberkas short loin chislic burgdoggen.</li>
+    </ol>
+  </p>
+  <p>
+    <h3>What about a block quote?!?!?</h3>
+    <blockquote>
+      For 50 years, WWF has been protecting the future of nature. The world's leading conservation organization, WWF works in 100 countries and is supported by 1.2 million members in the United States and close to 5 million globally.
+      </blockquote>
+  </p>
+
+</div>
+
+  
+</WithoutHero>
