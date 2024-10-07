@@ -60,7 +60,7 @@
   }
 
   .rich-text {
-    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:uppercase prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-tertiary-500 prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-hr:my-8;
+    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
   }
 
   .wrapper {
@@ -97,12 +97,11 @@
     @apply grid grid-cols-1 gap-4 md:grid-cols-2;
   }
 
-  .img-float-right{
-    @apply float-right w-full md:w-1/2 lg:w-1/3 mt-4 mx-4;
+  .img-float-right {
+    @apply float-right mx-4 mt-4 w-full md:w-1/2 lg:w-1/3;
   }
 
-  .img-float-left{
-    @apply float-left w-full md:w-1/2 lg:w-1/3 mt-4 mx-4;
+  .img-float-left {
+    @apply float-left mx-4 mt-4 w-full md:w-1/2 lg:w-1/3;
   }
-  
 }
