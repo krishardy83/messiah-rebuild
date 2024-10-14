@@ -1,0 +1,83 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "../icon.astro";
+
+interface Props extends HTMLAttributes<"li"> {
+  transparent: boolean;
+}
+
+const { transparent, class: className, ...props } = Astro.props;
+---
+
+<li
+  {...props}
+  x-data="{
+    open: false,
+
+    toggle() {
+      this.open = this.open ? this.close() : true;
+
+      if (this.open) {
+        this.$nextTick(() => this.$refs.input.focus());
+      }
+    },
+
+    close(focusAfter) {
+      this.open = false;
+
+      focusAfter && focusAfter.focus();
+    }
+  }"
+  x-id="['button', 'form']"
+  @keydown.escape.prevent.stop="close($refs.button)"
+  @focusin.window="!$refs.form.contains($event.target) && close()"
+>
+  <button
+    type="button"
+    x-ref="button"
+    @click="toggle()"
+    :id="$id('button')"
+    :aria-expanded="open"
+    :aria-controls="$id('form')"
+    :aria-label="open ? 'close search form' : 'show search form'"
+    aria-haspopup="true"
+    class:list={[
+      "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
+      className,
+      transparent
+        ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+        : "text-primary-800",
+    ]}
+  >
+    <Icon name="search" class="size-5 pointer-events-none" />
+  </button>
+
+  <search
+    x-show="open"
+    x-ref="form"
+    x-transition.opacity
+    @click.outside="close($refs.button)"
+    :id="$id('form')"
+    :aria-labelledby="$id('button')"
+    style="display: none"
+    class="absolute left-0 top-0 right-0 bg-primary-800 text-white duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
+  >
+    <form class="max-w-6xl mx-auto px-4 flex relative">
+      <input
+        type="search"
+        x-ref="input"
+        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
+        placeholder="What are you searching for?"
+        name="s"
+        autofocus
+      />
+      <button
+        type="submit"
+        aria-label="submit search form"
+        class="absolute right-4 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+      >
+        <Icon name="search" class="size-5 pointer-events-none" />
+      </button>
+    </form>
+  </search>
+</li>

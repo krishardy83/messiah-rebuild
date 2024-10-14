@@ -39,6 +39,8 @@ const { title, image, options, class: className, ...props } = Astro.props;
     options ? (
       <select
         data-dropdown
+        x-data
+        @change="$el.value ? window.location.href = $el.value : null"
         aria-label="please select a page"
         class="bg-white w-full border border-gray-300 block p-2 rounded-md mt-4"
       >
@@ -50,17 +52,3 @@ const { title, image, options, class: className, ...props } = Astro.props;
     ) : null
   }
 </article>
-
-<script>
-  function handleDropdownChange(event: Event) {
-    let { value } = event.target as HTMLSelectElement;
-
-    if (value) {
-      window.location.href = value;
-    }
-  }
-
-  document.querySelectorAll("[data-dropdown]").forEach((dropdown) => {
-    dropdown.addEventListener("change", handleDropdownChange);
-  });
-</script>

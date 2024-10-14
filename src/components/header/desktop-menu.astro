@@ -1,8 +1,8 @@
 ---
-import { slugify } from "../../lib/utils";
 import Icon from "../icon.astro";
 import Logo from "../logo.astro";
 import { bottomGroups, topGroups } from "./navigation-data";
+import SearchForm from "./search-form.astro";
 
 interface Props {
   transparent: boolean;
@@ -13,7 +13,19 @@ const { transparent } = Astro.props;
 
 <div
   class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[compress='true']:-translate-y-12 transition-all"
-  data-menu
+  x-data="{
+    scrolling: false,
+    compress: false,
+
+    scroll() {
+      this.scrolling = window.scrollY > 0;
+      this.compress = window.scrollY > 450;
+    },
+  }"
+  x-init="scroll"
+  :data-scrolling="scrolling"
+  :data-compress="compress"
+  @scroll.window="scroll"
 >
   <header class="mx-auto max-w-6xl px-4">
     <nav class="flex items-end flex-wrap" data-analytics="navigation">
@@ -32,17 +44,38 @@ const { transparent } = Astro.props;
 
       <div class="flex-col justify-end transition-opacity grow hidden lg:flex" data-menu-wrapper>
         <ul
+          x-ref="group"
           class="flex justify-end mb-4 items-center group-data-[compress='true']:opacity-0 transition-opacity leading-none"
         >
           {
             topGroups.map((group) => (
-              <li class="relative">
+              <li
+                class="relative"
+                x-data="{
+                  open: false,
+
+                  toggle() {
+                    this.open = this.open ? this.close() : true;
+                  },
+
+                  close(focusAfter) {
+                    this.open = false;
+
+                    focusAfter && focusAfter.focus();
+                  }
+                }"
+                @keydown.escape.prevent.stop="close($refs.button)"
+                @focusin.window="!$refs.group.contains($event.target) && close()"
+                x-id="['group', 'button']"
+              >
                 <button
                   type="button"
-                  aria-expanded="false"
+                  x-ref="button"
+                  @click="toggle()"
+                  :id="$id('button')"
+                  :aria-expanded="open"
+                  :aria-controls="$id('group')"
                   aria-haspopup="true"
-                  id={`group-button-${slugify(group.title)}`}
-                  aria-controls={`group-${slugify(group.title)}`}
                   class:list={[
                     "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white flex items-center gap-x-2 group text-xs xl:text-sm",
                     transparent
@@ -59,11 +92,15 @@ const { transparent } = Astro.props;
                 </button>
 
                 <div
-                  id={`group-${slugify(group.title)}`}
-                  class="opacity-0 hidden absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
+                  x-show="open"
+                  x-transition.opacity
+                  x-ref="group"
+                  @click.outside="close($refs.button)"
+                  :id="$id('group')"
+                  :aria-labelledby="$id('button')"
+                  class="absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
                   role="region"
-                  aria-labelledby={`group-button-${slugify(group.title)}`}
-                  aria-hidden="true"
+                  style="display: none"
                 >
                   <ul class="flex flex-col">
                     {group.children.map((child) => {
@@ -106,36 +143,39 @@ const { transparent } = Astro.props;
             </a>
           </li>
 
-          <li>
-            <button
-              type="button"
-              aria-label="show search form"
-              aria-expanded="false"
-              aria-haspopup="true"
-              id="search-form-toggle"
-              aria-controls="search-form"
-              class:list={[
-                "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
-                transparent
-                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
-                  : "text-primary-800",
-              ]}
-            >
-              <Icon name="search" class="size-4 xl:size-5 pointer-events-none" />
-            </button>
-          </li>
+          <SearchForm transparent={transparent} />
         </ul>
 
-        <ul class="flex gap-4 lg:gap-6 justify-end">
+
+        <ul class="flex gap-4 lg:gap-6 justify-end items-center">
           {
             bottomGroups.map((group) => (
-              <li>
+              <li
+                x-data="{
+                  open: false,
+
+                  toggle() {
+                    this.open = this.open ? this.close() : true;
+                  },
+
+                  close(focusAfter) {
+                    this.open = false;
+
+                    focusAfter && focusAfter.focus();
+                  }
+                }"
+                @keydown.escape.prevent.stop="close($refs.button)"
+                @focusin.window="!$refs.group.contains($event.target) && close()"
+                x-id="['group', 'button']"
+              >
                 <button
                   type="button"
-                  aria-expanded="false"
+                  x-ref="button"
+                  @click="toggle()"
+                  :id="$id('button')"
+                  :aria-expanded="open"
+                  :aria-controls="$id('group')"
                   aria-haspopup="true"
-                  id={`group-button-${slugify(group.title)}`}
-                  aria-controls={`group-${slugify(group.title)}`}
                   class:list={[
                     "text-sm group xl:text-lg flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
                     transparent
@@ -152,11 +192,15 @@ const { transparent } = Astro.props;
                 </button>
 
                 <div
-                  id={`group-${slugify(group.title)}`}
-                  class="opacity-0 hidden absolute left-0 mt-6 w-full bg-gray-100 py-12 transition-opacity duration-300 z-30"
+                  x-show="open"
+                  x-transition.opacity
+                  x-ref="group"
+                  @click.outside="close($refs.button)"
+                  :id="$id('group')"
+                  :aria-labelledby="$id('button')"
+                  class="absolute left-0 mt-6 w-full bg-gray-100 py-12 transition-opacity duration-300 z-30"
                   role="region"
-                  aria-labelledby={`group-button-${slugify(group.title)}`}
-                  aria-hidden="true"
+                  style="display: none"
                 >
                   <div class="mx-auto flex max-w-6xl gap-12 px-4">
                     <div class="w-2/5 border-r border-gray-300 pr-12">
@@ -195,152 +239,9 @@ const { transparent } = Astro.props;
             ))
           }
 
-          <li class="hidden group-data-[compress='true']:block">
-            <button
-              type="button"
-              aria-label="show search form"
-              aria-expanded="false"
-              aria-haspopup="true"
-              id="search-form-toggle"
-              aria-controls="search-form"
-              class:list={[
-                "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
-                transparent
-                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
-                  : "text-primary-800",
-              ]}
-            >
-              <Icon name="search" class="size-5 pointer-events-none" />
-            </button>
-          </li>
+          <SearchForm transparent={transparent} class="hidden group-data-[compress='true']:block" />
         </ul>
       </div>
     </nav>
   </header>
-
-  <search
-    id="search-form"
-    aria-labelledby="search-form-toggle"
-    aria-hidden="true"
-    class="opacity-0 hidden absolute left-0 top-0 right-0 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
-  >
-    <form class="max-w-6xl mx-auto px-4 flex relative">
-      <input
-        type="search"
-        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
-        placeholder="What are you searching for?"
-        name="s"
-        autofocus
-      />
-      <button
-        type="submit"
-        aria-label="submit search form"
-        class="absolute right-4 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
-      >
-        <Icon name="search" class="size-5 pointer-events-none" />
-      </button>
-    </form>
-  </search>
 </div>
-
-<script>
-  const menu = document.querySelector<HTMLDivElement>("[data-menu]");
-
-  function hide(button: HTMLButtonElement) {
-    let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
-
-    if (group) {
-      group.classList.add("opacity-0");
-      button.setAttribute("aria-expanded", "false");
-      group.setAttribute("aria-hidden", "true");
-      group.addEventListener(
-        "transitionend",
-        () => {
-          group.classList.add("hidden");
-        },
-        { once: true }
-      );
-    }
-  }
-
-  function show(button: HTMLButtonElement) {
-    let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
-
-    if (group) {
-      group.classList.remove("hidden");
-      button.setAttribute("aria-expanded", "true");
-      group.setAttribute("aria-hidden", "false");
-
-      setTimeout(() => {
-        group.classList.remove("opacity-0");
-      });
-    }
-  }
-
-  function hideActive() {
-    let active = getActive();
-
-    if (active) {
-      hide(active);
-      active.focus();
-    }
-  }
-
-  function handleToggleGroup(button: HTMLButtonElement) {
-    if (button.getAttribute("aria-expanded") === "false") {
-      hideActive();
-      show(button);
-    } else {
-      hide(button);
-    }
-  }
-
-  function getActive() {
-    return menu?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
-  }
-
-  function handleClick(event: MouseEvent) {
-    let element = event.target as HTMLElement;
-    let active = getActive();
-
-    if (element.hasAttribute("aria-controls")) {
-      handleToggleGroup(element as HTMLButtonElement);
-    }
-
-    if (!element.closest("[data-menu]") && active) {
-      hideActive();
-    }
-  }
-
-  function handleKeyDown(event: KeyboardEvent) {
-    let active = getActive();
-
-    if (event.key === "Escape" && active) {
-      hideActive();
-    }
-  }
-
-  function handleScroll() {
-    if (window.scrollY > 0) {
-      if (menu?.getAttribute("data-scrolling") !== "true") {
-        menu?.setAttribute("data-scrolling", "true");
-      }
-    } else {
-      menu?.setAttribute("data-scrolling", "false");
-    }
-
-    if (window.scrollY > 450) {
-      if (menu?.getAttribute("data-compress") !== "true") {
-        menu?.setAttribute("data-compress", "true");
-      }
-    } else {
-      menu?.setAttribute("data-compress", "false");
-    }
-  }
-
-  document.addEventListener("click", handleClick);
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("scroll", handleScroll, { passive: true });
-
-  handleScroll();
-</script>
