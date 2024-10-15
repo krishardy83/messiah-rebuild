@@ -63,7 +63,7 @@ const { transparent } = Astro.props;
   <div
     x-show="open"
     x-transition.opacity
-    style="display: none"
+    x-cloak
     class="bg-primary-800 text-white fixed inset-0 z-40 lg:hidden py-10 px-4 overflow-y-auto"
   >
     <Logo />
@@ -124,11 +124,11 @@ const { transparent } = Astro.props;
                 x-show="open"
                 x-collapse
                 x-ref="group"
+                x-cloak
                 :id="$id('group')"
                 :aria-labelledby="$id('button')"
                 class="mt-4"
                 role="region"
-                style="display: none"
               >
                 {group.children.map((child) => (
                   <ul class="ml-4 flex flex-col gap-2 mb-2">

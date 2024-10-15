@@ -1,5 +1,6 @@
 ---
 import ImageHoverLink from "../../components/image-hover-link.astro";
+import Slider from "../../components/slider.astro";
 
 const items = [
   {
@@ -114,7 +115,7 @@ const items = [
     </div>
   </div>
 
-  <div class="f-carousel mt-8 wrapper px-12" data-image-tile-slider>
+  <Slider class="mt-8 wrapper px-12">
     {
       items.map((item) => (
         <div class="f-carousel__slide px-4 md:w-1/2 lg:w-1/3">
@@ -122,23 +123,5 @@ const items = [
         </div>
       ))
     }
-  </div>
+  </Slider>
 </section>
-
-<script>
-  import { Carousel } from "@fancyapps/ui";
-
-  const container = document.querySelector<HTMLDivElement>("[data-image-tile-slider]");
-
-  new Carousel(container, {
-    infinite: true,
-    Dots: false,
-  });
-</script>
-
-<style is:global>
-  .f-carousel:is([data-image-tile-slider]) {
-    --f-button-svg-width: 100px;
-    --f-button-svg-height: 100px;
-  }
-</style>

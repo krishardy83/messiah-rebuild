@@ -1,5 +1,6 @@
 ---
 import Accordion from "../../components/accordion.astro";
+import Slider from "../../components/slider.astro";
 import Youtube from "../../components/youtube.astro";
 ---
 
@@ -77,7 +78,7 @@ import Youtube from "../../components/youtube.astro";
 
 <Youtube videoId="WvhBFxo40U4" litebox class="mb-8" />
 
-<div class="f-carousel mt-16" data-slider>
+<Slider class="mt-16 [&_.f-button]:text-primary-800 [&_.f-button_svg]:size-16">
   <div class="f-carousel__slide px-16 md:px-4 w-full text-center">
     <a href="https://www.intelligent.com/best-masters-in-digital-marketing-degree-programs/">
       <figure class="flex items-center flex-col text-center">
@@ -123,26 +124,4 @@ import Youtube from "../../components/youtube.astro";
       </figcaption>
     </figure>
   </div>
-</div>
-
-<script>
-  import { Carousel } from "@fancyapps/ui";
-
-  const container = document.querySelector<HTMLDivElement>("[data-slider]");
-
-  new Carousel(container, {
-    infinite: true,
-    Dots: false,
-    Autoplay: true,
-    transition: "slide",
-  });
-</script>
-
-<style is:global>
-  .f-carousel:is([data-slider]) {
-    --f-button-svg-width: 100px;
-    --f-button-svg-height: 100px;
-    --f-button-color: black;
-    --f-button-hover-color: black;
-  }
-</style>
+</Slider>

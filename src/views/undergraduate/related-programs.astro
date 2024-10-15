@@ -1,5 +1,6 @@
 ---
 import ProgramCard, { type Program } from "../../components/program-card.astro";
+import Slider from "../../components/slider.astro";
 
 async function getRelatedPrograms() {
   const slug = Astro.url.pathname.split("/").at(2);
@@ -51,7 +52,7 @@ const relatedPrograms = await getRelatedPrograms();
 
 <h3 class="h3">Programs related to Accounting</h3>
 
-<div class="f-carousel" data-related-programs-slider>
+<Slider>
   {
     relatedPrograms.map((relatedProgram: any) => (
       <div class="px-2 f-carousel__slide w-1/2 lg:w-1/4">
@@ -64,16 +65,4 @@ const relatedPrograms = await getRelatedPrograms();
       </div>
     ))
   }
-</div>
-
-<script>
-  import { Carousel } from "@fancyapps/ui";
-
-  const container = document.querySelector<HTMLDivElement>("[data-related-programs-slider]");
-
-  new Carousel(container, {
-    infinite: true,
-    Dots: true,
-    Navigation: false,
-  });
-</script>
+</Slider>

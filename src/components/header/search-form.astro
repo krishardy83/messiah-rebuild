@@ -56,10 +56,10 @@ const { transparent, class: className, ...props } = Astro.props;
     x-show="open"
     x-ref="form"
     x-transition.opacity
+    x-cloak
     @click.outside="close($refs.button)"
     :id="$id('form')"
     :aria-labelledby="$id('button')"
-    style="display: none"
     class="absolute left-0 top-0 right-0 bg-primary-800 text-white duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
   >
     <form class="max-w-6xl mx-auto px-4 flex relative">

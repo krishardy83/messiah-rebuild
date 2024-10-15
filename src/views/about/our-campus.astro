@@ -23,9 +23,9 @@ const slides = [
 ];
 ---
 
-<Slider class="h-[50vw] max-h-[800px] scroll-m-24" id="our-campus" slides={slides}>
+<section class="lg:h-[50vw] lg:max-h-[800px] scroll-m-24 relative" id="our-campus">
   <div
-    class="bg-primary-800 lg:bg-primary-800/80 lg:absolute w-full lg:max-w-2xl bottom-8 left-1/2 text-center lg:-translate-x-1/2 p-8"
+    class="bg-primary-800 lg:bg-primary-800/80 z-10 lg:absolute w-full lg:max-w-2xl bottom-8 left-1/2 text-center lg:-translate-x-1/2 p-8"
   >
     <h3 class="text-white h2">Our beautiful campus</h3>
     <p class="text-white mb-4 paragraph">
@@ -37,4 +37,14 @@ const slides = [
       class="btn-quaternary">View virtual tour</a
     >
   </div>
-</Slider>
+
+  <Slider class="[&_.f-button]:text-white [&_.f-button]:hover:text-white [&_.f-button_svg]:size-16">
+    {
+      slides.map((slide) => (
+        <figure class="f-carousel__slide lg:h-[50vw] lg:max-h-[800px]">
+          <img src={slide.src} class="object-cover w-full" />
+        </figure>
+      ))
+    }
+  </Slider>
+</section>

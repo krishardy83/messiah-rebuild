@@ -2,43 +2,19 @@
 import type { HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
 
-interface Props extends HTMLAttributes<"div"> {
-  slides: {
-    src: string;
-    alt?: string;
-  }[];
-}
+interface Props extends HTMLAttributes<"div"> {}
 
-const { slides, class: className, ...props } = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<div class="relative" data-analytics="slider">
-  <div class={cn("f-carousel", className)} {...props} data-slider>
-    {
-      slides.map((slide) => (
-        <figure class="f-carousel__slide">
-          <img src={slide.src} alt={slide.alt} class="w-full h-full object-cover" />
-        </figure>
-      ))
-    }
-  </div>
-
+<div
+  class={cn("f-carousel", className)}
+  x-id="['slider']"
+  :id="$id('slider')"
+  x-init="$nextTick(() => {
+    new Carousel(document.getElementById($id('slider')), { infinite: true, Dots: false, transition: 'slide' })
+  })"
+  {...props}
+>
   <slot />
 </div>
-
-<script>
-  import { Carousel } from "@fancyapps/ui";
-
-  const container = document.querySelector<HTMLDivElement>("[data-slider]");
-
-  new Carousel(container, { infinite: true, Dots: false });
-</script>
-
-<style is:global>
-  .f-carousel:is([data-slider]) {
-    --f-button-color: white;
-    --f-button-svg-width: 100px;
-    --f-button-svg-height: 100px;
-    --f-button-hover-color: white;
-  }
-</style>

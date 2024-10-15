@@ -1,4 +1,6 @@
 ---
+import Slider from "../../components/slider.astro";
+
 const items = [
   {
     question:
@@ -44,20 +46,22 @@ const items = [
   <div class="wrapper">
     <h2 class="h2 text-center">Frequently asked questions—you asked, we answered!</h2>
 
-    <dl class="f-carousel mt-12" data-faq-slider>
-      {
-        items.map((item) => (
-          <div class="f-carousel__slide px-12 md:px-24">
-            <dt class="font-title font-bold text-2xl border-b border-primary-400 pb-2 mb-2 pl-8 relative before:content-['Q:'] before:absolute before:top-0 before:left-0 before:font-bold before:font-title before:text-2xl">
-              {item.question}
-            </dt>
-            <dd
-              class="pl-8 relative before:content-['A:'] before:absolute before:top-0 before:left-0 before:font-bold before:font-title before:text-2xl"
-              set:html={item.answer}
-            />
-          </div>
-        ))
-      }
+    <dl>
+      <Slider class="mt-12 [&_.f-button]:text-primary-800 [&_.f-button_svg]:size-16">
+        {
+          items.map((item) => (
+            <div class="f-carousel__slide px-12 md:px-24">
+              <dt class="font-title font-bold text-2xl border-b border-primary-400 pb-2 mb-2 pl-8 relative before:content-['Q:'] before:absolute before:top-0 before:left-0 before:font-bold before:font-title before:text-2xl">
+                {item.question}
+              </dt>
+              <dd
+                class="pl-8 relative before:content-['A:'] before:absolute before:top-0 before:left-0 before:font-bold before:font-title before:text-2xl"
+                set:html={item.answer}
+              />
+            </div>
+          ))
+        }
+      </Slider>
     </dl>
 
     <div class="flex gap-4 flex-wrap justify-center mt-8">
@@ -65,23 +69,3 @@ const items = [
     </div>
   </div>
 </section>
-
-<script>
-  import { Carousel } from "@fancyapps/ui";
-
-  const container = document.querySelector<HTMLDivElement>("[data-faq-slider]");
-
-  new Carousel(container, {
-    infinite: true,
-    Dots: false,
-  });
-</script>
-
-<style is:global>
-  .f-carousel:is([data-faq-slider]) {
-    --f-button-svg-width: 100px;
-    --f-button-svg-height: 100px;
-    --f-button-color: #273d5e;
-    --f-button-hover-color: #273d5e;
-  }
-</style>

@@ -1,4 +1,6 @@
 ---
+import Slider from "../../components/slider.astro";
+
 const items = [
   {
     content:
@@ -22,7 +24,9 @@ const items = [
   <div class="max-w-6xl mx-auto px-4">
     <h2 class="h2">Student quotes</h2>
 
-    <div class="f-carousel mt-16" data-quotes-slider>
+    <Slider
+      class="mt-16 [&_.f-button]:text-white [&_.f-button]:hover:text-white [&_.f-button_svg]:size-16"
+    >
       {
         items.map((item) => (
           <div class="f-carousel__slide px-16 md:px-4 w-full text-center">
@@ -33,27 +37,6 @@ const items = [
           </div>
         ))
       }
-    </div>
+    </Slider>
   </div>
 </section>
-
-<script>
-  import { Carousel } from "@fancyapps/ui";
-
-  const container = document.querySelector<HTMLDivElement>("[data-quotes-slider]");
-
-  new Carousel(container, {
-    infinite: true,
-    Dots: false,
-    transition: "slide",
-  });
-</script>
-
-<style is:global>
-  .f-carousel:is([data-quotes-slider]) {
-    --f-button-svg-width: 100px;
-    --f-button-svg-height: 100px;
-    --f-button-color: #fff;
-    --f-button-hover-color: #fff;
-  }
-</style>
