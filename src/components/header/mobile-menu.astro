@@ -1,5 +1,4 @@
 ---
-import { slugify } from "../../lib/utils";
 import Icon from "../icon.astro";
 import Logo from "../logo.astro";
 import { bottomGroups, topGroups } from "./navigation-data";
@@ -10,27 +9,6 @@ interface Props {
 
 const { transparent } = Astro.props;
 ---
-
-<button
-  type="button"
-  aria-label="open page menu"
-  data-mobile-menu-trigger
-  aria-expanded="false"
-  class="group/trigger h-12 w-12 text-white bg-primary-800 lg:hidden fixed z-50 top-12 right-0 aria-expanded:bg-white aria-expanded:text-primary-800 transition-colors"
->
-  <span
-    aria-hidden="true"
-    class="pointer-events-none absolute left-2 top-4 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:top-6 group-aria-expanded/trigger:rotate-[135deg]"
-  ></span>
-  <span
-    aria-hidden="true"
-    class="pointer-events-none absolute left-2 top-6 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:-left-16 group-aria-expanded/trigger:opacity-0"
-  ></span>
-  <span
-    aria-hidden="true"
-    class="pointer-events-none absolute left-2 top-8 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:top-6 group-aria-expanded/trigger:-rotate-[135deg]"
-  ></span>
-</button>
 
 <a
   href="/"
@@ -44,236 +22,181 @@ const { transparent } = Astro.props;
 </a>
 
 <div
-  class="bg-primary-800 text-white fixed inset-0 z-40 hidden lg:hidden opacity-0 py-10 px-4 transition-opacity duration-300 overflow-y-auto"
-  data-mobile-menu-content
+  x-data="{
+    open: false,
+
+    toggle() {
+      this.open = this.open ? this.close() : true;
+    },
+
+    close(focusAfter) {
+      this.open = false;
+
+      focusAfter && focusAfter.focus();
+    }
+  }"
+  @keydown.escape.prevent.stop="close($refs.button)"
+  x-trap="open"
 >
-  <a href="/" aria-label="home page">
+  <button
+    type="button"
+    @click="toggle()"
+    x-ref="button"
+    :aria-label="open ? 'close menu' : 'open menu'"
+    :aria-expanded="open"
+    class="group/trigger h-12 w-12 text-white bg-primary-800 lg:hidden fixed z-50 top-12 right-0 aria-expanded:bg-white aria-expanded:text-primary-800 transition-colors"
+  >
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute left-2 top-4 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:top-6 group-aria-expanded/trigger:rotate-[135deg]"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute left-2 top-6 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:-left-16 group-aria-expanded/trigger:opacity-0"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute left-2 top-8 block h-0.5 right-2 bg-current transition-all ease-in-out group-aria-expanded/trigger:top-6 group-aria-expanded/trigger:-rotate-[135deg]"
+    ></span>
+  </button>
+
+  <div
+    x-show="open"
+    x-transition.opacity
+    style="display: none"
+    class="bg-primary-800 text-white fixed inset-0 z-40 lg:hidden py-10 px-4 overflow-y-auto"
+  >
     <Logo />
-  </a>
 
-  <search class="my-4">
-    <form class="relative">
-      <input
-        type="search"
-        class="border border-white w-full px-4 py-2 bg-transparent placeholder:text-white"
-        placeholder="What are you searching for?"
-        name="s"
-      />
-      <button
-        type="submit"
-        aria-label="submit search form"
-        class="absolute right-0 top-0 text-white transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
-      >
-        <Icon name="search" class="size-5 pointer-events-none" />
-      </button>
-    </form>
-  </search>
+    <search class="my-4">
+      <form class="relative">
+        <input
+          type="search"
+          class="border border-white w-full px-4 py-2 bg-transparent placeholder:text-white"
+          placeholder="What are you searching for?"
+          name="s"
+        />
+        <button
+          type="submit"
+          aria-label="submit search form"
+          class="absolute right-0 top-0 text-white transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+        >
+          <Icon name="search" class="size-5 pointer-events-none" />
+        </button>
+      </form>
+    </search>
 
-  <nav data-analytics="navigation">
-    <ul>
-      {
-        bottomGroups.map((group) => (
-          <li>
-            <button
-              type="button"
-              aria-expanded="false"
-              aria-haspopup="true"
-              data-mobile-group-trigger
-              id={`mobile-group-button-${slugify(group.title)}`}
-              aria-controls={`mobile-group-${slugify(group.title)}`}
-              class="text-xl group py-4 flex items-center w-full border-b border-white/50 justify-between gap-x-2 font-bold hover:text-tertiary-400 transition-colors"
+    <nav data-analytics="navigation">
+      <ul>
+        {
+          bottomGroups.map((group) => (
+            <li
+              x-data="{
+                open: false,
+
+                toggle() {
+                  this.open = this.open ? this.close() : true;
+                },
+
+                close(focusAfter) {
+                  this.open = false;
+
+                  focusAfter && focusAfter.focus();
+                }
+              }"
+              x-id="['group', 'button']"
             >
-              {group.title}
+              <button
+                type="button"
+                x-ref="button"
+                @click="toggle()"
+                :id="$id('button')"
+                :aria-expanded="open"
+                :aria-controls="$id('group')"
+                class="text-xl group py-4 flex items-center w-full border-b border-white/50 justify-between gap-x-2 font-bold hover:text-tertiary-400 transition-colors"
+              >
+                {group.title}
 
-              <span class="pointer-events-none size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
-            </button>
+                <span class="pointer-events-none size-6 rounded-full bg-white block relative before:absolute before:h-3 before:w-0.5 before:bg-primary-800 after:absolute after:w-3 after:h-0.5 after:bg-primary-800 after:top-1/2 after:left-1.5 before:left-1/2 before:top-1.5 before:-translate-x-1/2 after:-translate-y-1/2 group-aria-expanded:rotate-90 transition-transform duration-300 after:duration-300 group-aria-expanded:after:w-0 after:transition-all" />
+              </button>
 
-            <div
-              id={`mobile-group-${slugify(group.title)}`}
-              class="mt-4 overflow-hidden h-[--height] transition-all duration-300"
-              role="region"
-              aria-labelledby={`mobile-group-button-${slugify(group.title)}`}
-              hidden
-            >
-              {group.children.map((child) => (
-                <ul class="ml-4 flex flex-col gap-2 mb-2">
-                  {child.map((link) => (
+              <div
+                x-show="open"
+                x-collapse
+                x-ref="group"
+                :id="$id('group')"
+                :aria-labelledby="$id('button')"
+                class="mt-4"
+                role="region"
+                style="display: none"
+              >
+                {group.children.map((child) => (
+                  <ul class="ml-4 flex flex-col gap-2 mb-2">
+                    {child.map((link) => (
+                      <li>
+                        <a
+                          href={link.href}
+                          class:list={[
+                            "link",
+                            {
+                              "font-title uppercase font-bold text-xl block mt-4": link.heading,
+                            },
+                          ]}
+                        >
+                          {link.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="flex gap-4 flex-col sm:flex-row mt-4">
+        {
+          topGroups.map((group) => (
+            <li class="border border-tertiary-300 p-4 sm:w-1/2">
+              <span class="font-title uppercase font-bold text-xl text-tertiary-300 mb-2 block">
+                {group.title}
+              </span>
+              <ul class="flex flex-col gap-2 mb-2">
+                {group.children.map((link) => {
+                  if (link.type === "separator") {
+                    return null;
+                  }
+
+                  return (
                     <li>
-                      <a
-                        href={link.href}
-                        class:list={[
-                          "link",
-                          {
-                            "font-title uppercase font-bold text-xl block mt-4": link.heading,
-                          },
-                        ]}
-                      >
+                      <a href={link.href} class="link">
                         {link.title}
                       </a>
                     </li>
-                  ))}
-                </ul>
-              ))}
-            </div>
-          </li>
-        ))
-      }
-    </ul>
-    <ul class="flex gap-4 flex-col sm:flex-row mt-4">
-      {
-        topGroups.map((group) => (
-          <li class="border border-tertiary-300 p-4 sm:w-1/2">
-            <span class="font-title uppercase font-bold text-xl text-tertiary-300 mb-2 block">
-              {group.title}
-            </span>
-            <ul class="flex flex-col gap-2 mb-2">
-              {group.children.map((link) => {
-                if (link.type === "separator") {
-                  return null;
-                }
+                  );
+                })}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
-                return (
-                  <li>
-                    <a href={link.href} class="link">
-                      {link.title}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </li>
-        ))
-      }
+    <ul class="grid grid-cols-2 gap-4 mt-4">
+      <li>
+        <a href="https://www.messiah.edu/applytoday" class="btn-quaternary w-full h-full">Apply</a>
+      </li>
+      <li>
+        <a href="https://www.messiah.edu/visit" class="btn-quaternary w-full h-full">Visit</a>
+      </li>
+      <li>
+        <a href="https://www.messiah.edu/request" class="btn-quaternary w-full h-full"
+          >Request Information</a
+        >
+      </li>
+      <li>
+        <a href="https://www.messiah.edu/give" class="btn-quaternary w-full h-full">Give</a>
+      </li>
     </ul>
-  </nav>
-
-  <ul class="grid grid-cols-2 gap-4 mt-4">
-    <li>
-      <a href="https://www.messiah.edu/applytoday" class="btn-quaternary w-full h-full">Apply</a>
-    </li>
-    <li>
-      <a href="https://www.messiah.edu/visit" class="btn-quaternary w-full h-full">Visit</a>
-    </li>
-    <li>
-      <a href="https://www.messiah.edu/request" class="btn-quaternary w-full h-full"
-        >Request Information</a
-      >
-    </li>
-    <li>
-      <a href="https://www.messiah.edu/give" class="btn-quaternary w-full h-full">Give</a>
-    </li>
-  </ul>
+  </div>
 </div>
-
-<script>
-  let content = document.querySelector<HTMLDivElement>("[data-mobile-menu-content]")!;
-  let trigger = document.querySelector<HTMLDivElement>("[data-mobile-menu-trigger]")!;
-
-  let open = false;
-  let previouslySelected: HTMLElement | null = null;
-
-  function closeMenu() {
-    trigger.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("overflow-hidden");
-    content.classList.add("opacity-0");
-
-    content.addEventListener(
-      "transitionend",
-      () => {
-        content.classList.add("hidden");
-      },
-      { once: true }
-    );
-
-    previouslySelected?.focus();
-
-    open = false;
-  }
-
-  function openMenu() {
-    previouslySelected = document.activeElement as HTMLElement;
-
-    trigger.setAttribute("aria-expanded", "true");
-    document.body.classList.add("overflow-hidden");
-    content.classList.remove("hidden");
-
-    setTimeout(() => {
-      content.classList.remove("opacity-0");
-    });
-
-    open = true;
-  }
-
-  function handleToggleGroup(trigger: HTMLElement) {
-    let group = content.querySelector<HTMLDivElement>(`#${trigger.getAttribute("aria-controls")}`)!;
-
-    if (trigger.getAttribute("aria-expanded") === "true") {
-      group.style.setProperty("--height", group.getAttribute("data-collapsed-height"));
-
-      group.addEventListener(
-        "transitionend",
-        () => {
-          group.removeAttribute("data-collapsed-height");
-          group.removeAttribute("style");
-          group.setAttribute("hidden", "true");
-        },
-        { once: true }
-      );
-
-      trigger.setAttribute("aria-expanded", "false");
-    } else {
-      group.setAttribute("data-collapsed-height", group.scrollHeight + "px");
-      group.style.setProperty("--height", group.scrollHeight + "px");
-
-      requestAnimationFrame(() => {
-        group.style.setProperty("--height", group.scrollHeight + "px");
-      });
-
-      group.removeAttribute("hidden");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-  }
-
-  function handleClick(event: MouseEvent) {
-    let target = event.target as HTMLElement;
-
-    if (target.hasAttribute("data-mobile-menu-trigger")) {
-      if (open) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    }
-
-    if (target.hasAttribute("data-mobile-group-trigger")) {
-      handleToggleGroup(target);
-    }
-  }
-
-  function handleKeyDown(event: KeyboardEvent) {
-    if (event.key === "Tab") {
-      const focusable = content.querySelectorAll<HTMLElement>(
-        'button, input, [role="region"]:not([hidden]) a'
-      )!;
-
-      if (event.shiftKey) {
-        if (document.activeElement === trigger) {
-          event.preventDefault();
-          focusable[focusable.length - 1]?.focus();
-        }
-      } else {
-        if (document.activeElement === focusable[focusable.length - 1]) {
-          event.preventDefault();
-          trigger.focus();
-        }
-      }
-    }
-
-    if (event.key === "Escape" && open) {
-      closeMenu();
-    }
-  }
-
-  document.addEventListener("click", handleClick);
-  document.addEventListener("keydown", handleKeyDown);
-</script>
