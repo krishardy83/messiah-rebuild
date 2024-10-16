@@ -11,8 +11,12 @@ const { title, description, class: className, ...props } = Astro.props;
 ---
 
 <section class={cn("wrapper pt-12 md:pt-24 relative", className)} {...props}>
-  <h2 class="h3 text-primary-800 md:w-2/3">{title}</h2>
-  <p class="paragraph md:w-1/2 lg:w-2/3 text-tertiary-500">{description}</p>
+  <h2 class="mb-4 font-title text-3xl lg:text-4xl text-primary-800 md:w-2/3">
+    {title}
+  </h2>
+  <p class="font-title leading-tight text-xl md:text-2xl md:w-1/2 lg:w-2/3 text-tertiary-500">
+    {description}
+  </p>
 
   <slot />
 </section>
