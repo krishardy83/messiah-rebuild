@@ -87,7 +87,7 @@ import Icon from "../../components/icon.astro";
 
 <script>
   import Alpine from "alpinejs";
-  import { isInViewport } from "../../lib/utils";
+  // import { isInViewport } from "../../lib/utils";
 
   document.addEventListener("alpine:init", () => {
     Alpine.data("tabs", () => ({
@@ -165,9 +165,9 @@ import Icon from "../../components/icon.astro";
 
         const list = document.getElementById("aid-entries");
 
-        if (list && !isInViewport(list)) {
-          list.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        // if (list && !isInViewport(list)) {
+        list?.scrollIntoView({ behavior: "smooth", block: "start" });
+        // }
       },
     }));
   });

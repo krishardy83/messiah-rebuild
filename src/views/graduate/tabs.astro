@@ -15,38 +15,84 @@ interface Props extends HTMLAttributes<"div"> {
 const { tabs, class: className, ...props } = Astro.props;
 ---
 
-<div class={className} x-data="tabs" {...props}>
-  <div
+<div
+  class={className}
+  x-data="{
+    selected: null,
+
+    init() {
+      this.$nextTick(() => this.select(this.$id('tab', 1)));
+    },
+
+    select(id) {
+      this.selected = id;
+
+      if (!this.isInViewport(this.$refs.panels) && this.isMobileView()) {
+        this.$refs.panels.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    },
+
+    isInViewport(el) {
+      const rect = el.getBoundingClientRect();
+
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    },
+
+    isMobileView() {
+      return window.matchMedia('(max-width: 768px)').matches;
+    },
+
+    isSelected(id) {
+      return this.selected === id;
+    },
+
+    whichChild(el, parent) {
+      return Array.from(parent.children).indexOf(el) + 1;
+    }
+  }"
+  x-id="['tab']"
+  {...props}
+>
+  <ul
+    x-ref="tablist"
+    @keydown.right.prevent.stop="$focus.wrap().next()"
+    @keydown.left.prevent.stop="$focus.wrap().prev()"
+    @keydown.home.prevent.stop="$focus.first()"
+    @keydown.end.prevent.stop="$focus.last()"
     role="tablist"
     class="wrapper border-t border-gray-200 mt-12 items-center flex flex-col md:flex-row gap-x-4 justify-between flex-wrap"
   >
   {tabs.map((tab) => (
-    <button
-      type="button"
-      role="tab"
-      class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
-      id={`tab-${tab.id}`}
-      aria-controls={`tabpanel-${tab.id}`}
-      @click={`setActiveTab('${tab.id}')`}
-      :aria-selected={`active === '${tab.id}'`}
-      :tabindex={`active === '${tab.id}' ? undefined : '-1'`}
-    >
-      {tab.label}
-    </button>
+    <li>
+      <button
+        @click="select($el.id)"
+        @focus="select($el.id)"
+        :aria-selected="isSelected($el.id)"
+        :tabindex="isSelected($el.id) ? 0 : -1"
+        :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+        type="button"
+        role="tab"
+        class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
+      >
+        {tab.label}
+      </button>
+    </li>
   ))}
-  </div>
+</ul>
 
-  <div class="bg-[linear-gradient(to_bottom,rgba(0,0,0,.075),white_100px)]" id="tab-content">
+  <div class="bg-[linear-gradient(to_bottom,rgba(0,0,0,.075),white_100px)]">
     <div class="wrapper flex flex-col md:flex-row">
-      <div class="flex-1 py-8">
+      <div class="flex-1 py-8" x-ref="panels">
         {tabs.map((tab) => (
           <div
+            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
             role="tabpanel"
-            tabindex="0"
-            id={`tabpanel-${tab.id}`}
-            aria-labelledby={`tab-${tab.id}`}
-            x-cloak
-            x-show={`active === '${tab.id}'`}
           >
             <tab.Component />
           </div>
@@ -90,24 +136,3 @@ const { tabs, class: className, ...props } = Astro.props;
     </div>
   </div>
 </div>
-
-<script>
-  import Alpine from "alpinejs";
-  import { isInViewport } from "../../lib/utils";
-
-  document.addEventListener("alpine:init", () => {
-    Alpine.data("tabs", () => ({
-      active: 'overview',
-
-      setActiveTab(tab: string) {
-        this.active = tab;
-
-        const content = document.getElementById("tab-content");
-
-        if (content && !isInViewport(content) && window.matchMedia("(max-width: 768px)").matches) {
-          content.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      },
-    }));
-  });
-</script>
