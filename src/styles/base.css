@@ -20,7 +20,7 @@
   }
 
   .h3 {
-    @apply mb-4 font-title text-2xl md:text-3xl lg:text-4xl;
+    @apply mb-4 font-title text-3xl lg:text-4xl;
   }
 
   .h4 {
@@ -58,7 +58,7 @@
   }
 
   .rich-text {
-    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
+    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-h4:text-xl prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
   }
 
   .wrapper {
