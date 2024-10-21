@@ -30,8 +30,10 @@ const { title, description, analyticsKey, subtitle, badge, programs, image } = A
       <div class="lg:w-3/4 relative z-10 md:mb-20">
         <h1
           class={cn(
-            "font-title font-bold text-xl sm:text-2xl md:text-3xl lg:text-5xl text-white uppercase",
-            { "md:mb-4": !subtitle }
+            "font-title font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white uppercase",
+            {
+              "md:mb-4": !subtitle,
+            }
           )}
         >
           {title}
@@ -46,7 +48,7 @@ const { title, description, analyticsKey, subtitle, badge, programs, image } = A
 
         {subtitle ? <p class="mb-4 text-white text-lg">{subtitle}</p> : null}
 
-        <ProgramList programs={programs} showText />
+        <ProgramList programs={programs} showText class="mt-2 md:mt-0" />
       </div>
     </div>
   </header>
