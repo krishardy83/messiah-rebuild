@@ -51,22 +51,50 @@ const options = [
 
     <div
       class="relative"
-      x-data="{ visible: false }"
-      @click.outside="visible = false"
-      @keyup.window.escape="visible = false"
+      x-data="{
+        open: false,
+
+        toggle() {
+          if (this.open) {
+            return this.close()
+          }
+
+          this.$refs.button.focus()
+
+          this.open = true
+        },
+        close(focusAfter) {
+          if (! this.open) return
+
+          this.open = false
+
+          focusAfter && focusAfter.focus()
+        }
+      }"
+      @keydown.escape.prevent.stop="close($refs.button)"
+      @focusin.window="! $refs.panel.contains($event.target) && close()"
+      x-id="['dropdown-button']"
     >
       <button
+        x-ref="button"
         type="button"
         class="btn-quaternary"
         aria-haspopup="listbox"
-        :aria-expanded="visible"
-        @click="visible = !visible"
-        >Information for
+        :aria-expanded="open"
+        :aria-controls="$id('dropdown-button')"
+        @click="toggle()"
+      >
+        Information for
         <Icon name="bars" />
       </button>
 
       <ul
-        :hidden="!visible"
+        x-ref="panel"
+        x-show="open"
+        x-cloak
+        x-transition.origin.top.left
+        @click.outside="close($refs.button)"
+        :id="$id('dropdown-button')"
         role="listbox"
         class="absolute top-full bg-gray-100 text-primary-800 font-title font-bold w-full text-lg"
       >

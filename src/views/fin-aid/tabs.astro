@@ -3,7 +3,95 @@ import Icon from "../../components/icon.astro";
 ---
 
 <div
-  x-data="tabs"
+  x-data="{
+    entries: [],
+    isDialogVisible: false,
+    selected: 'Scholarships',
+    activeEntry: null,
+
+    filters: [
+      {
+        id: 'Scholarships',
+        label: 'Scholarships',
+        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/graduation-cap-new.svg',
+      },
+      {
+        id: 'Grants',
+        label: 'Grants',
+        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/grants-new.svg',
+        description:
+          'The grants listed below are available to U.S. citizens and permanent residents only.',
+      },
+      {
+        id: 'Federal Loans',
+        label: 'Federal Loans',
+        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/fel-loan-new.svg',
+      },
+      {
+        id: 'Other Assistance',
+        label: 'Other Assistance',
+        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/hand-shake.svg',
+      },
+      {
+        id: null,
+        label: 'All Aid',
+        description: 'The grants listed below are available to U.S. citizens and permanent residents only.',
+      }
+    ],
+
+    init() {
+      fetch('https://www.messiah.edu/site/a/cache/fin-aid.json')
+        .then((response) => response.json())
+        .then((data) => {
+          this.entries = data.items;
+        });
+    },
+
+    entriesWithIcon() {
+      return this.entries.map((entry) => {
+        const filter = this.filters.find((filter) => filter.id === entry.category_name);
+
+        return { ...entry, icon: filter?.icon || null };
+      });
+    },
+
+    filteredEntries() {
+      if (!this.selected) {
+        return this.entriesWithIcon();
+      }
+
+      return this.entriesWithIcon().filter((entry) => entry.category_name === this.selected);
+    },
+
+    description() {
+      const active = this.filters.find((filter) => filter.id === this.selected);
+
+      return active?.description;
+    },
+
+    isInViewport(el) {
+      const rect = el.getBoundingClientRect();
+
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    },
+
+    isMobileView() {
+      return window.matchMedia('(max-width: 768px)').matches;
+    },
+
+    select(filterId) {
+      this.selected = filterId;
+
+      if (!this.isInViewport(this.$refs.panels) && this.isMobileView()) {
+        this.$refs.panels.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }"
   class="wrapper"
   x-effect="document.body.classList.toggle('overflow-hidden', isDialogVisible)"
 >
@@ -12,10 +100,10 @@ import Icon from "../../components/icon.astro";
       <button
         type="button"
         role="switch"
-        :aria-selected="checked === filter.id"
+        :aria-selected="selected === filter.id"
         class="text-primary-800 font-sans flex p-4 items-center text-lg md:text-xl gap-4 border-b-4 whitespace-nowrap flex-1 justify-center"
-        @click="setActiveTab(filter.id)"
-        :class="checked === filter.id ? 'border-tertiary-400' : 'border-white'"
+        @click="select(filter.id)"
+        :class="selected === filter.id ? 'border-tertiary-400' : 'border-white'"
       >
         <template x-if="filter.icon">
           <img :src="filter.icon" alt="" aria-hidden="true" width="32" height="32" />
@@ -25,32 +113,42 @@ import Icon from "../../components/icon.astro";
     </template>
   </div>
 
-  <template x-if="description">
-    <p class="text-center mt-8" x-text="description"></p>
-  </template>
-
-  <ul class="mt-8 scroll-m-16" id="aid-entries">
-    <template x-for="entry in filteredEntries">
-      <li class="border-b border-gray-300 last-of-type:border-b-0">
-        <button
-          type="button"
-          @click="isDialogVisible = true; activeEntry = entry"
-          class="flex items-center text-left gap-4 p-4 transition-colors hover:bg-gray-100 w-full"
-        >
-          <img :src="entry.icon" alt="" aria-hidden="true" width="32" height="32" />
-          <span x-text="entry.entry_title"></span>
-          <Icon name="chevron-right" class="ml-auto" />
-        </button>
-      </li>
+  <div x-ref="panels">
+    <template x-if="description">
+      <p class="text-center mt-8" x-text="description"></p>
     </template>
-  </ul>
+
+    <ul class="mt-8 scroll-m-16" id="aid-entries">
+      <template x-for="entry in filteredEntries">
+        <li class="border-b border-gray-300 last-of-type:border-b-0">
+          <button
+            type="button"
+            @click="isDialogVisible = true; activeEntry = entry"
+            class="flex items-center text-left gap-4 p-4 transition-colors hover:bg-gray-100 w-full"
+          >
+            <img :src="entry.icon" alt="" aria-hidden="true" width="32" height="32" />
+            <span x-text="entry.entry_title"></span>
+            <Icon name="chevron-right" class="ml-auto" />
+          </button>
+        </li>
+      </template>
+    </ul>
+  </div>
 
   <dialog
     :open="isDialogVisible"
-    @keyup.window.escape="isDialogVisible = false"
-    class="hidden open:flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
+    x-show="isDialogVisible"
+    x-cloak
+    x-id="['modal-title']"
+    x-transition.opacity
+    @keyup.escape.prevent.stop="isDialogVisible = false"
+    :aria-labelledby="$id('modal-title')"
+    class="flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
   >
-    <div class="max-w-3xl w-full bg-white py-20 relative overflow-y-auto">
+    <div
+      class="max-w-3xl w-full bg-white py-20 relative overflow-y-auto"
+      x-trap.noscroll.inert="isDialogVisible"
+    >
       <button
         type="button"
         class="absolute left-4 lg:left-auto lg:right-4 top-5 hover:text-tertiary-400 transition-colors"
@@ -65,6 +163,7 @@ import Icon from "../../components/icon.astro";
           <header class="flex gap-4 items-center mb-8">
             <img :src="activeEntry.icon" alt="" aria-hidden="true" width="32" height="32" />
             <h3
+              :id="$id('modal-title')"
               x-text="activeEntry.entry_title"
               class="font-title text-2xl md:text-3xl lg:text-4xl text-primary-800"
             >
@@ -84,91 +183,3 @@ import Icon from "../../components/icon.astro";
     </div>
   </dialog>
 </div>
-
-<script>
-  import Alpine from "alpinejs";
-  // import { isInViewport } from "../../lib/utils";
-
-  document.addEventListener("alpine:init", () => {
-    Alpine.data("tabs", () => ({
-      entries: [] as { entry_name: string; category_name: string }[],
-
-      isDialogVisible: false,
-
-      activeEntry: null,
-
-      filters: [
-        {
-          id: "Scholarships",
-          label: "Scholarships",
-          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/graduation-cap-new.svg",
-        },
-        {
-          id: "Grants",
-          label: "Grants",
-          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/grants-new.svg",
-          description:
-            "The grants listed below are available to U.S. citizens and permanent residents only.",
-        },
-        {
-          id: "Federal Loans",
-          label: "Federal Loans",
-          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/fel-loan-new.svg",
-        },
-        {
-          id: "Other Assistance",
-          label: "Other Assistance",
-          icon: "https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/hand-shake.svg",
-        },
-        {
-          id: null,
-          label: "All Aid",
-          description:
-            "The grants listed below are available to U.S. citizens and permanent residents only.",
-        },
-      ],
-
-      checked: "Scholarships",
-
-      init() {
-        fetch("https://www.messiah.edu/site/a/cache/fin-aid.json")
-          .then((response) => response.json())
-          .then((data) => {
-            this.entries = data.items;
-          });
-      },
-
-      entriesWithIcon() {
-        return this.entries.map((entry) => {
-          const filter = this.filters.find((filter) => filter.id === entry.category_name);
-
-          return { ...entry, icon: filter?.icon || null };
-        });
-      },
-
-      filteredEntries() {
-        if (!this.checked) {
-          return this.entriesWithIcon();
-        }
-
-        return this.entriesWithIcon().filter((entry) => entry.category_name === this.checked);
-      },
-
-      description() {
-        const active = this.filters.find((filter) => filter.id === this.checked);
-
-        return active?.description;
-      },
-
-      setActiveTab(filterId: string) {
-        this.checked = filterId;
-
-        const list = document.getElementById("aid-entries");
-
-        // if (list && !isInViewport(list)) {
-        list?.scrollIntoView({ behavior: "smooth", block: "start" });
-        // }
-      },
-    }));
-  });
-</script>

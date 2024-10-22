@@ -2,7 +2,30 @@
 import Icon from "../../components/icon.astro";
 ---
 
-<section class="max-w-6xl mx-auto px-4 py-24" x-data="dates">
+<section
+  class="max-w-6xl mx-auto px-4 py-24"
+  x-data="{
+    dates: [],
+    
+    init() {
+      fetch(
+        'https://mcadmissions.messiah.edu/manage/query/run?id=0434b8c1-17f7-46f3-b3de-0eadbed101a6&cmd=service&output=json&h=df7ae7ad-1295-43c4-8184-e338f28d06d4'
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.dates = data.row;
+        });
+    },
+
+    getTitle(start) {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      }).format(new Date(start));
+    }
+  }"
+>
   <h2 class="h2 text-primary-800">Join us for an upcoming Open House</h2>
 
   <ol class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
@@ -24,31 +47,3 @@ import Icon from "../../components/icon.astro";
     </template>
   </ol>
 </section>
-
-<script>
-  import Alpine from "alpinejs";
-
-  document.addEventListener("alpine:init", () => {
-    Alpine.data("dates", () => ({
-      dates: [],
-
-      init() {
-        fetch(
-          "https://mcadmissions.messiah.edu/manage/query/run?id=0434b8c1-17f7-46f3-b3de-0eadbed101a6&cmd=service&output=json&h=df7ae7ad-1295-43c4-8184-e338f28d06d4"
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            this.dates = data.row;
-          });
-      },
-
-      getTitle(start: string) {
-        return new Intl.DateTimeFormat("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        }).format(new Date(start));
-      },
-    }));
-  });
-</script>

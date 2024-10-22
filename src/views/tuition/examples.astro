@@ -76,131 +76,153 @@ const people = [
 <section class="max-w-6xl mx-auto px-4 py-16 md:py-24">
   <h2 class="h2 text-primary-800 text-center">Examples of Financial Aid</h2>
 
-  <div role="tablist" class="flex gap-2 my-8 flex-col md:flex-row">
-    {
-      people.map((person, index) => (
-        <button
-          type="button"
-          role="tab"
-          class="font-title uppercase font-bold text-2xl flex-1 text-gray-400 py-4 md:py-8 border-b-4 border-gray-300 aria-selected:border-primary-800 aria-selected:text-primary-800"
-          aria-selected={index === 0}
-          id={`tab-${person.name.toLowerCase()}`}
-          aria-controls={`tabpanel-${person.name.toLowerCase()}`}
-        >
-          Meet {person.name}
-        </button>
-      ))
-    }
-  </div>
+  <div
+    x-data="{
+      selected: null,
 
-  {
-    people.map((person, index) => (
-      <div
-        role="tabpanel"
-        tabindex="0"
-        id={`tabpanel-${person.name.toLowerCase()}`}
-        aria-labelledby={`tab-${person.name.toLowerCase()}`}
-        hidden={index !== 0}
-      >
-        <p class="paragraph mb-4">{person.description}</p>
+      init() {
+        this.$nextTick(() => this.select(this.$id('tab', 1)));
+      },
 
-        <h3 class="h3 text-primary-800">
-          Tuition and Fees – <span class="font-normal">2024-2025 Academic Year</span>
-        </h3>
+      select(id) {
+        this.selected = id;
 
-        <ul class="mb-8">
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Basic tuition</span>
-            <span class="font-bold ml-auto">{person.basicTuition}</span>
+        if (!this.isInViewport(this.$refs.panels) && this.isMobileView()) {
+          this.$refs.panels.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      },
+
+      isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      },
+
+      isMobileView() {
+        return window.matchMedia('(max-width: 768px)').matches;
+      },
+
+      isSelected(id) {
+        return this.selected === id;
+      },
+
+      whichChild(el, parent) {
+        return Array.from(parent.children).indexOf(el) + 1;
+      }
+    }"
+    x-id="['tab']"
+  >
+    <ul
+      x-ref="tablist"
+      @keydown.right.prevent.stop="$focus.wrap().next()"
+      @keydown.left.prevent.stop="$focus.wrap().prev()"
+      @keydown.home.prevent.stop="$focus.first()"
+      @keydown.end.prevent.stop="$focus.last()"
+      role="tablist"
+      class="flex gap-2 my-8 flex-col md:flex-row"
+    >
+      {
+        people.map((tab) => (
+          <li class="flex-1">
+            <button
+              @click="select($el.id)"
+              @focus="select($el.id)"
+              :aria-selected="isSelected($el.id)"
+              :tabindex="isSelected($el.id) ? 0 : -1"
+              :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+              type="button"
+              role="tab"
+              class="font-title uppercase w-full font-bold text-2xl text-gray-400 py-4 md:py-8 border-b-4 border-gray-300 aria-selected:border-primary-800 aria-selected:text-primary-800"
+            >
+              Meet {tab.name}
+            </button>
           </li>
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Basic fees</span>
-            <span class="text-base">
-              (minimum amount Student Government Association and student service fees)
-            </span>
-            <span class="font-bold ml-auto">{person.basicFees}</span>
-          </li>
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Housing</span>
-            <span class="text-base">(double occupancy)</span>
-            <span class="font-bold ml-auto">{person.housing}</span>
-          </li>
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Food</span>
-            <span class="text-base">(maximum costs)</span>
-            <span class="font-bold ml-auto">{person.food}</span>
-          </li>
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Total tuition, fees, housing, and food</span>
-            <span class="font-bold ml-auto">{person.totalTuition}</span>
-          </li>
-          <li class="border-t border-tertiary-300 text-xl py-3">
-            <div class="flex items-center gap-4 mb-2">
-              <span class="font-bold">Total gift aid</span>
-              <span class="font-bold ml-auto">{person.giftAids.total}</span>
-            </div>
-            <ul class="ml-8 text-base">
-              {person.giftAids.items.map((item) => (
-                <li>{item}</li>
-              ))}
+        ))
+      }
+    </ul>
+
+    <div x-ref="panels">
+      {
+        people.map((tab) => (
+          <div
+            role="tabpanel"
+            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
+            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+          >
+            <p class="paragraph mb-4">{tab.description}</p>
+
+            <h3 class="h3 text-primary-800">
+              Tuition and Fees – <span class="font-normal">2024-2025 Academic Year</span>
+            </h3>
+
+            <ul class="mb-8">
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Basic tuition</span>
+                <span class="font-bold ml-auto">{tab.basicTuition}</span>
+              </li>
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Basic fees</span>
+                <span class="text-base">
+                  (minimum amount Student Government Association and student service fees)
+                </span>
+                <span class="font-bold ml-auto">{tab.basicFees}</span>
+              </li>
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Housing</span>
+                <span class="text-base">(double occupancy)</span>
+                <span class="font-bold ml-auto">{tab.housing}</span>
+              </li>
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Food</span>
+                <span class="text-base">(maximum costs)</span>
+                <span class="font-bold ml-auto">{tab.food}</span>
+              </li>
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Total tuition, fees, housing, and food</span>
+                <span class="font-bold ml-auto">{tab.totalTuition}</span>
+              </li>
+              <li class="border-t border-tertiary-300 text-xl py-3">
+                <div class="flex items-center gap-4 mb-2">
+                  <span class="font-bold">Total gift aid</span>
+                  <span class="font-bold ml-auto">{tab.giftAids.total}</span>
+                </div>
+                <ul class="ml-8 text-base">
+                  {tab.giftAids.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </li>
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Federal loans</span>
+                <span class="font-bold ml-auto">{tab.federalLoans}</span>
+              </li>
+              <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
+                <span class="font-bold">Total Aid</span>
+                <span class="font-bold ml-auto">{tab.totalAid}</span>
+              </li>
+              <li class="flex items-center gap-4 border-t-4 border-tertiary-300 py-3 font-bold text-primary-800 uppercase md:text-2xl">
+                <span>{tab.name}'s cost after financial aid</span>
+                <span class="ml-auto">{tab.final}</span>
+              </li>
             </ul>
-          </li>
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Federal loans</span>
-            <span class="font-bold ml-auto">{person.federalLoans}</span>
-          </li>
-          <li class="flex items-center gap-4 border-t border-tertiary-300 text-xl py-3">
-            <span class="font-bold">Total Aid</span>
-            <span class="font-bold ml-auto">{person.totalAid}</span>
-          </li>
-          <li class="flex items-center gap-4 border-t-4 border-tertiary-300 py-3 font-bold text-primary-800 uppercase md:text-2xl">
-            <span>{person.name}'s cost after financial aid</span>
-            <span class="ml-auto">{person.final}</span>
-          </li>
-        </ul>
 
-        <p class="paragraph mb-4">
-          *Students in these examples are from the highest academic tiers. Please keep in mind that
-          these are only a few sample cases. Each student’s financial information is reviewed on an
-          individual basis. Financial aid packages may differ from those listed above.
-        </p>
+            <p class="paragraph mb-4">
+              *Students in these examples are from the highest academic tiers. Please keep in mind
+              that these are only a few sample cases. Each student’s financial information is reviewed
+              on an individual basis. Financial aid packages may differ from those listed above.
+            </p>
 
-        <p class="paragraph">
-          For the best estimate of your cost, please use our Net Price Calculator.
-        </p>
-      </div>
-    ))
-  }
+            <p class="paragraph">
+              For the best estimate of your cost, please use our Net Price Calculator.
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </section>
-
-<script>
-  let buttons = document.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") {
-    }
-  });
-
-  document.addEventListener("click", (event) => {
-    let trigger = event.target as HTMLElement;
-
-    if (trigger.getAttribute("role") === "tab") {
-      panels.forEach((panel) => {
-        panel.setAttribute("hidden", "");
-
-        if (panel.getAttribute("id") === trigger.getAttribute("aria-controls")) {
-          panel.removeAttribute("hidden");
-        }
-      });
-
-      buttons.forEach((button) => {
-        button.setAttribute("aria-selected", "false");
-
-        if (button.getAttribute("id") === trigger.getAttribute("id")) {
-          button.setAttribute("aria-selected", "true");
-        }
-      });
-    }
-  });
-</script>
