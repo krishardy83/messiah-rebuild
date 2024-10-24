@@ -25,7 +25,7 @@ function getYouTubePoster(videoId: string) {
   {
     litebox ? (
       <a
-        data-youtube-embed
+        data-fancybox
         href={getYouTubeUrl(videoId)}
         aria-label="play video"
         class="relative block group h-full"
@@ -61,10 +61,3 @@ function getYouTubePoster(videoId: string) {
     ) : null
   }
 </figure>
-
-<script>
-  import { Fancybox } from "@fancyapps/ui";
-  import "lite-youtube-embed";
-
-  Fancybox.bind("[data-youtube-embed]");
-</script>

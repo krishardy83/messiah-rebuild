@@ -69,6 +69,18 @@ const { title, description, transparent = true } = Astro.props;
       href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
     />
     <!-- End Fancyapps -->
+
+    <!-- Lite YouTube Embed -->
+    <script
+      is:inline
+      defer
+      src=" https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.min.js "
+    ></script>
+    <link
+      href=" https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.min.css "
+      rel="stylesheet"
+    />
+    <!-- End Lite YouTube Embed -->
   </head>
   <body class="font-sans text-gray-700">
     <!-- Google Tag Manager (noscript) -->
@@ -93,5 +105,19 @@ const { title, description, transparent = true } = Astro.props;
     <slot />
 
     <Footer />
+
+    <script>
+      declare var Fancybox: any;
+
+      Fancybox.bind("[data-fancybox]", {
+        caption: (_: any, slide: any, caption: any) => {
+          if (!caption) return null;
+
+          return `
+            <div style='${slide.imageEl ? `max-width: ${slide.imageEl.offsetWidth > 0 ? `${slide.imageEl.offsetWidth}px` : `800px`}` : ``}'>${caption}</div>
+          `;
+        },
+      });
+    </script>
   </body>
 </html>

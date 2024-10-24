@@ -219,15 +219,3 @@ const groupFitnessItems = [
     </div>
   </div>
 </section>
-
-<script>
-  import { Fancybox } from "@fancyapps/ui";
-
-  Fancybox.bind("[data-fancybox]", {
-    caption: (_, slide, caption) => {
-      return `
-          <div style="${slide.imageEl ? `max-width: ${slide.imageEl.offsetWidth > 0 ? `${slide.imageEl.offsetWidth}px` : "auto"}` : ""}">${caption}</div>
-        `;
-    },
-  });
-</script>
