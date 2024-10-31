@@ -30,9 +30,11 @@ const { title, description, analyticsKey, mobileImage, subtitle, badge, programs
     aria-hidden="true"
   >
     <div
-      class="max-w-6xl mx-auto px-4 h-[70vw] min-h-[400px] max-h-[900px] flex items-end pb-4 pd:mb-0"
+      class="max-w-6xl mx-auto md:px-4 md:h-[70vw] min-h-[400px] max-h-[900px] flex items-end md:pb-4"
     >
-      <div class="lg:w-3/4 relative z-10 md:mb-20">
+      <div
+        class="lg:w-3/4 mt-[400px] w-full md:mt-0 relative bg-primary-800 md:bg-transparent z-10 md:mb-20 p-4 md:p-0"
+      >
         <h1
           class={cn(
             "font-title font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white uppercase",
@@ -51,7 +53,7 @@ const { title, description, analyticsKey, mobileImage, subtitle, badge, programs
           }
         </h1>
 
-        {subtitle ? <p class="mb-4 text-white text-lg">{subtitle}</p> : null}
+        {subtitle ? <p class="mb-4 text-white md:text-lg">{subtitle}</p> : null}
 
         <ProgramList programs={programs} showText class="mt-2 md:mt-0" />
       </div>
