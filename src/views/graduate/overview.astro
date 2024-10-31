@@ -5,76 +5,80 @@ import Youtube from "../../components/youtube.astro";
 import RelatedPrograms from "../../components/related-programs.astro";
 ---
 
-<h3 class="h3">Digital Marketing overview</h3>
-
-<p class="mb-4">
-  Messiah University’s nationally ranked MBA is designed for recent graduates and working
-  professionals who seek to exponentially grow their careers and opportunities, expand their level
-  of influence and deliver transformative impact to the businesses, organizations and communities
-  they serve. <a href="https://www.messiah.edu/graduate/mba-certificate" class="link underline"
-    >MBA certificates</a
-  > are also available.
-</p>
-
-<Accordion id="program-details" title="Program details">
-  <ul class="list-disc pl-6">
-    <li>36 credits</li>
-    <li>Fully online</li>
-    <li>No-fee tuition</li>
-    <li>Eight- and six-week courses</li>
-    <li>One-year completion, plus capstone</li>
-    <li>Culminating capstone project with faculty member and organization of your choice</li>
-    <li>
-      Biblical integration that will equip you to serve God more effectively as a faithful
-      professional
-    </li>
-    <li>Practical courses that provide immediate value to your workplace</li>
-    <li>Faculty who serve as mentors</li>
-    <li>Extensive networking and career development opportunities</li>
-    <li>
-      <a
-        href="https://www.messiah.edu/undergraduate/accelerated-business-administration-program"
-        class="link underline"
-        >5-year seamless bachelor’s degree to MBA available for undergraduate students</a
-      >
-    </li>
-  </ul>
-</Accordion>
-
-<Accordion id="career-options" title="Career options">
-  <ul class="list-disc pl-6 mb-4">
-    <li>Executive, director or manager leading teams and organizations</li>
-    <li>CEO, COO, CFO, CAO</li>
-    <li>Financial manager / controller</li>
-    <li>Human resources executive, director or manager</li>
-    <li>Project / operations manager</li>
-    <li>Sales / account executive</li>
-    <li>Supply chain leader</li>
-    <li>Consultant</li>
-  </ul>
+<div class="rich-text">
+  <h2>Digital Marketing overview</h2>
 
   <p>
-    For more information on career planning, visit the <a
-      href="http://messiah.edu/career"
-      target="_blank"
-      class="underline link">Messiah University Career and Professional Development Center</a
-    >.
+    Messiah University’s nationally ranked MBA is designed for recent graduates and working
+    professionals who seek to exponentially grow their careers and opportunities, expand their level
+    of influence and deliver transformative impact to the businesses, organizations and communities
+    they serve. <a href="https://www.messiah.edu/graduate/mba-certificate">MBA certificates</a> are also
+    available.
   </p>
+</div>
+
+<Accordion id="program-details" title="Program details" allowProse>
+  <div class="rich-text">
+    <ul>
+      <li>36 credits</li>
+      <li>Fully online</li>
+      <li>No-fee tuition</li>
+      <li>Eight- and six-week courses</li>
+      <li>One-year completion, plus capstone</li>
+      <li>Culminating capstone project with faculty member and organization of your choice</li>
+      <li>
+        Biblical integration that will equip you to serve God more effectively as a faithful
+        professional
+      </li>
+      <li>Practical courses that provide immediate value to your workplace</li>
+      <li>Faculty who serve as mentors</li>
+      <li>Extensive networking and career development opportunities</li>
+      <li>
+        <a href="https://www.messiah.edu/undergraduate/accelerated-business-administration-program"
+          >5-year seamless bachelor’s degree to MBA available for undergraduate students</a
+        >
+      </li>
+    </ul>
+  </div>
 </Accordion>
 
-<Accordion id="accreditation" title="Accreditation">
-  <p class="mb-4">
-    Messiah University is accredited by the Middle States Association of Colleges and Schools,
-    Commission on Higher Education. It is the highest accrediting authority recognized by the U.S.
-    Department of Education for degree-granting colleges and universities located in Pennsylvania,
-    Delaware, the District of Columbia, Maryland, New Jersey, New York, Puerto Rico, the U.S. Virgin
-    Islands and several other locations internationally.
-  </p>
+<Accordion id="career-options" title="Career options" allowProse>
+  <div class="rich-text">
+    <ul>
+      <li>Executive, director or manager leading teams and organizations</li>
+      <li>CEO, COO, CFO, CAO</li>
+      <li>Financial manager / controller</li>
+      <li>Human resources executive, director or manager</li>
+      <li>Project / operations manager</li>
+      <li>Sales / account executive</li>
+      <li>Supply chain leader</li>
+      <li>Consultant</li>
+    </ul>
 
-  <p>
-    Additionally, Messiah University’s undergraduate and graduate programs in business are
-    accredited by the Accreditation Council for Business Schools and Programs (ACBSP).
-  </p>
+    <p>
+      For more information on career planning, visit the <a
+        href="http://messiah.edu/career"
+        target="_blank">Messiah University Career and Professional Development Center</a
+      >.
+    </p>
+  </div>
+</Accordion>
+
+<Accordion id="accreditation" title="Accreditation" allowProse>
+  <div class="rich-text">
+    <p>
+      Messiah University is accredited by the Middle States Association of Colleges and Schools,
+      Commission on Higher Education. It is the highest accrediting authority recognized by the U.S.
+      Department of Education for degree-granting colleges and universities located in Pennsylvania,
+      Delaware, the District of Columbia, Maryland, New Jersey, New York, Puerto Rico, the U.S.
+      Virgin Islands and several other locations internationally.
+    </p>
+
+    <p>
+      Additionally, Messiah University’s undergraduate and graduate programs in business are
+      accredited by the Accreditation Council for Business Schools and Programs (ACBSP).
+    </p>
+  </div>
 </Accordion>
 
 <Youtube videoId="WvhBFxo40U4" litebox class="mb-8" />

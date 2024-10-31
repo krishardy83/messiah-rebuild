@@ -3,91 +3,96 @@ import Accordion from "../../components/accordion.astro";
 import EmployeeRecord from "../../components/employee-record.astro";
 ---
 
-<h3 class="h3">Next steps for admissions</h3>
+<div class="rich-text">
+  <h2>Next steps for admissions</h2>
 
-<p class="mb-4">
-  Applying for admission to a graduate program at Messiah University is the first step to making
-  your personal and professional goals a reality.
-</p>
+  <p>
+    Applying for admission to a graduate program at Messiah University is the first step to making
+    your personal and professional goals a reality.
+  </p>
+</div>
 
 <Accordion
   image={{ src: "https://www.messiah.edu/images/shape_2x_2.png", size: 24 }}
   id="next-courses"
   title="Next course start dates"
+  allowProse
 >
-  <table>
-    <thead class="text-left">
-      <tr>
-        <th class="pr-8">2024</th>
-        <th class="pr-8">2025</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="pr-8">January 14</td>
-        <td class="pr-8">January 12</td>
-      </tr>
-      <tr>
-        <td class="pr-8">March 17</td>
-        <td class="pr-8">March 16</td>
-      </tr>
-      <tr>
-        <td class="pr-8">May 19</td>
-        <td class="pr-8">May 18</td>
-      </tr>
-      <tr>
-        <td class="pr-8">July 7</td>
-        <td class="pr-8">July 6</td>
-      </tr>
-      <tr>
-        <td class="pr-8">August 25</td>
-        <td class="pr-8">August 24</td>
-      </tr>
-      <tr>
-        <td class="pr-8">October 27</td>
-        <td class="pr-8">October 26</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="rich-text">
+    <table>
+      <thead class="text-left">
+        <tr>
+          <th>2024</th>
+          <th>2025</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>January 14</td>
+          <td>January 12</td>
+        </tr>
+        <tr>
+          <td>March 17</td>
+          <td>March 16</td>
+        </tr>
+        <tr>
+          <td>May 19</td>
+          <td>May 18</td>
+        </tr>
+        <tr>
+          <td>July 7</td>
+          <td>July 6</td>
+        </tr>
+        <tr>
+          <td>August 25</td>
+          <td>August 24</td>
+        </tr>
+        <tr>
+          <td>October 27</td>
+          <td>October 26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </Accordion>
 
 <Accordion
   image={{ src: "https://www.messiah.edu/images/shape_2x_3.png", size: 24 }}
   id="how-to-apply"
   title="How to apply"
+  allowProse
 >
-  <p class="mb-4">
-    Before completing an application for any of Messiah University’s graduate and certificate
-    programs, please read our Admissions Requirements to ensure that you are eligible for enrollment
-    and to receive a helpful checklist of the supporting documentation that you will need to provide
-    to complete your application.
-  </p>
+  <div class="rich-text">
+    <p>
+      Before completing an application for any of Messiah University’s graduate and certificate
+      programs, please read our Admissions Requirements to ensure that you are eligible for
+      enrollment and to receive a helpful checklist of the supporting documentation that you will
+      need to provide to complete your application.
+    </p>
 
-  <ul class="list-disc pl-6">
-    <li>
-      <strong class="block">New applicants:</strong>
-      Please <a
-        href="https://mcadmissions.messiah.edu/account/register?r=https://mcadmissions.messiah.edu/apply/?sr=	ddc2cc68-8ce2-4a24-8b8d-f8cfa5072e1c"
-        target="_blank"
-        class="link underline">click here</a
-      > to start your Messiah application.
-    </li><li>
-      <strong class="block">4+1 Master of Business Administration</strong>
-      Current Messiah undergraduates can <a
-        href="https://mcadmissions.messiah.edu/account/register?r=https://mcadmissions.messiah.edu/apply/?sr=	ddc2cc68-8ce2-4a24-8b8d-f8cfa5072e1c"
-        target="_blank"
-        class="link underline">click here</a
-      > for the 4+1 MBA program application.
-    </li><li>
-      <strong class="block">Re-Enrollment applicants:</strong>
-      Students who have enrolled in graduate & professional degree courses at Messiah within the last
-      two years can <a
-        href="https://mcadmissions.messiah.edu/account/register?r=https://mcadmissions.messiah.edu/apply/?sr=44893230-4e39-4e33-9d9c-70d05ffc811b"
-        target="_blank"
-        class="link underline">click here</a
-      > for the re-enrollment application.
-    </li>
-  </ul>
+    <ul>
+      <li>
+        <strong class="block">New applicants:</strong>
+        Please <a
+          href="https://mcadmissions.messiah.edu/account/register?r=https://mcadmissions.messiah.edu/apply/?sr=	ddc2cc68-8ce2-4a24-8b8d-f8cfa5072e1c"
+          target="_blank">click here</a
+        > to start your Messiah application.
+      </li><li>
+        <strong class="block">4+1 Master of Business Administration</strong>
+        Current Messiah undergraduates can <a
+          href="https://mcadmissions.messiah.edu/account/register?r=https://mcadmissions.messiah.edu/apply/?sr=	ddc2cc68-8ce2-4a24-8b8d-f8cfa5072e1c"
+          target="_blank">click here</a
+        > for the 4+1 MBA program application.
+      </li><li>
+        <strong class="block">Re-Enrollment applicants:</strong>
+        Students who have enrolled in graduate & professional degree courses at Messiah within the last
+        two years can <a
+          href="https://mcadmissions.messiah.edu/account/register?r=https://mcadmissions.messiah.edu/apply/?sr=44893230-4e39-4e33-9d9c-70d05ffc811b"
+          target="_blank">click here</a
+        > for the re-enrollment application.
+      </li>
+    </ul>
+  </div>
 </Accordion>
 
 <a href="http://www.messiah.edu/business-admissions" class="btn btn-primary mb-4"
