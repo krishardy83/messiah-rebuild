@@ -120,7 +120,7 @@ const accordions = [
   accordions.map((accordion) => (
     <Accordion title={accordion.title} id={accordion.id} image={{ src: accordion.icon }}>
       {accordion.entries.map((entry) => (
-        <article class="flex flex-col md:flex-row gap-4 md:gap-8 mb-4">
+        <article class="flex flex-col md:flex-row gap-4 md:gap-8 mb-4 pb-4 border-b border-b-gray-300 last-of-type:border-b-0 last-of-type:mb-0 last-of-type:pb-0">
           <figure class="shrink-0">
             <img
               src={entry.image.src}
