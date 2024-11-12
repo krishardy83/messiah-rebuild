@@ -46,14 +46,12 @@ const { class: className, ...props } = Astro.props;
     switchProgram() {
       const currentStudentType = document.cookie.split(';').find((cookie) => {
         return cookie.includes('mc_student_type');
-      });
+      }) || 'mc_student_type=undergraduate';
 
-      if (currentStudentType) {
-        const [_, value] = currentStudentType.split('=');
-        const newStudentType = value === 'undergraduate' ? 'graduate' : 'undergraduate';
+      const [_, value] = currentStudentType.split('=');
+      const newStudentType = value === 'undergraduate' ? 'graduate' : 'undergraduate';
 
-        document.cookie = `mc_student_type=${newStudentType}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
-      }
+      document.cookie = `mc_student_type=${newStudentType}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
 
       window.location.reload();
     }
