@@ -1,70 +1,99 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { ComponentProps, HTMLAttributes } from "astro/types";
 import Icon from "./icon.astro";
 import { cn } from "../lib/utils";
 
 interface Props extends HTMLAttributes<"nav"> {}
 
+const entries: {
+  name: string;
+  href: string;
+  type?: string;
+  icon?: ComponentProps<typeof Icon>["name"];
+}[] = [
+  { icon: "book", name: "Academic programs", href: "/", type: "undergraduate" },
+  { icon: "marker", name: "Visit campus", href: "/", type: "undergraduate" },
+  { icon: "edit", name: "Apply", href: "/", type: "undergraduate" },
+  { icon: "chevron-right", name: "Deposit", href: "/", type: "undergraduate" },
+  { icon: "computer", name: "Request info", href: "/" },
+  { name: "Tuition & aid", href: "/", type: "undergraduate" },
+  { icon: "pencil", name: "Apply online", href: "/", type: "graduate" },
+  { icon: "book", name: "Degrees & certificates", href: "/", type: "graduate" },
+  { name: "Cost & aid", href: "/", type: "graduate" },
+  { icon: "check", name: "Next steps", href: "/", type: "graduate" },
+];
+
+const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
+
+function getEntriesByCookie() {
+  return entries.filter((entry) => {
+    if (!entry.type) {
+      return true;
+    }
+
+    return entry.type === studentType;
+  });
+}
+
 const { class: className, ...props } = Astro.props;
 ---
 
-<nav data-analytics="next-steps" {...props} class={cn("bg-white w-60", className)}>
+<nav
+  data-analytics="next-steps"
+  {...props}
+  class={cn("bg-white w-60", className)}
+  x-data="{
+    switchProgram() {
+      const currentStudentType = document.cookie.split(';').find((cookie) => {
+        return cookie.includes('mc_student_type');
+      });
+
+      if (currentStudentType) {
+        const [_, value] = currentStudentType.split('=');
+        const newStudentType = value === 'undergraduate' ? 'graduate' : 'undergraduate';
+
+        document.cookie = `mc_student_type=${newStudentType}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+      }
+
+      window.location.reload();
+    }
+  }"
+>
   <h3 class="text-primary-800 leading-tight px-4 py-2">
     <span class="uppercase font-title text-lg font-bold block">Next steps</span>
-    <span class="text-sm">for Undergrad students</span>
+    <span class="text-sm"
+      >for {studentType === "undergraduate" ? "Undergrad" : "Graduate"} Students</span
+    >
   </h3>
 
   <ul>
+    {
+      getEntriesByCookie().map((entry) => (
+        <li>
+          <a
+            href={entry.href}
+            class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+          >
+            {entry.name} {entry.icon ? <Icon name={entry.icon} class="size-5" /> : null}
+          </a>
+        </li>
+      ))
+    }
     <li>
-      <a
-        href="/"
-        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
-        >Academic programs <Icon name="book" class="size-5" /></a
+      <button
+        type="button"
+        class="bg-gray-800 text-white text-left w-full py-2 px-4 flex gap-4 justify-between items-center"
+        @click="switchProgram()"
       >
-    </li>
-    <li>
-      <a
-        href="/"
-        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
-        >Visit campus <Icon name="marker" class="size-5" /></a
-      >
-    </li>
-    <li>
-      <a
-        href="/"
-        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
-        >Apply <Icon name="edit" class="size-5" /></a
-      >
-    </li>
-    <li>
-      <a
-        href="/"
-        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
-        >Deposit <Icon name="chevron-right" class="size-5" /></a
-      >
-    </li>
-    <li>
-      <a
-        href="/"
-        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
-        >Request info <Icon name="computer" class="size-5" /></a
-      >
-    </li>
-    <li>
-      <a
-        href="/"
-        class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
-        >Tuition & iid</a
-      >
-    </li>
-    <li>
-      <a href="/" class="bg-gray-800 text-white py-2 px-4 flex gap-4 justify-between items-center">
         <span>
           <span class="font-title uppercase font-bold block">Switch to</span>
-          <span class="text-sm">Graduate programs</span>
+          <span class="text-sm"
+            >{studentType === "undergraduate" ? "Graduate" : "Undergraduate"}
+            programs
+          </span>
         </span>
         <Icon name="switch" class="size-5" />
-      </a>
+      </button>
     </li>
   </ul>
 </nav>
