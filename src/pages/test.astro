@@ -1,0 +1,127 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import Accordion from "../components/accordion.astro";
+import MultiPurpose from "../components/multi-purpose.astro";
+import ImageHoverLink from "../components/image-hover-link.astro";
+
+
+---
+
+<SingleColumn
+  title="Physical Therapy"
+  subtitle="Explore Physical Therapy at Messiah University"
+  description="Explore Physical Therapy at Messiah University"
+  image="/images/physical-therapy.jpg"
+  mobileImage="/images/mobile-pt-hero.webp"
+  analyticsKey="pt"
+>
+  <div class="wrapper my-20">
+    <div class="content-grid-wide !mb-12">
+      <div class="content-grid-left">
+        <div class="rich-text">
+        <h2>Chislic shank ham swine beef tongue doner sirloin</h2>
+        <p>
+          Bacon ipsum dolor amet short loin flank boudin ham hock, chislic shank ham swine beef tongue doner sirloin. Cow sirloin alcatra short ribs, frankfurter pig spare ribs tail ribeye hamburger tri-tip chicken chislic doner. Landjaeger turkey andouille corned beef ham hock picanha meatloaf ground round. Spare ribs pig boudin, leberkas bresaola pork belly filet mignon beef tenderloin t-bone chicken. Cow ball tip andouille pork, drumstick leberkas brisket tongue turducken. Short ribs prosciutto pancetta cow alcatra andouille, short loin bacon shankle ham hock leberkas.
+        </p>
+        <h3>Beef tongue doner sirloin</h3>
+        <p>
+          Bacon ipsum dolor amet short loin flank boudin ham hock, chislic shank ham swine beef tongue doner sirloin. Cow sirloin alcatra short ribs, frankfurter pig spare ribs tail ribeye hamburger tri-tip chicken chislic doner. Landjaeger turkey andouille corned beef ham hock picanha meatloaf ground round. Spare ribs pig boudin, leberkas bresaola pork belly filet mignon beef tenderloin t-bone chicken. Cow ball tip andouille pork, drumstick leberkas brisket tongue turducken. Short ribs prosciutto pancetta cow alcatra andouille, short loin bacon shankle ham hock leberkas.
+        </p>
+      </div>
+      </div>
+      <div class="content-grid-right">
+        <MultiPurpose
+        title="Multi-purpose example heading"
+        subtitle="Example subtitle"
+        link={{ href: "/", label: "Example link" }}
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat.
+      </MultiPurpose>
+
+      </div>
+    </div>
+
+    <Accordion
+    id="example-1"
+    title="Example Accordion Heading"
+    subtitle="Example subheading - content within"
+  >
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
+
+    <ul class="list-disc pl-6 mt-4">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </Accordion>
+  <Accordion title="Example Accordion Heading">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
+
+    <ul class="list-disc pl-6 mt-4">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </Accordion>
+    
+   
+
+
+  </div>
+
+
+  <div class="bg-primary-800 py-20 ">
+    <div class="wrapper">
+      <div class="rich-text text-white text-center">
+        <h2 class="text-white">chislic shank ham swine beef tongue doner sirloin</h2>
+        <p>
+          Bacon ipsum dolor amet short loin flank boudin ham hock, chislic shank ham swine beef tongue doner sirloin. Cow sirloin alcatra short ribs, frankfurter pig spare ribs tail ribeye hamburger tri-tip chicken chislic doner. Landjaeger turkey andouille corned beef ham hock picanha meatloaf ground round. Spare ribs pig boudin, leberkas bresaola pork belly filet mignon beef tenderloin t-bone chicken. Cow ball tip andouille pork, drumstick leberkas brisket tongue turducken. Short ribs prosciutto pancetta cow alcatra andouille, short loin bacon shankle ham hock leberkas.
+        </p>
+        <h3 class="text-white">chislic shank ham swine beef tongue doner sirloin</h3>
+        <p>
+          Bacon ipsum dolor amet short loin flank boudin ham hock, chislic shank ham swine beef tongue doner sirloin. Cow sirloin alcatra short ribs, frankfurter pig spare ribs tail ribeye hamburger tri-tip chicken chislic doner. Landjaeger turkey andouille corned beef ham hock picanha meatloaf ground round. Spare ribs pig boudin, leberkas bresaola pork belly filet mignon beef tenderloin t-bone chicken. Cow ball tip andouille pork, drumstick leberkas brisket tongue turducken. Short ribs prosciutto pancetta cow alcatra andouille, short loin bacon shankle ham hock leberkas.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper my-20">
+    <div class="rich-text text-center">
+      <h2>Chislic shank ham swine beef tongue doner sirloin</h2>
+      <p>
+        Bacon ipsum dolor amet short loin flank boudin ham hock, chislic shank ham swine beef tongue doner sirloin. Cow sirloin alcatra short ribs, frankfurter pig spare ribs tail ribeye hamburger tri-tip chicken chislic doner. Landjaeger turkey andouille corned beef ham hock picanha meatloaf ground round. Spare ribs pig boudin, leberkas bresaola pork belly filet mignon beef tenderloin t-bone chicken. Cow ball tip andouille pork, drumstick leberkas brisket tongue turducken. Short ribs prosciutto pancetta cow alcatra andouille, short loin bacon shankle ham hock leberkas.
+      </p>
+    </div>
+    <div class="grid-2">  
+      {
+        new Array(6).fill(null).map(() => (
+          <ImageHoverLink
+            size="small"
+            caption="Example image hover link"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            image={{
+              src: "/images/image-hover-widget-example.jpg",
+              alt: "Example image",
+            }}
+            button={{
+              label: "Example Button Link Text",
+              href: "/",
+            }}
+          />
+        ))
+      }
+      </div>
+      
+  </div>
+</SingleColumn>
