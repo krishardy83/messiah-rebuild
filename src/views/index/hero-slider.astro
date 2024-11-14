@@ -1,17 +1,36 @@
 ---
+interface Props {
+  randomStart?: boolean;
+}
+
 const slides = [
   {
-    title: "Falcon Fridays are a great way to experience campus this summer!",
+    title: "30+ graduate degree programs and certificates",
     description:
-      "Tour our amazing campus, check out our exciting academic programs and spiritual growth opportunities-- and, of course, stick around for some ice cream!",
+      "Various program formats available to fit the needs of working adults.",
     button: "Become a student",
-    image: "https://www.messiah.edu/images/ff.jpg",
+    image: "https://www.messiah.edu/images/become_a_student_grad.jpg",
     links: [
       {
-        href: "https://www.messiah.edu/info/23324/falcon_fridays?element=homepage-car",
+        href: "https://www.messiah.edu/info/22860/degrees_and_certificates",
+        label: "View grad programs",
+      },
+    ],
+    type: 'graduate',
+  },
+  {
+    title: "Join us for a fall open house!",
+    description:
+      "Come visit to explore our academic programs, experience campus culture, take a campus tour and see what it means to be part of the Messiah community. And, of course, lunch is on us!",
+    button: "Become a student",
+    image: "https://www.messiah.edu/images/students_on_sidewalk.jpg",
+    links: [
+      {
+        href: "https://www.messiah.edu/openhouse?element=homepage-carousel",
         label: "Learn more",
       },
     ],
+    type: 'undergraduate',
   },
   {
     title: "Academic Excellence",
@@ -58,16 +77,37 @@ const slides = [
     ],
   },
 ];
+
+const { randomStart  = false } = Astro.props;
+const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
+
+function getSlidesByCookie() {
+  return slides.filter((slide) => {
+    if (!slide.type) {
+      return true;
+    }
+
+    return slide.type === studentType;
+  });
+}
+
+function getFirstSlide() {
+  if (randomStart) {
+    return Math.floor(Math.random() * getSlidesByCookie().length) + 1;
+  }
+
+  return 1;
+}
 ---
 
 <div
   class="relative flex flex-col-reverse -mt-48"
   data-analytics="hero"
-  x-data="{
+  x-data={`{
     selected: null,
 
     init() {
-      this.$nextTick(() => this.select(this.$id('tab', 1)));
+      this.$nextTick(() => this.select(this.$id('tab', ${getFirstSlide()})));
     },
 
     select(id) {
@@ -81,7 +121,7 @@ const slides = [
     whichChild(el, parent) {
       return Array.from(parent.children).indexOf(el) + 1;
     }
-  }"
+  }`}
   x-id="['tab']"
 >
   <ul
@@ -94,7 +134,7 @@ const slides = [
     class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
   >
     {
-      slides.map((slide) => (
+      getSlidesByCookie().map((slide) => (
         <li class="w-full sm:w-1/2 md:w-1/4 flex justify-center">
           <button
             @click="select($el.id)"
@@ -117,7 +157,7 @@ const slides = [
 
   <div>
     {
-      slides.map((slide) => (
+      getSlidesByCookie().map((slide) => (
         <div
           role="tabpanel"
           x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
