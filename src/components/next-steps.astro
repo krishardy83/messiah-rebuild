@@ -52,6 +52,7 @@ const { class: className, ...props } = Astro.props;
       const newStudentType = value === 'undergraduate' ? 'graduate' : 'undergraduate';
 
       document.cookie = `mc_student_type=${newStudentType}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+      localStorage.setItem('mc_slider_start_first', 'true');
 
       window.location.reload();
     }
