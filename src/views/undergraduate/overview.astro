@@ -2,6 +2,7 @@
 import Accordion from "../../components/accordion.astro";
 import Youtube from "../../components/youtube.astro";
 import RelatedPrograms from "../../components/related-programs.astro";
+import Slider from "../../components/slider.astro";
 ---
 
 <div class="rich-text">
@@ -23,6 +24,12 @@ import RelatedPrograms from "../../components/related-programs.astro";
     demand for trained accountants.
   </p>
 </div>
+
+<Accordion id="distinctives" title="Thinking about grad school?" allowProse>
+  <div class="rich-text">
+   
+  </div>
+</Accordion>
 
 <Accordion id="distinctives" title="Accounting program distinctives" allowProse>
   <div class="rich-text">
@@ -125,6 +132,54 @@ import RelatedPrograms from "../../components/related-programs.astro";
   preview="https://img.youtube.com/vi/JEpsLgJpkWA/hqdefault.jpg"
   class="mb-8"
 />
+
+<Slider class="my-16 [&_.f-button]:text-primary-800 [&_.f-button_svg]:size-16">
+  <div class="f-carousel__slide px-16 md:px-4 w-full text-center">
+    <a href="https://www.intelligent.com/best-masters-in-digital-marketing-degree-programs/">
+      <figure class="flex items-center flex-col text-center">
+        <img
+          class="mb-8"
+          src="https://www.messiah.edu/images/Best_Masters_in_Digital_Marketing_Programs_copy.jpg"
+          alt=""
+          width="200"
+        />
+        <figcaption class="max-w-lg">
+          Intelligent.com has ranked Messiah #1 in the Best Master's in Digital Marketing Degree
+          Programs category.
+        </figcaption>
+      </figure>
+    </a>
+  </div>
+  <div class="f-carousel__slide px-16 md:px-4 w-full text-center">
+    <a href="https://universityhq.org/best-colleges/pennsylvania/mba-degrees/">
+      <figure class="flex items-center flex-col text-center">
+        <img
+          class="mb-8"
+          src="https://www.messiah.edu/images/2023_best_mba_colleges_in_pennsylvania_badge_copy.jpg"
+          alt=""
+          width="200"
+        />
+        <figcaption class="max-w-lg">
+          University HQ ranked Messiah as a Best MBA College in Pennsylvania.
+        </figcaption>
+      </figure>
+    </a>
+  </div>
+  <div class="f-carousel__slide px-16 md:px-4 w-full text-center">
+    <figure class="flex items-center flex-col text-center">
+      <img
+        class="mb-8"
+        src="https://www.messiah.edu/images/Grad_School_Hub_Most_Affordable_Online_Programs_01.jpg"
+        alt=""
+        width="200"
+      />
+      <figcaption class="max-w-lg">
+        Grad School Hub ranked Messiah’s MBA in digital marketing as one of the 10 Most Affordable
+        Online Programs in the Internet Marketing Online category.
+      </figcaption>
+    </figure>
+  </div>
+</Slider>
 
 <div class="rich-text">
   <h2>The CPA exam</h2>
