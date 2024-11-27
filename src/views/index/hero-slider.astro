@@ -107,7 +107,11 @@ function getFirstSlide() {
     selected: null,
 
     init() {
-      this.$nextTick(() => this.select(this.$id('tab', ${getFirstSlide()})));
+      const shouldStartAtFirstSlide = localStorage.getItem('mc_slider_start_first') === 'true';
+
+      this.$nextTick(() => this.select(this.$id('tab', shouldStartAtFirstSlide ? 1 : ${getFirstSlide()})));
+
+      localStorage.removeItem('mc_slider_start_first');
     },
 
     select(id) {
