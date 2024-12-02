@@ -1,0 +1,56 @@
+---
+import WithoutHero from "../../layouts/without-hero.astro";
+
+export const prerender = false;
+---
+
+<WithoutHero
+  title="Global Alert Example"
+  description="Example of a global alert"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Content Grey Example", href: "/" },
+  ]}
+>
+  <p>The alert is displayed globally on top of each page and controlled via a cookie.</p>
+
+  <div
+    x-data="{
+      isAlertVisible: document.cookie.split(';').find((cookie) => {
+        return cookie.includes('mc_alert');
+      })?.includes('mc_alert=1'),
+
+      toggleAlert() {
+        if (this.isAlertVisible) {
+          document.cookie = `mc_alert=0; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+        } else {
+          document.cookie = `mc_alert=1; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+        }
+        
+        window.location.reload();
+      }
+    }"
+  >
+    <button class="btn-primary" type="button" @click="toggleAlert()" x-show="!isAlertVisible"
+      >Show alert</button
+    >
+    <button class="btn-primary" type="button" @click="toggleAlert()" x-show="isAlertVisible"
+      >Hide alert</button
+    >
+  </div>
+</WithoutHero>

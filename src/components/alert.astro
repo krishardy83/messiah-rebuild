@@ -1,0 +1,46 @@
+---
+import Icon from "./icon.astro";
+
+const isAlertVisible = Boolean(Astro.cookies.get("mc_alert")?.value === "1");
+---
+
+{
+  isAlertVisible ? (
+    <div
+      class="bg-white relative z-10 py-4"
+      role="alert"
+      x-data="{
+        dismiss() {
+          document.cookie = `mc_alert=0; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`;
+          
+          window.location.reload();
+        }
+      }"
+    >
+      <div class="wrapper flex gap-4 relative">
+        <img src="/public/icons/snow.svg" alt="" class="size-14 mt-2" />
+
+        <button
+          type="button"
+          class="absolute right-0 top-0"
+          @click="dismiss()"
+          aria-label="Dismiss alert"
+        >
+          <Icon name="close" class="size-8" />
+        </button>
+
+        <div class="pr-12">
+          <p class="h4 text-primary-800">Campus Closure (while University is already open)</p>
+          <p>
+            The university campus and Winding Hill location are closing at _____. Faculty teaching
+            face-to-face courses for the remainder of the day will be providing course-specific
+            information to students via Canvas Announcements
+          </p>
+          <a href="#" class="btn-primary mt-2">
+            Read more
+          </a>
+        </div>
+      </div>
+    </div>
+  ) : null
+}
