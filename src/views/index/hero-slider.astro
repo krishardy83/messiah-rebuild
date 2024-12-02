@@ -9,7 +9,8 @@ const slides = [
     description:
       "Various program formats available to fit the needs of working adults.",
     button: "Become a student",
-    image: "https://www.messiah.edu/images/become_a_student_grad.jpg",
+    image: "/images/homepage/become_a_student_grad.jpg",
+    mobileImage: "/images/homepage/become_a_student_grad_mobile.jpg",
     links: [
       {
         href: "https://www.messiah.edu/info/22860/degrees_and_certificates",
@@ -23,7 +24,8 @@ const slides = [
     description:
       "Come visit to explore our academic programs, experience campus culture, take a campus tour and see what it means to be part of the Messiah community. And, of course, lunch is on us!",
     button: "Become a student",
-    image: "https://www.messiah.edu/images/students_on_sidewalk.jpg",
+    image: "/images/homepage/students_on_sidewalk.jpg",
+    mobileImage: "/images/homepage/students_on_sidewalk_mobile.jpg",
     links: [
       {
         href: "https://www.messiah.edu/openhouse?element=homepage-carousel",
@@ -35,7 +37,8 @@ const slides = [
   {
     title: "Academic Excellence",
     description: "Experience the academic distinction of a nationally ranked Christian college",
-    image: "https://www.messiah.edu/images/hero_academics.jpg",
+    image: "/images/homepage/hero_academics.jpg",
+    mobileImage: "/images/homepage/hero_academics_mobile.jpg",
     button: "Academic excellence",
     links: [
       {
@@ -52,7 +55,8 @@ const slides = [
     title: "Careers and Internships",
     description: "Explore your calling — from your first year through graduation",
     button: "Careers & internships",
-    image: "https://www.messiah.edu/images/career_hero.jpg",
+    image: "/images/homepage/career_hero.jpg",
+    mobileImage: "/images/homepage/career_hero_mobile.jpg",
     links: [
       {
         href: "https://www.messiah.edu/career-outcomes",
@@ -68,7 +72,8 @@ const slides = [
     title: "Study Abroad",
     description: "Where in the world will you go?",
     button: "Study abroad",
-    image: "https://www.messiah.edu/images/travel_hero.jpg",
+    image: "/images/homepage/travel_hero.jpg",
+    mobileImage: "/images/homepage/travel_hero_mobile.jpg",
     links: [
       {
         href: "https://www.messiah.edu/study-abroad",
@@ -135,7 +140,7 @@ function getFirstSlide() {
     @keydown.home.prevent.stop="$focus.first()"
     @keydown.end.prevent.stop="$focus.last()"
     role="tablist"
-    class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap"
+    class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap z-10"
   >
     {
       getSlidesByCookie().map((slide) => (
@@ -166,10 +171,13 @@ function getFirstSlide() {
           role="tabpanel"
           x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
           :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-          class="w-full flex h-[calc(100vh_+_6rem)] md:h-[calc(90vh_+_8rem)] max-h-[1200px] min-h-[500px] items-end sm:items-center bg-primary-800 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.75),transparent),var(--bg-banner)] bg-cover bg-no-repeat pb-4 sm:pb-0"
-          style={{ "--bg-banner": `url(${slide.image})` }}
+          class="w-full flex h-[calc(100vh_+_6rem)] md:h-[calc(90vh_+_8rem)] max-h-[1200px] min-h-[500px] items-end sm:items-center bg-primary-800 md:bg-[image:var(--bg-banner-desktop)] bg-[image:var(--bg-banner-mobile)] bg-cover bg-no-repeat pb-4 sm:pb-0 relative after:absolute after:inset-0 after:bg-gradient-to-br after:from-black/50 after:to-transparent"
+          style={{
+            "--bg-banner-desktop": `url(${slide.image})`,
+            "--bg-banner-mobile": `url(${slide.mobileImage})`,
+          }}
         >
-          <div class="max-w-[2100px] mx-auto px-4 lg:px-12 w-full">
+          <div class="max-w-[2100px] mx-auto px-4 lg:px-12 w-full z-10">
             <p class="text-white h2 max-w-2xl">{slide.title}</p>
             <p class="text-white text-lg md:text-xl max-w-xl mb-8">{slide.description}</p>
             <div class="flex gap-2">
