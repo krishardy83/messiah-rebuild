@@ -1,0 +1,61 @@
+---
+import ProgramList, { Program } from "../../components/program-list.astro";
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Program List Preview"
+  description="Demo page of all program list types"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Content Grey Example", href: "/" },
+  ]}
+>
+  <p>All available programs with text:</p>
+  <ProgramList
+    class="bg-gray-400 p-4 flex-col"
+    programs={[
+      Program.Major,
+      Program.Minor,
+      Program.Concentration,
+      Program.PreHealthAdvising,
+      Program.ThreePlusPartnerPrograms,
+      Program.TeachingCertificate,
+      Program.Accelerated,
+      Program.EarlyAssurance,
+      Program.UndergraduateCertificate,
+    ]}
+    showText
+  />
+
+  <p>All available programs without text:</p>
+  <ProgramList
+    class="bg-gray-400 p-4"
+    programs={[
+      Program.Major,
+      Program.Minor,
+      Program.Concentration,
+      Program.PreHealthAdvising,
+      Program.ThreePlusPartnerPrograms,
+      Program.TeachingCertificate,
+      Program.Accelerated,
+      Program.EarlyAssurance,
+      Program.UndergraduateCertificate,
+    ]}
+  />
+</WithoutHero>
