@@ -1,9 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
-import ProgramList from "./program-list.astro";
-
-export type Program = "M" | "m" | "T" | "U";
+import ProgramList, { Program } from "./program-list.astro";
 
 interface Props extends HTMLAttributes<"article"> {
   title: string;

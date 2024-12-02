@@ -1,5 +1,6 @@
 ---
-import ProgramCard, { type Program } from "./program-card.astro";
+import ProgramCard from "./program-card.astro";
+import { Program } from "./program-list.astro";
 import Slider from "./slider.astro";
 
 async function getRelatedPrograms() {
@@ -15,7 +16,6 @@ async function getRelatedPrograms() {
   const thisProgram = programs.items.find(
     (program: any) => program.url_slug === "accounting-major"
   );
-  // const thisProgram = programs.items.find((program: any) => program.url_slug === slug);
 
   if (!thisProgram) {
     return [];
@@ -32,19 +32,19 @@ function getProgramTypes(program: any) {
   const types: Program[] = [];
 
   if (program.major === "Yes") {
-    types.push("M");
+    types.push(Program.Major);
   }
 
   if (program.minor === "Yes") {
-    types.push("m");
+    types.push(Program.Minor);
   }
 
   if (program.teaching_certification === "Yes") {
-    types.push("T");
+    types.push(Program.TeachingCertificate);
   }
 
   if (program.undergrad_certificates === "Yes") {
-    types.push("U");
+    types.push(Program.UndergraduateCertificate);
   }
 
   return types;

@@ -3,7 +3,18 @@ import type { ComponentProps, HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
 import Icon from "./icon.astro";
 
-export type Program = "M" | "m" | "T" | "U" | "C" | "O";
+export enum Program {
+  Major = "M",
+  Minor = "m",
+  Concentration = "C",
+  PreHealthAdvising = "P",
+  ThreePlusPartnerPrograms = "3+",
+  TeachingCertificate = "T",
+  Accelerated = "A",
+  EarlyAssurance = "E",
+  UndergraduateCertificate = "UC",
+  Online = "O",
+}
 
 interface Props extends HTMLAttributes<"article"> {
   programs: Program[];
@@ -12,21 +23,29 @@ interface Props extends HTMLAttributes<"article"> {
 
 const { programs, showText = false, class: className, ...props } = Astro.props;
 
-const colorMap = {
+const colorMap: { [K in Program]: string } = {
   M: "#273d5e",
   m: "#4d87a9",
+  C: "#ab4e42",
+  P: "#7477b8",
+  "3+": "#84ab8b",
   T: "#e37b65",
-  U: "#e37b65",
-  C: "#6697B8",
+  A: "#DCAC42",
+  E: "#afafaf",
+  UC: "#0a0a0ab3",
   O: "transparent",
 };
 
-const textMap = {
+const textMap: { [K in Program]: string } = {
   M: "Major",
   m: "Minor",
-  T: "Teaching",
-  U: "Undergraduate",
   C: "Concentration",
+  P: "Pre-Health Advising",
+  "3+": "3+ Partner Programs",
+  T: "Teaching Certificate",
+  A: "Accelerated",
+  E: "Early Assurance",
+  UC: "Undergraduate Certificate",
   O: "Online",
 };
 
@@ -34,8 +53,12 @@ const iconMap: { [K in Program]: ComponentProps<typeof Icon>["name"] | null } = 
   M: null,
   m: null,
   T: null,
-  U: null,
+  UC: null,
+  A: null,
+  E: null,
   C: null,
+  P: null,
+  "3+": null,
   O: "computer",
 };
 ---
