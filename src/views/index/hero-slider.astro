@@ -166,7 +166,7 @@ function getFirstSlide() {
           role="tabpanel"
           x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
           :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-          class="w-full flex h-[75vw] min-h-[800px] max-h-[1200px] items-center bg-primary-800 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.75),transparent),var(--bg-banner)] bg-cover bg-no-repeat"
+          class="w-full flex h-[calc(100vh_+_6rem)] md:h-[calc(90vh_+_8rem)] max-h-[1200px] min-h-[500px] items-end sm:items-center bg-primary-800 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.75),transparent),var(--bg-banner)] bg-cover bg-no-repeat pb-4 sm:pb-0"
           style={{ "--bg-banner": `url(${slide.image})` }}
         >
           <div class="max-w-[2100px] mx-auto px-4 lg:px-12 w-full">
