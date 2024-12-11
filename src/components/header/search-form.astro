@@ -62,13 +62,13 @@ const { transparent, class: className, ...props } = Astro.props;
     :aria-labelledby="$id('button')"
     class="absolute left-0 top-0 right-0 bg-primary-800 text-white duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
   >
-    <form class="max-w-6xl mx-auto px-4 flex relative">
+    <form action="/search/search-results?" class="max-w-6xl mx-auto px-4 flex relative">
       <input
         type="search"
         x-ref="input"
         class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
         placeholder="What are you searching for?"
-        name="s"
+        name="q"
         autofocus
       />
       <button
