@@ -5,6 +5,10 @@ export function cn(...classes: ClassValue[]) {
   return twMerge(clsx(...classes));
 }
 
+export function slugify(str: string) {
+  return str.toLowerCase().replace(/[\W_\s]+/g, "-");
+}
+
 export function createId(length: number = 5) {
   const CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
