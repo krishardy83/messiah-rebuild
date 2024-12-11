@@ -28,7 +28,7 @@ const { transparent } = Astro.props;
   x-init="scroll"
   :data-scrolling="scrolling"
   :data-compress="compress"
-  @scroll.window="scroll"
+  x-on:scroll.window="scroll"
 >
   <header class="mx-auto max-w-6xl px-4">
     <nav class="flex items-end flex-wrap" data-analytics="navigation">
@@ -67,14 +67,14 @@ const { transparent } = Astro.props;
                     focusAfter && focusAfter.focus();
                   }
                 }"
-                @keydown.escape.prevent.stop="close($refs.button)"
-                @focusin.window="!$refs.group.contains($event.target) && close()"
+                x-on:keydown.escape.prevent.stop="close($refs.button)"
+                x-on:focusin.window="!$refs.group.contains($event.target) && close()"
                 x-id="['group', 'button']"
               >
                 <button
                   type="button"
                   x-ref="button"
-                  @click="toggle()"
+                  x-on:click="toggle()"
                   :id="$id('button')"
                   :aria-expanded="open"
                   :aria-controls="$id('group')"
@@ -99,7 +99,7 @@ const { transparent } = Astro.props;
                   x-transition.opacity
                   x-ref="group"
                   x-cloak
-                  @click.outside="close($refs.button)"
+                  x-on:click.outside="close($refs.button)"
                   :id="$id('group')"
                   :aria-labelledby="$id('button')"
                   class="absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
@@ -167,14 +167,14 @@ const { transparent } = Astro.props;
                     focusAfter && focusAfter.focus();
                   }
                 }"
-                @keydown.escape.prevent.stop="close($refs.button)"
-                @focusin.window="!$refs.group.contains($event.target) && close()"
+                x-on:keydown.escape.prevent.stop="close($refs.button)"
+                x-on:focusin.window="!$refs.group.contains($event.target) && close()"
                 x-id="['group', 'button']"
               >
                 <button
                   type="button"
                   x-ref="button"
-                  @click="toggle()"
+                  x-on:click="toggle()"
                   :id="$id('button')"
                   :aria-expanded="open"
                   :aria-controls="$id('group')"
@@ -199,7 +199,7 @@ const { transparent } = Astro.props;
                   x-transition.opacity
                   x-ref="group"
                   x-cloak
-                  @click.outside="close($refs.button)"
+                  x-on:click.outside="close($refs.button)"
                   :id="$id('group')"
                   :aria-labelledby="$id('button')"
                   class="absolute left-0 mt-6 w-full bg-gray-100 py-12 transition-opacity duration-300 z-30"

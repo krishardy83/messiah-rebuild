@@ -35,12 +35,12 @@ const { transparent } = Astro.props;
       focusAfter && focusAfter.focus();
     }
   }"
-  @keydown.escape.prevent.stop="close($refs.button)"
+  x-on:keydown.escape.prevent.stop="close($refs.button)"
   x-trap="open"
 >
   <button
     type="button"
-    @click="toggle()"
+    x-on:click="toggle()"
     x-ref="button"
     :aria-label="open ? 'close menu' : 'open menu'"
     :aria-expanded="open"
@@ -109,7 +109,7 @@ const { transparent } = Astro.props;
               <button
                 type="button"
                 x-ref="button"
-                @click="toggle()"
+                x-on:click="toggle()"
                 :id="$id('button')"
                 :aria-expanded="open"
                 :aria-controls="$id('group')"
