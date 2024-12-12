@@ -15,18 +15,33 @@ const { title, tabs, class: className, ...props } = Astro.props;
 
 <dialog
   data-analytics="tabbed-dialog"
-  data-tabbed-dialog
-  class={cn("absolute inset-0 w-full h-full overflow-y-auto", className)}
+  class={cn("absolute inset-0 z-10 w-full h-full overflow-y-auto", className)}
+  x-show="selected !== null"
+  open="selected !== null"
+  style="display: none"
+  @keydown.escape.prevent.stop="selected = null"
+  x-id="['modal-title']"
+  :aria-labelledby="$id('modal-title')"
   {...props}
 >
-  <div class="wrapper py-24 text-white">
+  <div
+    class="wrapper py-24 text-white"
+    x-on:click.stop
+  >
     <header class="flex items-center justify-center relative">
-      {title ? <h3 class="text-center h2">{title}</h3> : null}
+      {title ? (
+        <h3
+          class="text-center h2"
+          :id="$id('modal-title')"
+        >
+          {title}
+        </h3>
+      ) : null}
       <button
         type="button"
         class="absolute right-0 hover:text-tertiary-400 transition-colors"
         aria-label="close dialog"
-        data-tabbed-dialog-close
+        @click="selected = null"
       >
         <Icon name="close" class="size-10" />
       </button>
@@ -39,9 +54,10 @@ const { title, tabs, class: className, ...props } = Astro.props;
             class="font-title uppercase font-bold text-lg md:text-2xl border-b-2 border-spacing-2 border-transparent aria-selected:border-tertiary-400 aria-selected:text-tertiary-400"
             type="button"
             role="tab"
-            aria-selected={index === 0 ? "true" : "false"}
+            :aria-selected={`selected === 'index-${index}' ? "true" : "false"`}
             id={`tabbed-dialog-tab-${index}`}
             aria-controls={`tabbed-dialog-tabpanel-${index}`}
+            @click={`selected = 'index-${index}'`}
           >
             {tab.name}
           </button>
@@ -52,58 +68,3 @@ const { title, tabs, class: className, ...props } = Astro.props;
     <slot />
   </div>
 </dialog>
-
-<script>
-  let buttons = document.querySelectorAll<HTMLButtonElement>("[data-tabbed-dialog-trigger]");
-  let dialog = document.querySelector<HTMLDialogElement>("[data-tabbed-dialog]");
-  let close = dialog?.querySelector<HTMLButtonElement>("[data-tabbed-dialog-close]");
-  let tabs = document.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
-  let panels = document.querySelectorAll<HTMLDivElement>('[role="tabpanel"]');
-
-  function handleSelectTab(tab: string) {
-    let button = Array.from(tabs).find((b) => b.getAttribute("aria-controls") === tab);
-
-    tabs.forEach((tab) => {
-      tab.setAttribute("aria-selected", "false");
-    });
-
-    panels.forEach((panel) => {
-      panel.setAttribute("hidden", "");
-
-      if (panel.getAttribute("id") === tab) {
-        panel.removeAttribute("hidden");
-        button?.setAttribute("aria-selected", "true");
-      }
-    });
-  }
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      let target = button.getAttribute("data-tabbed-dialog-trigger");
-
-      if (target) {
-        handleSelectTab(target);
-      }
-
-      dialog?.show();
-    });
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      dialog?.close();
-    }
-  });
-
-  close?.addEventListener("click", () => dialog?.close());
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", (event) => {
-      let target = (event.target as HTMLButtonElement).getAttribute("aria-controls");
-
-      if (target) {
-        handleSelectTab(target);
-      }
-    });
-  });
-</script>
