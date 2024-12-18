@@ -23,7 +23,8 @@ const entries: {
   { icon: "check", name: "Next steps", href: "/", type: "graduate" },
 ];
 
-const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
+// const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
+const studentType = "undergraduate";
 
 function getEntriesByCookie() {
   return entries.filter((entry) => {

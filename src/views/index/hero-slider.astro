@@ -84,7 +84,8 @@ const slides = [
 ];
 
 const { randomStart  = false } = Astro.props;
-const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
+// const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
+const studentType = "undergraduate";
 
 function getSlidesByCookie() {
   return slides.filter((slide) => {
@@ -98,7 +99,8 @@ function getSlidesByCookie() {
 
 function getFirstSlide() {
   if (randomStart) {
-    return Math.floor(Math.random() * getSlidesByCookie().length) + 1;
+    // return Math.floor(Math.random() * getSlidesByCookie().length) + 1;
+    return Math.floor(Math.random() * 4) + 1;
   }
 
   return 1;
