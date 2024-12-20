@@ -16,6 +16,12 @@ export enum Program {
   Online = "O",
   Hybrid = "H",
   Campus = "CA",
+  Track = "TR",
+  CertificateAdvancedGraduateStudies = "GS",
+  NonDegree = "N",
+  PaTeachingCertification = "PA",
+  GraduateCertificate = "G",
+
 }
 
 interface Props extends HTMLAttributes<"article"> {
@@ -38,6 +44,11 @@ const colorMap: { [K in Program]: string } = {
   O: "transparent",
   H: "transparent",
   CA: "transparent",
+  TR: "#4d87a9",
+  GS: "#e37b65",
+  N: "#84ab8b",
+  PA: "#ab4e42",
+  G: "#7477b8",
 };
 
 const textMap: { [K in Program]: string } = {
@@ -53,6 +64,11 @@ const textMap: { [K in Program]: string } = {
   O: "Online",
   H: "Hybrid",
   CA: "Campus",
+  TR: "Track",
+  GS: "Certificate in Advanced Graduate Studies",
+  N: "Non-Degree",
+  PA: "Pa Teaching Certification",
+  G: "Graduate Certificate",
 };
 
 const iconMap: { [K in Program]: ComponentProps<typeof Icon>["name"] | null } = {
@@ -68,6 +84,11 @@ const iconMap: { [K in Program]: ComponentProps<typeof Icon>["name"] | null } = 
   O: "computer",
   CA: "library",
   H: "scale",
+  TR: null,
+  GS: null,
+  N: null,
+  PA: null,
+  G: null,
 };
 ---
 

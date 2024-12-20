@@ -26,7 +26,7 @@ import WithoutHero from "../../layouts/without-hero.astro";
     { name: "Content Grey Example", href: "/" },
   ]}
 >
-  <p>All available programs with text:</p>
+  <h2>All UG programs:</h2>
   <ProgramList
     class="bg-gray-400 p-4 flex-col"
     programs={[
@@ -39,14 +39,9 @@ import WithoutHero from "../../layouts/without-hero.astro";
       Program.Accelerated,
       Program.EarlyAssurance,
       Program.UndergraduateCertificate,
-      Program.Online,
-      Program.Hybrid,
-      Program.Campus,
     ]}
     showText
   />
-
-  <p>All available programs without text:</p>
   <ProgramList
     class="bg-gray-400 p-4"
     programs={[
@@ -59,9 +54,54 @@ import WithoutHero from "../../layouts/without-hero.astro";
       Program.Accelerated,
       Program.EarlyAssurance,
       Program.UndergraduateCertificate,
+    ]}
+  />
+
+  <h2>All Grad programs:</h2>
+  <ProgramList
+    class="bg-gray-400 p-4 flex-col"
+    programs={[
+      Program.Concentration,
+      Program.Track,
+      Program.CertificateAdvancedGraduateStudies,
+      Program.NonDegree,
+      Program.PaTeachingCertification,
+      Program.GraduateCertificate
+    ]}
+    showText
+  />
+
+  <ProgramList
+    class="bg-gray-400 p-4"
+    programs={[
+      Program.Concentration,
+      Program.Track,
+      Program.CertificateAdvancedGraduateStudies,
+      Program.NonDegree,
+      Program.PaTeachingCertification,
+      Program.GraduateCertificate
+    ]}
+  />
+
+  <h2>Program Format:</h2>
+  <ProgramList
+    class="bg-gray-400 p-4 flex-col"
+    programs={[
+      Program.Online,
+      Program.Hybrid,
+      Program.Campus,
+
+    ]}
+    showText
+  />
+
+  <ProgramList
+    class="bg-gray-400 p-4"
+    programs={[
       Program.Online,
       Program.Hybrid,
       Program.Campus,
     ]}
   />
+
 </WithoutHero>
