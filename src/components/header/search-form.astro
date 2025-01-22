@@ -55,12 +55,11 @@ const { transparent, class: className, ...props } = Astro.props;
   <search
     x-show="open"
     x-ref="form"
-    x-transition.opacity
     x-cloak
     @click.outside="close($refs.button)"
     :id="$id('form')"
     :aria-labelledby="$id('button')"
-    class="absolute left-0 top-0 right-0 bg-primary-800 text-white duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
+    class="absolute left-0 top-0 right-0 bg-primary-800 text-white p-8 z-10 group-data-[compress='true']:translate-y-12"
   >
     <form
       action="https://cascade-prod.messiah.edu/search/search-results"
