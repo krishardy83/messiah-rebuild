@@ -22,7 +22,15 @@ const accordionId = id || createId();
   data-analytics="accordion"
   class={cn("border border-gray-300 mb-4", { "not-prose": !allowProse }, className)}
   {...props}
-  x-data={`{ show: location.search.includes('${accordionId}') }`}
+  x-data={`{
+    show: location.search.includes('${accordionId}'),
+
+    init() {
+      if (this.show) {
+        $el.scrollIntoView({ block: 'center' });
+      }
+    }
+  }`}
 >
   <h3>
     <button
