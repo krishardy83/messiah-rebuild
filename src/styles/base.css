@@ -13,6 +13,14 @@
     @apply font-title text-3xl font-bold uppercase text-white md:text-4xl lg:text-6xl xl:text-8xl;
   }
 
+  .h1-md {
+    @apply font-title text-2xl font-bold uppercase text-white md:text-3xl lg:text-5xl xl:text-7xl;
+  }
+
+  .h1-sm {
+    @apply font-title text-xl font-bold uppercase text-white md:text-3xl lg:text-5xl xl:text-6xl;
+  }
+
   .h2 {
     @apply mb-4 font-title text-4xl font-bold md:text-5xl lg:text-6xl;
   }
@@ -61,6 +69,13 @@
 
   .wrapper {
     @apply mx-auto max-w-6xl px-4;
+  }
+
+  .wrapper-md {
+    @apply mx-auto max-w-5xl px-4;
+  }
+  .wrapper-sm {
+    @apply mx-auto max-w-4xl px-4;
   }
 }
 
