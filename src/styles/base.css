@@ -77,8 +77,11 @@
   .wrapper-sm {
     @apply mx-auto max-w-4xl px-4;
   }
-}
 
+  .bg-gradient {
+    @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600 ;
+  }
+}
 @layer utilities {
   .text-shadow {
     text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
