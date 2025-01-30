@@ -23,7 +23,7 @@ const accordionId = id || createId();
   class={cn("border border-gray-300 mb-4", { "not-prose": !allowProse }, className)}
   {...props}
   x-data={`{
-    show: location.search.includes('${accordionId}'),
+    show: location.search.slice(1) === '${accordionId}',
 
     init() {
       if (this.show) {
