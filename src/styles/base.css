@@ -36,53 +36,7 @@
   .paragraph {
     @apply leading-relaxed md:text-lg;
   }
-}
 
-@layer components {
-  .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-x-2 px-4 py-3 text-center font-title text-base/5 font-bold uppercase tracking-wider transition-all md:text-base/5;
-  }
-
-  .btn-primary {
-    @apply btn bg-gradient-to-r from-button-from to-button-to text-white hover:opacity-80;
-  }
-
-  .btn-secondary {
-    @apply btn bg-gradient-to-r from-tertiary-500 to-secondary-500 text-white hover:opacity-80;
-  }
-
-  .btn-tertiary {
-    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800;
-  }
-
-  .btn-quaternary {
-    @apply btn bg-gray-100 text-primary-800 hover:bg-gray-200 focus-visible:bg-gray-200;
-  }
-
-  .link {
-    @apply transition-colors hover:text-tertiary-400 focus-visible:text-tertiary-400;
-  }
-
-  .rich-text {
-    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-h4:text-xl prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
-  }
-
-  .wrapper {
-    @apply mx-auto max-w-6xl px-4;
-  }
-
-  .wrapper-md {
-    @apply mx-auto max-w-5xl px-4;
-  }
-  .wrapper-sm {
-    @apply mx-auto max-w-4xl px-4;
-  }
-
-  .bg-gradient {
-    @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600 ;
-  }
-}
-@layer utilities {
   .text-shadow {
     text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
   }
@@ -129,5 +83,50 @@
 
   .img-float-left {
     @apply float-left mx-4 mt-0 w-full md:w-1/2 lg:w-1/3;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-x-2 px-4 py-3 text-center font-title text-base/5 font-bold uppercase tracking-wider transition-all md:text-base/5;
+  }
+
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-button-from to-button-to text-white hover:opacity-80;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gradient-to-r from-tertiary-500 to-secondary-500 text-white hover:opacity-80;
+  }
+
+  .btn-tertiary {
+    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800;
+  }
+
+  .btn-quaternary {
+    @apply btn bg-gray-100 text-primary-800 hover:bg-gray-200 focus-visible:bg-gray-200;
+  }
+
+  .link {
+    @apply transition-colors hover:text-tertiary-400 focus-visible:text-tertiary-400;
+  }
+
+  .rich-text {
+    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-h4:text-xl prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
+  }
+
+  .wrapper {
+    @apply mx-auto max-w-6xl px-4;
+  }
+
+  .wrapper-md {
+    @apply mx-auto max-w-5xl px-4;
+  }
+  .wrapper-sm {
+    @apply mx-auto max-w-4xl px-4;
+  }
+
+  .bg-gradient {
+    @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600 ;
   }
 }

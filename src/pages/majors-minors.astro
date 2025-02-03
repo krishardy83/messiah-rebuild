@@ -1,0 +1,851 @@
+---
+import Icon from "../components/icon.astro";
+import WithoutHero from "../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Majors, minors, and programs"
+  description="Majors, minors, and programs"
+  sidebarLinks={[
+    {
+      title: "Academics",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Academics", href: "/" },
+    { name: "Majors, minors, and programs", href: "/" },
+  ]}
+>
+  <!-- <style>
+    .search-input {
+      border: 1px solid #ccc;
+      width: 100%;
+      padding: 7px 6px 7px 36px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font:
+        18px/24px "aptifer-sans",
+        sans-serif;
+      color: #2c4263;
+      background: white
+        url("https://www.messiah.edu/site/custom_scripts/styles/img/courses/ico-001.png") no-repeat
+        10px 11px;
+      appearance: none;
+      box-sizing: border-box !important;
+    }
+
+    .tabs {
+      margin: unset !important;
+      padding: unset !important;
+      list-style: none !important;
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .tabs li {
+      padding: unset !important;
+    }
+
+    @media (width < 768px) {
+      .tabs li {
+        width: 50% !important;
+      }
+    }
+
+    @media (width < 480px) {
+      .tabs li {
+        width: 100% !important;
+      }
+    }
+
+    .tab-button {
+      border: 1px solid #ccc;
+      background-color: white;
+      color: #42648b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      justify-content: center;
+      font-family: "Aptifer Sans LT W01", sans-serif;
+      height: 50px;
+      padding-inline: 20px;
+      margin-bottom: -1px;
+      margin-left: -1px;
+      cursor: pointer;
+      appearance: none;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .tab-button:is(.active) {
+      background-color: #273d5e;
+      border-color: #273d5e;
+      color: white;
+    }
+
+    .tab-title {
+      text-transform: uppercase;
+    }
+
+    .tab-subtitle {
+      font-size: 12px;
+    }
+
+    .selects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-block: 16px 24px;
+    }
+
+    .select {
+      border: 1px solid #ccc;
+      padding: 7px 6px;
+      border-radius: 6px;
+      font:
+        14px/24px "aptifer-sans",
+        sans-serif;
+      color: #2c4263;
+      background-color: white;
+    }
+
+    .select-clear {
+      background-color: unset;
+      border: unset;
+      color: #2c4263;
+      font:
+        16px/24px "aptifer-sans",
+        sans-serif;
+      appearance: none;
+      padding-inline: 8px;
+      cursor: pointer;
+    }
+
+    .reset-button {
+      background-color: unset;
+      border: unset;
+      font: inherit;
+      color: #2c4263;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .courses-list {
+      list-style-type: none;
+      margin: unset;
+      padding: unset !important;
+    }
+
+    .courses-entry {
+      display: flex;
+      align-items: center;
+      gap: 6px 16px;
+      border-bottom: 1px solid #ccc;
+      padding: 8px !important;
+      background: none !important;
+      width: 100% !important;
+    }
+
+    @media (width < 580px) {
+      .courses-entry {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+    }
+
+    .courses-entry:hover {
+      background-color: #eee;
+    }
+
+    .courses-button {
+      background-color: unset;
+      border: unset;
+      font: inherit;
+      color: #2c4263;
+      font:
+        15px/17px "aptifer-sans",
+        sans-serif;
+      appearance: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .courses-number {
+      background-color: #ddd;
+      border: 1px solid #666;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 0.85em;
+      padding: 0 4px;
+      text-transform: uppercase;
+      font:
+        13px/17px aptifer-sans,
+        sans-serif;
+    }
+
+    .dialog {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+    }
+
+    .dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(75, 93, 121, 0.9);
+    }
+
+    .dialog-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(100%, 660px);
+      box-sizing: border-box;
+      background-color: white;
+      padding: 60px 40px 20px 40px;
+      overflow-y: auto;
+    }
+
+    .dialog-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background-color: unset;
+      border: unset;
+      padding: unset;
+      cursor: pointer;
+    }
+
+    .dialog-date {
+      display: flex;
+      align-items: center;
+      font-family: "Aptifer Sans LT W01", sans-serif;
+      font-size: 20px;
+      color: #5c5c5c;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .dialog-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #273d5e;
+      line-height: 40px;
+    }
+
+    .dialog-description {
+      font-family: "Aptifer Sans LT W01", sans-serif;
+      font-size: 16px;
+      color: #787878;
+      line-height: 28px;
+    }
+
+    .dialog-details {
+      background: #f0f0f0;
+      border-radius: 8px;
+      padding: 20px;
+      line-height: 28px;
+    }
+
+    .detail {
+      display: flex;
+    }
+
+    .detail dd {
+      margin-left: 4px;
+    }
+  </style> -->
+
+  <h2 class="h3">Majors, Minors and Programs</h2>
+
+  <div
+    x-data="{
+        programs: [],
+        selected: null,
+        loading: true,
+        letters: 'abcdefghijklmnopqrstuvwxyz'.split(''),
+        error: null,
+        filters: {
+          quest: '',
+          education: '',
+          query: '',
+        },
+        open: null,
+        dropdowns: {
+          quest: getQuestValues(),
+          education: getEducationValues()
+        },
+        tabs: getTabs(),
+
+        types: {
+          M: {
+            key: 'M',
+            label:'Major',
+            color: '#273d5e',
+            description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+          },
+          m: {
+            key: 'm',
+            label: 'Minor',
+            color: '#4d87a9',
+            description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+          },
+          C: {
+            key: 'C',
+            label: 'Concentration',
+            color: '#ab4e42',
+            description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+          },
+          P: {
+            key: 'P',
+            label: 'Pre-Health Advising',
+            color: '#7477b8',
+            description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+          },
+          '3+': {
+            key: '3+',
+            label: '3+ Partner Programs',
+            color: '#84ab8b',
+            description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+          },
+          T: {
+            key: 'T',
+            label: 'Teaching Certificate',
+            color: '#e37b65',
+            description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+          },
+          A: {
+            key: 'A',
+            label: 'Accelerated',
+            color: '#DCAC42',
+            description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+          },
+          E: {
+            key: 'E',
+            label: 'Early Assurance',
+            color: '#afafaf',
+            description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+          },
+          UC: {
+            key: 'UC',
+            label: 'Undergrad Certificate',
+            color: '#0a0a0ab3',
+            description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+          },
+          AD: {
+            key: 'AD',
+            label: 'Adult Degree Programs',
+            color: '#84ab8b',
+            description: '',
+          },
+        },
+
+        getTypes(program) {
+          const types = [];
+
+          if (program.major === 'true') types.push(this.types['M']);
+          if (program.minor === 'true') types.push(this.types['m']);
+          if (program.concentration === 'true') types.push(this.types['C']);
+          if (program.teaching_certification === 'true') types.push(this.types['P']);
+          if (program.accelerated === 'true') types.push(this.types['A']);
+          if (program.early_assurance === 'true') types.push(this.types['E']);
+          if (program.undergrad_certificate === 'true') types.push(this.types['UC']);
+
+          return types;
+        },
+
+        transformPrograms(programs) {
+          return programs.map((program) => {
+            const degrees = program.degree === 'none' ? [] : program.degree.split(',');
+            const url = new URL(location.origin);
+  
+            url.pathname = program.program_url;
+
+            return {
+              name: program.program_name,
+              degrees,
+              url: url.toString(),
+              types: this.getTypes(program),
+            };
+          });
+        },
+
+        init() {
+          this.$nextTick(() => this.select('all'));
+          
+          fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+            .then((response) => response.json())
+            .then((data) => {
+              this.programs = this.transformPrograms(data.items);
+              this.loading = false;
+            })
+            .catch((error) => {
+              this.error = `Could not fetch courses data (${error.message})`;
+              this.loading = false;
+            });
+        },
+
+        select(key) {
+          this.selected = key;
+        },
+
+        isSelected(key) {
+          return this.selected === key;
+        },
+  
+        get categorizedCourses() {
+          if (this.selected === 'all') {
+            return this.programs;
+          }
+
+          if (this.selected === 'other') {
+            return this.programs.filter((course) => course.summer_term !== 'UG Summer Early 6 Week' && course.summer_term !== 'UG Summer Late 6 Week' && course.summer_term !== 'UG Full Summer');
+          }
+
+          return this.programs.filter((course) => course.summer_term === this.selected);
+        },
+
+        get filteredCourses() {
+          const search = this.filters.query.trim().toLowerCase();
+          const quest = this.filters.quest;
+          const education = this.filters.education;
+
+          return this.categorizedCourses.filter((course) => {
+            const name = course.course_name.toLowerCase();
+            const number = course.course_number.toLowerCase();
+
+            const matchesQuery = name.includes(search) || number.includes(search);
+            const matchesQuest = quest ? course.attributes.includes(quest) : true;
+            const matchesEducation = education ? course.attributes.includes(education) : true;
+
+            return matchesQuery && matchesQuest && matchesEducation;
+          }).sort((a, b) => a.course_name.localeCompare(b.course_name));
+        },
+
+        filterSelectOptions(arr) {
+          const attributes = this.getUniqueAttributes();
+
+          return arr.filter((option) => {
+            return attributes.has(option.code);
+          });
+        },
+
+        formatDate(date) {
+          return new Date(date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
+        },
+
+        getUniqueAttributes() {
+          const unique = new Set();
+
+          for (let i = 0; i < this.programs.length; i++) {
+            for (let j = 0; j < this.programs[i].attributes.length; j++) {
+              unique.add(this.programs[i].attributes[j]);
+            }
+          }
+
+          return unique;
+        },
+
+        getEntryDetails(type) {
+          if (!this.open) {
+            return null;
+          }
+
+          const { attributes } = this.open;
+
+          return attributes.map((attribute) => {
+            return this.dropdowns[type].find((option) => option.code === attribute)?.label;
+          }).filter((attribute) => {
+            return Boolean(attribute) && attribute !== 'None';
+          }).join(', ');
+        },
+
+        reset() {
+          this.filters.quest = '';
+          this.filters.education = '';
+          this.filters.query = '';
+        }
+      }"
+  >
+    <div class="bg-gray-100 p-4 mb-8">
+      <p class="mb-4">
+        We can help you find the right major. Search by keywords or interests to explore which of
+        Messiah's 80+ academic programs would be a good fit for you.
+      </p>
+
+      <div class="relative">
+        <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
+        <input
+          type="search"
+          placeholder="Search the program list..."
+          aria-label="Search the program list..."
+          x-model="filters.query"
+          class="bg-white w-full min-h-12 px-4 pl-12"
+        />
+      </div>
+    </div>
+
+    <ol class="flex gap-2 mb-8">
+      <template x-for="letter in letters">
+        <li>
+          <a
+            class="font-semibold text-3xl font-title text-gray-600"
+            :href="`#${letter}`"
+            x-text="letter.toUpperCase()"></a>
+        </li>
+      </template>
+    </ol>
+
+    <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
+      <template x-for="[key, type] in Object.entries(types)">
+        <button type="button" role="switch" class="text-xs flex items-center gap-2">
+          <span
+            x-text="key"
+            class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+            :style="`background-color: ${type.color}`"></span>
+          <span x-text="type.label" class="uppercase"></span>
+        </button>
+      </template>
+    </div>
+
+    <!-- <ul
+      class="tabs"
+      x-ref="tablist"
+      @keydown.right.prevent.stop="$focus.wrap().next()"
+      @keydown.home.prevent.stop="$focus.first()"
+      @keydown.page-up.prevent.stop="$focus.first()"
+      @keydown.left.prevent.stop="$focus.wrap().prev()"
+      @keydown.end.prevent.stop="$focus.last()"
+      @keydown.page-down.prevent.stop="$focus.last()"
+      role="tablist"
+    >
+      <template x-for="tab in tabs">
+        <li>
+          <button
+            :id="'tab' + tab.key"
+            @click="select(tab.key)"
+            @mousedown.prevent
+            @focus="select(tab.key)"
+            type="button"
+            :tabindex="isSelected(tab.key) ? 0 : -1"
+            :aria-selected="isSelected(tab.key)"
+            :class="isSelected(tab.key) ? 'active' : ''"
+            class="tab-button"
+            role="tab"
+          >
+            <span x-text="tab.title" class="tab-title"></span>
+            <span x-text="tab.subtitle" class="tab-subtitle"></span>
+          </button>
+        </li>
+      </template>
+    </ul> -->
+
+    <!-- <div class="selects">
+      <select x-model="filters.quest" class="select" @change="filters.education = ''">
+        <option value="" disabled selected>Filter by quest area</option>
+
+        <template x-for="option in filterSelectOptions(dropdowns.quest)">
+          <option :value="option.code" x-text="option.label"></option>
+        </template>
+      </select>
+
+      <select x-model="filters.education" class="select" @change="filters.quest = ''">
+        <option value="" disabled selected>Filter by general education</option>
+
+        <template x-for="option in filterSelectOptions(dropdowns.education)">
+          <option :value="option.code" x-text="option.label"></option>
+        </template>
+      </select>
+
+      <button
+        class="select-clear"
+        x-show="filters.quest || filters.education"
+        type="button"
+        @click="filters.quest = ''; filters.education = ''"
+      >
+        Reset
+      </button>
+    </div> -->
+
+    <ul class="text-sm">
+      <template x-for="program in programs">
+        <li class="grid gap-2 grid-cols-[auto__auto_1fr_auto] border-b border-b-gray-200">
+          <button type="button" class="bg-gray-100 h-full w-8 flex justify-center items-center">
+            <Icon name="expand" class="size-5" />
+          </button>
+
+          <a x-text="program.name" class="block py-2 text-primary-800" :href="program.url"></a>
+
+          <ul class="flex gap-2 self-center">
+            <template x-for="degree in program.degrees">
+              <li
+                x-text="degree"
+                class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+              >
+              </li>
+            </template>
+          </ul>
+
+          <ul class="flex gap-4 ml-auto self-center">
+            <template x-for="type in program.types">
+              <li
+                x-text="type.key"
+                :style="`background-color: ${type.color}`"
+                class="w-5 h-5 text-white text-xs rounded-full flex items-center justify-center bg-slate-500"
+              >
+              </li>
+            </template>
+          </ul>
+          <!-- <button
+            type="button"
+            x-text="course.course_name"
+            @click="open = course"
+            class="courses-button"></button>
+          <span
+            x-show="tab.key === 'all'"
+            x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
+            class="courses-number"></span>
+          <span x-show="tab.key !== 'all'" x-text="course.course_number" class="courses-number"
+          ></span> -->
+        </li>
+      </template>
+    </ul>
+    <!-- <div>
+      <template x-for="tab in tabs">
+        <section x-show="isSelected(tab.key)" :aria-labelledby="'tab' + tab.key" role="tabpanel">
+          <ul class="courses-list">
+            <template x-for="course in filteredCourses">
+              <li class="courses-entry">
+                <button
+                  type="button"
+                  x-text="course.course_name"
+                  @click="open = course"
+                  class="courses-button"></button>
+                <span
+                  x-show="tab.key === 'all'"
+                  x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
+                  class="courses-number"></span>
+                <span
+                  x-show="tab.key !== 'all'"
+                  x-text="course.course_number"
+                  class="courses-number"></span>
+              </li>
+            </template>
+          </ul>
+
+          <p role="alert" x-show="loading">Loading courses data, please wait...</p>
+
+          <p role="alert" x-show="error" x-text="error"></p>
+
+          <p role="alert" x-show="filteredCourses.length === 0 && !loading && !error">
+            No courses found with your filters.
+            <button type="button" @click="reset()" class="reset-button">Reset</button>
+          </p>
+        </section>
+      </template>
+    </div> -->
+
+    <template x-teleport="body">
+      <div
+        x-show="Boolean(open)"
+        style="display: none"
+        x-on:keydown.escape.prevent.stop="open = null"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="dialog"
+      >
+        <div
+          x-show="Boolean(open)"
+          @click="open = null"
+          x-transition.opacity.duration.300
+          class="dialog-backdrop"
+        >
+        </div>
+
+        <div
+          x-show="Boolean(open)"
+          x-transition.opacity.duration.300
+          x-trap.noscroll.inert="open"
+          class="dialog-panel"
+        >
+          <button
+            type="button"
+            x-on:click="open = null"
+            aria-label="Close dialog"
+            class="dialog-close"
+          >
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              width="40"
+              height="40"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+
+          <p class="dialog-date">
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              width="24"
+              height="24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+              ></path>
+            </svg>
+
+            <span x-text="formatDate(open?.start_date)"></span> -
+            <span x-text="formatDate(open?.end_date)"></span>
+          </p>
+
+          <h2 :id="$id('modal-title')" class="dialog-title" x-text="open?.course_name"></h2>
+
+          <p class="dialog-description" x-text="open?.course_description"></p>
+
+          <div class="dialog-details">
+            <h3>Course Details</h3>
+
+            <dl>
+              <div class="detail">
+                <dt>Course Number:</dt>
+                <dd x-text="open?.course_number"></dd>
+              </div>
+
+              <div class="detail">
+                <dt>Professor:</dt>
+                <dd x-text="open?.instructor"></dd>
+              </div>
+
+              <div class="detail">
+                <dt>Credits:</dt>
+                <dd x-text="open?.credits"></dd>
+              </div>
+
+              <div class="detail" x-show="getEntryDetails('education')?.length > 0">
+                <dt>General Education:</dt>
+                <dd x-text="getEntryDetails('education')"></dd>
+              </div>
+
+              <div class="detail" x-show="getEntryDetails('quest')?.length > 0">
+                <dt>Quest:</dt>
+                <dd x-text="getEntryDetails('quest')"></dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <script is:inline>
+    function getTabs() {
+      return [
+        {
+          title: "All courses",
+          subtitle: null,
+          key: "all",
+        },
+        {
+          title: "Early summer",
+          subtitle: "May 19 - June 29",
+          key: "UG Summer Early 6 Week",
+        },
+        {
+          title: "Late summer",
+          subtitle: "July 7 - August 17",
+          key: "UG Summer Late 6 Week",
+        },
+        {
+          title: "Entire summer",
+          subtitle: "May 19 - August 17",
+          key: "UG Full Summer",
+        },
+        {
+          title: "Other terms",
+          subtitle: "Various dates",
+          key: "other",
+        },
+      ];
+    }
+
+    function getQuestValues() {
+      return [
+        { code: "G11", label: "1st Year Sem" },
+        { code: "G12", label: "Communication" },
+        { code: "G13", label: "Writing Enriched" },
+        { code: "G14", label: "Created&Called" },
+        { code: "G21A", label: "Math" },
+        { code: "G21B", label: "Lab Science" },
+        { code: "G21C", label: "Sci/Tech/World" },
+        { code: "G22A", label: "Social Science" },
+        { code: "G22B", label: "Euro History" },
+        { code: "G22C", label: "U.S. History" },
+        { code: "G23A", label: "Literature" },
+        { code: "G23B", label: "Phil/Religion" },
+        { code: "G23C", label: "Arts" },
+        { code: "G24", label: "Language" },
+        { code: "G24C", label: "Cross Cultural" },
+        { code: "G25", label: "Non-Western" },
+        { code: "G31", label: "Bible" },
+        { code: "G32", label: "Christian Beliefs" },
+        { code: "G41", label: "Physical Educ." },
+        { code: "G41W", label: "Wellness" },
+        { code: "G42A", label: "Ethics" },
+        { code: "G42B", label: "World Views" },
+        { code: "G42C", label: "Pluralism" },
+      ];
+    }
+
+    function getEducationValues() {
+      return [
+        { code: "GBIL", label: "Bible" },
+        { code: "GCHB", label: "Christian Beliefs" },
+        { code: "GDCC", label: "Domestic Cross-Cultural" },
+        { code: "GECG", label: "Ethics & the Common Good" },
+        { code: "GFYS", label: "First-Year Seminar" },
+        { code: "GGCC", label: "Global Cross-Cultural" },
+        { code: "GHOW", label: "Holistic Wellness" },
+        { code: "GHST", label: "History" },
+        { code: "GIPG", label: "Intercultural Perspectives - Global" },
+        { code: "GIPU", label: "Intercultural Perspectives - UG" },
+        { code: "GLA3", label: "Gen Ed Language Level 3" },
+        { code: "GLAK", label: "Literature/Arts" },
+        { code: "GLAN", label: "Language" },
+        { code: "GMAT", label: "Mathematics" },
+        { code: "GNSL", label: "Natural Science Lab" },
+        { code: "GOCO", label: "Oral Communication" },
+        { code: "GPHR", label: "Philosophy/Religion" },
+        { code: "GSSK", label: "Social Scientific Ways of Knowing" },
+        { code: "GWCO", label: "Written Communication" },
+      ];
+    }
+  </script>
+</WithoutHero>
