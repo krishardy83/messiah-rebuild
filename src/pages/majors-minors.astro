@@ -24,257 +24,14 @@ import WithoutHero from "../layouts/without-hero.astro";
     { name: "Majors, minors, and programs", href: "/" },
   ]}
 >
-  <!-- <style>
-    .search-input {
-      border: 1px solid #ccc;
-      width: 100%;
-      padding: 7px 6px 7px 36px;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      font:
-        18px/24px "aptifer-sans",
-        sans-serif;
-      color: #2c4263;
-      background: white
-        url("https://www.messiah.edu/site/custom_scripts/styles/img/courses/ico-001.png") no-repeat
-        10px 11px;
-      appearance: none;
-      box-sizing: border-box !important;
-    }
-
-    .tabs {
-      margin: unset !important;
-      padding: unset !important;
-      list-style: none !important;
-      display: flex;
-      flex-wrap: wrap;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .tabs li {
-      padding: unset !important;
-    }
-
-    @media (width < 768px) {
-      .tabs li {
-        width: 50% !important;
-      }
-    }
-
-    @media (width < 480px) {
-      .tabs li {
-        width: 100% !important;
-      }
-    }
-
-    .tab-button {
-      border: 1px solid #ccc;
-      background-color: white;
-      color: #42648b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      justify-content: center;
-      font-family: "Aptifer Sans LT W01", sans-serif;
-      height: 50px;
-      padding-inline: 20px;
-      margin-bottom: -1px;
-      margin-left: -1px;
-      cursor: pointer;
-      appearance: none;
-      width: 100%;
-      white-space: nowrap;
-    }
-
-    .tab-button:is(.active) {
-      background-color: #273d5e;
-      border-color: #273d5e;
-      color: white;
-    }
-
-    .tab-title {
-      text-transform: uppercase;
-    }
-
-    .tab-subtitle {
-      font-size: 12px;
-    }
-
-    .selects {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-block: 16px 24px;
-    }
-
-    .select {
-      border: 1px solid #ccc;
-      padding: 7px 6px;
-      border-radius: 6px;
-      font:
-        14px/24px "aptifer-sans",
-        sans-serif;
-      color: #2c4263;
-      background-color: white;
-    }
-
-    .select-clear {
-      background-color: unset;
-      border: unset;
-      color: #2c4263;
-      font:
-        16px/24px "aptifer-sans",
-        sans-serif;
-      appearance: none;
-      padding-inline: 8px;
-      cursor: pointer;
-    }
-
-    .reset-button {
-      background-color: unset;
-      border: unset;
-      font: inherit;
-      color: #2c4263;
-      appearance: none;
-      cursor: pointer;
-    }
-
-    .courses-list {
-      list-style-type: none;
-      margin: unset;
-      padding: unset !important;
-    }
-
-    .courses-entry {
-      display: flex;
-      align-items: center;
-      gap: 6px 16px;
-      border-bottom: 1px solid #ccc;
-      padding: 8px !important;
-      background: none !important;
-      width: 100% !important;
-    }
-
-    @media (width < 580px) {
-      .courses-entry {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-      }
-    }
-
-    .courses-entry:hover {
-      background-color: #eee;
-    }
-
-    .courses-button {
-      background-color: unset;
-      border: unset;
-      font: inherit;
-      color: #2c4263;
-      font:
-        15px/17px "aptifer-sans",
-        sans-serif;
-      appearance: none;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .courses-number {
-      background-color: #ddd;
-      border: 1px solid #666;
-      border-radius: 5px;
-      display: inline-block;
-      font-size: 0.85em;
-      padding: 0 4px;
-      text-transform: uppercase;
-      font:
-        13px/17px aptifer-sans,
-        sans-serif;
-    }
-
-    .dialog {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-    }
-
-    .dialog-backdrop {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(75, 93, 121, 0.9);
-    }
-
-    .dialog-panel {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: min(100%, 660px);
-      box-sizing: border-box;
-      background-color: white;
-      padding: 60px 40px 20px 40px;
-      overflow-y: auto;
-    }
-
-    .dialog-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background-color: unset;
-      border: unset;
-      padding: unset;
-      cursor: pointer;
-    }
-
-    .dialog-date {
-      display: flex;
-      align-items: center;
-      font-family: "Aptifer Sans LT W01", sans-serif;
-      font-size: 20px;
-      color: #5c5c5c;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .dialog-title {
-      font-size: 32px;
-      font-weight: bold;
-      color: #273d5e;
-      line-height: 40px;
-    }
-
-    .dialog-description {
-      font-family: "Aptifer Sans LT W01", sans-serif;
-      font-size: 16px;
-      color: #787878;
-      line-height: 28px;
-    }
-
-    .dialog-details {
-      background: #f0f0f0;
-      border-radius: 8px;
-      padding: 20px;
-      line-height: 28px;
-    }
-
-    .detail {
-      display: flex;
-    }
-
-    .detail dd {
-      margin-left: 4px;
-    }
-  </style> -->
-
   <h2 class="h3">Majors, Minors and Programs</h2>
 
   <div
     x-data="{
         programs: [],
         selected: null,
+        letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
         loading: true,
-        letters: 'abcdefghijklmnopqrstuvwxyz'.split(''),
         error: null,
         filters: {
           types: [],
@@ -348,6 +105,10 @@ import WithoutHero from "../layouts/without-hero.astro";
         },
 
         hasType(program, type) {
+          if (program === null) {
+            return false;
+          }
+
           return program[type] === 'true';
         },
 
@@ -362,8 +123,16 @@ import WithoutHero from "../layouts/without-hero.astro";
         getProgramURL(program) {
           const url = new URL(location.origin);
           url.pathname = program.program_url;
-          
+
           return url.toString();
+        },
+
+        getJobs(program) {
+          if (program.job_title !== '') {
+            return program.job_title.split(',');
+          }
+
+          return [];
         },
 
         transformPrograms(programs) {
@@ -374,7 +143,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           return programs.map((program) => {
             return {
               ...program,
-              name: program.program_name,
+              jobs: this.getJobs(program),
               degrees: this.getDegrees(program),
               url: this.getProgramURL(program),
             };
@@ -383,7 +152,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
         init() {
           this.$nextTick(() => this.select('all'));
-          
+
           fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
             .then((response) => response.json())
             .then((data) => {
@@ -403,7 +172,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         isSelected(key) {
           return this.selected === key;
         },
-  
+
         get categorizedCourses() {
           if (this.selected === 'all') {
             return this.programs;
@@ -417,11 +186,19 @@ import WithoutHero from "../layouts/without-hero.astro";
         },
 
         get filteredPrograms() {
-          const types = this.filters.types;
+          return this.programs.filter((program) => this.hasMatchingType(program));
+        },
 
-          return this.programs.filter((program) => {
-            return types.length ? types.every((type) => this.hasType(program, type)) : true;
-          });
+        hasMatchingType(program) {
+          if (this.filters.types.length === 0) {
+            return true;
+          }
+
+          return this.filters.types.every((type) => this.hasType(program, type));
+        },
+
+        isFiltered(program) {
+          return this.hasMatchingType(program);
         },
 
         get filteredCourses() {
@@ -446,6 +223,16 @@ import WithoutHero from "../layouts/without-hero.astro";
 
           return arr.filter((option) => {
             return attributes.has(option.code);
+          });
+        },
+
+        isLetterAvailable(letter) {
+          if (this.programs.length === 0) {
+            return true;
+          }
+
+          return this.filteredPrograms.some((program) => {
+            return program.program_name.at(0) === letter;
           });
         },
 
@@ -482,7 +269,19 @@ import WithoutHero from "../layouts/without-hero.astro";
           }).join(', ');
         },
 
+        scrollToProgram(letter) {
+          const row = document.querySelector(`tr[data-letter='${letter}']`);
+
+          if (row) {
+            row.scrollIntoView({ behavior: 'smooth' });
+            row.classList.add('bg-tertiary-200');
+
+            setTimeout(() => row.classList.remove('bg-tertiary-200'), 1000);
+          }
+        },
+
         reset() {
+          this.filters.types = [];
           this.filters.quest = '';
           this.filters.education = '';
           this.filters.query = '';
@@ -510,13 +309,25 @@ import WithoutHero from "../layouts/without-hero.astro";
     <ol class="flex gap-2 mb-8">
       <template x-for="letter in letters">
         <li>
-          <a
+          <button
             class="font-semibold text-3xl font-title text-gray-600"
-            :href="`#${letter}`"
-            x-text="letter.toUpperCase()"></a>
+            :class="isLetterAvailable(letter) ? '' : 'opacity-50 pointer-events-none cursor-not-allowed'"
+            x-text="letter.toUpperCase()"
+            @click="scrollToProgram(letter)"></button>
         </li>
       </template>
     </ol>
+
+    <div class="mb-8 border-b border-gray-300">
+      <ul class="flex">
+        <li>
+          <a class="px-4 py-2 block bg-primary-800 text-white" href="/major-minor">Undergraduate programs</a>
+        </li>
+        <li>
+          <a class="px-4 py-2 block text-primary-800" href="https://www.messiah.edu/info/20436/degrees">Graduate programs</a>
+        </li>
+      </ul>
+    </div>
 
     <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
       <template x-for="[key, type] in Object.entries(types)">
@@ -593,19 +404,31 @@ import WithoutHero from "../layouts/without-hero.astro";
       </button>
     </div> -->
 
-    <table class="text-sm w-full">
+    <p x-show="loading" class="">Loading program list...</p>
+
+    <p role="alert" x-show="filteredPrograms.length === 0 && !loading && !error">
+      No programs found with your filters.
+      <button type="button" @click="reset()" class="text-primary-800 hover:underline">Reset</button>
+    </p>
+
+    <table class="text-sm w-full" x-show="!loading && filteredPrograms.length > 0">
+      <thead>
+        <tr class="border-b border-b-gray-300 bg-gray-100">
+          <td colspan="11" class="py-2 px-4">* click an icon above to filter the list </td>
+        </tr>
+      </thead>
       <tbody>
-        <template x-for="program in filteredPrograms">
-          <tr class="border-b border-b-gray-200 hover:bg-gray-100">
+        <template x-for="program in programs">
+          <tr class="border-b border-b-gray-200 hover:bg-gray-100 scroll-m-20 transition-colors" x-show="isFiltered(program)" :data-letter="program.program_name.at(0)">
             <td class="bg-gray-100 w-8">
               <button type="button" class="h-full w-8 flex justify-center items-center">
-                <Icon name="expand" class="size-5" />
+                <Icon name="expand" class="size-5" @click="open = program" />
               </button>
             </td>
 
             <td class="p-2">
               <a
-                x-text="program.name"
+                x-text="program.program_name"
                 class="text-primary-800 hover:underline mr-2"
                 :href="program.url"></a>
 
@@ -659,41 +482,6 @@ import WithoutHero from "../layouts/without-hero.astro";
       </tbody>
     </table>
 
-    <!-- <div>
-      <template x-for="tab in tabs">
-        <section x-show="isSelected(tab.key)" :aria-labelledby="'tab' + tab.key" role="tabpanel">
-          <ul class="courses-list">
-            <template x-for="course in filteredCourses">
-              <li class="courses-entry">
-                <button
-                  type="button"
-                  x-text="course.course_name"
-                  @click="open = course"
-                  class="courses-button"></button>
-                <span
-                  x-show="tab.key === 'all'"
-                  x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
-                  class="courses-number"></span>
-                <span
-                  x-show="tab.key !== 'all'"
-                  x-text="course.course_number"
-                  class="courses-number"></span>
-              </li>
-            </template>
-          </ul>
-
-          <p role="alert" x-show="loading">Loading courses data, please wait...</p>
-
-          <p role="alert" x-show="error" x-text="error"></p>
-
-          <p role="alert" x-show="filteredCourses.length === 0 && !loading && !error">
-            No courses found with your filters.
-            <button type="button" @click="reset()" class="reset-button">Reset</button>
-          </p>
-        </section>
-      </template>
-    </div> -->
-
     <template x-teleport="body">
       <div
         x-show="Boolean(open)"
@@ -709,7 +497,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           x-show="Boolean(open)"
           @click="open = null"
           x-transition.opacity.duration.300
-          class="dialog-backdrop"
+          class="fixed inset-0 bg-primary-800/80 z-30"
         >
         </div>
 
@@ -717,29 +505,69 @@ import WithoutHero from "../layouts/without-hero.astro";
           x-show="Boolean(open)"
           x-transition.opacity.duration.300
           x-trap.noscroll.inert="open"
-          class="dialog-panel"
+          class="fixed top-0 right-0 bottom-0 w-[660px] bg-white z-30"
         >
-          <button
-            type="button"
-            x-on:click="open = null"
-            aria-label="Close dialog"
-            class="dialog-close"
-          >
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              width="40"
-              height="40"
+          <div class="flex justify-end p-4">
+            <button
+              type="button"
+              @click="open = null"
+              aria-label="Close dialog"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
-            </svg>
-          </button>
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                width="40"
+                height="40"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
 
-          <p class="dialog-date">
+          <img :src="open?.thumbnail_small" :alt="open?.thumbnail_small_alt" class="w-full bg-gray-200 mb-4" />
+
+          <div class="p-4">
+            <h4 class="mb-2">
+              <span class="text-primary-800 font-title text-3xl font-bold mr-2" x-text="open?.program_name"></span>
+              <span class="inline-flex gap-2 items-center">
+                <template x-for="degree in open?.degrees">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </h4>
+
+            <p x-text="open?.department_name" class="mb-2"></p>
+
+            <ul class="flex gap-2 items-center mb-8">
+              <template x-for="[key, type] in Object.entries(types)">
+                <li x-show="hasType(open, key)" x-text="type.label" class="text-white text-xs px-2 py-1 rounded-full" :style="`background-color: ${type.color}`">
+                </li>
+              </template>
+            </ul>
+
+            <p x-text="open?.program_peek" class="mb-4"></p>
+
+            <div class="bg-gray-100 p-4 rounded-lg mb-4">
+              <h5 class="h4 mb-2">Career options</h5>
+
+              <ul class="columns-2">
+                <template x-for="job in open?.jobs">
+                  <li x-text="job"></li>
+                </template>
+              </ul>
+            </div>
+
+            <a :href="open?.url" class="btn btn-tertiary">Visit program page</a>
+          </div>
+          <!-- <p class="dialog-date">
             <svg
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
@@ -794,7 +622,7 @@ import WithoutHero from "../layouts/without-hero.astro";
                 <dd x-text="getEntryDetails('quest')"></dd>
               </div>
             </dl>
-          </div>
+          </div> -->
         </div>
       </div>
     </template>
