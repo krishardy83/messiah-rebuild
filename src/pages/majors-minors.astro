@@ -277,6 +277,8 @@ import WithoutHero from "../layouts/without-hero.astro";
         letters: 'abcdefghijklmnopqrstuvwxyz'.split(''),
         error: null,
         filters: {
+          types: [],
+
           quest: '',
           education: '',
           query: '',
@@ -289,19 +291,19 @@ import WithoutHero from "../layouts/without-hero.astro";
         tabs: getTabs(),
 
         types: {
-          M: {
+          major: {
             key: 'M',
             label:'Major',
             color: '#273d5e',
             description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
           },
-          m: {
+          minor: {
             key: 'm',
             label: 'Minor',
             color: '#4d87a9',
             description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
           },
-          C: {
+          concentration: {
             key: 'C',
             label: 'Concentration',
             color: '#ab4e42',
@@ -319,64 +321,62 @@ import WithoutHero from "../layouts/without-hero.astro";
             color: '#84ab8b',
             description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
           },
-          T: {
+          teaching_certification: {
             key: 'T',
             label: 'Teaching Certificate',
             color: '#e37b65',
             description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
           },
-          A: {
+          accelerated: {
             key: 'A',
             label: 'Accelerated',
             color: '#DCAC42',
             description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
           },
-          E: {
+          early_assurance: {
             key: 'E',
             label: 'Early Assurance',
             color: '#afafaf',
             description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
           },
-          UC: {
+          undergrad_certificate: {
             key: 'UC',
             label: 'Undergrad Certificate',
             color: '#0a0a0ab3',
             description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
           },
-          AD: {
-            key: 'AD',
-            label: 'Adult Degree Programs',
-            color: '#84ab8b',
-            description: '',
-          },
         },
 
-        getTypes(program) {
-          const types = [];
+        hasType(program, type) {
+          return program[type] === 'true';
+        },
 
-          if (program.major === 'true') types.push(this.types['M']);
-          if (program.minor === 'true') types.push(this.types['m']);
-          if (program.concentration === 'true') types.push(this.types['C']);
-          if (program.teaching_certification === 'true') types.push(this.types['P']);
-          if (program.accelerated === 'true') types.push(this.types['A']);
-          if (program.early_assurance === 'true') types.push(this.types['E']);
-          if (program.undergrad_certificate === 'true') types.push(this.types['UC']);
+        getDegrees(program) {
+          if (program.degree !== 'none' && program.degree !== '') {
+            return program.degree.split(',');
+          }
 
-          return types;
+          return [];
+        },
+
+        getProgramURL(program) {
+          const url = new URL(location.origin);
+          url.pathname = program.program_url;
+          
+          return url.toString();
         },
 
         transformPrograms(programs) {
-          return programs.map((program) => {
-            const degrees = program.degree === 'none' ? [] : program.degree.split(',');
-            const url = new URL(location.origin);
-  
-            url.pathname = program.program_url;
+          function hasDegree(program) {
+            return program.degree !== 'none' && program.degree !== '';
+          }
 
+          return programs.map((program) => {
             return {
+              ...program,
               name: program.program_name,
-              degrees,
-              url: url.toString(),
-              types: this.getTypes(program),
+              degrees: this.getDegrees(program),
+              url: this.getProgramURL(program),
             };
           });
         },
@@ -414,6 +414,14 @@ import WithoutHero from "../layouts/without-hero.astro";
           }
 
           return this.programs.filter((course) => course.summer_term === this.selected);
+        },
+
+        get filteredPrograms() {
+          const types = this.filters.types;
+
+          return this.programs.filter((program) => {
+            return types.length ? types.every((type) => this.hasType(program, type)) : true;
+          });
         },
 
         get filteredCourses() {
@@ -512,13 +520,17 @@ import WithoutHero from "../layouts/without-hero.astro";
 
     <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
       <template x-for="[key, type] in Object.entries(types)">
-        <button type="button" role="switch" class="text-xs flex items-center gap-2">
+        <label class="text-xs flex items-center gap-2 cursor-pointer group">
+          <input type="checkbox" :value="key" x-model="filters.types" class="sr-only" />
           <span
-            x-text="key"
+            x-text="type.key"
             class="w-5 h-5 text-white rounded-full flex items-center justify-center"
             :style="`background-color: ${type.color}`"></span>
-          <span x-text="type.label" class="uppercase"></span>
-        </button>
+          <span
+            x-text="type.label"
+            class="uppercase group-hover:underline"
+            :class="filters.types.includes(key) ? 'text-primary-400' : ''"></span>
+        </label>
       </template>
     </div>
 
@@ -581,49 +593,72 @@ import WithoutHero from "../layouts/without-hero.astro";
       </button>
     </div> -->
 
-    <ul class="text-sm">
-      <template x-for="program in programs">
-        <li class="grid gap-2 grid-cols-[auto__auto_1fr_auto] border-b border-b-gray-200">
-          <button type="button" class="bg-gray-100 h-full w-8 flex justify-center items-center">
-            <Icon name="expand" class="size-5" />
-          </button>
+    <table class="text-sm w-full">
+      <tbody>
+        <template x-for="program in filteredPrograms">
+          <tr class="border-b border-b-gray-200 hover:bg-gray-100">
+            <td class="bg-gray-100 w-8">
+              <button type="button" class="h-full w-8 flex justify-center items-center">
+                <Icon name="expand" class="size-5" />
+              </button>
+            </td>
 
-          <a x-text="program.name" class="block py-2 text-primary-800" :href="program.url"></a>
+            <td class="p-2">
+              <a
+                x-text="program.name"
+                class="text-primary-800 hover:underline mr-2"
+                :href="program.url"></a>
 
-          <ul class="flex gap-2 self-center">
-            <template x-for="degree in program.degrees">
-              <li
-                x-text="degree"
-                class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
-              >
-              </li>
+              <span class="inline-flex gap-2" x-show="program.degrees.length > 0">
+                <template x-for="degree in program.degrees">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </td>
+
+            <template x-for="[key, type] in Object.entries(types)">
+              <td class="w-8">
+                <button
+                  x-data
+                  @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                  x-show="hasType(program, key)"
+                  x-text="type.key"
+                  class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                  :style="`background-color: ${type.color}`"></button>
+              </td>
             </template>
-          </ul>
 
-          <ul class="flex gap-4 ml-auto self-center">
-            <template x-for="type in program.types">
-              <li
-                x-text="type.key"
-                :style="`background-color: ${type.color}`"
-                class="w-5 h-5 text-white text-xs rounded-full flex items-center justify-center bg-slate-500"
-              >
-              </li>
-            </template>
-          </ul>
-          <!-- <button
-            type="button"
-            x-text="course.course_name"
-            @click="open = course"
-            class="courses-button"></button>
-          <span
-            x-show="tab.key === 'all'"
-            x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
-            class="courses-number"></span>
-          <span x-show="tab.key !== 'all'" x-text="course.course_number" class="courses-number"
-          ></span> -->
-        </li>
-      </template>
-    </ul>
+            <!-- <ul class="flex gap-8 self-center">
+              <template x-for="type in program.types">
+                <li
+                  x-text="type.key"
+                  :style="`background-color: ${type.color}`"
+                  class="w-5 h-5 text-white text-xs rounded-full flex items-center justify-center bg-slate-500"
+                >
+                </li>
+              </template>
+            </ul> -->
+
+            <!-- <button
+              type="button"
+              x-text="course.course_name"
+              @click="open = course"
+              class="courses-button"></button>
+            <span
+              x-show="tab.key === 'all'"
+              x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
+              class="courses-number"></span>
+            <span x-show="tab.key !== 'all'" x-text="course.course_number" class="courses-number"
+            ></span> -->
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
     <!-- <div>
       <template x-for="tab in tabs">
         <section x-show="isSelected(tab.key)" :aria-labelledby="'tab' + tab.key" role="tabpanel">
