@@ -261,6 +261,15 @@ import WithoutHero from "../layouts/without-hero.astro";
 
     <p x-show="loading" class="">Loading program list...</p>
 
+    <template x-if="error">
+      <p role="alert" class="text-red-600 bg-red-50 py-2 px-4">
+        <span class="block mb-2"
+          >Snap! Something went wrong. Please refresh the page or try again later.</span
+        >
+        <code x-text="error" class="text-sm leading-none"></code>
+      </p>
+    </template>
+
     <p role="alert" x-show="filteredPrograms.length === 0 && !loading && !error">
       No programs found with your filters.
       <button type="button" @click="reset()" class="text-primary-800 hover:underline">Reset</button>
