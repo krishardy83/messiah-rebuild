@@ -245,7 +245,9 @@ import WithoutHero from "../layouts/without-hero.astro";
 
     <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
       <template x-for="[key, type] in Object.entries(types)">
-        <label class="text-xs flex items-center gap-2 cursor-pointer group">
+        <label
+          class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
+        >
           <input type="checkbox" :value="key" x-model="filters.types" class="sr-only" />
           <span
             x-text="type.key"
@@ -278,7 +280,18 @@ import WithoutHero from "../layouts/without-hero.astro";
     <table class="text-sm w-full" x-show="!loading && filteredPrograms.length > 0">
       <thead>
         <tr class="border-b border-b-gray-300 bg-gray-100">
-          <td colspan="11" class="py-2 px-4">* click an icon above to filter the list </td>
+          <td colspan="11" class="py-2 px-4 relative"
+            >* click an icon above to filter the list
+            <button
+              type="button"
+              @click="reset()"
+              x-show="filters.types.length > 0"
+              class="absolute top-0 right-0 flex items-center gap-2 h-full px-4 hover:bg-gray-200 transition-colors"
+            >
+              <Icon name="close" class="size-5" />
+              Reset filter</button
+            >
+          </td>
         </tr>
       </thead>
       <tbody>
@@ -289,8 +302,12 @@ import WithoutHero from "../layouts/without-hero.astro";
             :data-letter="program.program_name.at(0)"
           >
             <td class="bg-gray-100 w-8">
-              <button type="button" class="h-full w-8 flex justify-center items-center">
-                <Icon name="expand" class="size-5" @click="open = program" />
+              <button
+                type="button"
+                @click="open = program"
+                class="h-full w-8 flex justify-center items-center"
+              >
+                <Icon name="expand" class="size-5" />
               </button>
             </td>
 
