@@ -35,17 +35,8 @@ import WithoutHero from "../layouts/without-hero.astro";
         error: null,
         filters: {
           types: [],
-
-          quest: '',
-          education: '',
-          query: '',
         },
         open: null,
-        dropdowns: {
-          quest: getQuestValues(),
-          education: getEducationValues()
-        },
-        tabs: getTabs(),
 
         types: {
           major: {
@@ -112,7 +103,11 @@ import WithoutHero from "../layouts/without-hero.astro";
           return program[type] === 'true';
         },
 
-        getDegrees(program) {
+        getProgramDegrees(program) {
+          if (!program) {
+            return [];
+          }
+
           if (program.degree !== 'none' && program.degree !== '') {
             return program.degree.split(',');
           }
@@ -121,68 +116,43 @@ import WithoutHero from "../layouts/without-hero.astro";
         },
 
         getProgramURL(program) {
+          if (!program) {
+            return null;
+          }
+
           const url = new URL(location.origin);
           url.pathname = program.program_url;
 
           return url.toString();
         },
 
-        getJobs(program) {
-          if (program.job_title !== '') {
-            return program.job_title.split(',');
+        getRelatedPrograms(program) {
+          if (!program) {
+            return [];
           }
 
-          return [];
-        },
+          const related = program.related_programs.split('|');
 
-        transformPrograms(programs) {
-          function hasDegree(program) {
-            return program.degree !== 'none' && program.degree !== '';
+          if (related.length === 0) {
+            return [];
           }
 
-          return programs.map((program) => {
-            return {
-              ...program,
-              jobs: this.getJobs(program),
-              degrees: this.getDegrees(program),
-              url: this.getProgramURL(program),
-            };
+          return related.map((program) => {
+            return this.programs.find((p) => p.entry_id === program);
           });
         },
 
         init() {
-          this.$nextTick(() => this.select('all'));
-
           fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
             .then((response) => response.json())
             .then((data) => {
-              this.programs = this.transformPrograms(data.items);
+              this.programs = data.items;
               this.loading = false;
             })
             .catch((error) => {
-              this.error = `Could not fetch courses data (${error.message})`;
+              this.error = `Could not fetch program data (${error.message})`;
               this.loading = false;
             });
-        },
-
-        select(key) {
-          this.selected = key;
-        },
-
-        isSelected(key) {
-          return this.selected === key;
-        },
-
-        get categorizedCourses() {
-          if (this.selected === 'all') {
-            return this.programs;
-          }
-
-          if (this.selected === 'other') {
-            return this.programs.filter((course) => course.summer_term !== 'UG Summer Early 6 Week' && course.summer_term !== 'UG Summer Late 6 Week' && course.summer_term !== 'UG Full Summer');
-          }
-
-          return this.programs.filter((course) => course.summer_term === this.selected);
         },
 
         get filteredPrograms() {
@@ -201,31 +171,6 @@ import WithoutHero from "../layouts/without-hero.astro";
           return this.hasMatchingType(program);
         },
 
-        get filteredCourses() {
-          const search = this.filters.query.trim().toLowerCase();
-          const quest = this.filters.quest;
-          const education = this.filters.education;
-
-          return this.categorizedCourses.filter((course) => {
-            const name = course.course_name.toLowerCase();
-            const number = course.course_number.toLowerCase();
-
-            const matchesQuery = name.includes(search) || number.includes(search);
-            const matchesQuest = quest ? course.attributes.includes(quest) : true;
-            const matchesEducation = education ? course.attributes.includes(education) : true;
-
-            return matchesQuery && matchesQuest && matchesEducation;
-          }).sort((a, b) => a.course_name.localeCompare(b.course_name));
-        },
-
-        filterSelectOptions(arr) {
-          const attributes = this.getUniqueAttributes();
-
-          return arr.filter((option) => {
-            return attributes.has(option.code);
-          });
-        },
-
         isLetterAvailable(letter) {
           if (this.programs.length === 0) {
             return true;
@@ -234,39 +179,6 @@ import WithoutHero from "../layouts/without-hero.astro";
           return this.filteredPrograms.some((program) => {
             return program.program_name.at(0) === letter;
           });
-        },
-
-        formatDate(date) {
-          return new Date(date).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-          });
-        },
-
-        getUniqueAttributes() {
-          const unique = new Set();
-
-          for (let i = 0; i < this.programs.length; i++) {
-            for (let j = 0; j < this.programs[i].attributes.length; j++) {
-              unique.add(this.programs[i].attributes[j]);
-            }
-          }
-
-          return unique;
-        },
-
-        getEntryDetails(type) {
-          if (!this.open) {
-            return null;
-          }
-
-          const { attributes } = this.open;
-
-          return attributes.map((attribute) => {
-            return this.dropdowns[type].find((option) => option.code === attribute)?.label;
-          }).filter((attribute) => {
-            return Boolean(attribute) && attribute !== 'None';
-          }).join(', ');
         },
 
         scrollToProgram(letter) {
@@ -282,9 +194,6 @@ import WithoutHero from "../layouts/without-hero.astro";
 
         reset() {
           this.filters.types = [];
-          this.filters.quest = '';
-          this.filters.education = '';
-          this.filters.query = '';
         }
       }"
   >
@@ -321,10 +230,15 @@ import WithoutHero from "../layouts/without-hero.astro";
     <div class="mb-8 border-b border-gray-300">
       <ul class="flex">
         <li>
-          <a class="px-4 py-2 block bg-primary-800 text-white" href="/major-minor">Undergraduate programs</a>
+          <a class="px-4 py-2 block bg-primary-800 text-white" href="/major-minor"
+            >Undergraduate programs</a
+          >
         </li>
         <li>
-          <a class="px-4 py-2 block text-primary-800" href="https://www.messiah.edu/info/20436/degrees">Graduate programs</a>
+          <a
+            class="px-4 py-2 block text-primary-800"
+            href="https://www.messiah.edu/info/20436/degrees">Graduate programs</a
+          >
         </li>
       </ul>
     </div>
@@ -345,65 +259,6 @@ import WithoutHero from "../layouts/without-hero.astro";
       </template>
     </div>
 
-    <!-- <ul
-      class="tabs"
-      x-ref="tablist"
-      @keydown.right.prevent.stop="$focus.wrap().next()"
-      @keydown.home.prevent.stop="$focus.first()"
-      @keydown.page-up.prevent.stop="$focus.first()"
-      @keydown.left.prevent.stop="$focus.wrap().prev()"
-      @keydown.end.prevent.stop="$focus.last()"
-      @keydown.page-down.prevent.stop="$focus.last()"
-      role="tablist"
-    >
-      <template x-for="tab in tabs">
-        <li>
-          <button
-            :id="'tab' + tab.key"
-            @click="select(tab.key)"
-            @mousedown.prevent
-            @focus="select(tab.key)"
-            type="button"
-            :tabindex="isSelected(tab.key) ? 0 : -1"
-            :aria-selected="isSelected(tab.key)"
-            :class="isSelected(tab.key) ? 'active' : ''"
-            class="tab-button"
-            role="tab"
-          >
-            <span x-text="tab.title" class="tab-title"></span>
-            <span x-text="tab.subtitle" class="tab-subtitle"></span>
-          </button>
-        </li>
-      </template>
-    </ul> -->
-
-    <!-- <div class="selects">
-      <select x-model="filters.quest" class="select" @change="filters.education = ''">
-        <option value="" disabled selected>Filter by quest area</option>
-
-        <template x-for="option in filterSelectOptions(dropdowns.quest)">
-          <option :value="option.code" x-text="option.label"></option>
-        </template>
-      </select>
-
-      <select x-model="filters.education" class="select" @change="filters.quest = ''">
-        <option value="" disabled selected>Filter by general education</option>
-
-        <template x-for="option in filterSelectOptions(dropdowns.education)">
-          <option :value="option.code" x-text="option.label"></option>
-        </template>
-      </select>
-
-      <button
-        class="select-clear"
-        x-show="filters.quest || filters.education"
-        type="button"
-        @click="filters.quest = ''; filters.education = ''"
-      >
-        Reset
-      </button>
-    </div> -->
-
     <p x-show="loading" class="">Loading program list...</p>
 
     <p role="alert" x-show="filteredPrograms.length === 0 && !loading && !error">
@@ -419,7 +274,11 @@ import WithoutHero from "../layouts/without-hero.astro";
       </thead>
       <tbody>
         <template x-for="program in programs">
-          <tr class="border-b border-b-gray-200 hover:bg-gray-100 scroll-m-20 transition-colors" x-show="isFiltered(program)" :data-letter="program.program_name.at(0)">
+          <tr
+            class="border-b border-b-gray-200 hover:bg-gray-100 scroll-m-20 transition-colors"
+            x-show="isFiltered(program)"
+            :data-letter="program.program_name.at(0)"
+          >
             <td class="bg-gray-100 w-8">
               <button type="button" class="h-full w-8 flex justify-center items-center">
                 <Icon name="expand" class="size-5" @click="open = program" />
@@ -430,10 +289,10 @@ import WithoutHero from "../layouts/without-hero.astro";
               <a
                 x-text="program.program_name"
                 class="text-primary-800 hover:underline mr-2"
-                :href="program.url"></a>
+                :href="getProgramURL(program)"></a>
 
-              <span class="inline-flex gap-2" x-show="program.degrees.length > 0">
-                <template x-for="degree in program.degrees">
+              <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                <template x-for="degree in getProgramDegrees(program)">
                   <span
                     x-text="degree"
                     class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
@@ -454,29 +313,6 @@ import WithoutHero from "../layouts/without-hero.astro";
                   :style="`background-color: ${type.color}`"></button>
               </td>
             </template>
-
-            <!-- <ul class="flex gap-8 self-center">
-              <template x-for="type in program.types">
-                <li
-                  x-text="type.key"
-                  :style="`background-color: ${type.color}`"
-                  class="w-5 h-5 text-white text-xs rounded-full flex items-center justify-center bg-slate-500"
-                >
-                </li>
-              </template>
-            </ul> -->
-
-            <!-- <button
-              type="button"
-              x-text="course.course_name"
-              @click="open = course"
-              class="courses-button"></button>
-            <span
-              x-show="tab.key === 'all'"
-              x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
-              class="courses-number"></span>
-            <span x-show="tab.key !== 'all'" x-text="course.course_number" class="courses-number"
-            ></span> -->
           </tr>
         </template>
       </tbody>
@@ -505,14 +341,10 @@ import WithoutHero from "../layouts/without-hero.astro";
           x-show="Boolean(open)"
           x-transition.opacity.duration.300
           x-trap.noscroll.inert="open"
-          class="fixed top-0 right-0 bottom-0 w-[660px] bg-white z-30"
+          class="fixed top-0 right-0 bottom-0 w-[660px] bg-white z-30 overflow-y-auto"
         >
           <div class="flex justify-end p-4">
-            <button
-              type="button"
-              @click="open = null"
-              aria-label="Close dialog"
-            >
+            <button type="button" @click="open = null" aria-label="Close dialog">
               <svg
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -523,18 +355,25 @@ import WithoutHero from "../layouts/without-hero.astro";
                 width="40"
                 height="40"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"
+                ></path>
               </svg>
             </button>
           </div>
 
-          <img :src="open?.thumbnail_small" :alt="open?.thumbnail_small_alt" class="w-full bg-gray-200 mb-4" />
+          <img
+            :src="open?.thumbnail_small"
+            :alt="open?.thumbnail_small_alt"
+            class="w-full bg-gray-200 mb-4"
+          />
 
           <div class="p-4">
             <h4 class="mb-2">
-              <span class="text-primary-800 font-title text-3xl font-bold mr-2" x-text="open?.program_name"></span>
+              <span
+                class="text-primary-800 font-title text-3xl font-bold mr-2"
+                x-text="open?.program_name"></span>
               <span class="inline-flex gap-2 items-center">
-                <template x-for="degree in open?.degrees">
+                <template x-for="degree in getProgramDegrees(open)">
                   <span
                     x-text="degree"
                     class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
@@ -548,167 +387,63 @@ import WithoutHero from "../layouts/without-hero.astro";
 
             <ul class="flex gap-2 items-center mb-8">
               <template x-for="[key, type] in Object.entries(types)">
-                <li x-show="hasType(open, key)" x-text="type.label" class="text-white text-xs px-2 py-1 rounded-full" :style="`background-color: ${type.color}`">
+                <li
+                  x-show="hasType(open, key)"
+                  x-text="type.label"
+                  class="text-white text-xs px-2 py-1 rounded-full"
+                  :style="`background-color: ${type.color}`"
+                >
                 </li>
               </template>
             </ul>
 
             <p x-text="open?.program_peek" class="mb-4"></p>
 
-            <div class="bg-gray-100 p-4 rounded-lg mb-4">
-              <h5 class="h4 mb-2">Career options</h5>
+            <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
 
-              <ul class="columns-2">
-                <template x-for="job in open?.jobs">
-                  <li x-text="job"></li>
+            <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
+              <h5 class="text-primary-800 mb-4 font-title">
+                <span class="block text-xl leading-none">Programs related to</span>
+                <span x-text="open?.program_name" class="text-2xl font-bold leading-none"></span>
+              </h5>
+
+              <ul class="grid grid-cols-3 gap-4">
+                <template x-for="related in getRelatedPrograms(open)">
+                  <li
+                    class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden max-w-48"
+                  >
+                    <img
+                      :src="related.thumbnail_small"
+                      :alt="related.thumbnail_small_alt"
+                      class="w-full h-32 object-cover"
+                    />
+                    <span class="p-2">
+                      <span x-text="related.program_name" class="block mb-2"></span>
+
+                      <span class="flex gap-2">
+                        <template x-for="[key, type] in Object.entries(types)">
+                          <span
+                            x-text="type.key"
+                            class="w-5 h-5 text-white rounded-full flex text-xs items-center justify-center mb-4"
+                            :style="`background-color: ${type.color}`"
+                            x-show="hasType(related, key)"
+                          >
+                          </span>
+                        </template>
+                      </span>
+                    </span>
+                    <a
+                      :href="getProgramURL(related)"
+                      class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
+                      >Read more</a
+                    >
+                  </li>
                 </template>
               </ul>
             </div>
-
-            <a :href="open?.url" class="btn btn-tertiary">Visit program page</a>
           </div>
-          <!-- <p class="dialog-date">
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              width="24"
-              height="24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
-              ></path>
-            </svg>
-
-            <span x-text="formatDate(open?.start_date)"></span> -
-            <span x-text="formatDate(open?.end_date)"></span>
-          </p>
-
-          <h2 :id="$id('modal-title')" class="dialog-title" x-text="open?.course_name"></h2>
-
-          <p class="dialog-description" x-text="open?.course_description"></p>
-
-          <div class="dialog-details">
-            <h3>Course Details</h3>
-
-            <dl>
-              <div class="detail">
-                <dt>Course Number:</dt>
-                <dd x-text="open?.course_number"></dd>
-              </div>
-
-              <div class="detail">
-                <dt>Professor:</dt>
-                <dd x-text="open?.instructor"></dd>
-              </div>
-
-              <div class="detail">
-                <dt>Credits:</dt>
-                <dd x-text="open?.credits"></dd>
-              </div>
-
-              <div class="detail" x-show="getEntryDetails('education')?.length > 0">
-                <dt>General Education:</dt>
-                <dd x-text="getEntryDetails('education')"></dd>
-              </div>
-
-              <div class="detail" x-show="getEntryDetails('quest')?.length > 0">
-                <dt>Quest:</dt>
-                <dd x-text="getEntryDetails('quest')"></dd>
-              </div>
-            </dl>
-          </div> -->
         </div>
       </div>
     </template>
   </div>
-
-  <script is:inline>
-    function getTabs() {
-      return [
-        {
-          title: "All courses",
-          subtitle: null,
-          key: "all",
-        },
-        {
-          title: "Early summer",
-          subtitle: "May 19 - June 29",
-          key: "UG Summer Early 6 Week",
-        },
-        {
-          title: "Late summer",
-          subtitle: "July 7 - August 17",
-          key: "UG Summer Late 6 Week",
-        },
-        {
-          title: "Entire summer",
-          subtitle: "May 19 - August 17",
-          key: "UG Full Summer",
-        },
-        {
-          title: "Other terms",
-          subtitle: "Various dates",
-          key: "other",
-        },
-      ];
-    }
-
-    function getQuestValues() {
-      return [
-        { code: "G11", label: "1st Year Sem" },
-        { code: "G12", label: "Communication" },
-        { code: "G13", label: "Writing Enriched" },
-        { code: "G14", label: "Created&Called" },
-        { code: "G21A", label: "Math" },
-        { code: "G21B", label: "Lab Science" },
-        { code: "G21C", label: "Sci/Tech/World" },
-        { code: "G22A", label: "Social Science" },
-        { code: "G22B", label: "Euro History" },
-        { code: "G22C", label: "U.S. History" },
-        { code: "G23A", label: "Literature" },
-        { code: "G23B", label: "Phil/Religion" },
-        { code: "G23C", label: "Arts" },
-        { code: "G24", label: "Language" },
-        { code: "G24C", label: "Cross Cultural" },
-        { code: "G25", label: "Non-Western" },
-        { code: "G31", label: "Bible" },
-        { code: "G32", label: "Christian Beliefs" },
-        { code: "G41", label: "Physical Educ." },
-        { code: "G41W", label: "Wellness" },
-        { code: "G42A", label: "Ethics" },
-        { code: "G42B", label: "World Views" },
-        { code: "G42C", label: "Pluralism" },
-      ];
-    }
-
-    function getEducationValues() {
-      return [
-        { code: "GBIL", label: "Bible" },
-        { code: "GCHB", label: "Christian Beliefs" },
-        { code: "GDCC", label: "Domestic Cross-Cultural" },
-        { code: "GECG", label: "Ethics & the Common Good" },
-        { code: "GFYS", label: "First-Year Seminar" },
-        { code: "GGCC", label: "Global Cross-Cultural" },
-        { code: "GHOW", label: "Holistic Wellness" },
-        { code: "GHST", label: "History" },
-        { code: "GIPG", label: "Intercultural Perspectives - Global" },
-        { code: "GIPU", label: "Intercultural Perspectives - UG" },
-        { code: "GLA3", label: "Gen Ed Language Level 3" },
-        { code: "GLAK", label: "Literature/Arts" },
-        { code: "GLAN", label: "Language" },
-        { code: "GMAT", label: "Mathematics" },
-        { code: "GNSL", label: "Natural Science Lab" },
-        { code: "GOCO", label: "Oral Communication" },
-        { code: "GPHR", label: "Philosophy/Religion" },
-        { code: "GSSK", label: "Social Scientific Ways of Knowing" },
-        { code: "GWCO", label: "Written Communication" },
-      ];
-    }
-  </script>
 </WithoutHero>
