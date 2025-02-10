@@ -35,6 +35,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         error: null,
         filters: {
           types: [],
+          query: '',
         },
         open: null,
 
@@ -156,7 +157,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         },
 
         get filteredPrograms() {
-          return this.programs.filter((program) => this.hasMatchingType(program));
+          return this.programs.filter((program) => this.hasMatchingType(program) && this.hasMatchingQuery(program));
         },
 
         hasMatchingType(program) {
@@ -167,8 +168,20 @@ import WithoutHero from "../layouts/without-hero.astro";
           return this.filters.types.every((type) => this.hasType(program, type));
         },
 
+        hasMatchingQuery(program) {
+          if (this.filters.query === '') {
+            return true;
+          }
+
+          const query = this.filters.query.trim().toLowerCase();
+          const matchesName = program.program_name.toLowerCase().includes(query);
+          const matchesKeywords = program.keywords.split(',').some((keyword) => keyword.toLowerCase().includes(query));
+
+          return matchesName || matchesKeywords;
+        },
+
         isFiltered(program) {
-          return this.hasMatchingType(program);
+          return this.hasMatchingType(program) && this.hasMatchingQuery(program);
         },
 
         isLetterAvailable(letter) {
@@ -194,6 +207,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
         reset() {
           this.filters.types = [];
+          this.filters.query = '';
         }
       }"
   >
@@ -274,7 +288,9 @@ import WithoutHero from "../layouts/without-hero.astro";
 
     <p role="alert" x-show="filteredPrograms.length === 0 && !loading && !error">
       No programs found with your filters.
-      <button type="button" @click="reset()" class="text-primary-800 hover:underline">Reset</button>
+      <button type="button" @click="reset()" class="text-primary-800 underline hover:no-underline"
+        >Reset</button
+      >
     </p>
 
     <table class="text-sm w-full" x-show="!loading && filteredPrograms.length > 0">
