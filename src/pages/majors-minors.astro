@@ -29,10 +29,10 @@ import WithoutHero from "../layouts/without-hero.astro";
   <div
     x-data="{
         programs: [],
-        selected: null,
         letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
         loading: true,
         error: null,
+        search: '',
         filters: {
           types: [],
           query: '',
@@ -156,42 +156,16 @@ import WithoutHero from "../layouts/without-hero.astro";
             });
         },
 
-        get filteredPrograms() {
-          return this.programs.filter((program) => this.hasMatchingType(program) && this.hasMatchingQuery(program));
-        },
-
-        hasMatchingType(program) {
-          if (this.filters.types.length === 0) {
-            return true;
-          }
-
-          return this.filters.types.every((type) => this.hasType(program, type));
-        },
-
-        hasMatchingQuery(program) {
-          if (this.filters.query === '') {
-            return true;
-          }
-
-          const query = this.filters.query.trim().toLowerCase();
-          const matchesName = program.program_name.toLowerCase().includes(query);
-          const matchesKeywords = program.keywords.split(',').some((keyword) => keyword.toLowerCase().includes(query));
-
-          return matchesName || matchesKeywords;
-        },
-
-        isFiltered(program) {
-          return this.hasMatchingType(program) && this.hasMatchingQuery(program);
-        },
-
         isLetterAvailable(letter) {
-          if (this.programs.length === 0) {
-            return true;
-          }
-
-          return this.filteredPrograms.some((program) => {
+          const direct = this.filtered.direct.some((program) => {
             return program.program_name.at(0) === letter;
           });
+
+          const related = this.filtered.related.some((program) => {
+            return program.program_name.at(0) === letter;
+          });
+
+          return direct || related;
         },
 
         scrollToProgram(letter) {
@@ -205,9 +179,59 @@ import WithoutHero from "../layouts/without-hero.astro";
           }
         },
 
+        scrollToTable() {
+          const row = document.querySelector('tbody tr');
+
+          if (row) {
+            row.scrollIntoView({ behavior: 'smooth' });
+          }
+        },
+
         reset() {
           this.filters.types = [];
           this.filters.query = '';
+          this.search = '';
+        },
+
+        get filtered() {
+          const query = this.filters.query.trim().toLowerCase();
+          const matches = { direct: [], related: [] };
+
+          this.programs.forEach((program) => {
+            const isTypeMatch = this.filters.types.every((type) => this.hasType(program, type));
+            const isNameMatch = program.program_name.toLowerCase().includes(query);
+            const isKeywordMatch = program.keywords.split(',').some((keyword) => keyword.toLowerCase().includes(query));
+
+            if (isTypeMatch && isNameMatch) {
+              matches.direct.push(program);
+            }
+
+            if (isTypeMatch && isKeywordMatch && !isNameMatch) {
+              matches.related.push(program);
+            }
+          });
+
+          return matches;
+        },
+
+        get keywords() {
+          const keywords = new Set();
+
+          this.programs.forEach((program) => {
+            program.keywords.split(',').forEach((keyword) => {
+              keywords.add(keyword.trim().toLowerCase());
+            });
+          });
+
+          return Array.from(keywords);
+        },
+
+        isKeywordVisible(keyword) {
+          if (this.search.length <= 1) {
+            return false;
+          }
+
+          return keyword.toLowerCase().includes(this.search.trim().toLowerCase());
         }
       }"
   >
@@ -221,11 +245,39 @@ import WithoutHero from "../layouts/without-hero.astro";
         <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
         <input
           type="search"
+          @input="search = $event.target.value"
+          x-model.debounce="filters.query"
+          autocomplete="off"
           placeholder="Search the program list..."
           aria-label="Search the program list..."
-          x-model="filters.query"
           class="bg-white w-full min-h-12 px-4 pl-12"
+          @keydown.enter="scrollToTable"
         />
+        <button
+          type="button"
+          title="Clear input"
+          x-show="filters.query.length > 0"
+          @click="reset"
+          class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+        >
+          <Icon name="close" class="size-5" />
+        </button>
+
+        <div
+          x-show="search.length > 1"
+          class="absolute right-0 z-10 mt-2 max-h-80 w-full overflow-y-scroll overscroll-contain rounded-lg border border-gray-200 bg-white p-1.5 shadow-sm outline-none"
+        >
+          <ul>
+            <template x-for="keyword in keywords.slice(10)" :key="keyword">
+              <li
+                x-show="isKeywordVisible(keyword)"
+                class="group flex w-full cursor-default items-center rounded-md px-2 py-1.5 transition-colors"
+              >
+                <span x-text="keyword"></span>
+              </li>
+            </template>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -275,26 +327,48 @@ import WithoutHero from "../layouts/without-hero.astro";
       </template>
     </div>
 
-    <p x-show="loading" class="">Loading program list...</p>
-
-    <template x-if="error">
-      <p role="alert" class="text-red-600 bg-red-50 py-2 px-4">
-        <span class="block mb-2"
-          >Snap! Something went wrong. Please refresh the page or try again later.</span
-        >
-        <code x-text="error" class="text-sm leading-none"></code>
-      </p>
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading program list...</p>
+      </div>
     </template>
 
-    <p role="alert" x-show="filteredPrograms.length === 0 && !loading && !error">
-      No programs found with your filters.
-      <button type="button" @click="reset()" class="text-primary-800 underline hover:no-underline"
-        >Reset</button
-      >
-    </p>
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
 
-    <table class="text-sm w-full" x-show="!loading && filteredPrograms.length > 0">
-      <thead>
+    <template x-if="!filtered.direct.length && !filtered.related.length && !loading && !error">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p class="mb-4">
+          No programs match your search "<span x-text="filters.query"></span>" and the selected
+          program type.
+        </p>
+
+        <p class="mb-4">
+          <b>Search tip:</b> Try using interest keywords like accounting or mathematics than a potential
+          job title (accountant) to find more programs! And remember, you can always visit a full list
+          of our <a href="https://www.messiah.edu/majors-minors-programs" class="underline link"
+            >undergraduate programs</a
+          > and <a href="https://www.messiah.edu/info/20436/degrees" class="underline link"
+            >graduate programs</a
+          >.
+        </p>
+
+        <button type="button" @click="reset" class="btn btn-quaternary">Reset</button>
+      </div>
+    </template>
+
+    <table class="text-sm w-full" x-show="!error && !loading">
+      <thead x-show="!filters.query">
         <tr class="border-b border-b-gray-300 bg-gray-100">
           <td colspan="11" class="py-2 px-4 relative"
             >* click an icon above to filter the list
@@ -311,10 +385,67 @@ import WithoutHero from "../layouts/without-hero.astro";
         </tr>
       </thead>
       <tbody>
-        <template x-for="program in programs">
+        <tr class="border-b border-b-gray-200" x-show="filters.query && filtered.direct.length > 0">
+          <td colspan="11" class="py-2"
+            ><span class="h4">Programs for "<span x-text="filters.query"></span>"</span></td
+          >
+        </tr>
+
+        <template x-for="program in filtered.direct">
           <tr
-            class="border-b border-b-gray-200 hover:bg-gray-100 scroll-m-20 transition-colors"
-            x-show="isFiltered(program)"
+            class="border-b border-b-gray-200 hover:bg-gray-100 scroll-m-20 transition-colors scroll-m-28"
+            :data-letter="program.program_name.at(0)"
+          >
+            <td class="bg-gray-100 w-8">
+              <button
+                type="button"
+                @click="open = program"
+                class="h-full w-8 flex justify-center items-center"
+              >
+                <Icon name="expand" class="size-5" />
+              </button>
+            </td>
+
+            <td class="p-2">
+              <a
+                x-text="program.program_name"
+                class="text-primary-800 hover:underline mr-2"
+                :href="getProgramURL(program)"></a>
+
+              <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                <template x-for="degree in getProgramDegrees(program)">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </td>
+
+            <template x-for="[key, type] in Object.entries(types)">
+              <td class="w-8">
+                <button
+                  x-data
+                  @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                  x-show="hasType(program, key)"
+                  x-text="type.key"
+                  class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                  :style="`background-color: ${type.color}`"></button>
+              </td>
+            </template>
+          </tr>
+        </template>
+
+        <tr class="border-b border-b-gray-200" x-show="filters.query && filtered.direct.length > 0">
+          <td colspan="11" class="pb-2 pt-8"
+            ><span class="h4">Programs related to "<span x-text="filters.query"></span>"</span></td
+          >
+        </tr>
+
+        <template x-for="program in filtered.related">
+          <tr
+            class="border-b border-b-gray-200 hover:bg-gray-100 scroll-m-20 transition-colors scroll-m-28"
             :data-letter="program.program_name.at(0)"
           >
             <td class="bg-gray-100 w-8">
