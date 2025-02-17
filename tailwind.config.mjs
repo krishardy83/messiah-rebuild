@@ -46,7 +46,15 @@ export default {
     'pb-60',
     'pb-72',
     'wrapper-sm',
-    'wrapper-md'
+    'wrapper-md',
+    'object-bottom',
+    'object-left',
+    'object-left-bottom',
+    'object-left-top',
+    'object-right',
+    'object-right-bottom',
+    'object-right-top',
+    'object-top'
   ],
   theme: {
     extend: {
