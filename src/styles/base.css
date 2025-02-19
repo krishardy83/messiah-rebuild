@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@property --progress {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
 @layer base {
   [x-cloak] {
     display: none !important;
@@ -127,6 +133,6 @@
   }
 
   .bg-gradient {
-    @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600 ;
+    @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600;
   }
 }
