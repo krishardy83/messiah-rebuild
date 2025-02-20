@@ -239,23 +239,30 @@ import WithoutHero from "../layouts/without-hero.astro";
         get filteredKeywords() {
           const search = this.search.value.trim().toLowerCase();
 
-          return this.keywords.filter((keyword) => keyword.includes(search));
-        },
+          return this.keywords.map((keyword) => {
+            const lowerKeyword = keyword.toLowerCase();
+            let score = 0;
 
-        isKeywordVisible(keyword) {
-          if (this.search.value.length <= 1) {
-            return false;
-          }
+            if (lowerKeyword === search) {
+              score += 100;
+            } else if (lowerKeyword.startsWith(search)) {
+              score += 50;
+            } else if (lowerKeyword.includes(` ${search}`)) {
+              score += 30;
+            } else if (lowerKeyword.includes(search)) {
+              score += 10;
+            }
 
-          return keyword.toLowerCase().includes(this.search.value.trim().toLowerCase());
+            return { keyword, score };
+          })
+          .filter((item) => item.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .map((item) => item.keyword);
         },
 
         handleChange(event) {
           this.search.value = event.target.value;
-
-          if (this.search.value.length > 1) {
-            this.search.open = true;
-          }
+          this.search.open = event.target.value.length > 1;
         },
 
         handleKeyDown(event) {
@@ -278,7 +285,19 @@ import WithoutHero from "../layouts/without-hero.astro";
             } else {
               available[index + 1].focus();
             }
+          } else if (event.key === 'Enter') {
+            this.close();
+            this.scrollToTable();
+          } else if (document.activeElement !== this.$refs.input) {
+            this.$refs.input.focus();
           }
+        },
+
+        handleKeywordClick(keyword) {
+          this.filters.query = keyword;
+          this.scrollToTable();
+
+          this.close();
         },
 
         close() {
@@ -302,14 +321,14 @@ import WithoutHero from "../layouts/without-hero.astro";
       <div class="relative">
         <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
         <input
-          type="search"
-          @input="handleChange"
+          x-ref="input"
+          type="text"
+          @input.debounce="handleChange"
           x-model.debounce="filters.query"
           autocomplete="off"
           placeholder="Search the program list..."
           aria-label="Search the program list..."
           class="bg-white w-full min-h-12 px-4 pl-12"
-          @keydown.enter="scrollToTable"
         />
         <button
           type="button"
@@ -326,12 +345,11 @@ import WithoutHero from "../layouts/without-hero.astro";
           class="absolute right-0 z-10 mt-2 max-h-80 w-full overflow-y-scroll overscroll-contain border border-gray-300 bg-white py-2 shadow-sm outline-none"
           x-ref="panel"
         >
-          <template x-for="keyword in keywords" :key="keyword">
+          <template x-for="keyword in filteredKeywords" :key="keyword">
             <button
-              x-show="isKeywordVisible(keyword)"
               type="button"
               x-text="keyword"
-              @click="filters.query = keyword; close()"
+              @click="handleKeywordClick(keyword)"
               class="flex w-full cursor-pointer items-center py-2 px-4 transition-colors hover:bg-primary-100 focus-visible:bg-primary-100 focus-visible:outline-none"
             >
             </button>
@@ -448,7 +466,10 @@ import WithoutHero from "../layouts/without-hero.astro";
         </tr>
       </thead>
       <tbody>
-        <tr class="border-b border-b-gray-200" x-show="filters.query && filtered.direct.length > 0">
+        <tr
+          class="border-b border-b-gray-200 scroll-m-28"
+          x-show="filters.query && filtered.direct.length > 0"
+        >
           <td colspan="11" class="py-2"
             ><span class="h4">Programs for "<span x-text="filters.query"></span>"</span></td
           >
@@ -500,7 +521,10 @@ import WithoutHero from "../layouts/without-hero.astro";
           </tr>
         </template>
 
-        <tr class="border-b border-b-gray-200" x-show="filters.query && filtered.direct.length > 0">
+        <tr
+          class="border-b border-b-gray-200"
+          x-show="filters.query && filtered.related.length > 0"
+        >
           <td colspan="11" class="pb-2 pt-8"
             ><span class="h4">Programs related to "<span x-text="filters.query"></span>"</span></td
           >
