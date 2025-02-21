@@ -92,12 +92,6 @@ export default {
         title: ["priori-sans", ...fontFamily.serif],
         sans: ["noto-sans", ...fontFamily.sans],
       },
-      backgroundImage: {
-        "progress-gradient": "conic-gradient(#75adcf var(--progress), white 0%)",
-      },
-      transitionProperty: {
-        progress: "--progress",
-      },
       colors: {
         primary: {
           50: "#f4f6fb",
