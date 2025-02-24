@@ -114,7 +114,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           }
 
           if (program.degree !== 'none' && program.degree !== '') {
-            return program.degree.split(',');
+            return program.degree.split('|');
           }
 
           return [];

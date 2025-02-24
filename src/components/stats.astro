@@ -9,7 +9,21 @@ interface Props extends HTMLAttributes<"nav"> {
 const { value, class: className, ...props } = Astro.props;
 ---
 
-<div class="@container" data-analytics="stats">
+<div
+  x-data="{
+    init() {
+      this.$nextTick(() => {
+        const observer = new IntersectionObserver((entries) => {
+          this.$refs.progress.classList.toggle('start-animation', entries[0].isIntersecting);
+        });
+
+        observer.observe(this.$refs.progress);
+      });
+    }
+  }"
+  class="@container"
+  data-analytics="stats"
+>
   <div
     class={cn(
       "bg-[url(/images/grad_stats_background.jpg)] bg-cover flex gap-8 p-8 items-center flex-wrap @md:flex-nowrap",
@@ -22,6 +36,7 @@ const { value, class: className, ...props } = Astro.props;
     </p>
 
     <div
+      x-ref="progress"
       class="counter relative after:content-[counter(num)_'%'] after:absolute after:left-1/2 after:top-1/2 w-max after:-translate-x-1/2 after:-translate-y-1/2 after:text-5xl after:text-white"
     >
       <svg width="200" height="200" viewBox="0 0 200 200" class="circular-progress">
@@ -65,7 +80,14 @@ const { value, class: className, ...props } = Astro.props;
 
   .counter {
     counter-reset: num var(--num);
+  }
+
+  .counter.start-animation {
     animation: counter-animation 2s ease-out 0s 1 forwards;
+
+    .circular-progress {
+      animation: progress-animation 2s ease-out 0s 1 forwards;
+    }
   }
 
   .circular-progress {
@@ -75,7 +97,6 @@ const { value, class: className, ...props } = Astro.props;
     --radius: calc((var(--size) - var(--stroke-width)) / 2);
     --circumference: calc(var(--radius) * pi * 2);
     --dash: calc((var(--progress) * var(--circumference)) / 100);
-    animation: progress-animation 2s ease-out 0s 1 forwards;
   }
 
   .circular-progress circle {
