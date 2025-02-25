@@ -70,7 +70,11 @@ const items = [
 ];
 ---
 
-<section id="start" class="wrapper py-24 flex flex-col lg:flex-row gap-12 lg:gap-24">
+<section
+  id="start"
+  class="wrapper py-24 flex flex-col lg:flex-row gap-12 lg:gap-24"
+  x-data="{ selected: null }"
+>
   <div class="lg:w-3/5">
     <h2 class="h2 text-primary-800">Get in the game!</h2>
 
@@ -86,11 +90,7 @@ const items = [
     <div class="flex gap-4 flex-wrap">
       {
         items.map((item, index) => (
-          <button
-            type="button"
-            class="btn-primary"
-            data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
-          >
+          <button type="button" class="btn-primary" @click={`selected = 'index-${index}'`}>
             {item.name}
           </button>
         ))
@@ -106,6 +106,47 @@ const items = [
       preview="https://www.messiah.edu/site/custom_scripts/styles/img/athletics/in-the-game.jpg"
     />
   </div>
+
+  <TabbedDialog tabs={items} class="z-30 bg-primary-800/80 text-white backdrop-blur-sm fixed">
+    {
+      items.map((item, index) => (
+        <div
+          id={`tabbed-dialog-tabpanel-${index}`}
+          role="tabpanel"
+          x-show={`selected === 'index-${index}'`}
+          aria-labelledby={`tabbed-dialog-tab-${index}`}
+        >
+          <div class="flex gap-12">
+            <figure class="flex-shrink-0">
+              <img src={item.image} alt="" class="bg-white p-1 rounded-full" />
+            </figure>
+
+            <div class="w-full">
+              <p class="paragraph mb-4">{item.description}</p>
+
+              {item.links ? (
+                <ul class="columns-2">
+                  {item.links.map((link) => (
+                    <li>
+                      <a href={link.href} class="uppercase font-title text-xl font-bold link">
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+
+              <hr class="my-8" />
+
+              <a href={item.button.href} class="btn-quaternary">
+                {item.button.label}
+              </a>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </TabbedDialog>
 </section>
 
 <div class="wrapper pb-24 flex gap-8">
@@ -153,45 +194,3 @@ const items = [
     </figcaption>
   </figure>
 </div>
-
-<TabbedDialog tabs={items} class="z-30 bg-primary-800/80 text-white backdrop-blur-sm fixed">
-  {
-    items.map((item, index) => (
-      <div
-        id={`tabbed-dialog-tabpanel-${index}`}
-        role="tabpanel"
-        data-tab-value={item.name}
-        hidden={index === 0 ? undefined : ""}
-        aria-labelledby={`tabbed-dialog-tab-${index}`}
-      >
-        <div class="flex gap-12">
-          <figure class="flex-shrink-0">
-            <img src={item.image} alt="" class="bg-white p-1 rounded-full" />
-          </figure>
-
-          <div class="w-full">
-            <p class="paragraph mb-4">{item.description}</p>
-
-            {item.links ? (
-              <ul class="columns-2">
-                {item.links.map((link) => (
-                  <li>
-                    <a href={link.href} class="uppercase font-title text-xl font-bold link">
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-
-            <hr class="my-8" />
-
-            <a href={item.button.href} class="btn-quaternary">
-              {item.button.label}
-            </a>
-          </div>
-        </div>
-      </div>
-    ))
-  }
-</TabbedDialog>

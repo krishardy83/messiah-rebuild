@@ -14,7 +14,7 @@ const items = [
       <p class="mb-4 paragraph">No-fee tuition<br />
       At Messiah University, most of our graduate programs feature no-fee tuition. The cost per credit is what you pay–there are no hidden fees for labs, courses, services or technology. We put the true cost of your program upfront so that you can accurately compare and plan for your graduate education.</p>
 
-      <div class="flex gap-2 flex-wrap mt-4"> 
+      <div class="flex gap-2 flex-wrap mt-4">
         <a class="btn-quaternary" href="https://www.messiah.edu/info/21313/financial_aid_for_graduate_programs">Financial aid</a>
         <a class="btn-quaternary" href="https://www.messiah.edu/info/22941/tuition_and_fees">Tuition</a>
       </div>
@@ -67,7 +67,7 @@ const items = [
           <p class="paragraph mb-4">Students meet at a physical location during scheduled meeting times for the duration of the course.</p>
 
           <p class="paragraph mb-4">The following graduate programs are offered in a traditional format:</p>
-          
+
           <ul class="list-disc pl-6">
             <li>Occupational therapy</li>
             <li>Physical therapy</li>
@@ -78,7 +78,7 @@ const items = [
           <p class="paragraph mb-4">Most of Messiah’s graduate programs are conducted in a hybrid format which combines face-to-face meetings and online delivery.</p>
 
           <p class="paragraph mb-4">The following graduate programs are offered in a hybrid format:</p>
-          
+
           <ul class="list-disc pl-6 mb-4">
             <li>Counseling</li>
             <li>Education *</li>
@@ -95,7 +95,7 @@ const items = [
           <p class="paragraph mb-4">Students access all course materials online through a learning management system: there are no requirements for face-to-face sessions.</p>
 
           <p class="paragraph mb-4">The following graduate programs are offered in an online format:</p>
-          
+
           <ul class="list-disc pl-6 mb-4">
             <li>Business and leadership</li>
             <li>Education *</li>
@@ -105,7 +105,7 @@ const items = [
         </div>
       </div>
 
-      <div class="flex gap-4 flex-wrap mt-8 justify-center"> 
+      <div class="flex gap-4 flex-wrap mt-8 justify-center">
         <a class="btn-quaternary" href="https://www.messiah.edu/info/22871/program_and_class_format">Learn more about Messiah's Graduate class formats</a>
       </div>
     `,
@@ -117,7 +117,7 @@ const items = [
   class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover py-24 relative scroll-m-24"
   id="why-messiah"
 >
-  <div class="wrapper">
+  <div class="wrapper" x-data="{ selected: null }">
     <h2 class="text-white h2 text-center">Why Messiah?</h2>
     <p class="text-white text-center paragraph mx-auto max-w-4xl">
       Messiah’s graduate programs are designed to challenge your intellect, engage your faith and
@@ -129,7 +129,7 @@ const items = [
         items.map((item, index) => (
           <li>
             <button
-              data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
+              @click={`selected = 'index-${index}'`}
               type="button"
               class="text-white group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
             >
@@ -144,29 +144,28 @@ const items = [
         ))
       }
     </ul>
+
+    <TabbedDialog
+      tabs={items}
+      title="Why Messiah?"
+      class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover bg-primary-950"
+    >
+      {
+        items.map((item, index) => (
+          <div
+            id={`tabbed-dialog-tabpanel-${index}`}
+            role="tabpanel"
+            x-show={`selected === 'index-${index}'`}
+            aria-labelledby={`tabbed-dialog-tab-${index}`}
+          >
+            <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
+              {item.name}
+            </h4>
+
+            <div set:html={item.content} />
+          </div>
+        ))
+      }
+    </TabbedDialog>
   </div>
-
-  <TabbedDialog
-    tabs={items}
-    title="Why Messiah?"
-    class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover bg-primary-950"
-  >
-    {
-      items.map((item, index) => (
-        <div
-          id={`tabbed-dialog-tabpanel-${index}`}
-          role="tabpanel"
-          data-tab-value={item.name}
-          hidden={index === 0 ? undefined : ""}
-          aria-labelledby={`tabbed-dialog-tab-${index}`}
-        >
-          <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
-            {item.name}
-          </h4>
-
-          <div set:html={item.content} />
-        </div>
-      ))
-    }
-  </TabbedDialog>
 </section>

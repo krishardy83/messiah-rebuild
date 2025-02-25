@@ -21,7 +21,7 @@ const items = [
 
       <p class="mb-4 paragraph">While there’s plenty to do on campus, we realize you might want to explore the surrounding area, too. Luckily, we’re only a short drive from Harrisburg—Pennsylvania’s capital city—and many other towns and metropolitan areas. Within just a few minutes of campus, you’ll find plenty of restaurants, shopping, entertainment venues, movie theaters, galleries, coffee shops and museums.</p>
 
-      <div class="flex gap-2 flex-wrap mt-4"> 
+      <div class="flex gap-2 flex-wrap mt-4">
         <a class="btn-quaternary" href="https://www.messiah.edu/area">Things to see and do!</a>
       </div>
     `,
@@ -44,35 +44,35 @@ const items = [
           <img src="https://www.messiah.edu/site/custom_scripts/styles/img/student-life/wtd-slide-2.jpg" alt="" />
 
           <h5 class="font-title uppercase font-bold mt-4 mb-2 text-xl">White-out march</h5>
-          
+
           <p class="paragraph">Before the Homecoming soccer games, students are given white (free!) T-shirts. The spirited crowd—dressed in white and led by a bagpiper—marches across the Covered Bridge to the soccer field where they inspire Falcon fans to cheer on the big game!</p>
         </div>
         <div>
           <img src="https://www.messiah.edu/site/custom_scripts/styles/img/student-life/wtd-slide-3.jpg" alt="" />
 
           <h5 class="font-title uppercase font-bold mt-4 mb-2 text-xl">Powderpuff football</h5>
-          
+
           <p class="paragraph">The women gear up for a fun football game while the men take on the role as cheerleaders in this fun Homecoming tradition. The competition pits seniors against first-years and sophomores against juniors.</p>
         </div>
         <div>
           <img src="https://www.messiah.edu/site/custom_scripts/styles/img/student-life/wtd-slide-4.jpg" alt="" />
 
           <h5 class="font-title uppercase font-bold mt-4 mb-2 text-xl">Service day</h5>
-          
+
           <p class="paragraph">Each spring, Messiah hosts Service Day where students and employees have a day off from classes and work, and serve together as a campus community. This is done either as a volunteer for Special Olympics (hosted on our campus) or with any one of many outreach opportunities throughout the local area. </p>
         </div>
         <div>
           <img src="https://www.messiah.edu/site/custom_scripts/styles/img/student-life/wtd-slide-6.jpg" alt="" />
 
           <h5 class="font-title uppercase font-bold mt-4 mb-2 text-xl">Final week</h5>
-          
+
           <p class="paragraph">Studying for finals likely doesn’t seem like fun, but Messiah works hard to make that week more bearable for students. During finals week, Lottie Dining Hall opens one night between 10 p.m. and midnight and employee volunteers serve students free pancakes and tots. Then, at midnight every night during finals week, students let off a little steam with a collective scream out their windows! </p>
         </div>
         <div>
           <img src="https://www.messiah.edu/site/custom_scripts/styles/img/student-life/wtd-slide-7.jpg" alt="" />
 
           <h5 class="font-title uppercase font-bold mt-4 mb-2 text-xl">Yellow Breeches</h5>
-          
+
           <p class="paragraph">The beautiful Yellow Breeches Creek runs right through Messiah’s campus, and on any given day, you’ll see students enjoying a nap in a hammock, studying with friends, tubing or canoeing, and even fishing!</p>
         </div>
       </div>
@@ -95,7 +95,7 @@ const items = [
 
       <p class="mb-4 paragraph">In addition to NCAA athletics, there are many club sports and recreational leagues on campus, like Ultimate frisbee, field hockey and more. Club teams compete against other colleges and universities, while our recreational teams compete against each other for the coveted campus rec sports league title. As a Messiah athlete, no matter what level you compete at, you practice something of lifelong importance directing your talents and hard work toward a greater purpose.</p>
 
-      <div class="flex gap-2 flex-wrap mt-4"> 
+      <div class="flex gap-2 flex-wrap mt-4">
         <a class="btn-quaternary" href="http://www.gomessiah.com/clubsports">Club sports</a>
         <a class="btn-quaternary" href="https://www.messiah.edu/info/20711/rec_sports">Rec sports</a>
         <a class="btn-quaternary" href="http://www.gomessiah.com/">NCAA sports</a>
@@ -110,7 +110,7 @@ const items = [
 
       <p class="mb-4 paragraph">Messiah's campus is an active, busy place. You can engage your passions in any of the 60+ clubs and organizations within the Student Government Association (SGA). These student-run groups play a crucial role in your education, offering you a place to serve, lead, grow and have fun outside the classroom.</p>
 
-      <div class="flex gap-2 flex-wrap mt-4"> 
+      <div class="flex gap-2 flex-wrap mt-4">
         <a class="btn-quaternary" href="https://www.messiah.edu/info/21478/clubs_and_organizations">See our full list of clubs and organizations</a>
       </div>
     `,
@@ -119,7 +119,7 @@ const items = [
 ---
 
 <section class="bg-[url(/images/campus-bg.jpg)] bg-no-repeat bg-cover py-24 relative scroll-m-24">
-  <div class="wrapper">
+  <div class="wrapper" x-data="{ selected: null }">
     <h2 class="text-white h2 text-center">What's there to do?</h2>
 
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-8 my-12">
@@ -127,7 +127,7 @@ const items = [
         items.map((item, index) => (
           <li>
             <button
-              data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
+              @click={`selected = 'index-${index}'`}
               type="button"
               class="text-white group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
             >
@@ -142,29 +142,28 @@ const items = [
         ))
       }
     </ul>
+
+    <TabbedDialog
+      tabs={items}
+      title="What's there to do?"
+      class="bg-[linear-gradient(to_right,rgba(0,0,0,.4),rgba(0,0,0,.4)),url(/images/campus-bg.jpg)] bg-no-repeat bg-cover bg-primary-950"
+    >
+      {
+        items.map((item, index) => (
+          <div
+            id={`tabbed-dialog-tabpanel-${index}`}
+            role="tabpanel"
+            x-show={`selected === 'index-${index}'`}
+            aria-labelledby={`tabbed-dialog-tab-${index}`}
+          >
+            <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
+              {item.name}
+            </h4>
+
+            <div set:html={item.content} />
+          </div>
+        ))
+      }
+    </TabbedDialog>
   </div>
-
-  <TabbedDialog
-    tabs={items}
-    title="What's there to do?"
-    class="bg-[linear-gradient(to_right,rgba(0,0,0,.4),rgba(0,0,0,.4)),url(/images/campus-bg.jpg)] bg-no-repeat bg-cover bg-primary-950"
-  >
-    {
-      items.map((item, index) => (
-        <div
-          id={`tabbed-dialog-tabpanel-${index}`}
-          role="tabpanel"
-          data-tab-value={item.name}
-          hidden={index === 0 ? undefined : ""}
-          aria-labelledby={`tabbed-dialog-tab-${index}`}
-        >
-          <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
-            {item.name}
-          </h4>
-
-          <div set:html={item.content} />
-        </div>
-      ))
-    }
-  </TabbedDialog>
 </section>

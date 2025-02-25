@@ -127,7 +127,7 @@ const items = [
   class="bg-[url(/images/why-messiah-bg-ug.jpg)] bg-no-repeat bg-cover py-24 relative scroll-m-24"
   id="academic-opportunities"
 >
-  <div class="wrapper">
+  <div class="wrapper" x-data="{ selected: null }">
     <h2 class="text-white h2 text-center">Academic opportunities</h2>
     <p class="text-white text-center paragraph mx-auto max-w-4xl">
       Students at Messiah enhance their classroom experiences by taking advantage of a rich variety
@@ -140,7 +140,7 @@ const items = [
         items.map((item, index) => (
           <li>
             <button
-              data-tabbed-dialog-trigger={`tabbed-dialog-tabpanel-${index}`}
+              @click={`selected = 'index-${index}'`}
               type="button"
               class="text-white group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
             >
@@ -155,58 +155,57 @@ const items = [
         ))
       }
     </ul>
-  </div>
 
-  <TabbedDialog
-    tabs={items}
-    title="Why Messiah?"
-    class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover bg-primary-950"
-  >
-    {
-      items.map((item, index) => (
-        <div
-          id={`tabbed-dialog-tabpanel-${index}`}
-          role="tabpanel"
-          data-tab-value={item.name}
-          hidden={index === 0 ? undefined : ""}
-          aria-labelledby={`tabbed-dialog-tab-${index}`}
-        >
-          <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
-            {item.name}
-          </h4>
+    <TabbedDialog
+      tabs={items}
+      title="Why Messiah?"
+      class="bg-[url(/images/why-messiah-bg-grad.jpg)] bg-no-repeat bg-cover bg-primary-950"
+    >
+      {
+        items.map((item, index) => (
+          <div
+            id={`tabbed-dialog-tabpanel-${index}`}
+            role="tabpanel"
+            x-show={`selected === 'index-${index}'`}
+            aria-labelledby={`tabbed-dialog-tab-${index}`}
+          >
+            <h4 class="text-center text-3xl my-12 relative before:absolute before:w-1/4 md:before:w-1/4 before:h-1 before:bg-gray-400 before:left-0 before:top-1/2 after:absolute after:w-1/4 md:after:w-1/4 after:h-1 after:bg-gray-400 after:right-0 after:top-1/2 after:hidden before:hidden md:after:block md:before:block">
+              {item.name}
+            </h4>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p class="paragraph mb-4">{item.description}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p class="paragraph mb-4">{item.description}</p>
 
-              <div class="flex flex-wrap gap-2">
-                {item.buttons.map((button) => (
-                  <a href={button.href} class="btn-quaternary">
-                    {button.label}
-                  </a>
-                ))}
+                <div class="flex flex-wrap gap-2">
+                  {item.buttons.map((button) => (
+                    <a href={button.href} class="btn-quaternary">
+                      {button.label}
+                    </a>
+                  ))}
+                </div>
               </div>
+
+              {item.image ? (
+                <img
+                  src={item.image.src}
+                  alt={item.image.alt}
+                  class="w-full aspect-video object-cover"
+                />
+              ) : null}
+
+              {item.video ? (
+                <Youtube
+                  videoId={item.video.id}
+                  litebox
+                  preview={item.video.image}
+                  alt={item.video.alt}
+                />
+              ) : null}
             </div>
-
-            {item.image ? (
-              <img
-                src={item.image.src}
-                alt={item.image.alt}
-                class="w-full aspect-video object-cover"
-              />
-            ) : null}
-
-            {item.video ? (
-              <Youtube
-                videoId={item.video.id}
-                litebox
-                preview={item.video.image}
-                alt={item.video.alt}
-              />
-            ) : null}
           </div>
-        </div>
-      ))
-    }
-  </TabbedDialog>
+        ))
+      }
+    </TabbedDialog>
+  </div>
 </section>
