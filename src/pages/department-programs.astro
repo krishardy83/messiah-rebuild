@@ -1,0 +1,481 @@
+---
+import Icon from "../components/icon.astro";
+import WithoutHero from "../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Chemistry and Biochemistry"
+  description="Chemistry and Biochemistry"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Academics", href: "/" },
+    { name: "Chemistry and Biochemistry", href: "/" },
+  ]}
+>
+  <h2 class="h3">Our academic programs</h2>
+
+  <div class="rich-text mb-8">
+    <img
+      src="https://www.messiah.edu/images/comm1_000_1.jpg"
+      class="float-right not-prose ml-4 mb-4"
+      width="300"
+      height="200"
+    />
+    <p>
+      All of our majors offer you both rigorous coursework and hands-on experience in our cutting
+      edge facilities and equipment as well as off-campus through internships. Our students also
+      have the flexibility to major, minor, or study abroad. A number of students also complete
+      projects of their own creation, work alongside professors on research studies, engage in
+      service learning through some of their classes.
+    </p>
+
+    <p>
+      As a student in the Messiah University Department of Communication, you'll step into a world
+      of possibilities, all built around our mission. Through a common core of courses, you'll learn
+      to communicate ethically, listen effectively, and resolve issues graciously. Building on this
+      strong foundation, you'll gain specialized knowledge and practical skills in one of six
+      majors.
+    </p>
+  </div>
+
+  <h3 class="h3 mb-4">Our chemistry and biochemistry programs</h3>
+
+  <div
+    x-data="{
+      programs: [],
+      loading: true,
+      error: null,
+      filters: {
+        types: [],
+        id: 'communication',
+      },
+      open: null,
+
+      types: {
+        major: {
+          key: 'M',
+          label:'Major',
+          color: '#273d5e',
+          description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+        },
+        minor: {
+          key: 'm',
+          label: 'Minor',
+          color: '#4d87a9',
+          description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+        },
+        concentration: {
+          key: 'C',
+          label: 'Concentration',
+          color: '#ab4e42',
+          description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+        },
+        P: {
+          key: 'P',
+          label: 'Pre-Health Advising',
+          color: '#7477b8',
+          description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+        },
+        '3+': {
+          key: '3+',
+          label: '3+ Partner Programs',
+          color: '#84ab8b',
+          description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+        },
+        teaching_certification: {
+          key: 'T',
+          label: 'Teaching Certificate',
+          color: '#e37b65',
+          description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+        },
+        accelerated: {
+          key: 'A',
+          label: 'Accelerated',
+          color: '#DCAC42',
+          description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+        },
+        early_assurance: {
+          key: 'E',
+          label: 'Early Assurance',
+          color: '#afafaf',
+          description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+        },
+        undergrad_certificate: {
+          key: 'UC',
+          label: 'Undergrad Certificate',
+          color: '#0a0a0ab3',
+          description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+        },
+      },
+
+      hasType(program, type) {
+        if (program === null) {
+          return false;
+        }
+
+        return program[type] === 'true';
+      },
+
+      getProgramDegrees(program) {
+        if (!program) {
+          return [];
+        }
+
+        if (program.degree !== 'none' && program.degree !== '') {
+          return program.degree.split('|');
+        }
+
+        return [];
+      },
+
+      getProgramURL(program) {
+        if (!program) {
+          return null;
+        }
+
+        const url = new URL(location.origin);
+        url.pathname = program.program_url;
+
+        return url.toString();
+      },
+
+      getRelatedPrograms(program) {
+        if (!program) {
+          return [];
+        }
+
+        const related = program.related_programs.split('|');
+
+        if (related.length === 0) {
+          return [];
+        }
+
+        return related.map((program) => {
+          return this.programs.find((p) => p.entry_id === program);
+        });
+      },
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.programs = data.items;
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch program data (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      reset() {
+        this.filters.types = [];
+      },
+
+      get filtered() {
+        const programs = new Map();
+
+        const limitedPrograms = this.programs.filter((program) => {
+          return this.filters.types.every((type) => this.hasType(program, type)) && program.department_id === this.filters.id;
+        });
+
+        for (const program of limitedPrograms) {
+          if (program.parent_program === '') {
+            programs.set(program.entry_id, { ...program, child_programs: [] });
+          }
+        }
+
+        for (const program of limitedPrograms) {
+          if (program.parent_program !== '') {
+            const parent = programs.get(program.parent_program);
+
+            if (parent) {
+              parent.child_programs.push(program);
+            }
+          }
+        }
+
+        return Array.from(programs.values());
+      }
+    }"
+  >
+    <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
+      <template x-for="[key, type] in Object.entries(types)">
+        <label
+          class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
+        >
+          <input type="checkbox" :value="key" x-model="filters.types" class="sr-only" />
+          <span
+            x-text="type.key"
+            class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+            :style="`background-color: ${type.color}`"></span>
+          <span
+            x-text="type.label"
+            class="uppercase group-hover:underline"
+            :class="filters.types.includes(key) ? 'text-primary-400' : ''"></span>
+        </label>
+      </template>
+    </div>
+
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading program list...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <template x-if="!filtered.length && !loading && !error">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p class="mb-4">No programs match the selected program type.</p>
+
+        <button type="button" @click="reset()" class="btn btn-quaternary">Reset</button>
+      </div>
+    </template>
+
+    <ul>
+      <template x-for="program in filtered">
+        <li class="border-b border-b-gray-200 scroll-m-28">
+          <span class="flex hover:bg-gray-100 transition-colors">
+            <button
+              type="button"
+              @click="open = program"
+              class="h-full w-8 flex justify-center items-center"
+            >
+              <Icon name="expand" class="size-5" />
+            </button>
+
+            <a
+              x-text="program.program_name"
+              class="text-primary-800 hover:underline mr-2"
+              :href="getProgramURL(program)"></a>
+
+            <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+              <template x-for="degree in getProgramDegrees(program)">
+                <span
+                  x-text="degree"
+                  class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                >
+                </span>
+              </template>
+            </span>
+
+            <template x-for="[key, type] in Object.entries(types)">
+              <button
+                x-data
+                @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                x-show="hasType(program, key)"
+                x-text="type.key"
+                class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                :style="`background-color: ${type.color}`"></button>
+            </template>
+          </span>
+
+          <template x-if="program.child_programs.length > 0">
+            <ul>
+              <template x-for="child_program in program.child_programs">
+                <li class="border-t border-t-gray-200 flex hover:bg-gray-100 transition-colors">
+                  <button
+                    type="button"
+                    @click="open = child_program"
+                    class="h-full w-8 mr-8 flex justify-center items-center"
+                  >
+                    <Icon name="expand" class="size-5" />
+                  </button>
+
+                  <a
+                    x-text="child_program.program_name"
+                    class="text-primary-800 hover:underline mr-2"
+                    :href="getProgramURL(child_program)"></a>
+
+                  <span
+                    class="inline-flex gap-2"
+                    x-show="getProgramDegrees(child_program).length > 0"
+                  >
+                    <template x-for="degree in getProgramDegrees(child_program)">
+                      <span
+                        x-text="degree"
+                        class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                      >
+                      </span>
+                    </template>
+                  </span>
+
+                  <template x-for="[key, type] in Object.entries(types)">
+                    <button
+                      x-data
+                      @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                      x-show="hasType(child_program, key)"
+                      x-text="type.key"
+                      class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                      :style="`background-color: ${type.color}`"></button>
+                  </template>
+                </li>
+              </template>
+            </ul>
+          </template>
+        </li>
+      </template>
+    </ul>
+    <!-- <table class="text-sm w-full" x-show="filtered.length > 0 && !error && !loading">
+      <thead>
+        <tr class="border-b border-b-gray-300 bg-gray-100">
+          <td colspan="11" class="py-2 px-4 relative"
+            >* click an icon above to filter the list
+            <button
+              type="button"
+              @click="reset()"
+              x-show="filters.types.length > 0"
+              class="absolute top-0 right-0 flex items-center gap-2 h-full px-4 hover:bg-gray-200 transition-colors"
+            >
+              <Icon name="close" class="size-5" />
+              Reset filter</button
+            >
+          </td>
+        </tr>
+      </thead>
+      <tbody class="scroll-m-28">
+
+      </tbody>
+    </table> -->
+
+    <template x-teleport="body">
+      <div
+        x-show="Boolean(open)"
+        style="display: none"
+        x-on:keydown.escape.prevent.stop="open = null"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="dialog"
+      >
+        <div
+          x-show="Boolean(open)"
+          @click="open = null"
+          x-transition.opacity.duration.300
+          class="fixed inset-0 bg-primary-800/80 z-50"
+        >
+        </div>
+
+        <div
+          x-show="Boolean(open)"
+          x-transition.opacity.duration.300
+          x-trap.noscroll.inert="open"
+          class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+        >
+          <div class="flex justify-end p-4">
+            <button type="button" @click="open = null" aria-label="Close dialog">
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                width="40"
+                height="40"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <img
+            :src="open?.thumbnail_small"
+            :alt="open?.thumbnail_small_alt"
+            class="w-full bg-gray-200 mb-4"
+          />
+
+          <div class="p-4">
+            <h4 class="mb-2">
+              <span
+                class="text-primary-800 font-title text-3xl font-bold mr-2"
+                x-text="open?.program_name"></span>
+              <span class="inline-flex gap-2 items-center">
+                <template x-for="degree in getProgramDegrees(open)">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </h4>
+
+            <p x-text="open?.department_name" class="mb-2"></p>
+
+            <ul class="flex gap-2 items-center mb-8">
+              <template x-for="[key, type] in Object.entries(types)">
+                <li
+                  x-show="hasType(open, key)"
+                  x-text="type.label"
+                  class="text-white text-xs px-2 py-1 rounded-full"
+                  :style="`background-color: ${type.color}`"
+                >
+                </li>
+              </template>
+            </ul>
+
+            <p x-text="open?.program_peek" class="mb-4"></p>
+
+            <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
+
+            <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
+              <h5 class="text-primary-800 mb-4 font-title">
+                <span class="block text-xl leading-none">Programs related to</span>
+                <span x-text="open?.program_name" class="text-2xl font-bold leading-none"></span>
+              </h5>
+
+              <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <template x-for="related in getRelatedPrograms(open)">
+                  <li
+                    class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden"
+                  >
+                    <img
+                      :src="related.thumbnail_small"
+                      :alt="related.thumbnail_small_alt"
+                      class="w-full h-32 object-cover"
+                    />
+                    <span class="p-2">
+                      <span x-text="related.program_name" class="block mb-2"></span>
+
+                      <span class="flex gap-2">
+                        <template x-for="[key, type] in Object.entries(types)">
+                          <span
+                            x-text="type.key"
+                            class="w-5 h-5 text-white rounded-full flex text-xs items-center justify-center mb-4"
+                            :style="`background-color: ${type.color}`"
+                            x-show="hasType(related, key)"
+                          >
+                          </span>
+                        </template>
+                      </span>
+                    </span>
+                    <a
+                      :href="getProgramURL(related)"
+                      class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
+                      >Read more</a
+                    >
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+</WithoutHero>
