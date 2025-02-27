@@ -22,7 +22,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       loading: true,
       error: null,
       filters: {
-        types: [],
+        type: '',
         query: '',
         interestGroup: 'all',
       },
@@ -93,6 +93,10 @@ import WithoutHero from "../layouts/without-hero.astro";
       hasType(program, type) {
         if (program === null) {
           return false;
+        }
+
+        if (type === '') {
+          return true;
         }
 
         return program[type] === 'true';
@@ -182,7 +186,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       reset() {
-        this.filters.types = [];
+        this.filters.type = '';
         this.filters.query = '';
         this.filters.interestGroup = 'all';
       },
@@ -199,9 +203,9 @@ import WithoutHero from "../layouts/without-hero.astro";
         const matches = { direct: [], related: [] };
 
         this.programs.forEach((program) => {
-          const { types, interestGroup } = this.filters;
+          const { type, interestGroup } = this.filters;
 
-          const isTypeMatch = types.every((type) => this.hasType(program, type));
+          const isTypeMatch = this.hasType(program, type);
           const isNameMatch = program.program_name.toLowerCase().includes(query);
           const isKeywordMatch = program.keywords.split(',').some((keyword) => keyword.toLowerCase().includes(query));
           const isInterestGroupMatch = interestGroup === 'all' ? true : program.interest_group_name.split('|').includes(interestGroup);
@@ -427,7 +431,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           <label
             class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
           >
-            <input type="checkbox" :value="key" x-model="filters.types" class="sr-only" />
+            <input type="radio" :value="key" x-model="filters.type" class="sr-only" />
             <span
               x-text="type.key"
               class="w-5 h-5 text-white rounded-full flex items-center justify-center"
@@ -435,7 +439,7 @@ import WithoutHero from "../layouts/without-hero.astro";
             <span
               x-text="type.label"
               class="uppercase group-hover:underline"
-              :class="filters.types.includes(key) ? 'text-primary-400' : ''"></span>
+              :class="filters.type === key ? 'text-primary-400' : ''"></span>
           </label>
         </template>
       </div>
@@ -483,14 +487,14 @@ import WithoutHero from "../layouts/without-hero.astro";
       </template>
 
       <table class="text-sm w-full" x-show="!error && !loading">
-        <thead x-show="!filters.query">
+        <thead x-show="!filters.query && filtered.length > 0">
           <tr class="border-b border-b-gray-300 bg-gray-100">
             <td colspan="11" class="py-2 px-4 relative"
               >* click an icon above to filter the list
               <button
                 type="button"
                 @click="reset()"
-                x-show="filters.types.length > 0"
+                x-show="filters.type !== ''"
                 class="absolute top-0 right-0 flex items-center gap-2 h-full px-4 hover:bg-gray-200 transition-colors"
               >
                 <Icon name="close" class="size-5" />
