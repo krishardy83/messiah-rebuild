@@ -172,30 +172,50 @@ import WithoutHero from "../layouts/without-hero.astro";
         this.filters.types = [];
       },
 
-      get filtered() {
-        const programs = new Map();
+      get transformedPrograms() {
+        const parents = {};
+        const children = {};
 
-        const limitedPrograms = this.programs.filter((program) => {
-          return this.filters.types.every((type) => this.hasType(program, type)) && program.department_id === this.filters.id;
+        this.programs.forEach((program) => {
+          if (program.parent_program) {
+            program.is_child = true;
+
+            if (!children[program.parent_program]) {
+              children[program.parent_program] = [];
+            }
+
+            children[program.parent_program].push(program);
+          } else {
+            program.is_child = false;
+            parents[program.entry_id] = program;
+          }
         });
 
-        for (const program of limitedPrograms) {
-          if (program.parent_program === '') {
-            programs.set(program.entry_id, { ...program, child_programs: [] });
+        const sortedParentIds = Object.keys(parents).sort((a, b) =>
+          parents[a].program_name.localeCompare(parents[b].program_name)
+        );
+
+        const result = [];
+
+        sortedParentIds.forEach(parentId => {
+          result.push(parents[parentId]);
+
+          if (children[parentId]) {
+            const sortedChildren = children[parentId].sort((a, b) =>
+              a.program_name.localeCompare(b.program_name)
+            );
+
+            result.push(...sortedChildren);
           }
-        }
+        });
 
-        for (const program of limitedPrograms) {
-          if (program.parent_program !== '') {
-            const parent = programs.get(program.parent_program);
+        return result;
+      },
 
-            if (parent) {
-              parent.child_programs.push(program);
-            }
-          }
-        }
-
-        return Array.from(programs.values());
+      get filteredPrograms() {
+        return this.transformedPrograms.filter((program) => {
+          return this.filters.types.every((type) => this.hasType(program, type)) && program.department_id === this.filters.id;
+        });
       }
     }"
   >
@@ -233,7 +253,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       </div>
     </template>
 
-    <template x-if="!filtered.length && !loading && !error">
+    <template x-if="filteredPrograms.length === 0 && !loading && !error">
       <div
         role="alert"
         class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
@@ -244,92 +264,8 @@ import WithoutHero from "../layouts/without-hero.astro";
       </div>
     </template>
 
-    <ul>
-      <template x-for="program in filtered">
-        <li class="border-b border-b-gray-200 scroll-m-28">
-          <span class="flex hover:bg-gray-100 transition-colors">
-            <button
-              type="button"
-              @click="open = program"
-              class="h-full w-8 flex justify-center items-center"
-            >
-              <Icon name="expand" class="size-5" />
-            </button>
-
-            <a
-              x-text="program.program_name"
-              class="text-primary-800 hover:underline mr-2"
-              :href="getProgramURL(program)"></a>
-
-            <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
-              <template x-for="degree in getProgramDegrees(program)">
-                <span
-                  x-text="degree"
-                  class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
-                >
-                </span>
-              </template>
-            </span>
-
-            <template x-for="[key, type] in Object.entries(types)">
-              <button
-                x-data
-                @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
-                x-show="hasType(program, key)"
-                x-text="type.key"
-                class="w-5 h-5 text-white rounded-full flex items-center justify-center"
-                :style="`background-color: ${type.color}`"></button>
-            </template>
-          </span>
-
-          <template x-if="program.child_programs.length > 0">
-            <ul>
-              <template x-for="child_program in program.child_programs">
-                <li class="border-t border-t-gray-200 flex hover:bg-gray-100 transition-colors">
-                  <button
-                    type="button"
-                    @click="open = child_program"
-                    class="h-full w-8 mr-8 flex justify-center items-center"
-                  >
-                    <Icon name="expand" class="size-5" />
-                  </button>
-
-                  <a
-                    x-text="child_program.program_name"
-                    class="text-primary-800 hover:underline mr-2"
-                    :href="getProgramURL(child_program)"></a>
-
-                  <span
-                    class="inline-flex gap-2"
-                    x-show="getProgramDegrees(child_program).length > 0"
-                  >
-                    <template x-for="degree in getProgramDegrees(child_program)">
-                      <span
-                        x-text="degree"
-                        class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
-                      >
-                      </span>
-                    </template>
-                  </span>
-
-                  <template x-for="[key, type] in Object.entries(types)">
-                    <button
-                      x-data
-                      @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
-                      x-show="hasType(child_program, key)"
-                      x-text="type.key"
-                      class="w-5 h-5 text-white rounded-full flex items-center justify-center"
-                      :style="`background-color: ${type.color}`"></button>
-                  </template>
-                </li>
-              </template>
-            </ul>
-          </template>
-        </li>
-      </template>
-    </ul>
-    <!-- <table class="text-sm w-full" x-show="filtered.length > 0 && !error && !loading">
-      <thead>
+    <table class="text-sm w-full" x-show="filteredPrograms.length > 0 && !error && !loading">
+      <thead x-show="!filters.query">
         <tr class="border-b border-b-gray-300 bg-gray-100">
           <td colspan="11" class="py-2 px-4 relative"
             >* click an icon above to filter the list
@@ -346,9 +282,53 @@ import WithoutHero from "../layouts/without-hero.astro";
         </tr>
       </thead>
       <tbody class="scroll-m-28">
+        <template x-for="program in filteredPrograms">
+          <tr
+            class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
+            :data-letter="program.program_name.at(0)"
+          >
+            <td class="bg-gray-100 w-8">
+              <button
+                type="button"
+                @click="open = program"
+                class="h-full w-8 flex justify-center items-center"
+              >
+                <Icon name="expand" class="size-5" />
+              </button>
+            </td>
 
+            <td class="p-2" :class="program.is_child ? 'pl-8' : ''">
+              <a
+                x-text="program.program_name"
+                class="text-primary-800 hover:underline mr-2"
+                :href="getProgramURL(program)"></a>
+
+              <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                <template x-for="degree in getProgramDegrees(program)">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </td>
+
+            <template x-for="[key, type] in Object.entries(types)">
+              <td class="w-8">
+                <button
+                  x-data
+                  @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                  x-show="hasType(program, key)"
+                  x-text="type.key"
+                  class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                  :style="`background-color: ${type.color}`"></button>
+              </td>
+            </template>
+          </tr>
+        </template>
       </tbody>
-    </table> -->
+    </table>
 
     <template x-teleport="body">
       <div
