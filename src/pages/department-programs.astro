@@ -220,11 +220,19 @@ import WithoutHero from "../layouts/without-hero.astro";
         return this.transformedPrograms.filter((program) => {
           return this.hasType(program, this.filters.type) && program.department_id === this.filters.id;
         });
+      },
+
+      get filteredTypes() {
+        const current = this.programs.filter((program) => program.department_id === this.filters.id);
+
+        return Object.entries(this.types).filter(([key, type]) => {
+          return current.some((program) => this.hasType(program, key));
+        });
       }
     }"
   >
     <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
-      <template x-for="[key, type] in Object.entries(types)">
+      <template x-for="[key, type] in filteredTypes">
         <label
           class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
         >
