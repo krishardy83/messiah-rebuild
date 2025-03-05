@@ -1,5 +1,4 @@
 ---
-import Alert from "../alert.astro";
 import Icon from "../icon.astro";
 import Logo from "../logo.astro";
 import { bottomGroups, topGroups } from "./navigation-data";
@@ -12,7 +11,7 @@ interface Props {
 const { transparent } = Astro.props;
 ---
 
-<Alert />
+<!-- <Alert /> -->
 
 <div
   class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[compress='true']:-translate-y-12 transition-all"
