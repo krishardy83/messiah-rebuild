@@ -14,7 +14,7 @@ async function getRelatedPrograms() {
   const programs = await response.json();
 
   const thisProgram = programs.items.find(
-    (program: any) => program.url_slug === "accounting-major"
+    (program: any) => program.url_slug === "accounting-major",
   );
 
   if (!thisProgram) {

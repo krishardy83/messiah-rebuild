@@ -12,7 +12,7 @@ const { class: className, ...props } = Astro.props;
   x-id="['slider']"
   :id="$id('slider')"
   x-init="$nextTick(() => {
-    new Carousel(document.getElementById($id('slider')), { infinite: true, Dots: false, transition: 'slide', center: false })
+    new Carousel(document.getElementById($id('slider')), { infinite: true, Dots: false, transition: 'slide', center: false, slidesPerPage: 4 })
   })"
   {...props}
 >

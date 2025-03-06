@@ -87,7 +87,7 @@ const { tabs, class: className, ...props } = Astro.props;
 
   <div class="bg-[linear-gradient(to_bottom,rgba(0,0,0,.075),white_100px)]">
     <div class="wrapper flex flex-col md:flex-row">
-      <div class="flex-1 py-8" x-ref="panels">
+      <div class="md:w-2/3 py-8" x-ref="panels">
         {tabs.map((tab) => (
           <div
             x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
@@ -99,7 +99,7 @@ const { tabs, class: className, ...props } = Astro.props;
         ))}
       </div>
 
-      <aside class="md:border-l md:border-gray-200 md:ml-8 md:pl-8 md:max-w-xs w-full mb-8">
+      <aside class="md:border-l md:border-gray-200 md:ml-8 md:pl-8 md:w-1/3 mb-8">
         <div class="md:sticky md:top-24">
           <nav class="space-y-2 my-8">
             <a
@@ -131,7 +131,7 @@ const { tabs, class: className, ...props } = Astro.props;
               class="btn-primary w-full justify-start"><Icon name="chat" /> Chat</a
             >
           </nav>
-          
+
           <RequestInformationForm />
         </div>
       </aside>
