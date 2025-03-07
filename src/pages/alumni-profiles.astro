@@ -1,0 +1,170 @@
+---
+import WithoutHero from "../layouts/without-hero.astro";
+import Slider from "../components/slider.astro";
+---
+
+<WithoutHero
+  title="Alumni - Department of Communication"
+  description="Alumni - Department of Communication"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Academics", href: "/" },
+    { name: "Schools and departments", href: "/" },
+    { name: "Department of Communication", href: "/" },
+    { name: "Our alumni", href: "/" },
+  ]}
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+>
+  <div
+    x-data="{
+      alumni: [],
+      loading: true,
+      error: null,
+
+      filters: {
+        major: '',
+      },
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/alumni_directory/_data/alumni-directory-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.alumni = data.listing_data.filter((student) => student.major.length > 0);
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch program data (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      getMajors() {
+        const majors = new Set();
+
+        this.alumni.forEach((student) => {
+          majors.add(student.major);
+        });
+
+        return Array.from(majors);
+      },
+
+      getFilteredAlumni() {
+        return this.alumni.filter((student) => {
+          if (this.filters.major === '') {
+            return true;
+          }
+
+          return student.major === this.filters.major;
+        });
+      },
+
+      getFeaturedAlumni() {
+        return this.alumni.filter((student) => student.featured === 'yes').slice(0, 5);
+      },
+    }"
+  >
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading information, please wait...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <template x-if="alumni.length > 0">
+      <div>
+        <Slider class="mb-12 [&_.f-button_svg]:size-16 bg-gray-100 border border-gray-300">
+          <template x-for="student in getFeaturedAlumni()">
+            <div class="f-carousel__slide w-full py-8 px-12">
+              <article class="flex gap-8">
+                <img
+                  :src="student.banner_image"
+                  :alt="student.entry_name"
+                  class="object-cover shrink-0 w-52 h-64"
+                  width="200"
+                  height="300"
+                  decoding="async"
+                />
+
+                <div>
+                  <h2
+                    class="font-title text-primary-800 font-bold text-3xl"
+                    x-text="student.entry_name + ` '` + student.classYear"
+                  >
+                  </h2>
+                  <p class="text-primary-800 font-bold mb-2" x-text="student.heading"></p>
+                  <p x-text="student.teaser" class="mb-4"></p>
+
+                  <button type="button" class="btn btn-quaternary">View profile</button>
+                </div>
+              </article>
+            </div>
+          </template>
+        </Slider>
+
+        <div class="flex flex-wrap items-center border border-gray-300 px-4 py-2 gap-2 mb-4">
+          <label for="major-filter" class="font-semibold">Filter by major:</label>
+          <select
+            x-model="filters.major"
+            id="major-filter"
+            class="w-full md:w-auto bg-gray-100 md:bg-transparent p-2"
+          >
+            <option value="">View all</option>
+            <template x-for="major in getMajors()">
+              <option x-text="major" :value="major"></option>
+            </template>
+          </select>
+        </div>
+
+        <template x-for="student, index in getFilteredAlumni()">
+          <article class="flex gap-8 relative border-t border-gray-300 pt-12 mt-12">
+            <span
+              x-text="student.major"
+              class="bg-primary-800 text-white uppercase absolute top-0 right-0 font-title inline-block text-lg px-2 py-1"
+            ></span>
+            <img
+              :src="student.banner_image"
+              :alt="student.entry_name"
+              class="object-cover shrink-0 w-52 h-64"
+              width="200"
+              height="300"
+              :loading="index < 4 ? 'eager' : 'lazy'"
+              decoding="async"
+            />
+
+            <div>
+              <h2
+                class="font-title text-primary-800 font-bold text-3xl"
+                x-text="student.entry_name + ` '` + student.classYear"
+              >
+              </h2>
+              <p class="text-primary-800 font-bold mb-2" x-text="student.heading"></p>
+              <p x-text="student.teaser" class="mb-4"></p>
+
+              <button type="button" class="btn btn-quaternary">View profile</button>
+            </div>
+          </article>
+        </template>
+      </div>
+    </template>
+  </div></WithoutHero
+>
