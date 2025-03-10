@@ -31,8 +31,10 @@ import Slider from "../components/slider.astro";
       alumni: [],
       loading: true,
       error: null,
+      open: null,
 
       filters: {
+        department: 'Communication',
         major: '',
       },
 
@@ -40,7 +42,7 @@ import Slider from "../components/slider.astro";
         fetch('https://cascade-prod.messiah.edu/alumni_directory/_data/alumni-directory-json.json')
           .then((response) => response.json())
           .then((data) => {
-            this.alumni = data.listing_data.filter((student) => student.major.length > 0);
+            this.alumni = data.listing_data.filter((student) => student.major.length > 0 && student.ugDept === this.filters.department);
             this.loading = false;
           })
           .catch((error) => {
@@ -70,7 +72,10 @@ import Slider from "../components/slider.astro";
       },
 
       getFeaturedAlumni() {
-        return this.alumni.filter((student) => student.featured === 'yes').slice(0, 5);
+        return this.alumni
+          .filter((student) => student.featured === 'yes')
+          .sort((a, b) => b.classYear - a.classYear)
+          .slice(0, 4);
       },
     }"
   >
@@ -94,12 +99,12 @@ import Slider from "../components/slider.astro";
       <div>
         <Slider class="mb-12 [&_.f-button_svg]:size-16 bg-gray-100 border border-gray-300">
           <template x-for="student in getFeaturedAlumni()">
-            <div class="f-carousel__slide w-full py-8 px-12">
-              <article class="flex gap-8">
+            <div class="f-carousel__slide">
+              <article class="flex gap-8 py-8 px-12">
                 <img
                   :src="student.banner_image"
                   :alt="student.entry_name"
-                  class="object-cover shrink-0 w-52 h-64"
+                  class="object-cover"
                   width="200"
                   height="300"
                   decoding="async"
@@ -121,7 +126,7 @@ import Slider from "../components/slider.astro";
           </template>
         </Slider>
 
-        <div class="flex flex-wrap items-center border border-gray-300 px-4 py-2 gap-2 mb-4">
+        <div class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-4">
           <label for="major-filter" class="font-semibold">Filter by major:</label>
           <select
             x-model="filters.major"
@@ -136,15 +141,15 @@ import Slider from "../components/slider.astro";
         </div>
 
         <template x-for="student, index in getFilteredAlumni()">
-          <article class="flex gap-8 relative border-t border-gray-300 pt-12 mt-12">
+          <article class="flex gap-4 md:gap-8 relative border-t border-gray-300 pt-12 mt-12">
             <span
               x-text="student.major"
-              class="bg-primary-800 text-white uppercase absolute top-0 right-0 font-title inline-block text-lg px-2 py-1"
+              class="bg-primary-800 text-white uppercase absolute top-0 right-0 font-title inline-block text-lg px-2 md:py-1"
             ></span>
             <img
               :src="student.banner_image"
               :alt="student.entry_name"
-              class="object-cover shrink-0 w-52 h-64"
+              class="object-cover shrink-0 w-24 h-36 md:w-52 md:h-64"
               width="200"
               height="300"
               :loading="index < 4 ? 'eager' : 'lazy'"
@@ -160,11 +165,84 @@ import Slider from "../components/slider.astro";
               <p class="text-primary-800 font-bold mb-2" x-text="student.heading"></p>
               <p x-text="student.teaser" class="mb-4"></p>
 
-              <button type="button" class="btn btn-quaternary">View profile</button>
+              <button type="button" class="btn btn-quaternary" @click="open = student"
+                >View profile</button
+              >
             </div>
           </article>
         </template>
       </div>
     </template>
-  </div></WithoutHero
->
+
+    <template x-teleport="body">
+      <div
+        x-show="Boolean(open)"
+        style="display: none"
+        x-on:keydown.escape.prevent.stop="open = null"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+      >
+        <div
+          x-show="Boolean(open)"
+          @click="open = null"
+          x-transition.opacity.duration.300
+          class="fixed inset-0 bg-primary-800/80 z-50"
+        >
+        </div>
+
+        <div
+          x-show="Boolean(open)"
+          x-transition.opacity.duration.300
+          x-trap.noscroll.inert="open"
+          class="fixed inset-0 z-50 flex items-center justify-center p-4"
+        >
+          <div
+            class="bg-white p-8 w-full max-w-3xl shadow-xl overflow-y-auto max-h-full"
+            @click.away="open = null"
+          >
+            <div class="flex justify-end">
+              <button type="button" @click="open = null" aria-label="Close dialog">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  width="40"
+                  height="40"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8">
+              <img
+                :src="open?.banner_image"
+                :alt="open?.entry_name"
+                class="object-cover shrink-0 w-52 h-64"
+                width="200"
+                height="300"
+                decoding="async"
+              />
+
+              <div>
+                <h3
+                  class="font-title text-primary-800 font-bold text-4xl"
+                  x-text="open?.entry_name + ` '` + open?.classYear"
+                >
+                </h3>
+                <p class="text-primary-800 font-bold mb-2 text-lg" x-text="open?.heading"></p>
+                <div x-html="open?.profile"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+</WithoutHero>
