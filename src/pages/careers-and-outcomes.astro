@@ -1,5 +1,6 @@
 ---
 import WithoutHero from "../layouts/without-hero.astro";
+import Stats from "../components/stats.astro";
 ---
 
 <WithoutHero
@@ -37,10 +38,12 @@ import WithoutHero from "../layouts/without-hero.astro";
   </div>
 
   <div
+    class="mb-8"
     x-data="{
       programs: [],
       loading: true,
       error: null,
+      expanded: false,
 
       filters: {
         department: 'communication',
@@ -138,7 +141,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
     <template x-if="programs.length > 0">
       <div>
-        <div class="flex flex-wrap items-center border border-gray-300 px-4 py-2 gap-2 mb-4">
+        <div class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-4">
           <label for="program-filter" class="font-semibold">Filter by program:</label>
           <select
             x-model="filters.program"
@@ -152,10 +155,13 @@ import WithoutHero from "../layouts/without-hero.astro";
           </select>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 h-80 gap-4 overflow-hidden transition-all duration-300"
+          :style="expanded && { height: $el.scrollHeight + 'px' }"
+        >
           <div>
             <h3 class="h4 mb-4">Where they work</h3>
-            <ul class="list-disc pl-4">
+            <ul class="mb-4">
               <template x-for="entry in getWhereTheyWork()">
                 <li x-text="entry"></li>
               </template>
@@ -165,7 +171,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           <div>
             <h3 class="h4 mb-4">What they do</h3>
 
-            <ul class="list-disc pl-4">
+            <ul class="mb-4">
               <template x-for="entry in getWhatTheyDo()">
                 <li x-text="entry"></li>
               </template>
@@ -174,14 +180,27 @@ import WithoutHero from "../layouts/without-hero.astro";
 
           <div>
             <h3 class="h4 mb-4">Where they study</h3>
-            <ul class="list-disc pl-4">
+            <ul class="mb-4">
               <template x-for="entry in getWhereTheyStudy()">
                 <li x-text="entry"></li>
               </template>
             </ul>
           </div>
         </div>
+
+        <div class="border-y border-gray-300 flex justify-center py-2">
+          <button
+            type="button"
+            class="btn btn-quaternary bg-white"
+            @click="expanded = !expanded"
+            x-text="expanded ? 'Hide full list' : 'Show full list'"></button>
+        </div>
       </div>
     </template>
   </div>
+
+  <Stats value={100}>
+    100% of the Class of 2023 Communication respondents were employed or in graduate school within
+    6-9 months of graduation.
+  </Stats>
 </WithoutHero>
