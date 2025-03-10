@@ -1,6 +1,5 @@
 ---
 import CtaSidebarLinks from "../components/cta-sidebar-links.astro";
-import { cn } from "../lib/utils";
 import BaseLayout from "./base.astro";
 
 interface Props {
@@ -32,19 +31,18 @@ const { title, description, analyticsKey, subtitle, buttons, image, mobileImage 
     <div
       class="max-w-[2100px] sm:pt-32 mx-auto px-4 lg:px-12 h-[70vw] min-h-[500px] max-h-[900px] flex items-end md:items-center pb-4 pd:mb-0"
     >
-      <div class="md:w-max md:max-w-[50%] relative z-10">
-        <h1
-          class={cn("h1", {
-            "border-b-4 md:border-b-8 border-tertiary-300 mb-4 pb-3": subtitle,
-          })}
-        >
+      <div class="md:w-1/2 relative z-10">
+        <h1 class="h1">
           {title}
         </h1>
         {
           subtitle ? (
-            <p class="text-white uppercase font-title md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-none">
-              {subtitle}
-            </p>
+            <>
+              <hr class="border-tertiary-300 border-b-4 md:border-b-8 w-1/2 mb-4 mt-3" />
+              <p class="text-white uppercase font-title md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-none">
+                {subtitle}
+              </p>
+            </>
           ) : null
         }
 
