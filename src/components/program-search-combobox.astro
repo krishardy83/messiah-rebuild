@@ -1,0 +1,151 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"form"> {
+  placeholder: string;
+}
+
+const { placeholder, class: className, ...props } = Astro.props;
+---
+
+<form
+  x-data="{
+    keywords: [],
+    loading: true,
+    error: null,
+    query: '',
+    expanded: false,
+
+    init() {
+      fetch('https://cascade-prod.messiah.edu/_program_data/ug-json-light.json')
+        .then((response) => response.json())
+        .then((data) => {
+          const keywords = new Set();
+
+          this.programs = data.items.forEach((program) => {
+            program.keywords.split(',').forEach((keyword) => {
+              keywords.add(keyword.trim());
+            });
+          });
+
+          this.keywords = Array.from(keywords);
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch program data (${error.message})`;
+          this.loading = false;
+        });
+    },
+
+    get filteredKeywords() {
+      const search = this.query.trim().toLowerCase();
+
+      return this.keywords.map((keyword) => {
+        const lowerKeyword = keyword.toLowerCase();
+        let score = 0;
+
+        if (lowerKeyword === search) {
+          score += 100;
+        } else if (lowerKeyword.startsWith(search)) {
+          score += 50;
+        } else if (lowerKeyword.includes(` ${search}`)) {
+          score += 30;
+        } else if (lowerKeyword.includes(search)) {
+          score += 10;
+        }
+
+        return { keyword, score };
+      })
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.keyword);
+    },
+
+    handleChange(event) {
+      this.query = event.target.value;
+      this.expanded = event.target.value.length > 1;
+    },
+
+    handleKeyDown(event) {
+      const available = Array.from(this.$refs.panel.querySelectorAll(`button:not([style*='display:none']):not([style*='display: none'])`));
+      const index = available.findIndex((a) => a === document.activeElement);
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+
+        if (index <= 0) {
+          available[available.length - 1].focus();
+        } else {
+          available[index - 1].focus();
+        }
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+
+        if (index === -1 || index === available.length - 1) {
+          available[0].focus();
+        } else {
+          available[index + 1].focus();
+        }
+      } else if (event.key === 'Enter') {
+        this.close();
+      } else if (document.activeElement !== this.$refs.input) {
+        this.$refs.input.focus();
+      }
+    },
+
+    async handleKeywordClick(keyword) {
+      this.$refs.input.value = keyword;
+      this.$refs.input.form.submit();
+    },
+
+    close() {
+      this.expanded = false;
+    }
+  }"
+  class={className}
+  {...props}
+  action="/search"
+>
+  <div
+    class="relative"
+    @keydown.escape.prevent.stop="close()"
+    @keydown="handleKeyDown"
+    @focusin.window="!$refs.search.contains($event.target) && close()"
+    @click.outside="close()"
+    x-ref="search"
+  >
+    <input
+      type="search"
+      name="s"
+      x-ref="input"
+      class="bg-white w-full px-4 h-16 text-lg"
+      @input.debounce="handleChange"
+      x-model.debounce="query"
+      placeholder={placeholder}
+      required
+      x-model="query"
+      aria-label="enter a program name that you'd like to search for"
+    />
+
+    <div
+      x-show="expanded"
+      class="absolute right-0 z-10 max-h-80 w-full overflow-y-scroll overscroll-contain border border-gray-300 bg-white py-2 shadow-sm outline-none"
+      x-ref="panel"
+    >
+      <template x-for="keyword in filteredKeywords">
+        <button
+          type="button"
+          x-text="keyword"
+          @click="handleKeywordClick(keyword)"
+          class="flex w-full cursor-pointer items-center py-2 px-4 transition-colors hover:bg-primary-100 focus-visible:bg-primary-100 focus-visible:outline-none"
+        >
+        </button>
+      </template>
+
+      <template x-if="filteredKeywords.length === 0">
+        <p class="py-2 px-4">No suggestions found.</p>
+      </template>
+    </div>
+    <button type="submit" class="absolute btn-tertiary top-2 right-2">Go</button>
+  </div>
+</form>

@@ -1,5 +1,6 @@
 ---
 import Icon from "../../../components/icon.astro";
+import ProgramSearchCombobox from "../../../components/program-search-combobox.astro";
 ---
 
 <section
@@ -43,20 +44,7 @@ import Icon from "../../../components/icon.astro";
       </p>
     </header>
 
-    <search>
-      <form @submit.prevent="open = true" class="relative">
-        <input
-          type="search"
-          name="s"
-          class="bg-white w-full px-4 h-16 text-lg"
-          placeholder="Search for programs"
-          required
-          x-model="query"
-          aria-label="enter a program name that you'd like to search for"
-        />
-        <button type="submit" class="absolute btn-tertiary top-2 right-2">Go</button>
-      </form>
-    </search>
+    <ProgramSearchCombobox placeholder="Search for programs" />
 
     <div class="flex gap-2 flex-wrap mt-8">
       <a class="btn-quaternary" href="http://www.messiah.edu/majors-minors-programs"

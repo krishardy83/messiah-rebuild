@@ -1,39 +1,9 @@
 ---
 import Icon from "../../components/icon.astro";
+import ProgramSearchCombobox from "../../components/program-search-combobox.astro";
 ---
 
-<section
-  class="bg-[url(/patterns/img-05.png)] bg-no-repeat bg-cover"
-  x-data="{
-    open: false,
-    query: '',
-    subjects: [],
-
-    async init() {
-      try {
-        let response = await fetch('/subjects.json');
-
-        if (!response.ok) {
-          throw new Error(await response.text());
-        }
-
-        this.subjects = await response.json();
-      } catch (ex) {
-        console.log('Could not fetch data', ex);
-      }
-    },
-
-    getFilteredSubjects() {
-      if (this.query.length === 0) {
-        return this.subjects.slice(0, 10);
-      }
-
-      return this.subjects.filter(({ entry_title, keywords }) => {
-        return entry_title.toLowerCase().includes(this.query) || keywords.toLowerCase().includes(this.query);
-      }).slice(0, 10);
-    },
-  }"
->
+<section class="bg-[url(/patterns/img-05.png)] bg-no-repeat bg-cover">
   <div class="wrapper py-24">
     <header class="mb-8">
       <h2 class="text-tertiary-400 h2">What do you want to study?</h2>
@@ -43,20 +13,7 @@ import Icon from "../../components/icon.astro";
       </p>
     </header>
 
-    <search>
-      <form @submit.prevent="open = true" class="relative">
-        <input
-          type="search"
-          name="s"
-          class="bg-white w-full px-4 h-16 text-lg"
-          placeholder="Search for programs"
-          required
-          x-model="query"
-          aria-label="enter a program name that you'd like to search for"
-        />
-        <button type="submit" class="absolute btn-tertiary top-2 right-2">Go</button>
-      </form>
-    </search>
+    <ProgramSearchCombobox placeholder="Search for programs" />
 
     <div class="flex gap-2 flex-wrap mt-8">
       <a class="btn-quaternary" href="https://www.messiah.edu/majors-minors-programs"
