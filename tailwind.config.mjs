@@ -55,6 +55,8 @@ export default {
     "bg-top",
     "bg-right",
     "bg-left",
+    "w-1/4",
+    "w-1/3"
   ],
   theme: {
     extend: {
