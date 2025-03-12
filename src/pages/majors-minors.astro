@@ -23,7 +23,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       error: null,
       filters: {
         type: '',
-        query: '',
+        query: new URL(location).searchParams.get('s')  || '',
         interestGroup: 'all',
       },
       open: null,
