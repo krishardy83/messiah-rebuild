@@ -4,40 +4,40 @@ import SingleColumn from "../layouts/single-column.astro";
 const entries = [
   {
     title: "Slide 1",
-    image: "https://picsum.photos/seed/1/640/480",
+    image: "https://picsum.photos/seed/1/480/640",
     year: "2005",
     description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, autem.",
   },
   {
     title: "Slide 2",
-    image: "https://picsum.photos/seed/2/640/480",
+    image: "https://picsum.photos/seed/2/480/640",
     year: "2007",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
   },
   {
     title: "Slide 3",
-    image: "https://picsum.photos/seed/3/640/480/",
+    image: "https://picsum.photos/seed/3/480/640/",
     year: "2010",
     description: "Lorem ipsum dolor sit amet autem.",
   },
   {
     title: "Slide 4",
-    image: "https://picsum.photos/seed/4/640/480",
+    image: "https://picsum.photos/seed/4/480/640",
     year: "2020",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
   },
   {
     title: "Slide 5",
-    image: "https://picsum.photos/seed/5/640/480",
+    image: "https://picsum.photos/seed/5/480/640",
     year: "2021",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
   },
   {
     title: "Slide 6",
-    image: "https://picsum.photos/seed/6/640/480/",
+    image: "https://picsum.photos/seed/6/480/640/",
     year: "2025",
     description: "Lorem ipsum dolor, sit amet autem.",
   },
@@ -48,10 +48,21 @@ const entries = [
   <div
     class="max-w-7xl mx-auto px-4 py-12"
     x-data="{
+      embla: null,
+      index: 0,
+
       init() {
-        EmblaCarousel(this.$refs.embla, {
+        this.embla = EmblaCarousel(this.$refs.embla, {
           containScroll: false,
         });
+
+        this.embla.on('select', (api) => {
+          this.index = api.selectedScrollSnap();
+        });
+      },
+
+      scrollTo(index) {
+        this.embla.scrollTo(index);
       }
   }"
   >
@@ -72,5 +83,22 @@ const entries = [
         }
       </div>
     </div>
+
+    <nav
+      class="flex justify-center mt-8 relative after:z-10 after:absolute after:left-0 after:right-0 after:top-3 after:h-0.5 after:bg-primary-800"
+    >
+      {
+        entries.map((entry, index) => (
+          <button
+            type="button"
+            class="mx-8 z-20 text-sm flex flex-col items-center gap-1"
+            @click={`scrollTo(${index})`}
+          >
+            <span class="size-6 rounded-full block border-2 border-primary-800 transition-colors" :class={`${index} === index ? 'bg-primary-800' : 'bg-white'`} />
+            {entry.year}
+          </button>
+        ))
+      }
+    </nav>
   </div>
 </SingleColumn>
