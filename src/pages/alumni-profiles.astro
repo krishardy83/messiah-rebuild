@@ -1,6 +1,6 @@
 ---
 import WithoutHero from "../layouts/without-hero.astro";
-import Slider from "../components/slider.astro";
+import Icon from "../components/icon.astro";
 ---
 
 <WithoutHero
@@ -97,34 +97,73 @@ import Slider from "../components/slider.astro";
 
     <template x-if="alumni.length > 0">
       <div>
-        <Slider class="mb-12 [&_.f-button_svg]:size-16 bg-gray-100 border border-gray-300">
-          <template x-for="student in getFeaturedAlumni()">
-            <div class="f-carousel__slide">
-              <article class="flex gap-8 py-8 px-12">
-                <img
-                  :src="student.banner_image"
-                  :alt="student.entry_name"
-                  class="object-cover"
-                  width="200"
-                  height="300"
-                  decoding="async"
-                />
+        <div
+          x-data="{
+            embla: null,
+            
+            init() {
+              this.embla = EmblaCarousel(this.$refs.embla);
+            },
 
-                <div>
-                  <h2
-                    class="font-title text-primary-800 font-bold text-3xl"
-                    x-text="student.entry_name + ` '` + student.classYear"
-                  >
-                  </h2>
-                  <p class="text-primary-800 font-bold mb-2" x-text="student.heading"></p>
-                  <p x-text="student.teaser" class="mb-4"></p>
+            scrollNext() {
+              this.embla.scrollNext();
+            },
 
-                  <button type="button" class="btn btn-quaternary">View profile</button>
-                </div>
-              </article>
-            </div>
-          </template>
-        </Slider>
+            scrollPrev() {
+              this.embla.scrollPrev();
+            },
+          }"
+          class="overflow-hidden relative bg-gray-100 border border-gray-300 mb-12"
+          x-ref="embla"
+        >
+          <div class="flex touch-pan-y gap-8">
+            <template x-for="student in getFeaturedAlumni()">
+              <div class="basis-full flex-shrink-0 flex-grow-0">
+                <article class="flex gap-8 h-full">
+                  <img
+                    :src="student.banner_image"
+                    :alt="student.entry_name"
+                    class="object-cover h-full"
+                    width="200"
+                    height="300"
+                    decoding="async"
+                  />
+
+                  <div class="py-4">
+                    <h2
+                      class="font-title text-primary-800 font-bold text-3xl"
+                      x-text="student.entry_name + ` '` + student.classYear"
+                    >
+                    </h2>
+                    <p class="text-primary-800 font-bold mb-2" x-text="student.heading"></p>
+                    <p x-text="student.teaser" class="mb-4"></p>
+
+                    <button type="button" class="btn btn-quaternary" @click="open = student"
+                      >View profile</button
+                    >
+                  </div>
+                </article>
+              </div>
+            </template>
+          </div>
+
+          <nav>
+            <button
+              type="button"
+              class="absolute top-1/2 -translate-y-1/2 text-gray-700 left-0"
+              @click="scrollPrev"
+            >
+              <Icon name="chevron-right" class="size-10 rotate-180" />
+            </button>
+            <button
+              type="button"
+              class="absolute top-1/2 -translate-y-1/2 text-gray-700 right-0"
+              @click="scrollNext"
+            >
+              <Icon name="chevron-right" class="size-10" />
+            </button>
+          </nav>
+        </div>
 
         <div class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-4">
           <label for="major-filter" class="font-semibold">Filter by major:</label>

@@ -1,43 +1,44 @@
 ---
+import Icon from "../components/icon.astro";
 import SingleColumn from "../layouts/single-column.astro";
 
 const entries = [
   {
     title: "Slide 1",
-    image: "https://picsum.photos/seed/1/640/480",
+    image: "https://picsum.photos/seed/1/480/640",
     year: "2005",
     description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, autem.",
   },
   {
     title: "Slide 2",
-    image: "https://picsum.photos/seed/2/640/480",
+    image: "https://picsum.photos/seed/2/480/640",
     year: "2007",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
   },
   {
     title: "Slide 3",
-    image: "https://picsum.photos/seed/3/640/480/",
+    image: "https://picsum.photos/seed/3/480/640/",
     year: "2010",
     description: "Lorem ipsum dolor sit amet autem.",
   },
   {
     title: "Slide 4",
-    image: "https://picsum.photos/seed/4/640/480",
+    image: "https://picsum.photos/seed/4/480/640",
     year: "2020",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
   },
   {
     title: "Slide 5",
-    image: "https://picsum.photos/seed/5/640/480",
+    image: "https://picsum.photos/seed/5/480/640",
     year: "2021",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
   },
   {
     title: "Slide 6",
-    image: "https://picsum.photos/seed/6/640/480/",
+    image: "https://picsum.photos/seed/6/480/640/",
     year: "2025",
     description: "Lorem ipsum dolor, sit amet autem.",
   },
@@ -48,11 +49,26 @@ const entries = [
   <div
     class="max-w-7xl mx-auto px-4 py-12"
     x-data="{
+      embla: null,
+      index: 0,
+
       init() {
-        EmblaCarousel(this.$refs.embla, {
+        this.embla = EmblaCarousel(this.$refs.embla, {
           containScroll: false,
         });
-      }
+
+        this.embla.on('select', (api) => {
+          this.index = api.selectedScrollSnap();
+        });
+      },
+
+      scrollNext() {
+        this.embla.scrollNext();
+      },
+
+      scrollPrev() {
+        this.embla.scrollPrev();
+      },
   }"
   >
     <div
@@ -61,16 +77,35 @@ const entries = [
     >
       <div class="flex touch-pan-y gap-8">
         {
-          entries.map((entry) => (
-            <div class="basis-1/3 flex-shrink-0 flex-grow-0 text-center">
-              <h3 class="h4 text-primary-800 mb-4">{entry.title}</h3>
+          entries.map((entry, index) => (
+            <div class="basis-1/3 flex-shrink-0 flex-grow-0 text-center duration-300 transition-all" :class={`${index} === index ? '' : 'scale-90 opacity-60'`}>
+              <h3 class="h4 text-primary-800 mb-4 transition-opacity duration-300" :class={`${index} === index ? '' : 'opacity-0'`}>{entry.title}</h3>
               <img src={entry.image} alt={entry.title} class="mb-4" />
               <p class="h3 text-primary-800">{entry.year}</p>
-              <p>{entry.description}</p>
+              <p class="transition-opacity duration-300" :class={`${index} === index ? '' : 'opacity-0'`}>{entry.description}</p>
             </div>
           ))
         }
       </div>
+
+      <nav>
+        <button
+          type="button"
+          class="absolute top-1/2 -translate-y-1/2 text-gray-700 left-0 z-20 transition-opacity duration-300"
+          :class="index === 0 ? 'opacity-0 pointer-events-none' : ''"
+          @click="scrollPrev"
+        >
+          <Icon name="chevron-right" class="size-12 rotate-180" />
+        </button>
+        <button
+          type="button"
+          class="absolute top-1/2 -translate-y-1/2 text-gray-700 right-0 z-20 transition-opacity duration-300"
+          :class={`index === ${entries.length - 1} ? 'opacity-0 pointer-events-none' : ''`}
+          @click="scrollNext"
+        >
+          <Icon name="chevron-right" class="size-12" />
+        </button>
+      </nav>
     </div>
   </div>
 </SingleColumn>

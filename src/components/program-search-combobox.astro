@@ -104,7 +104,7 @@ const { placeholder, class: className, ...props } = Astro.props;
   }"
   class={className}
   {...props}
-  action="/search"
+  action="/majors-minors"
 >
   <div
     class="relative"
@@ -122,6 +122,7 @@ const { placeholder, class: className, ...props } = Astro.props;
       @input.debounce="handleChange"
       x-model.debounce="query"
       placeholder={placeholder}
+      autocomplete="off"
       required
       x-model="query"
       aria-label="enter a program name that you'd like to search for"
