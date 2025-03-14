@@ -487,8 +487,16 @@ import WithoutHero from "../layouts/without-hero.astro";
       </template>
 
       <table class="text-sm w-full" x-show="!error && !loading">
-        <thead x-show="!filters.query && filtered.length > 0">
-          <tr class="border-b border-b-gray-300 bg-gray-100">
+        <thead>
+          <tr
+            class="border-b border-b-gray-200 scroll-m-28"
+            x-show="filters.query && filtered.direct.length > 0"
+          >
+            <td colspan="11" class="py-2"
+              ><span class="h4">Programs for "<span x-text="filters.query"></span>"</span></td
+            >
+          </tr>
+          <tr class="border-b border-b-gray-300 bg-gray-100" x-show="filtered.direct.length > 0">
             <td colspan="11" class="py-2 px-4 relative"
               >* click an icon above to filter the list
               <button
@@ -504,15 +512,6 @@ import WithoutHero from "../layouts/without-hero.astro";
           </tr>
         </thead>
         <tbody class="scroll-m-28">
-          <tr
-            class="border-b border-b-gray-200 scroll-m-28"
-            x-show="filters.query && filtered.direct.length > 0"
-          >
-            <td colspan="11" class="py-2"
-              ><span class="h4">Programs for "<span x-text="filters.query"></span>"</span></td
-            >
-          </tr>
-
           <template x-for="program in filtered.direct">
             <tr
               class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
