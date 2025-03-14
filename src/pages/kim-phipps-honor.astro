@@ -4,43 +4,43 @@ import SingleColumn from "../layouts/single-column.astro";
 
 const entries = [
   {
-    title: "Slide 1",
-    image: "https://picsum.photos/seed/1/480/640",
+    title: "Inauguration of President Phipps",
+    image: "/images/kim-phipps/Phipps-2005-Inauguration.jpg",
+    year: "October 14, 2005",
+    description: "Messiah celebrates the inauguration of President Phipps with a weeklong schedule of special events for students, employees, alumni, community members and friends — culminating with the inauguration ceremony and festivities.",
+  },
+  {
+    title: "Athletics History",
+    image: "/images/kim-phipps/Phipps-2005-Soccer.jpg",
     year: "2005",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima, autem.",
-  },
-  {
-    title: "Slide 2",
-    image: "https://picsum.photos/seed/2/480/640",
-    year: "2007",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
+      "Messiah makes athletics history by becoming the first NCAA Division III soccer program to win the men's and women's championships in the same year.",
   },
   {
-    title: "Slide 3",
-    image: "https://picsum.photos/seed/3/480/640/",
-    year: "2010",
-    description: "Lorem ipsum dolor sit amet autem.",
+    title: "$50.5 million raised",
+    image: "/images/kim-phipps/Phipps-2005-Campaign.jpg",
+    year: "2005",
+    description: "Completion of the To Serve and To Lead Campaign ($50.5 million) — Messiah's largest campaign to date — including the construction of Boyer Hall, Larsen Student Union, and the expansion of Climenhaga Fine Arts Building.",
   },
   {
-    title: "Slide 4",
-    image: "https://picsum.photos/seed/4/480/640",
-    year: "2020",
+    title: "National Endowment for the Humanities",
+    image: "/images/kim-phipps/Phipps-2006.jpg",
+    year: "2006",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
+      "The Center for Public Humanities receives a competitive $200,000 grant from the National Endowment for the Humanities.",
   },
   {
-    title: "Slide 5",
-    image: "https://picsum.photos/seed/5/480/640",
-    year: "2021",
+    title: "Online course offerings",
+    image: "/images/kim-phipps/Phipps-2008-MessiahOnline.jpg",
+    year: "2008",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore maxime temporibus eos fugiat ullam eaque provident, culpa rem. Molestias, ea.",
+      "Launch of Messiah's first online undergraduate courses (Messiah Summer Online) with 18 courses enrolling 222 students.",
   },
   {
-    title: "Slide 6",
-    image: "https://picsum.photos/seed/6/480/640/",
-    year: "2025",
-    description: "Lorem ipsum dolor, sit amet autem.",
+    title: "Compassion Forum",
+    image: "/images/kim-phipps/Phipps-2008-CompassionForum.jpg",
+    year: "2008",
+    description: "Messiah hosts the Compassion Forum, a nationally televised, unprecedented conversation with presidential candidates, Hillary Clinton and Barack Obama, on the integration of faith and public policy.",
   },
 ];
 ---
@@ -79,9 +79,9 @@ const entries = [
         {
           entries.map((entry, index) => (
             <div class="basis-1/3 flex-shrink-0 flex-grow-0 text-center duration-300 transition-all" :class={`${index} === index ? '' : 'scale-90 opacity-60'`}>
-              <h3 class="h4 text-primary-800 mb-4 transition-opacity duration-300" :class={`${index} === index ? '' : 'opacity-0'`}>{entry.title}</h3>
-              <img src={entry.image} alt={entry.title} class="mb-4" />
-              <p class="h3 text-primary-800">{entry.year}</p>
+              <h3 class="h4 text-primary-800 mb-4 transition-opacity duration-300" :class={`${index} === index ? '' : 'opacity-0'`}>{entry.year}</h3>
+              <img src={entry.image} alt={entry.title} class="mb-4" width="420" height="280" />
+              <p class="h3 text-primary-800">{entry.title}</p>
               <p class="transition-opacity duration-300" :class={`${index} === index ? '' : 'opacity-0'`}>{entry.description}</p>
             </div>
           ))
