@@ -8,13 +8,23 @@ interface Props extends HTMLAttributes<"div"> {
   subtitle?: string;
   id?: string;
   allowProse?: boolean;
+  transparent?: boolean;
   image?: {
     src: string;
     size?: number;
   };
 }
 
-const { title, id, subtitle, allowProse = false, image, class: className, ...props } = Astro.props;
+const {
+  title,
+  id,
+  subtitle,
+  allowProse = false,
+  image,
+  transparent,
+  class: className,
+  ...props
+} = Astro.props;
 const accordionId = id || createId();
 ---
 
@@ -37,7 +47,13 @@ const accordionId = id || createId();
       type="button"
       aria-controls={accordionId}
       id={`button-${accordionId}`}
-      class="flex gap-x-4 text-left relative items-center aria-expanded:bg-white bg-gray-100 w-full pl-4 pr-14 py-4 transition-colors group"
+      class={cn(
+        "flex gap-x-4 text-left relative items-center w-full pl-4 pr-14 py-4 transition-colors group",
+        {
+          "aria-expanded:bg-white/10": transparent,
+          "aria-expanded:bg-white bg-gray-100": !transparent,
+        }
+      )}
       :aria-expanded="show"
       @click="show = !show"
     >
@@ -55,7 +71,10 @@ const accordionId = id || createId();
 
       <span class="flex flex-1 flex-wrap gap-x-2">
         <span
-          class="text-primary-800 font-sans text-sm sm:text-base md:text-lg mr-auto"
+          class={cn("font-sans text-sm sm:text-base md:text-lg mr-auto", {
+            "text-primary-800": !transparent,
+            "text-white": transparent,
+          })}
           set:html={title}
         />
         {
@@ -77,7 +96,12 @@ const accordionId = id || createId();
     id={accordionId}
     aria-labelledby={`button-${accordionId}`}
     :style="show && { height: $el.scrollHeight + 'px' }"
-    class="overflow-hidden transition-all ease-out duration-500 border-t border-gray-300 rich-text"
+    class={cn(
+      "overflow-hidden transition-all ease-out duration-500 border-t border-gray-300 rich-text",
+      {
+        "text-white": transparent,
+      }
+    )}
     :class="show ? 'h-auto' : 'h-0 invisible'"
   >
     <div class="p-4">
