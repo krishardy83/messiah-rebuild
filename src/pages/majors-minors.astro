@@ -147,6 +147,10 @@ import WithoutHero from "../layouts/without-hero.astro";
           .then((data) => {
             this.programs = data.items;
             this.loading = false;
+
+            if (this.filters.query) {
+              this.$nextTick(() => this.scrollToTable());
+            }
           })
           .catch((error) => {
             this.error = `Could not fetch program data (${error.message})`;
