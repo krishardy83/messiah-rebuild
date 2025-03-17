@@ -1,0 +1,229 @@
+---
+import Icon from "../components/icon.astro";
+import WithoutHero from "../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Graduate Tuition Discounts"
+  description="Graduate Tuition Discounts"
+  sidebarLinks={[
+    {
+      title: "Academics",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+  ]}
+>
+  <h2 class="h3">Graduate Tuition Discounts</h2>
+
+  <p class="mb-4">
+    Messiah University offers a number of tuition discounts that are program specific and have
+    unique parameters. Students must be enrolled in a participating Master's/Doctorate degree or
+    Certificate program. Eligibility is limited to one tuition discount per semester; tuition
+    discounts cannot be stacked. Tuition discounts are renewable each year until program completion.
+  </p>
+
+  <p class="mb-4">
+    Initial application must be received prior to the start date in the first term for which the
+    tuition discount is to be applied. Renewal applications are due every fall semester. Submit your
+    completed application to <a href="mailto:gradfinancialserv@messiah.edu" class="link underline"
+      >gradfinancialserv@messiah.edu</a
+    >. If you have questions on the application process, call 717.796.1800 ext. 2710.
+  </p>
+
+  <p class="mb-8">
+    <a
+      class="btn btn-primary"
+      href="https://dynamicforms.ngwebsolutions.com/casAuthentication.ashx?InstID=a80fe073-950f-4e16-a4c8-aeab21b2d9f7&targetUrl=https%3a%2f%2fdynamicforms.ngwebsolutions.com%2fSubmit%2fStart%2f4ec9283e-72ed-47f3-8243-674ec8749810"
+      >Graduate Tuition Discount Application</a
+    >
+  </p>
+
+  <h3 class="h3">Tuition Discounts</h3>
+
+  <p class="font-bold mb-4">
+    For questions about the percentage of tuition discounts for any of the below categories, please
+    contact the School of Graduate and Professional Studies, at <a
+      href="mailto:gradprograms@messiah.edu"
+      class="link underline">gradprograms@messiah.edu</a
+    > or 717-796-5061.
+  </p>
+
+  <p class="mb-8">
+    Tuition discounts are available to employees and employee dependents for eligible programs.
+    Verification that you have met the requirements for the tuition discount is required as part of
+    the application. <i
+      >If your organization is interested in partnering with Messiah University's Graduate Programs
+      for an organizational tuition discount, please contact Graduate Programs, at
+      gradprograms@messiah.edu</i
+    >.
+  </p>
+
+  <div
+    x-data="{
+      entries: [],
+      letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+      loading: true,
+      error: null,
+      search: '',
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/gr-tuition-discounts/_data/gr-tuition-discount-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.entries = data.listing_data;
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch the graduate tuition discounts list: (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      isLetterAvailable(letter) {
+        return this.filtered.some((entry) => entry.entry_name.at(0) === letter);
+      },
+
+      scrollToEntry(letter) {
+        const row = document.querySelector(`li[data-letter='${letter}']`);
+
+        if (row) {
+          row.scrollIntoView({ behavior: 'smooth' });
+          row.classList.add('bg-tertiary-200');
+
+          setTimeout(() => row.classList.remove('bg-tertiary-200'), 1000);
+        }
+      },
+
+      get filtered() {
+        const query = this.search.trim().toLowerCase();
+
+        return this.entries.filter((entry) => entry.entry_name.toLowerCase().includes(query)).sort((a,b) => a.entry_name.localeCompare(b.entry_name));
+      },
+    }"
+  >
+    <div class="relative mb-4">
+      <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
+      <input
+        type="search"
+        x-model="search"
+        autocomplete="off"
+        placeholder="Search by organization or membership..."
+        aria-label="Search by organization or membership..."
+        class="bg-white w-full min-h-12 px-4 pl-12 border border-gray-300"
+        @keydown.enter="scrollToTable"
+      />
+      <button
+        type="button"
+        title="Clear input"
+        x-show="search.length > 0"
+        @click="search = ''"
+        class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+      >
+        <Icon name="close" class="size-5" />
+      </button>
+    </div>
+
+    <ol class="flex gap-2 mb-8 flex-wrap">
+      <template x-for="letter in letters">
+        <li>
+          <button
+            class="font-semibold text-3xl font-title text-gray-600"
+            :class="isLetterAvailable(letter) ? '' : 'opacity-50 pointer-events-none cursor-not-allowed'"
+            x-text="letter.toUpperCase()"
+            @click="scrollToEntry(letter)"></button>
+        </li>
+      </template>
+    </ol>
+
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading tuition discounts list...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <template x-if="!filtered.length && !loading && !error">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p class="mb-4">
+          No organization or membership match your search "<span x-text="search"></span>".
+        </p>
+
+        <button type="button" @click="search = ''" class="btn btn-quaternary">Reset</button>
+      </div>
+    </template>
+
+    <ul class="text-sm" x-show="filtered.length && !error && !loading">
+      <template x-for="entry in filtered" :key="entry.entry_name">
+        <li
+          class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
+          :data-letter="entry.entry_name.at(0)"
+          x-data="{ show: false }"
+        >
+          <button
+            type="button"
+            :aria-expanded="show"
+            @click="show = !show"
+            class="group w-full p-2 gap-4 flex justify-between text-left"
+          >
+            <span x-text="entry.entry_name"></span>
+            <Icon
+              name="chevron-down"
+              class="size-5 group-aria-expanded:rotate-180 shrink-0 transition-transform duration-300"
+            />
+          </button>
+
+          <div
+            role="region"
+            :style="show && { height: $el.scrollHeight + 'px' }"
+            class="overflow-hidden transition-all ease-out duration-500 border-t border-gray-300"
+            :class="show ? 'h-auto' : 'h-0 invisible'"
+          >
+            <div class="p-4">
+              <h4 class="font-bold text-primary">Details</h4>
+              <div class="mb-4" x-html="entry.overview"></div>
+
+              <h4 class="font-bold text-primary">Website</h4>
+              <a
+                x-text="entry.entry_name"
+                class="text-primary-800 underline link inline-block mb-4"
+                :href="entry.url"
+                target="_blank"
+                rel="noopener nofollow noreferrer"
+              >
+              </a>
+
+              <h4 class="font-bold text-primary">Eligible Academic Programs</h4>
+              <ul class="list-disc pl-6">
+                <template x-for="program in entry.gradSubjectArea.split(', ')">
+                  <li x-text="program"></li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </template>
+    </ul>
+  </div>
+</WithoutHero>
