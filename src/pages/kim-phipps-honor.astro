@@ -72,13 +72,13 @@ const entries = [
   }"
   >
     <div
-      class="overflow-hidden relative before:absolute before:w-56 before:bg-gradient-to-r before:from-transparent before:z-10 before:to-white before:right-0 before:top-0 before:h-full after:absolute after:w-56 after:bg-gradient-to-l after:from-transparent after:z-10 after:to-white after:left-0 after:top-0 after:h-full"
+      class="overflow-hidden relative before:absolute before:w-24 md:before:w-56 before:bg-gradient-to-r before:from-transparent before:z-10 before:to-white before:right-0 before:top-0 before:h-full after:absolute after:w-24 md:after:w-56 after:bg-gradient-to-l after:from-transparent after:z-10 after:to-white after:left-0 after:top-0 after:h-full"
       x-ref="embla"
     >
       <div class="flex touch-pan-y gap-8">
         {
           entries.map((entry, index) => (
-            <div class="basis-1/3 flex-shrink-0 flex-grow-0 text-center duration-300 transition-all" :class={`${index} === index ? '' : 'scale-90 opacity-60'`}>
+            <div class="basis-3/5 md:basis-1/3 flex-shrink-0 flex-grow-0 text-center duration-300 transition-all" :class={`${index} === index ? '' : 'scale-90 opacity-60'`}>
               <h3 class="h4 text-primary-800 mb-4 transition-opacity duration-300" :class={`${index} === index ? '' : 'opacity-0'`}>{entry.year}</h3>
               <img src={entry.image} alt={entry.title} class="mb-4" width="420" height="280" />
               <p class="h3 text-primary-800">{entry.title}</p>
