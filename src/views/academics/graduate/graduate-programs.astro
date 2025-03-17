@@ -1,116 +1,140 @@
 ---
-import ImageHoverLink from "../../../components/image-hover-link.astro";
+import type { ComponentProps } from "astro/types";
+import Icon from "../../../components/icon.astro";
 
 const items = [
   {
     name: "Athletic Training",
     href: "https://www.messiah.edu/graduate/msat",
-    image: {
-      src: "https://www.messiah.edu/images/athletic_training_program_listing.jpg",
-      alt: "",
-    },
+    type: "On Campus",
+    degrees: ["M"],
   },
   {
     name: "Business and Leadership",
     href: "https://www.messiah.edu/info/22387/degrees_and_certificates",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-b-l.jpg",
-      alt: "",
-    },
+    type: "Online",
+    degrees: ["M", "G"],
   },
   {
     name: "Counseling",
     href: "https://www.messiah.edu/info/23251/degrees_and_certificates",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-counseling.jpg",
-      alt: "",
-    },
+    type: "Online",
+    degrees: ["M", "C"],
+  },
+  {
+    name: "Doctor of Science in Physical Therapy",
+    href: "https://www.messiah.edu/dspt-admissions",
+    type: "Online",
+    degrees: ["D"],
+  },
+  {
+    name: "Doctor Physical Therapy",
+    href: "https://www.messiah.edu/dspt-admissions",
+    type: "On Campus",
+    degrees: ["D"],
   },
   {
     name: "Education",
     href: "https://www.messiah.edu/info/23217/degrees_and_certificates",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-edu.jpg",
-      alt: "",
-    },
+    type: "Hybrid",
+    degrees: ["M", "G", "T"],
   },
   {
     name: "Higher Education Leadership",
     href: "https://www.messiah.edu/info/23126/degree_programs",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/grad-higher-ed.jpg",
-      alt: "",
-    },
+    type: "Hybrid",
+    degrees: ["M"],
   },
   {
     name: "Music",
     href: "https://www.messiah.edu/info/23276/degrees_and_tracks",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-conducting.jpg",
-      alt: "",
-    },
+    type: "Online",
+    degrees: ["M", "C"],
   },
   {
     name: "Nursing",
     href: "https://www.messiah.edu/info/23125/degree_programs",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-nursing.jpg",
-      alt: "",
-    },
+    type: "Online",
+    degrees: ["M", "D"],
   },
   {
     name: "Nutrition and Dietetics",
     href: "https://www.messiah.edu/graduate/dietetic-internship",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-dietetics.jpg",
-      alt: "",
-    },
+    type: "On Campus",
+    degrees: ["M"],
   },
   {
     name: "Occupational Therapy",
     href: "http://www.messiah.edu/mot",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-ot.jpg",
-      alt: "",
-    },
-  },
-  {
-    name: "Physical Therapy",
-    href: "http://www.messiah.edu/grad-pt",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-dpt.jpg",
-      alt: "",
-    },
+    type: "On Campus",
+    degrees: ["M"],
   },
   {
     name: "Social Work",
     href: "https://www.messiah.edu/homepage/5185/master_of_social_work_msw",
-    image: {
-      src: "https://www.messiah.edu/site/custom_scripts/styles/img/academics/dept-grad-MSW-400.jpg",
-      alt: "",
-    },
+    type: "Online",
+    degrees: ["M"],
   },
 ];
+
+const degreeMap: Record<string, string> = {
+  M: "Masters Degree",
+  G: "Graduate Certificate",
+  C: "Certificate in Advanced Graduate Studies",
+  D: "Doctoral Degree",
+  T: "PA Teaching Certificate",
+};
+
+const colorMap: Record<string, string> = {
+  M: "#273d5e",
+  G: "#7477b8",
+  C: "#ab4e42",
+  D: "#4d87a9",
+  T: "#e37b65",
+};
+
+const iconMap: Record<string, ComponentProps<typeof Icon>["name"]> = {
+  Online: "computer",
+  "On Campus": "library",
+  Hybrid: "scale",
+};
 ---
 
 <section class="bg-[url(/patterns/pattern-bg.png)] py-24 scroll-m-24" id="our-programs">
   <div class="wrapper">
     <h2 class="text-primary-800 h2 text-center">Explore Messiah’s graduate programs</h2>
 
-    <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-8">
+    <ul class="mt-12">
       {
         items.map((item) => (
-          <ImageHoverLink
-            size="small"
-            caption={item.name}
-            image={item.image}
-            button={{
-              label: "Learn more",
-              href: item.href,
-            }}
-          />
+          <li class="flex flex-col lg:flex-row gap-y-2 items-start gap-x-8 border-b border-gray-300 lg:items-center last-of-type:border-b-0 py-2 flex-wrap">
+            <span class="font-title font-bold text-primary-800 text-2xl">{item.name}</span>
+
+            <span class="flex items-center gap-2">
+              <Icon name={iconMap[item.type]!} />
+              {item.type}
+            </span>
+
+            <span class="flex gap-2 flex-wrap">
+              {item.degrees.map((degree) => (
+                <span class="flex gap-2 items-center">
+                  <span
+                    class="size-6 rounded-full items-center justify-center flex text-white text-sm"
+                    style={`background-color: ${colorMap[degree]}`}
+                  >
+                    {degree}
+                  </span>
+                  <span>{degreeMap[degree]}</span>
+                </span>
+              ))}
+            </span>
+
+            <a href={item.href} class="lg:ml-auto btn btn-tertiary">
+              Read more
+            </a>
+          </li>
         ))
       }
-    </div>
+    </ul>
   </div>
 </section>
