@@ -142,15 +142,15 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       init() {
+        if (this.filters.query) {
+          this.$refs.search.scrollIntoView();
+        }
+        
         fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
           .then((response) => response.json())
           .then((data) => {
             this.programs = data.items;
             this.loading = false;
-
-            if (this.filters.query) {
-              this.$nextTick(() => this.scrollToTable());
-            }
           })
           .catch((error) => {
             this.error = `Could not fetch program data (${error.message})`;
@@ -321,7 +321,7 @@ import WithoutHero from "../layouts/without-hero.astro";
   >
     <div>
       <div
-        class="bg-gray-100 p-4 mb-8"
+        class="bg-gray-100 p-4 mb-8 scroll-m-28"
         @keydown.escape.prevent.stop="close"
         @keydown="handleKeyDown"
         @focusin.window="!$refs.search.contains($event.target) && close()"
@@ -493,7 +493,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       <table class="text-sm w-full" x-show="!error && !loading">
         <thead>
           <tr
-            class="border-b border-b-gray-200 scroll-m-28"
+            class="border-b border-b-gray-200 scroll-m-28-28"
             x-show="filters.query && filtered.direct.length > 0"
           >
             <td colspan="11" class="py-2"
@@ -515,10 +515,10 @@ import WithoutHero from "../layouts/without-hero.astro";
             </td>
           </tr>
         </thead>
-        <tbody class="scroll-m-28">
+        <tbody class="scroll-m-28-28">
           <template x-for="program in filtered.direct">
             <tr
-              class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
+              class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28-28"
               :data-letter="program.program_name.at(0)"
             >
               <td class="bg-gray-100 w-8">
@@ -574,7 +574,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
           <template x-for="program in filtered.related">
             <tr
-              class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
+              class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28-28"
               :data-letter="program.program_name.at(0)"
             >
               <td class="bg-gray-100 w-8">
