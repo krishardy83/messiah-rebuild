@@ -290,7 +290,7 @@ const questions = [
       I need help finding the right visit option
     </button>
 
-    <template x-if="isSurveyVisible">
+    <template x-if="isSurveyVisible"> 
       <div class="bg-primary-800 max-w-xl p-8 mx-auto relative">
         <button
           type="button"
@@ -362,25 +362,35 @@ const questions = [
     }
   </ul>
 
-  <dialog
-    :open="isDialogVisible"
+<template x-teleport="body">
+  <div
     x-show="isDialogVisible"
-    x-cloak
+    style="display: none"
+    x-on:keydown.escape.prevent.stop="isDialogVisible = false"
+    role="dialog"
+    aria-modal="true"
     x-id="['modal-title']"
-    x-transition.opacity
-    @keyup.escape.prevent.stop="isDialogVisible = false"
     :aria-labelledby="$id('modal-title')"
-    class="hidden open:flex fixed z-30 inset-0 w-full h-full bg-tertiary-800/50 justify-end"
+    class="dialog"
   >
-    <div class="max-w-3xl bg-white py-20 relative overflow-y-auto" x-trap.noscroll.inert="isDialogVisible">
-      <button
-        type="button"
-        class="absolute left-4 lg:left-auto lg:right-4 top-5 hover:text-tertiary-400 transition-colors"
-        aria-label="close dialog"
-        @click="isDialogVisible = false"
-      >
-        <Icon name="close" class="size-10" />
-      </button>
+    <div
+      x-show="isDialogVisible"
+      @click="isDialogVisible = false"
+      x-transition.opacity.duration.300
+      class="fixed inset-0 bg-primary-800/80 z-50"
+    ></div>
+
+    <div
+      x-show="isDialogVisible"
+      x-transition.opacity.duration.300
+      x-trap.noscroll.inert="isDialogVisible"
+      class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+    >
+      <div class="flex justify-end p-4">
+        <button type="button" @click="isDialogVisible = false" aria-label="Close dialog">
+          <Icon name="close" class="size-10" />
+        </button>
+      </div>
 
       {
         items.map((item) => (
@@ -421,5 +431,7 @@ const questions = [
         ))
       }
     </div>
-  </dialog>
+  </div>
+</template>
+
 </section>
