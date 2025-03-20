@@ -50,127 +50,208 @@ import WithoutHero from "../layouts/without-hero.astro";
 
   <div
     x-data="{
-      courses: [],
-      selected: null,
-      loading: true,
-      error: null,
-      filters: {
-        quest: '',
-        education: '',
-        query: '',
-      },
-      open: null,
-      
-      init() {
-        this.$nextTick(() => this.select('all'));
+        courses: [],
+        selected: null,
+        loading: true,
+        error: null,
+        filters: {
+          quest: '',
+          education: '',
+          query: '',
+        },
+        open: null,
+        tabs: [
+          {
+            title: 'All courses',
+            subtitle: null,
+            key: 'all',
+          },
+          {
+            title: 'Early summer',
+            subtitle: 'May 18 - June 28',
+            key: 'UG Summer Early 6 Week',
+          },
+          {
+            title: 'Late summer',
+            subtitle: 'July 6 - August 16',
+            key: 'UG Summer Late 6 Week',
+          },
+          {
+            title: 'Entire summer',
+            subtitle: 'May 18 - August 16',
+            key: 'UG Full Summer',
+          },
+          {
+            title: 'Other terms',
+            subtitle: 'Various dates',
+            key: 'other',
+          },
+        ],
+        dropdowns: {
+          quest: [
+            { code: 'G11', label: '1st Year Sem' },
+            { code: 'G12', label: 'Communication' },
+            { code: 'G13', label: 'Writing Enriched' },
+            { code: 'G14', label: 'Created&Called' },
+            { code: 'G21A', label: 'Math' },
+            { code: 'G21B', label: 'Lab Science' },
+            { code: 'G21C', label: 'Sci/Tech/World' },
+            { code: 'G22A', label: 'Social Science' },
+            { code: 'G22B', label: 'Euro History' },
+            { code: 'G22C', label: 'U.S. History' },
+            { code: 'G23A', label: 'Literature' },
+            { code: 'G23B', label: 'Phil/Religion' },
+            { code: 'G23C', label: 'Arts' },
+            { code: 'G24', label: 'Language' },
+            { code: 'G24C', label: 'Cross Cultural' },
+            { code: 'G25', label: 'Non-Western' },
+            { code: 'G31', label: 'Bible' },
+            { code: 'G32', label: 'Christian Beliefs' },
+            { code: 'G41', label: 'Physical Educ.' },
+            { code: 'G41W', label: 'Wellness' },
+            { code: 'G42A', label: 'Ethics' },
+            { code: 'G42B', label: 'World Views' },
+            { code: 'G42C', label: 'Pluralism' },
+          ],
+          education: [
+            { code: 'GBIL', label: 'Bible' },
+            { code: 'GCHB', label: 'Christian Beliefs' },
+            { code: 'GDCC', label: 'Domestic Cross-Cultural' },
+            { code: 'GECG', label: 'Ethics & the Common Good' },
+            { code: 'GFYS', label: 'First-Year Seminar' },
+            { code: 'GGCC', label: 'Global Cross-Cultural' },
+            { code: 'GHOW', label: 'Holistic Wellness' },
+            { code: 'GHST', label: 'History' },
+            { code: 'GIPG', label: 'Intercultural Perspectives - Global' },
+            { code: 'GIPU', label: 'Intercultural Perspectives - UG' },
+            { code: 'GLA3', label: 'Gen Ed Language Level 3' },
+            { code: 'GLAK', label: 'Literature/Arts' },
+            { code: 'GLAN', label: 'Language' },
+            { code: 'GMAT', label: 'Mathematics' },
+            { code: 'GNSL', label: 'Natural Science Lab' },
+            { code: 'GOCO', label: 'Oral Communication' },
+            { code: 'GPHR', label: 'Philosophy/Religion' },
+            { code: 'GSSK', label: 'Social Scientific Ways of Knowing' },
+            { code: 'GWCO', label: 'Written Communication' },
+          ],
+        },
         
-        fetch('https://apps3.messiah.edu/summer_online/summer_online.json')
-          .then((response) => response.json())
-          .then((data) => {
-            this.courses = data.entries;
-            this.loading = false;
-          })
-          .catch((error) => {
-            this.error = `Could not fetch courses data (${error.message})`;
-            this.loading = false;
-          });
-      },
+        init() {
+          this.$nextTick(() => this.select('all'));
+          
+          fetch('https://cascade-prod.messiah.edu/gr-tuition-discounts/_data/summer_online.json')
+            .then((response) => response.json())
+            .then((data) => {
+              this.courses = data.entries;
+              this.loading = false;
+            })
+            .catch((error) => {
+              this.error = `Could not fetch courses data (${error.message})`;
+              this.loading = false;
+            });
+        },
 
-      select(key) {
-        this.selected = key;
-      },
+        select(key) {
+          this.selected = key;
+        },
 
-      isSelected(key) {
-        return this.selected === key;
-      },
-
-      get categorizedCourses() {
-        if (this.selected === 'all') {
-          return this.courses;
-        }
-
-        if (this.selected === 'other') {
-          return this.courses.filter((course) => course.summer_term !== 'UG Summer Early 6 Week' && course.summer_term !== 'UG Summer Late 6 Week' && course.summer_term !== 'UG Full Summer');
-        }
-
-        return this.courses.filter((course) => course.summer_term === this.selected);
-      },
-
-      get filteredCourses() {
-        const search = this.filters.query.trim().toLowerCase();
-        const quest = this.filters.quest;
-        const education = this.filters.education;
-
-        return this.categorizedCourses.filter((course) => {
-          const name = course.course_name.toLowerCase();
-          const number = course.course_number.toLowerCase();
-
-          const matchesQuery = name.includes(search) || number.includes(search);
-          const matchesQuest = quest ? course.attributes.includes(quest) : true;
-          const matchesEducation = education ? course.attributes.includes(education) : true;
-
-          return matchesQuery && matchesQuest && matchesEducation;
-        }).sort((a, b) => a.course_name.localeCompare(b.course_name));
-      },
-
-      filterSelectOptions(arr) {
-        const attributes = this.getUniqueAttributes();
-
-        return arr.filter((option) => {
-          return attributes.has(option.code);
-        });
-      },
-
-      formatDate(date) {
-        return new Date(date).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-        });
-      },
-
-      getUniqueAttributes() {
-        const unique = new Set();
-
-        for (let i = 0; i < this.courses.length; i++) {
-          for (let j = 0; j < this.courses[i].attributes.length; j++) {
-            unique.add(this.courses[i].attributes[j]);
+        isSelected(key) {
+          return this.selected === key;
+        },
+  
+        get categorizedCourses() {
+          if (this.selected === 'all') {
+            return this.courses;
           }
+
+          if (this.selected === 'other') {
+            return this.courses.filter((course) => course.summer_term !== 'UG Summer Early 6 Week' && course.summer_term !== 'UG Summer Late 6 Week' && course.summer_term !== 'UG Full Summer');
+          }
+
+          return this.courses.filter((course) => course.summer_term === this.selected);
+        },
+
+        get filteredCourses() {
+          const search = this.filters.query.trim().toLowerCase();
+          const quest = this.filters.quest;
+          const education = this.filters.education;
+
+          return this.categorizedCourses.filter((course) => {
+            const name = course.course_name.toLowerCase();
+            const number = course.course_number.toLowerCase();
+
+            const matchesQuery = name.includes(search) || number.includes(search);
+            const matchesQuest = quest ? course.attributes.includes(quest) : true;
+            const matchesEducation = education ? course.attributes.includes(education) : true;
+
+            return matchesQuery && matchesQuest && matchesEducation;
+          }).sort((a, b) => a.course_name.localeCompare(b.course_name));
+        },
+
+        filterSelectOptions(arr) {
+          const attributes = this.getUniqueAttributes();
+
+          return arr.filter((option) => {
+            return attributes.has(option.code);
+          });
+        },
+
+        formatDate(date) {
+          return new Date(date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+          });
+        },
+
+        getUniqueAttributes() {
+          const unique = new Set();
+
+          for (let i = 0; i < this.courses.length; i++) {
+            for (let j = 0; j < this.courses[i].attributes.length; j++) {
+              unique.add(this.courses[i].attributes[j]);
+            }
+          }
+
+          return unique;
+        },
+
+        getEntryDetails(type) {
+          if (!this.open) {
+            return null;
+          }
+
+          const { attributes } = this.open;
+
+          return attributes.map((attribute) => {
+            return this.dropdowns[type].find((option) => option.code === attribute)?.label;
+          }).filter((attribute) => {
+            return Boolean(attribute) && attribute !== 'None';
+          }).join(', ');
+        },
+
+        handleKeyDown(event) {
+          if (event.key === 'Enter') {
+            this.$refs.table.scrollIntoView({ behavior: 'smooth' });
+          }
+        },
+
+        reset() {
+          this.filters.quest = '';
+          this.filters.education = '';
+          this.filters.query = '';
         }
-
-        return unique;
-      },
-
-      getEntryDetails(type) {
-        if (!this.open) {
-          return null;
-        }
-
-        const { attributes } = this.open;
-
-        return attributes.map((attribute) => {
-          return this.dropdowns[type].find((option) => option.code === attribute)?.label;
-        }).filter((attribute) => {
-          return Boolean(attribute) && attribute !== 'None';
-        }).join(', ');
-      },
-
-      reset() {
-        this.filters.quest = '';
-        this.filters.education = '';
-        this.filters.query = '';
-      }
-    }"
+      }"
   >
     <div class="relative mb-4">
       <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
       <input
-        type="search"
+        type="text"
         x-model="filters.query"
         autocomplete="off"
-        placeholder="Search by name or course number..."
-        aria-label="Search by name or course number..."
+        @keydown="handleKeyDown"
+        placeholder="Search by name or course number"
+        aria-label="Search by name or course number"
         class="bg-white w-full min-h-12 px-4 pl-12 border border-gray-300"
-        @keydown.enter="scrollToTable"
       />
       <button
         type="button"
@@ -183,12 +264,78 @@ import WithoutHero from "../layouts/without-hero.astro";
       </button>
     </div>
 
+    <ul
+      class="flex flex-wrap border-b border-gray-300 mb-4"
+      x-ref="tablist"
+      @keydown.right.prevent.stop="$focus.wrap().next()"
+      @keydown.home.prevent.stop="$focus.first()"
+      @keydown.page-up.prevent.stop="$focus.first()"
+      @keydown.left.prevent.stop="$focus.wrap().prev()"
+      @keydown.end.prevent.stop="$focus.last()"
+      @keydown.page-down.prevent.stop="$focus.last()"
+      role="tablist"
+    >
+      <template x-for="tab in tabs">
+        <li class="-ml-px -mb-px w-1/2 sm:w-auto">
+          <button
+            :id="'tab' + tab.key"
+            @click="select(tab.key)"
+            @mousedown.prevent
+            @focus="select(tab.key)"
+            type="button"
+            :tabindex="isSelected(tab.key) ? 0 : -1"
+            :aria-selected="isSelected(tab.key)"
+            :class="isSelected(tab.key) ? 'bg-primary-800 text-white border-primary-800' : ''"
+            class="border border-gray-300 text-primary-800 flex flex-col items-center justify-center h-14 px-5 cursor-pointer w-full whitespace-nowrap"
+            role="tab"
+          >
+            <span x-text="tab.title" class="uppercase text-sm"></span>
+            <span x-text="tab.subtitle" class="text-xs"></span>
+          </button>
+        </li>
+      </template>
+    </ul>
+
+    <div class="flex flex-wrap gap-x-4 gap-y-2 mb-8">
+      <select
+        x-model="filters.quest"
+        class="bg-white min-h-12 px-4 border border-gray-300 w-full md:w-auto"
+        @change="filters.education = ''"
+      >
+        <option value="" disabled selected>Filter by quest area</option>
+
+        <template x-for="option in filterSelectOptions(dropdowns.quest)">
+          <option :value="option.code" x-text="option.label"></option>
+        </template>
+      </select>
+
+      <select
+        x-model="filters.education"
+        class="bg-white min-h-12 px-4 border border-gray-300 w-full md:w-auto"
+        @change="filters.quest = ''"
+      >
+        <option value="" disabled selected>Filter by general education</option>
+
+        <template x-for="option in filterSelectOptions(dropdowns.education)">
+          <option :value="option.code" x-text="option.label"></option>
+        </template>
+      </select>
+
+      <button
+        x-show="filters.quest || filters.education"
+        type="button"
+        @click="filters.quest = ''; filters.education = ''"
+      >
+        Reset
+      </button>
+    </div>
+
     <template x-if="loading">
       <div
         role="alert"
         class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
       >
-        <p>Loading summer courses...</p>
+        <p>Loading course list...</p>
       </div>
     </template>
 
@@ -199,28 +346,124 @@ import WithoutHero from "../layouts/without-hero.astro";
       </div>
     </template>
 
-    <template x-if="!filteredCourses.length && !loading && !error">
+    <template x-if="filteredCourses.length === 0 && !loading && !error">
       <div
         role="alert"
         class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
       >
-        <p class="mb-4">
-          No summer course matches your search "<span x-text="search"></span>".
-        </p>
+        <p class="mb-4">No courses found with your filters.</p>
 
-        <button type="button" @click="search = ''" class="btn btn-quaternary">Reset</button>
+        <button type="button" @click="reset()" class="btn btn-quaternary">Reset</button>
       </div>
     </template>
 
-    <ul class="text-sm" x-show="filteredCourses.length && !error && !loading">
-      <template x-for="entry in filteredCourses" :key="entry.entry_id">
-        <li
-          class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
-          :data-letter="entry.entry_name.at(0)"
-        >
-          <span x-text="entry.entry_name"></span>
-        </li>
+    <div x-ref="table" class="scroll-m-28">
+      <template x-for="tab in tabs">
+        <section x-show="isSelected(tab.key)" :aria-labelledby="'tab' + tab.key" role="tabpanel">
+          <ul class="text-sm">
+            <template x-for="course in filteredCourses">
+              <li
+                class="first-of-type:border-t items-center border-b gap-2 border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28 flex"
+              >
+                <button
+                  type="button"
+                  @click="open = course"
+                  class="size-9 flex justify-center items-center bg-gray-100"
+                >
+                  <Icon name="expand" class="size-5" />
+                </button>
+                <span x-text="course.course_name"></span>
+                <span
+                  x-show="tab.key === 'all'"
+                  x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
+                  class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"></span>
+                <span
+                  x-show="tab.key !== 'all'"
+                  x-text="course.course_number"
+                  class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"></span>
+              </li>
+            </template>
+          </ul>
+        </section>
       </template>
-    </ul>
+    </div>
+
+    <template x-teleport="body">
+      <div
+        x-show="Boolean(open)"
+        style="display: none"
+        x-on:keydown.escape.prevent.stop="open = null"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="dialog"
+      >
+        <div
+          x-show="Boolean(open)"
+          @click="open = null"
+          x-transition.opacity.duration.300
+          class="fixed inset-0 bg-primary-800/80 z-50"
+        >
+        </div>
+
+        <div
+          x-show="Boolean(open)"
+          x-transition.opacity.duration.300
+          x-trap.noscroll.inert="open"
+          class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+        >
+          <div class="flex justify-end p-4">
+            <button type="button" @click="open = null" aria-label="Close dialog">
+              <Icon name="close" class="size-10" />
+            </button>
+          </div>
+
+          <div class="p-4">
+            <div class="flex gap-2 text-gray-700 mb-4 items-center">
+              <Icon name="calendar" />
+              <span x-text="formatDate(open?.start_date)"></span> -
+              <span x-text="formatDate(open?.end_date)"></span>
+            </div>
+
+            <h2 :id="$id('modal-title')" class="text-primary h3 mb-4" x-text="open?.course_name">
+            </h2>
+
+            <p x-text="open?.course_description" class="mb-8"></p>
+
+            <div class="bg-gray-100 rounded-md p-4">
+              <h3 class="text-primary h4 mb-2">Course details</h3>
+
+              <dl>
+                <div class="flex gap-1">
+                  <dt>Course Number:</dt>
+                  <dd x-text="open?.course_number"></dd>
+                </div>
+
+                <div class="flex gap-1">
+                  <dt>Professor:</dt>
+                  <dd x-text="open?.instructor"></dd>
+                </div>
+
+                <div class="flex gap-1">
+                  <dt>Credits:</dt>
+                  <dd x-text="open?.credits"></dd>
+                </div>
+
+                <div class="flex gap-1" x-show="getEntryDetails('education')?.length > 0">
+                  <dt>General Education:</dt>
+                  <dd x-text="getEntryDetails('education')"></dd>
+                </div>
+
+                <div class="flex gap-1" x-show="getEntryDetails('quest')?.length > 0">
+                  <dt>Quest:</dt>
+                  <dd x-text="getEntryDetails('quest')"></dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
 </WithoutHero>
