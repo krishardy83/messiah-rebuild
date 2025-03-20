@@ -1,0 +1,193 @@
+---
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Email signatures"
+  description="Email signatures"
+  sidebarLinks={[
+    {
+      title: "Academics",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Email signatures", href: "/" },
+  ]}
+>
+  <h2 class="h3">Email signatures</h2>
+
+  <div class="rich-text">
+    <p>
+      Many of the College's official correspondence is now done via email rather than traditional
+      mail. To create a cohesive look similar to a letterhead, a standard email signature is now
+      available and shown below. Build your email signature below and copy and paste it into your
+      Outlook account. Optional fields on this form allow this to be customized for your needs.
+    </p>
+
+    <p>
+      Complete the form then select and copy the formatted signature. It will be placed in your
+      clipboard and can be pasted into your email client. The fields are not required, so please add
+      content to the fields you wish to display.
+    </p>
+  </div>
+
+  <div
+    x-data="{
+      name: '',
+      title: '',
+      department: '',
+      street: '',
+      address: '',
+      phone: '',
+      extension: '',
+      email: '',
+    }"
+  >
+    <form action="">
+      <div class="mb-4">
+        <label for="name" class="block mb-1">Name</label>
+        <input
+          type="text"
+          x-model="name"
+          id="name"
+          placeholder="John Doe"
+          class="w-full min-h-12 px-4 border border-gray-300"
+        />
+      </div>
+      <div class="flex gap-4">
+        <div class="mb-4 w-1/2">
+          <label for="title" class="block mb-1">Title</label>
+          <input
+            type="text"
+            x-model="title"
+            id="title"
+            placeholder="Professor"
+            class="w-full min-h-12 px-4 border border-gray-300"
+          />
+        </div>
+        <div class="mb-4 w-1/2">
+          <label for="department" class="block mb-1">Department</label>
+          <input
+            type="text"
+            x-model="department"
+            id="department"
+            placeholder="Digital & Marketing"
+            class="w-full min-h-12 px-4 border border-gray-300"
+          />
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="street" class="block mb-1">Street</label>
+        <input
+          type="text"
+          x-model="street"
+          id="street"
+          placeholder="One University Avenue"
+          class="w-full min-h-12 px-4 border border-gray-300"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="address" class="block mb-1">Address</label>
+        <input
+          type="text"
+          x-model="address"
+          id="address"
+          placeholder="Mechanicsburg PA 17055"
+          class="w-full min-h-12 px-4 border border-gray-300"
+        />
+      </div>
+      <div class="flex gap-4">
+        <div class="mb-4 w-3/4">
+          <label for="phone" class="block mb-1">Office phone</label>
+          <input
+            type="text"
+            x-model="phone"
+            id="phone"
+            placeholder="717-000-0000"
+            class="w-full min-h-12 px-4 border border-gray-300"
+          />
+        </div>
+        <div class="mb-4 w-1/4">
+          <label for="extension" class="block mb-1">Extension</label>
+          <input
+            type="text"
+            x-model="extension"
+            id="extension"
+            placeholder="0000"
+            class="w-full min-h-12 px-4 border border-gray-300"
+          />
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block mb-1">Email address</label>
+        <input
+          type="email"
+          x-model="email"
+          id="email"
+          placeholder="john.doe@messiah.edu"
+          class="w-full min-h-12 px-4 border border-gray-300"
+        />
+      </div>
+    </form>
+
+    <output class="select-all">
+      <img
+        src="https://www.messiah.edu/images/MU_Logo_1.gif"
+        alt="Messiah Logo"
+        width="200"
+        height="70"
+        style="margin-bottom: 10px;"
+      />
+      <p style="font-family: 'Arial', sans-serif; font-size: 16px; line-height: 20px;">
+        <strong
+          class="font-family: 'Arial Black', 'Arial', sans-serif; font-weight: bold; color: #293e5d; display: block;"
+          x-text="name || 'John Doe'"></strong><br />
+        <template x-if="title.length > 0">
+          <span>
+            <i class="font-style: italic;" x-text="title"></i><br />
+          </span>
+        </template>
+        <span x-text="department || 'Digital & Marketing'"></span><br />
+        <template x-if="street.length > 0">
+          <span>
+            <span x-text="street"></span><br />
+          </span>
+        </template>
+        <template x-if="address.length > 0">
+          <span>
+            <span x-text="address"></span><br />
+          </span>
+        </template>
+        <strong
+          style="font-family: 'Arial Black', 'Arial', sans-serif; font-weight: bold; color:#293e5d; font-size:16px; line-height: 20px"
+        >
+          T
+        </strong>
+        <span x-text="phone || '717-000-0000'"></span>
+        <template x-if="extension.length > 0">
+          <span>
+            |
+            <strong
+              style="font-family: 'Arial Black', 'Arial', sans-serif; font-weight: bold; color:#293e5d; font-size:16px; line-height: 20px"
+              >EXT</strong
+            >
+            <span x-text="extension"></span>
+          </span>
+        </template>
+        <br /><strong
+          style="font-family: 'Arial Black', 'Arial', sans-serif; font-weight: bold; color:#293e5d; font-size:16px; line-height: 20px"
+        >
+          E
+        </strong><a :href="`mailto:${email}`" x-text="email || 'john.doe@messiah.edu'"></a>
+      </p>
+    </output>
+  </div>
+</WithoutHero>
