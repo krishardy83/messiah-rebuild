@@ -1,0 +1,74 @@
+---
+import Icon from "../components/icon.astro";
+import SingleColumn from "../layouts/single-column.astro";
+---
+
+<SingleColumn
+  title="News Test"
+  description="News Test"
+  image="/images/child_adult.jpg"
+  mobileImage="/images/mobile-ot-hero.webp"
+>
+  <div class="max-w-7xl px-4 mx-auto py-16">
+    <search>
+      <form
+        class="flex flex-col md:flex-row gap-4"
+        action="[system-asset]site://News/topical[/system-asset]
+"
+      >
+        <div class="relative md:w-1/2 lg:w-1/3">
+          <Icon
+            name="search"
+            class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400"
+          />
+          <input
+            type="search"
+            class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white"
+            placeholder="Search articles"
+            name="q"
+          />
+        </div>
+
+        <div class="relative md:w-1/2 lg:w-1/3">
+          <Icon name="bars" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
+          <select class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white" name="s">
+            <option value="" selected disabled>View articles by category</option>
+            <option value="">All</option>
+            <option
+              value="[system-asset:id=95039a640a0000a971be1dd1f1b9b359]/academics[/system-asset]"
+              >Academics</option
+            >
+            <option
+              value="[system-asset:id=9509bca50a0000a971be1dd173d0b1d8]/athletics[/system-asset]"
+              >Athletics</option
+            >
+            <option
+              value="[system-asset:id=950a8c370a0000a971be1dd18fd3b5fa]/campus-news[/system-asset]"
+              >Campus news</option
+            >
+            <option
+              value="[system-asset:id=6782ba7f0a0000a906da0355422e74f9]/event-news[/system-asset]"
+              >Event news</option
+            >
+            <option
+              value="[system-asset:id=b27464370a0000a971be1dd1d914641a]/faculty-and-staff[/system-asset]"
+              >Faculty and staff</option
+            >
+            <option
+              value="[system-asset:id=b275186d0a0000a971be1dd1573dac1c]/profiles[/system-asset]"
+              >Profiles</option
+            >
+            <option
+              value="[system-asset:id=b275d96b0a0000a971be1dd16d1dd49c]/students-and-alumni[/system-asset]"
+              >Students and alumni</option
+            >
+            <option
+              value="[system-asset:id=94ec31580a0000a971be1dd150bab2ec]/topical[/system-asset]"
+              >Topical</option
+            >
+          </select>
+        </div>
+      </form>
+    </search>
+  </div>
+</SingleColumn>
