@@ -29,9 +29,19 @@ import SingleColumn from "../layouts/single-column.astro";
           />
         </div>
 
-        <div class="relative md:w-1/2 lg:w-1/3">
+        <div
+          class="relative md:w-1/2 lg:w-1/3"
+          x-data="{
+            navigate(event) {
+              window.location.href = `${window.location.href}/${event.target.value}`;
+            }
+          }"
+        >
           <Icon name="bars" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
-          <select class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white" name="s">
+          <select
+            class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white"
+            @change="navigate"
+          >
             <option value="" selected disabled>View articles by category</option>
             <option value="">All</option>
             <option
