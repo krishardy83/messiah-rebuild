@@ -134,9 +134,8 @@ import Icon from "../../components/icon.astro";
 
 <RelatedPrograms title="Programs related to Digital Marketing" />
 
-<section
+<div
   data-analytics="event-list"
-  class="@container not-prose border border-gray-300 bg-gray-100 mt-16"
   x-data="{
     events: [],
     loading: true,
@@ -180,30 +179,32 @@ import Icon from "../../components/icon.astro";
     </div>
   </template>
 
-  <template x-if="!loading && !error">
-    <div class="p-4 @md:p-8">
-      <h3 class="mb-4 h4 text-primary-800">Upcoming open house events</h3>
+  <template x-if="!loading && !error && events.length > 0">
+    <div class="@container not-prose border border-gray-300 bg-gray-100 mt-16">
+      <div class="p-4 @md:p-8">
+        <h3 class="mb-4 h4 text-primary-800">Upcoming open house events</h3>
 
-      <ul class="space-y-2 @md:space-y-4">
-        <template x-for="event in events">
-          <li class="p-4 bg-white shadow-md w-full flex items-center gap-4 relative group">
-            <time
-              :datetime="event.StartDate"
-              class="bg-gray-800 uppercase font-title font-bold text-white w-12 text-center aspect-square leading-none flex flex-col items-center justify-center group-hover:bg-primary-700 transition-colors flex-shrink-0"
-            >
-              <span x-text="getMonth(event.StartDate)"></span>
-              <span x-text="getDay(event.StartDate)"></span>
-            </time>
-            <a
-              :href="event.URL"
-              class="after:absolute after:inset-0 @md:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
-              x-text="event.Title"
-            >
-            </a>
-            <Icon name="chevron-right" class="ml-auto size-5 hidden @md:block" />
-          </li>
-        </template>
-      </ul>
+        <ul class="space-y-2 @md:space-y-4">
+          <template x-for="event in events">
+            <li class="p-4 bg-white shadow-md w-full flex items-center gap-4 relative group">
+              <time
+                :datetime="event.StartDate"
+                class="bg-gray-800 uppercase font-title font-bold text-white w-12 text-center aspect-square leading-none flex flex-col items-center justify-center group-hover:bg-primary-700 transition-colors flex-shrink-0"
+              >
+                <span x-text="getMonth(event.StartDate)"></span>
+                <span x-text="getDay(event.StartDate)"></span>
+              </time>
+              <a
+                :href="event.URL"
+                class="after:absolute after:inset-0 @md:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
+                x-text="event.Title"
+              >
+              </a>
+              <Icon name="chevron-right" class="ml-auto size-5 hidden @md:block" />
+            </li>
+          </template>
+        </ul>
+      </div>
     </div>
   </template>
-</section>
+</div>
