@@ -1,0 +1,122 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+---
+
+<SingleColumn
+  title="Our Recognitions"
+  description="Our Recognitions"
+  image="/images/physical-therapy.jpg"
+  mobileImage="/images/mobile-pt-hero.webp"
+  analyticsKey="recognitions"
+>
+  <div
+    class="wrapper py-24"
+    x-data="{
+      categories: [],
+      loading: true,
+      error: null,
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/rankings/_data/rankings-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            const categories = new Set(data.listing_data.map(((recognition) => {
+              return recognition.category.trim();
+            })));
+
+            this.categories = Array.from(categories).map((category) => ({
+              name: category,
+              slug: category.trim().toLowerCase().replace(/ /g, '-'),
+              recognitions: data.listing_data.filter((recognition) => {
+                return recognition.category.trim() === category && recognition.live === 'yes';
+              })
+            }));
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch recognitions. (${error.message})`;
+            this.loading = false;
+          });
+      },
+    }"
+  >
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading recognitions...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <template x-if="!loading && !error && categories.length > 0">
+      <div>
+        <nav>
+          <ul class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+            <template x-for="category in categories">
+              <li
+                class="relative after:absolute after:h-full after:right-0 after:top-0 after:w-px after:bg-gray-300 after:translate-x-4 last-of-type:after:bg-transparent"
+              >
+                <a
+                  :href="`#${category.slug}`"
+                  x-text="category.name"
+                  class="font-bold text-primary-800 link"></a>
+              </li>
+            </template>
+          </ul>
+        </nav>
+
+        <template x-for="category in categories">
+          <section>
+            <h2
+              :id="category.slug"
+              class="font-title uppercase text-primary-800 text-3xl text-center font-bold mb-8 mt-16 scroll-m-28"
+              x-text="category.name"
+            >
+            </h2>
+
+            <div class="sm:columns-2 lg:columns-3 xl:columns-4">
+              <template x-for="recognition in category.recognitions">
+                <article
+                  class="bg-gray-100 border border-gray-300 relative inline-block mb-4"
+                  :class="recognition.link ? 'hover:scale-105 transition-transform' : ''"
+                >
+                  <header class="p-4">
+                    <h3 class="font-title font-bold text-primary-800 text-2xl leading-none mb-2">
+                      <a
+                        x-show="recognition.link"
+                        :href="recognition.link"
+                        x-text="recognition.entry_name"
+                        class="after:absolute after:inset-0"></a>
+                      <span x-text="recognition.entry_name" x-show="!recognition.link"></span>
+                    </h3>
+
+                    <p x-text="recognition.description" class="mb-4 text-sm"></p>
+                  </header>
+
+                  <div class="bg-white border-t border-gray-300 p-4">
+                    <img :src="recognition.image" :alt="recognition.entry_name" class="w-full" />
+                  </div>
+
+                  <template x-if="recognition.link">
+                    <span
+                      class="absolute bottom-0 right-0 bg-primary-800 text-white py-2 px-4 block"
+                      >Read more</span
+                    >
+                  </template>
+                </article>
+              </template>
+            </div>
+          </section>
+        </template>
+      </div>
+    </template>
+  </div>
+</SingleColumn>
