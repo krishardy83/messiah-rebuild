@@ -1,0 +1,92 @@
+---
+import Card from "../components/card.astro";
+import Icon from "../components/icon.astro";
+import Sidebar from "../components/sidebar.astro";
+import WithHero from "../layouts/with-hero.astro";
+import StepByStep from "../views/undergraduate-admissions/step-by-step.astro";
+
+const sidebarLinks = [
+  {
+    title: "Web Services",
+    children: [
+      { href: "/", name: "FAQ's" },
+      { href: "/", name: "Project planning" },
+      { href: "/", name: "Services provided" },
+      { href: "/", name: "Support & training" },
+      { href: "/", name: "Website governance" },
+    ],
+  },
+  {
+    title: "Quick Links",
+    children: [
+      { href: "/", name: "Sign up for training" },
+      { href: "/", name: "Request access to edit site" },
+    ],
+  },
+];
+---
+
+<WithHero
+  title="Web Services at Messiah University"
+  description="The Web Office at Messiah College is housed within the Office of Marketing and Public Relations and serves as the central office responsible for the College’s external website and related web services."
+  image="/images/services-banner.jpg"
+  analyticsKey="web-services"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+  ]}
+>
+  <Sidebar links={sidebarLinks} slot="sidebar">
+    <a href="/" class="btn-tertiary w-full">Submit a web services ticket</a>
+  </Sidebar>
+
+  <div class="flex flex-col md:flex-row gap-4 items-start">
+    <div class="rich-text md:w-2/3">
+      <h2>Welcome</h2>
+
+      <p>
+        You are right to consider Messiah University if you are serious about deepening your
+        Christian faith; you are willing to be challenged in the classroom; you welcome the
+        opportunity to live alongside other believers in Christian community; championship athletics
+        and many rec sports options excite you; traveling is on your bucket list; you have a heart
+        for service; you care about living sustainably; you love attending concerts; and you want
+        faculty to not only remember your name but to truly invest in your college experience.
+      </p>
+
+      <p class="font-bold">Let us guide you through the Messiah University admissions process.</p>
+    </div>
+
+    <Card title="Quick links" class="w-full md:w-1/3">
+      <ul class="grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-1">
+        <li>
+          <a class="justify-start w-full btn btn-tertiary" href="http://www.messiah.edu/visit"
+            ><Icon name="library" class="size-5" /> Visit Campus</a
+          >
+        </li>
+        <li>
+          <a
+            class="justify-start w-full btn btn-tertiary"
+            href="https://tour.messiah.edu/?_gl=1*qj36cs*_gcl_au*MzQxMzU0MzcxLjE3Mzk4MTkxMzM.*_ga*OTE3MTUzNzc5LjE3Mzk4MTkxMzM.*_ga_11QNM61CQ5*MTc0MzAxMzA2OS41Mi4xLjE3NDMwMTUxMjYuNjAuMC4w"
+            ><Icon name="globe" class="size-5" /> Virtual Tour</a
+          >
+        </li>
+        <li>
+          <a class="justify-start w-full btn btn-tertiary" href="https://www.messiah.edu/academics">
+            <Icon name="pencil" class="size-5" />Academics</a
+          >
+        </li>
+        <li>
+          <a
+            class="justify-start w-full btn btn-tertiary"
+            href="https://www.messiah.edu/info/21344/tuition_and_aid"
+            ><Icon name="dollar" class="size-5" /> Tuition & Fees</a
+          >
+        </li>
+      </ul>
+    </Card>
+  </div>
+
+  <StepByStep />
+</WithHero>
