@@ -40,16 +40,16 @@ import Icon from "../../components/icon.astro";
     ],
 
     init() {
-      fetch('https://www.messiah.edu/site/a/cache/fin-aid.json')
+      fetch('https://cascade-prod.messiah.edu/fin-aid/_data/fin-aid-options.json')
         .then((response) => response.json())
         .then((data) => {
-          this.entries = data.items;
+          this.entries = data.listing_data;
         });
     },
 
     entriesWithIcon() {
       return this.entries.map((entry) => {
-        const filter = this.filters.find((filter) => filter.id === entry.category_name);
+        const filter = this.filters.find((filter) => filter.id === entry.category);
 
         return { ...entry, icon: filter?.icon || null };
       });
@@ -60,7 +60,7 @@ import Icon from "../../components/icon.astro";
         return this.entriesWithIcon();
       }
 
-      return this.entriesWithIcon().filter((entry) => entry.category_name === this.selected);
+      return this.entriesWithIcon().filter((entry) => entry.category === this.selected);
     },
 
     description() {
@@ -127,7 +127,7 @@ import Icon from "../../components/icon.astro";
             class="flex items-center text-left gap-4 p-4 transition-colors hover:bg-gray-100 w-full"
           >
             <img :src="entry.icon" alt="" aria-hidden="true" width="32" height="32" />
-            <span x-text="entry.entry_title"></span>
+            <span x-text="entry.entry_name"></span>
             <Icon name="chevron-right" class="ml-auto" />
           </button>
         </li>
@@ -164,7 +164,7 @@ import Icon from "../../components/icon.astro";
             <img :src="activeEntry.icon" alt="" aria-hidden="true" width="32" height="32" />
             <h3
               :id="$id('modal-title')"
-              x-text="activeEntry.entry_title"
+              x-text="activeEntry.entry_name"
               class="font-title text-2xl md:text-3xl lg:text-4xl text-primary-800"
             >
             </h3>
@@ -173,10 +173,7 @@ import Icon from "../../components/icon.astro";
           <div x-html="activeEntry.description" class="prose"></div>
 
           <template x-if="activeEntry.read_more_link">
-            <a
-              class="btn btn-primary mt-8"
-              x-text="activeEntry.read_more_link_text"
-              :href="activeEntry.read_more_link"></a>
+            <a class="btn btn-primary mt-8" :href="activeEntry.read_more_link">Read more</a>
           </template>
         </div>
       </template>
