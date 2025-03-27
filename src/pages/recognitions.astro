@@ -83,7 +83,7 @@ import SingleColumn from "../layouts/single-column.astro";
             <div class="sm:columns-2 lg:columns-3">
               <template x-for="recognition in category.recognitions">
                 <article
-                  class="bg-gray-100 border border-gray-300 relative inline-block mb-4"
+                  class="bg-gray-100 border border-gray-300 relative break-inside-avoid mb-4"
                   :class="recognition.link ? 'hover:scale-105 transition-transform' : ''"
                 >
                   <header class="p-4">
