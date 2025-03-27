@@ -368,11 +368,10 @@ import WithoutHero from "../layouts/without-hero.astro";
                 <button
                   type="button"
                   @click="open = course"
-                  class="size-9 flex justify-center items-center bg-gray-100"
+                  class="p-2 hover:underline"
+                  x-text="course.course_name"
                 >
-                  <Icon name="expand" class="size-5" />
                 </button>
-                <span x-text="course.course_name"></span>
                 <span
                   x-show="tab.key === 'all'"
                   x-text="`${formatDate(course.start_date)} - ${formatDate(course.end_date)}`"
