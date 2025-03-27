@@ -20,11 +20,9 @@ import SingleColumn from "../layouts/single-column.astro";
         fetch('https://cascade-prod.messiah.edu/rankings/_data/rankings-json.json')
           .then((response) => response.json())
           .then((data) => {
-            const categories = new Set(data.listing_data.map(((recognition) => {
-              return recognition.category.trim();
-            })));
+            const categories = ['Academics and Value', 'Undergraduate Programs', 'Graduate Programs', 'Athletics', 'Service and community', 'Sustainability'];
 
-            this.categories = Array.from(categories).map((category) => ({
+            this.categories = categories.map((category) => ({
               name: category,
               slug: category.trim().toLowerCase().replace(/ /g, '-'),
               recognitions: data.listing_data.filter((recognition) => {
@@ -82,7 +80,7 @@ import SingleColumn from "../layouts/single-column.astro";
             >
             </h2>
 
-            <div class="sm:columns-2 lg:columns-3 xl:columns-4">
+            <div class="sm:columns-2 lg:columns-3">
               <template x-for="recognition in category.recognitions">
                 <article
                   class="bg-gray-100 border border-gray-300 relative inline-block mb-4"
