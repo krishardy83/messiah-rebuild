@@ -47,6 +47,8 @@ export default {
     "pb-72",
     "wrapper-sm",
     "wrapper-md",
+    "wrapper-xl",
+    "wrapper-2xl",
     "bg-bottom",
     "bg-left-bottom",
     "bg-left-top",

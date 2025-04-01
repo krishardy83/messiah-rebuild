@@ -169,15 +169,23 @@
     @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-h4:text-xl prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
   }
 
+  .wrapper-sm {
+    @apply mx-auto max-w-4xl px-4;
+  }
+  
+  .wrapper-md {
+    @apply mx-auto max-w-5xl px-4;
+  }
   .wrapper {
     @apply mx-auto max-w-6xl px-4;
   }
 
-  .wrapper-md {
-    @apply mx-auto max-w-5xl px-4;
+  .wrapper-xl {
+    @apply mx-auto max-w-7xl px-4;
   }
-  .wrapper-sm {
-    @apply mx-auto max-w-4xl px-4;
+
+  .wrapper-2xl {
+    @apply mx-auto max-w-8xl px-4;
   }
 
   .bg-gradient {
