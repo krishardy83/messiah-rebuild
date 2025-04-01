@@ -184,10 +184,6 @@
     @apply mx-auto max-w-7xl px-4;
   }
 
-  .wrapper-2xl {
-    @apply mx-auto max-w-8xl px-4;
-  }
-
   .bg-gradient {
     @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600;
   }
