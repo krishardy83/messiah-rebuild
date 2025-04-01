@@ -80,6 +80,31 @@ import Icon from "../../components/icon.astro";
       );
     },
 
+    getStudentTypes(activeEntry) {
+      if (!activeEntry.studentTypes) {
+        return null;
+      }
+
+      const studentTypes = activeEntry.studentTypes.split('|');
+      let result = '';
+
+      if (studentTypes.length === 1) {
+        return studentTypes[0];
+      }
+
+      for (let i = 0; i < studentTypes.length; i++) {
+        if (i === 0) {
+          result += studentTypes[i];
+        } else if (i === studentTypes.length - 1) {
+          result += `, and ${studentTypes[i]}`;
+        } else {
+          result += `, ${studentTypes[i]}`;
+        }
+      }
+
+      return result;
+    },
+
     isMobileView() {
       return window.matchMedia('(max-width: 768px)').matches;
     },
@@ -160,14 +185,24 @@ import Icon from "../../components/icon.astro";
 
       <template x-if="activeEntry">
         <div class="py-4 px-8">
-          <header class="flex gap-4 items-center mb-8">
-            <img :src="activeEntry.icon" alt="" aria-hidden="true" width="32" height="32" />
-            <h3
-              :id="$id('modal-title')"
-              x-text="activeEntry.entry_name"
-              class="font-title text-2xl md:text-3xl lg:text-4xl text-primary-800"
-            >
-            </h3>
+          <header class="mb-8">
+            <div class="flex gap-4 items-center mb-2">
+              <img :src="activeEntry.icon" alt="" aria-hidden="true" width="32" height="32" />
+              <h3
+                :id="$id('modal-title')"
+                x-text="activeEntry.entry_name"
+                class="font-title text-2xl md:text-3xl lg:text-4xl text-primary-800"
+              >
+              </h3>
+            </div>
+
+            <template x-if="activeEntry.studentTypes">
+              <p class="ml-12">
+                This scholarship is for <span
+                  class="font-bold"
+                  x-text="getStudentTypes(activeEntry)"></span>
+              </p>
+            </template>
           </header>
 
           <div x-html="activeEntry.description" class="prose"></div>
