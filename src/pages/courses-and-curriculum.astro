@@ -1,0 +1,323 @@
+---
+import Icon from "../components/icon.astro";
+import WithoutHero from "../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Courses and curriculum"
+  description="Courses and curriculum"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Academics", href: "/" },
+    { name: "Courses and curriculum", href: "/" },
+  ]}
+>
+  <h2 class="h3">Courses and curriculum</h2>
+
+  <div class="rich-text mb-8">
+    <p>
+      The business program at Messiah University offers you the opportunity to take a broad range of
+      courses while also specializing in a specific discipline. In terms of breadth, you may choose
+      classes such as investments, operations management, moral Issues in business, small business
+      development and advertising. At the same time, you'll gain depth of experience in a specific
+      field by majoring in disciplines that include accounting, business administration, business
+      information systems, economics, economic development, international business and marketing.
+      Internships also can play a valuable role by providing real-world experience and honing
+      job-related competencies. At the end of the college journey, management and business students
+      experience strategic management (the capstone business course), which utilizes in-depth case
+      analysis to integrate all of the business disciplines and develop high-level decision-making
+      skills.
+    </p>
+
+    <p>Click a program in the listing below to view all related course options</p>
+  </div>
+
+  <div
+    x-data="{
+      programs: [],
+      loading: true,
+      error: null,
+      filters: {
+        type: '',
+        id: 'business',
+      },
+
+      types: {
+        major: {
+          key: 'M',
+          label:'Major',
+          color: '#273d5e',
+          description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+        },
+        minor: {
+          key: 'm',
+          label: 'Minor',
+          color: '#4d87a9',
+          description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+        },
+        concentration: {
+          key: 'C',
+          label: 'Concentration',
+          color: '#ab4e42',
+          description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+        },
+        P: {
+          key: 'P',
+          label: 'Pre-Health Advising',
+          color: '#7477b8',
+          description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+        },
+        '3+': {
+          key: '3+',
+          label: '3+ Partner Programs',
+          color: '#84ab8b',
+          description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+        },
+        teaching_certification: {
+          key: 'T',
+          label: 'Teaching Certificate',
+          color: '#e37b65',
+          description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+        },
+        accelerated: {
+          key: 'A',
+          label: 'Accelerated',
+          color: '#DCAC42',
+          description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+        },
+        early_assurance: {
+          key: 'E',
+          label: 'Early Assurance',
+          color: '#afafaf',
+          description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+        },
+        undergrad_certificate: {
+          key: 'UC',
+          label: 'Undergrad Certificate',
+          color: '#0a0a0ab3',
+          description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+        },
+      },
+
+      hasType(program, type) {
+        if (program === null) {
+          return false;
+        }
+
+        if (type === '') {
+          return true;
+        }
+
+        return program[type] === 'true';
+      },
+
+      getProgramDegrees(program) {
+        if (!program) {
+          return [];
+        }
+
+        if (program.degree !== 'none' && program.degree !== '') {
+          return program.degree.split('|');
+        }
+
+        return [];
+      },
+
+      getProgramURL(program) {
+        if (!program) {
+          return null;
+        }
+
+        const url = new URL(location.origin);
+        url.pathname = program.program_url;
+
+        return `${url.toString()}#courses`;
+      },
+
+      getRelatedPrograms(program) {
+        if (!program) {
+          return [];
+        }
+
+        const related = program.related_programs.split('|');
+
+        if (related.length === 0) {
+          return [];
+        }
+
+        return related.map((program) => {
+          return this.programs.find((p) => p.entry_id === program);
+        });
+      },
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.programs = data.items;
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch program data (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      reset() {
+        this.filters.type = '';
+      },
+
+      get transformedPrograms() {
+        const parents = {};
+        const children = {};
+
+        this.programs.forEach((program) => {
+          if (program.parent_program) {
+            program.is_child = true;
+
+            if (!children[program.parent_program]) {
+              children[program.parent_program] = [];
+            }
+
+            children[program.parent_program].push(program);
+          } else {
+            program.is_child = false;
+            parents[program.entry_id] = program;
+          }
+        });
+
+        const sortedParentIds = Object.keys(parents).sort((a, b) =>
+          parents[a].program_name.localeCompare(parents[b].program_name)
+        );
+
+        const result = [];
+
+        sortedParentIds.forEach(parentId => {
+          result.push(parents[parentId]);
+
+          if (children[parentId]) {
+            const sortedChildren = children[parentId].sort((a, b) =>
+              a.program_name.localeCompare(b.program_name)
+            );
+
+            result.push(...sortedChildren);
+          }
+        });
+
+        return result;
+      },
+
+      get filteredPrograms() {
+        return this.transformedPrograms.filter((program) => {
+          return this.hasType(program, this.filters.type) && program.department_id === this.filters.id;
+        });
+      },
+
+      get filteredTypes() {
+        const current = this.programs.filter((program) => program.department_id === this.filters.id);
+
+        return Object.entries(this.types).filter(([key, type]) => {
+          return current.some((program) => this.hasType(program, key));
+        });
+      }
+    }"
+  >
+    <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
+      <template x-for="[key, type] in filteredTypes">
+        <label
+          class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
+        >
+          <input type="radio" :value="key" x-model="filters.type" class="sr-only" />
+          <span
+            x-text="type.key"
+            class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+            :style="`background-color: ${type.color}`"></span>
+          <span
+            x-text="type.label"
+            class="uppercase group-hover:underline"
+            :class="filters.type === key ? 'text-primary-400' : ''"></span>
+        </label>
+      </template>
+    </div>
+
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading program list...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <template x-if="filteredPrograms.length === 0 && !loading && !error">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p class="mb-4">No programs match the selected program type.</p>
+
+        <button type="button" @click="reset()" class="btn btn-quaternary">Reset</button>
+      </div>
+    </template>
+
+    <table class="text-sm w-full" x-show="filteredPrograms.length > 0 && !error && !loading">
+      <thead x-show="!filters.query">
+        <tr class="border-b border-b-gray-300 bg-gray-100">
+          <td colspan="11" class="py-2 px-4 relative"
+            >* click an icon above to filter the list
+            <button
+              type="button"
+              @click="reset()"
+              x-show="filters.type !== ''"
+              class="absolute top-0 right-0 flex items-center gap-2 h-full px-4 hover:bg-gray-200 transition-colors"
+            >
+              <Icon name="close" class="size-5" />
+              Reset filter</button
+            >
+          </td>
+        </tr>
+      </thead>
+      <tbody class="scroll-m-28">
+        <template x-for="program in filteredPrograms">
+          <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28">
+            <td class="px-4 py-2" :class="program.is_child ? 'pl-8' : ''">
+              <a
+                x-text="program.program_name"
+                class="text-primary-800 hover:underline mr-2"
+                :href="getProgramURL(program)"></a>
+
+              <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                <template x-for="degree in getProgramDegrees(program)">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </td>
+
+            <template x-for="[key, type] in Object.entries(types)">
+              <td class="w-8">
+                <button
+                  x-data
+                  @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                  x-show="hasType(program, key)"
+                  x-text="type.key"
+                  class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                  :style="`background-color: ${type.color}`"></button>
+              </td>
+            </template>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</WithoutHero>
