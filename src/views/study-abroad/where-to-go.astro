@@ -1,0 +1,98 @@
+---
+import TabbedDialog from "../../components/tabbed-dialog.astro";
+
+const items = [
+  {
+    name: "Africa",
+    preview: "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/africa.jpg",
+    text: "Engage in a program that fosters spiritual formation alongside academic courses. Sharpen your world view as a whole. Live with Ugandan families. Examine the historical development of Christianity, while working alongside impactful groups at one of the world’s largest mission centers. Gaze at the renowned wildlife and encounter the real Africa. Experience life through research, worship and service, as you submerge yourself into a new society and gain a new perspective in a third world country.",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/south-america-continent.png",
+  },
+  {
+    name: "Asia",
+    preview: "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/asia.jpg",
+    text: "Take an educational excursion to Asia! Study in the bustling city of Seoul, South Korea studying at Korea University. . Take classes with Korean and international students and travel to various location around South Korea, such as Jeju Island and Busan. Learn a wide range of disciplines and integrate your studies with international field experiences to prepare you for global career opportunities.",
+    image: "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/asia-continent.png",
+  },
+  {
+    name: "Europe",
+    preview: "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/europe.jpg",
+    text: "With several different programs to choose from, Messiah University can send you into the many different cultures of Europe. Our off-campus programs will place you in fascinating places like France, Lithuania, Spain, Italy and more! Take advantage of travel to other nearby countries. Room with international students. Taste the delicious foods unique to each culture. While studying in Europe, the opportunities are endless. From strengthening your French skills in Paris, to exploring the landscape of pre-modern Italy, you can choose the program that best fits your academic needs while exploring your passions and interests.",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/europe-continent.png",
+  },
+  {
+    name: "North America",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/north-america.jpg",
+    text: "With such a diverse continent, our North American programs give students the ability to study and serve in areas such as the United States, Mexico and Central America. Head to Panama with AROMA (A Revolution of Missional Athletes) and further God’s kingdom by combining your gifts and passions for sports. Study public policy in Washington, D.C. while strengthening your dialogue on prominent domestic and international issues. Create and market music on a tour around the country with Contemporary Music Center in Nashville. The options extend as far as New York to Oregon, and down to Central America--the choice is yours!",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/north-america-continent.png",
+  },
+  {
+    name: "Central and South America",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/south-america.jpg",
+    text: "Enhance your Spanish skills by submerging yourself in Ecuadorian culture. Participate in international missions in the Dominican Republic. Take a course in global missions and expand your faith perspective to new horizons. Partner with local community leaders in Panama to work towards gaining access to clean water, invest in spiritual development. Find yourself gazing at the Andes Mountains or exploring the Pacific Ocean. Wherever you go, you’ll experience the culture’s connection to the physical and spiritual environment.",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/south-america-continent.png",
+  },
+  {
+    name: "South Pacific",
+    preview:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/SouthPacific2.jpg",
+    text: "The university culture in the South Pacific offers strong research-based academics, many nature–related science programs, and a vibrant campus lifestyle. Experience a beautiful, walkable, colorful city center full of cafes, restaurants, bars, boutiques, shopping centers, and entertainment venues that cater specifically to the college-aged community. And don’t forget beautiful beaches, rolling hills, and some of the country’s best hiking, camping, skiing, and surfing!",
+    image:
+      "https://www.messiah.edu/site/custom_scripts/styles/img/study-abroad/australia-continent.png",
+  },
+];
+---
+
+<section class="bg-[url(/patterns/pattern-bg.png)] py-24 relative">
+  <div class="wrapper" x-data="{ selected: null }">
+    <h2 class="h2 text-primary-800 text-center">Where in the world will you go?</h2>
+
+    <ul class="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto mt-12">
+      {
+        items.map((item, index) => (
+          <li>
+            <button
+              @click={`selected = 'index-${index}'`}
+              type="button"
+              class="group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
+            >
+              <img
+                src={item.preview}
+                alt=""
+                class="mb-2 rounded-full group-hover:opacity-75 border-4 border-white transition-opacity"
+              />
+              {item.name}
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+
+    <TabbedDialog tabs={items} class="bg-black/75">
+      {
+        items.map((item, index) => (
+          <div
+            id={`tabbed-dialog-tabpanel-${index}`}
+            role="tabpanel"
+            x-show={`selected === 'index-${index}'`}
+            aria-labelledby={`tabbed-dialog-tab-${index}`}
+            class="flex gap-12 max-w-5xl mx-auto items-start mt-12"
+          >
+            <img src={item.image} alt={item.name} class="w-52 hidden md:block" />
+
+            <div>
+              <h3 class="text-3xl mb-4">{item.name}</h3>
+              <p class="paragraph">{item.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </TabbedDialog>
+  </div>
+</section>

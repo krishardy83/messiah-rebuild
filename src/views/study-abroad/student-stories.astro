@@ -1,0 +1,309 @@
+---
+import Icon from "../../components/icon.astro";
+
+const markers = [
+  {
+    name: "Abigail Lindquist",
+    year: "2018",
+    major: "Human Development and Family Sciences ",
+    hometown: "Mechanicsburg, PA",
+    programlocation: "Malaysia, Borneo and Singapore Cross-Cultural",
+    overview:
+      "I was able to gain a better understanding of cultures and ecosystems, and grow in my own faith through understanding and learning about Islam. We got to go on night walks, bird watching, canopy walks, snorkeling, hiking, boating, and innertubing all swirled together into a three week class! Even experiencing church in a movie theater! Realizing that God has never left me and follows me wherever I go is such a humbling thing and makes me appreciate so much. It was a LOT to pack in: lots of flights, coffee, curry, pineapple tarts, and lots of lasting friendships that are so meaningful. ",
+    image: "https://www.messiah.edu/images/abby_1.jpg",
+    x: "80.5%",
+    y: "52.5%"
+  },
+  {
+    name: "Alicia Fleming",
+    year: "2018",
+    major: "English; Spanish minor",
+    hometown: "Hanover, PA",
+    programlocation: "University of Granada, Spain",
+    overview:
+      '"I am so grateful that Messiah decided to partner with Granada for the study abroad program in Spain. Granada is a beautiful city that is full of culture. It is not as much of a travel destination as larger cities, such as Madrid and Barcelona, so I feel I am able to have a more authentic Spanish experience."',
+    image: "https://www.messiah.edu/images/Alicia_Fleming_1.jpg",
+    x: "45%",
+    y: "24.5%"
+  },
+  {
+    name: "Andrew Russell",
+    year: "2017",
+    major: "Biology",
+    hometown: "West Chester, PA",
+    programlocation: "Messiah's New Zealand Cross-Cultural Course",
+    overview:
+      '"It was an amazing trip! We studied the ecology of the north island in NZ as well as the Maori culture. Here is a picture from the Tongariro Alpine Crossing, a trek we took last week! I am bringing back to Messiah a newfound wonder of God\'s creation, as I, along with the rest of the group, was in awe of His work over and over again!"',
+    image: "https://www.messiah.edu/images/Andrew_Russell_1.jpg",
+    x: "96%",
+    y: "88%"
+  },
+  {
+    name: "Daniel Jessen",
+    year: "2017",
+    major: "Film and Media Arts",
+    hometown: "Annadale, VA",
+    programlocation: "Los Angeles Film Studies Center ",
+    overview:
+      "\"You never know who you're going to meet. Keep in touch with your new friends because it's all about who you know.\"\r\n",
+    image: "https://www.messiah.edu/images/Danielle_Jessen.jpg",
+    x: "8%",
+    y: "26%"
+  },
+  {
+    name: "Ethan Wong",
+    year: "2020",
+    major: "Computer Information Science",
+    hometown: "Kuala Lumpur, Malaysia",
+    programlocation: "Oxford University, United Kingdom",
+    overview:
+      "\u201cMy study abroad program provided me with a once in a lifetime experience where I am working closely with professors and other students that represent some of the top in the world. In addition, the British education system has given me a whole new perspective on learning, and that there is no \u201cright way,\u201d just a different way. Aside from my studies, I can fly to another country within Europe for as low as $20. There is always something to do and your time abroad will be over before you know it!\u201d",
+    image: "https://www.messiah.edu/images/ethan_wong.jpg",
+    x: "81%",
+    y: "54%"
+  },
+  {
+    name: "Gabby Kurtz",
+    year: "2018",
+    major: "Public Relations and Business Administration Minor",
+    hometown: "Elverson, PA",
+    programlocation:
+      "International Business Institute- a ten week program that includes visits in the major political and economic centers of Russia, The European Union, India , Dubai and China. ",
+    overview:
+      "This has been a pivotal point in my college career, as I now feel more than prepared to enter my search for a job and pursue passions which have been revealed to me through my time abroad. Exposing yourself to new cultures not only teaches you about this grand world we live in, but also teaches you a lot about the kind of person you are and who you want to be. ",
+    image: "https://www.messiah.edu/images/gabby_1.jpg",
+    x: "72%",
+    y: "11%"
+  },
+  {
+    name: "Hannah Snavely",
+    year: "2018",
+    major: "Music & Spanish",
+    hometown: "Manheim, PA",
+    programlocation: "Valparaiso, Chile",
+    overview:
+      "My time abroad has brought me face-to-face with both the beauty and the challenges this world has to offer. I left Messiah with the goal of becoming more independent and confident, but instead I am learning every day to depend more on God. Living in a new country has made me realize how valuable our on-campus learning is: my faith, which was developed in Grantham, PA, now helps me withstand the tests that come with living in the world. What God has taught me about me identity in Him, and what Chile has taught me about living and loving to the fullest, are lessons that I will carry back to campus and with me the rest of my life.",
+    image: "https://www.messiah.edu/images/hannah_snavely_1.jpg",
+    x: "23.5%",
+    y: "83%"
+  },
+  {
+    name: "Kaitlyn Hoff",
+    year: "2018",
+    major: "Applied Health Science",
+    hometown: "Indiana, PA",
+    programlocation: "Italy Cross-Cultural (Rome, Florence, Turin and Milan) ",
+    overview:
+      '"Being a part of the Messiah community has prepared me for this experience. We are called to be culturally sensitive on our diverse campus and because of that it carries to our lives off campus. Everything I have experienced here has helped me gain a broader understanding and respect for the Italian people, their culture and fascinating history that this country embodies."',
+    image: "https://www.messiah.edu/images/Kaitlyn_Hoff_1.jpg",
+    x: "51%",
+    y: "25%"
+  },
+  {
+    name: "Kelly Gordon",
+    year: "2017",
+    major: "Public Relations",
+    hometown: "Pittsburgh, PA",
+    programlocation: "Contemporary Music Center in Nashville, TN",
+    overview:
+      '"I am thankful that my mentors at Messiah encouraged me to follow my dreams and take a chance to study somewhere outside of my comfort zone. Studying at the Contemporary Music Center in Nashville gave me a whole new way of thinking about learning. I was thrown into the music industry and learned from my peers and mentors rather than just textbooks or in a classroom setting. It has given me the confidence to take more risks and step outside of my comfort zone both personally and professionally."',
+    image: "https://www.messiah.edu/images/KELLY_GORDAN_NASHVILLE___2_1.jpg",
+    x: "18%",
+    y: "30%"
+  },
+  {
+    name: "Madi Morris",
+    year: "2019",
+    major: "Psychology",
+    hometown: "Lititz, PA",
+    programlocation: "Messiah Women\u2019s Lacrosse trip to Kenya",
+    overview:
+      "\u201cOur trip to Kenya was an incredible experience and showed me the importance of relationships across the globe. We had the opportunity to teach lacrosse and incorporate the sport into schools across Kenya, while also coaching the Kenyan national team! Their joyful spirits, hospitality and gratitude were contagious, and they allowed us to show the love of Christ alongside them and use our mutual love for lacrosse to grow relationships. Although we travelled to Kenya to teach, I feel we learned even more from the amazing people there than we could\u2019ve ever imagined.\u201d",
+    image: "https://www.messiah.edu/images/madi_morris.jpg",
+    x: "59%",
+    y: "54%"
+  },
+  {
+    name: "Natalie Toburen",
+    year: "2019",
+    major: "Nursing",
+    hometown: "Mechanicsburg, PA",
+    programlocation: "J-term Nursing Senior Practicum to Chiang Mai, Thailand",
+    overview:
+      "\u201cOur group's time in Thailand was a perfect blend of hands-on clinical experience, community health assessments, and exploring the breathtaking and culturally-rich country. My favorite parts of the trip were adventuring to the northern mountains of Chiang Rai, Thai massages, trying new foods (fried crickets & bamboo worms), shopping markets, the elephant camp, and hanging out with our sweet Thai friends!\u201d",
+    image: "https://www.messiah.edu/images/Natalie_Toburen.jpg",
+    x: "80%",
+    y: "45%"
+  },
+  {
+    name: "Rebecca Kriner",
+    year: "17",
+    major: "Nursing",
+    hometown: "Muncy, PA",
+    programlocation: "Messiah's Senior Practicum in Zambia",
+    overview:
+      '"The purpose of this trip was to learn about the cultural and lifestyle practices of the people in Zambia, while learning and assisting the nurses and doctors in Macha Mission Hospital. The picture I have chosen represents one central theme of my entire cross-cultural experience: adventure. Adventure into the mysterious, into excitement, into fear, into the uncomfortable, and into the heart of God. I hope to come back to Messiah with a changed heart that is more aware of the adventure that is all around me. I hope to never take this life I have for granted. I pray to be His hands and feet - to make a difference, to smile more, and above all, to love the people around me, and to love this life - my greatest adventure."',
+    image: "https://www.messiah.edu/images/RebeccaKriner_1.jpg",
+    x: "55%",
+    y: "67%"
+  },
+  {
+    name: "Sam Boden",
+    year: "2017",
+    major: "Sustainability Studies",
+    hometown: "Toronto, Canada",
+    programlocation: "Parliamentary Internship in London, UK",
+    overview:
+      '"I took a UK politics class last spring that provided me with a really thorough knowledge of the complexities of the British parliamentary system (thanks, Dr. Harles). My #MessiahCollege education has also taught me to think hard and to critically assess situations, which is absolutely necessary when working with MPs (Members of Parliament) and constituents and examining the impacts of complex legislation."',
+    image: "https://www.messiah.edu/images/sam_boden_1.jpg",
+    x: "46%",
+    y: "16%"
+  },
+  {
+    name: "Seth Williams",
+    year: "2019",
+    major: "Applied health science",
+    hometown: " Scranton, PA",
+    programlocation: " LCC International University, Klaipeda, Lithuania",
+    overview:
+      '"Living and interacting with students from more than 30 different countries is a rare opportunity, but Messiah and the Intercultural Office make it so easy--so why not? I\'ll be sad to leave eastern Europe, but glad to see my Messiah family again!" ',
+    image: "https://www.messiah.edu/images/Seth_Williams_1_1.jpg",
+    x: "53.5%",
+    y: "15%"
+  },
+  {
+    name: "Stephanie Bricker",
+    year: "2018",
+    major: "Public Relations major and Music and Worship minor",
+    hometown: "Chambersburg, PA",
+    programlocation: "Spain Cross-Cultural to Barcelona, Granada and Madrid",
+    overview:
+      "Messiah has a theme of being culturally sensitive as a part of the greater community. That\u2019s great to talk about and discuss, but coming on a trip like this, across the globe, really tests your ability to put that talk to practice. With that, I really hope to bring back a bigger and broader sense of the world and its diverse cultures\u2014especially within the Church. ",
+    image: "https://www.messiah.edu/images/Stephanie_Bricker___1.jpg",
+    x: "46.5%",
+    y: "25.5%"
+  },
+];
+---
+
+<section class="bg-primary-800 py-24 text-center">
+  <div class="wrapper" x-data="{ open: false, active: null }">
+    <h2 class="h2 text-white">Student stories</h2>
+    <p class="paragraph text-white mb-8">
+      Spend three weeks in Zambia studying health care in the developing world. Spend spring break
+      serving in sports ministry in Colombia. Study in Italy for a semester honing your artistic
+      skills. Whether it's Spain, New Zealand or England, you see yourself through the eyes of
+      others and understand yourself in new ways.
+    </p>
+
+    <div class="relative inline-block">
+      <img src="/images/worldmap.png" alt="Map of the world" class="h-auto block max-w-full" />
+
+        {
+          markers.map((marker, index) => (
+            <button
+              type="button"
+              @click={`open = true; active = 'marker-${index}';`}
+              class="absolute hover:text-tertiary-300 text-white"
+              style={`left: ${marker.x}; top: ${marker.y};`}
+            >
+              <Icon name="marker" class="size-6 md:size-8 lg:size-10 absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2" />
+            </button>
+          ))
+        }
+    </div>
+
+    <template x-teleport="body">
+      <div
+        x-show="open"
+        style="display: none"
+        x-on:keydown.escape.prevent.stop="open = false"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="dialog"
+      >
+        <div
+          x-show="open"
+          @click="open = false"
+          x-transition.opacity.duration.300
+          class="fixed inset-0 bg-primary-800/80 z-50"
+        ></div>
+  
+        <div
+          x-show="open"
+          x-transition.opacity.duration.300
+          x-trap.noscroll.inert="open"
+          class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+        >
+          <div class="flex justify-end p-4">
+            <button type="button" @click="open = false" aria-label="Close dialog">
+              <Icon name="close" class="size-10" />
+            </button>
+          </div>
+  
+          {
+            markers.map((marker, index) => (
+              <template id={`marker-${index}`} x-if="$el.getAttribute('id') === active">
+                <div>
+                  <img src={marker.image} alt={marker.name} class="w-full mb-4" width="736" height="280" />
+                  <div class="py-4 px-8">
+                    <h3
+                      class="h3 text-primary-800"
+                      :id="$id('modal-title')"
+                    >
+                      {marker.name}
+                    </h3>
+  
+                    <h4 class="font-title uppercase font-bold text-xl mb-1 text-primary-800">Graduation year</h4>
+                    <p class="mb-4">{marker.year}</p>
+
+                    <h4 class="font-title uppercase font-bold text-xl mb-1 text-primary-800">Major</h4>
+                    <p class="mb-4">{marker.major}</p>
+
+                    <h4 class="font-title uppercase font-bold text-xl mb-1 text-primary-800">Hometown</h4>
+                    <p class="mb-4">{marker.hometown}</p>
+  
+                    <h4 class="font-title uppercase font-bold text-xl mb-1 text-primary-800">Travel location and program</h4>
+                    <p class="mb-4">{marker.programlocation}</p>
+  
+                    <h4 class="font-title uppercase font-bold text-xl mb-1 text-primary-800">Messiah shoutout</h4>
+                    <p>{marker.overview}</p>
+                  </div>
+                </div>
+              </template>
+            ))
+          }
+        </div>
+      </div>
+    </template>
+  </div>
+</section>
+
+<script is:inline>
+  function positionMarkers() {
+    const map = document.getElementById("map");
+    const markers = document.querySelectorAll(".map-marker");
+
+    const mapWidth = map.naturalWidth;
+    const mapHeight = map.naturalHeight;
+
+    if (mapWidth === 0 || mapHeight === 0) return; // Ensure image is loaded
+
+    markers.forEach(marker => {
+      const xPercent = parseFloat(marker.dataset.x);
+      const yPercent = parseFloat(marker.dataset.y);
+
+      const x = (xPercent / 100) * map.clientWidth;
+      const y = (yPercent / 100) * map.clientHeight;
+
+      marker.style.left = `${x}px`;
+      marker.style.top = `${y}px`;
+    });
+  }
+
+  // Recalculate on load and resize
+  window.addEventListener("load", positionMarkers);
+  window.addEventListener("resize", positionMarkers);
+</script>

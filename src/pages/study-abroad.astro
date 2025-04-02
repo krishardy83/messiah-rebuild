@@ -1,0 +1,24 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import BindYourHeart from "../views/study-abroad/bind-your-heart.astro";
+import ReadyToGo from "../views/study-abroad/ready-to-go.astro";
+import StudentStories from "../views/study-abroad/student-stories.astro";
+import WhereToGo from "../views/study-abroad/where-to-go.astro";
+---
+
+<SingleColumn
+  title="Make the world your classroom"
+  image="/images/abroad-bg.jpg"
+  mobileImage="/images/abroad-bg.jpg"
+  subtitle="Study Abroad Opportunities"
+  description="Study Abroad Opportunities"
+  analyticsKey="study-abroad"
+>
+  <BindYourHeart />
+
+  <StudentStories />
+
+  <WhereToGo />
+
+  <ReadyToGo />
+</SingleColumn>
