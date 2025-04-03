@@ -38,7 +38,7 @@ import WithoutHero from "../../layouts/without-hero.astro";
     that an image scaled to 400 x 285 fits nicely 2 across.
   </p>
 
-  <p>
+  <p class="mb-8">
     For a real-world example of this widget, visit the <a
       href="https://www.messiah.edu/collaboratory/">Collaboratory</a
     > homepage.
@@ -70,15 +70,11 @@ import WithoutHero from "../../layouts/without-hero.astro";
         <ImageHoverLink
           size="small"
           caption="Example image hover link"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           image={{
             src: "/images/image-hover-widget-example.jpg",
             alt: "Example image",
           }}
-          button={{
-            label: "Example Button Link Text",
-            href: "/",
-          }}
+          href="/"
         />
       ))
     }

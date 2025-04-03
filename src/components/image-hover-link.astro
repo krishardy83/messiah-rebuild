@@ -10,6 +10,7 @@ interface Props extends HTMLAttributes<"img"> {
     src: string;
     alt: string;
   };
+  href?: string;
   button?: {
     label: string;
     href: string;
@@ -21,64 +22,89 @@ const {
   size = "large",
   description,
   image,
+  href,
   button,
   class: className,
   ...props
 } = Astro.props;
 ---
 
-<figure
-  data-analytics="image-hover-link"
-  class={cn("@container relative not-prose group aspect-[4/3]", className)}
-  tabindex="0"
->
-  <img {...props} src={image.src} alt={image.alt} class="w-full h-full object-cover" />
-
-  <figcaption
-    class={cn(
-      "absolute left-0 top-0 duration-300 group-hover:w-full group-hover:h-full group-focus:w-full group-focus:h-full group-focus-within:w-full group-focus-within:h-full transition-all bg-primary-800/80 text-center group-hover:overflow-y-auto group-focus:overflow-y-auto group-focus-within:overflow-y-auto",
-      {
-        "group-hover:p-4 @md:group-hover:p-8 group-focus-within:p-4 @md:group-focus-within:p-8 h-12":
-          size === "large",
-        "group-hover:p-2 @xs:group-hover:p-4 group-focus-within:p-2 @xs:group-focus-within:p-4 h-11":
-          size === "small",
-      }
-    )}
-  >
-    <h4
-      class={cn("font-title font-bold uppercase mx-auto text-white py-2 leading-none", {
-        "text-lg px-4 @sm:text-2xl @sm:px-12": size === "large",
-        "@xs:text-lg px-4": size === "small",
-      })}
+{
+  description ? (
+    <figure
+      data-analytics="image-hover-link"
+      class={cn("@container relative not-prose group aspect-[4/3]", className)}
+      tabindex="0"
     >
-      {caption}
-    </h4>
+      <img {...props} src={image.src} alt={image.alt} class="w-full h-full object-cover" />
 
-    {
-      description ? (
-        <p
-          class={cn(
-            "text-white mb-4 border-t border-white pt-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100 transition-opacity",
-            {
-              "text-xs @sm:text-sm": size === "small",
-              "text-sm @sm:text-base": size === "large",
-            }
-          )}
+      <figcaption
+        class={cn(
+          "absolute left-0 top-0 duration-300 transition-all bg-primary-800/80 text-center group-hover:overflow-y-auto group-focus:overflow-y-auto group-focus-within:overflow-y-auto group-hover:w-full group-hover:h-full group-focus:w-full group-focus:h-full group-focus-within:w-full group-focus-within:h-full",
+          {
+            "group-hover:p-4 @md:group-hover:p-8 group-focus-within:p-4 @md:group-focus-within:p-8 h-12":
+              size === "large",
+            "group-hover:p-2 @xs:group-hover:p-4 group-focus-within:p-2 @xs:group-focus-within:p-4 h-11":
+              size === "small",
+          }
+        )}
+      >
+        <h4
+          class={cn("font-title font-bold uppercase mx-auto text-white py-2 leading-none", {
+            "text-lg px-4 @sm:text-2xl @sm:px-12": size === "large",
+            "@xs:text-lg px-4": size === "small",
+          })}
         >
-          {description}
-        </p>
-      ) : null
-    }
+          {caption}
+        </h4>
 
-    {
-      button ? (
-        <a
-          class="btn-quaternary h-auto py-2 @sm:py-0 px-2 @sm:h-12 @sm:w-max mx-auto opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100"
-          href={button.href}
-        >
-          {button.label}
-        </a>
-      ) : null
-    }
-  </figcaption>
-</figure>
+        {description ? (
+          <p
+            class={cn(
+              "text-white mb-4 border-t border-white pt-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100 transition-opacity",
+              {
+                "text-xs @sm:text-sm": size === "small",
+                "text-sm @sm:text-base": size === "large",
+              }
+            )}
+          >
+            {description}
+          </p>
+        ) : null}
+
+        {button ? (
+          <a
+            class="btn-quaternary h-auto py-2 @sm:py-0 px-2 @sm:h-12 @sm:w-max mx-auto opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-focus-within:opacity-100"
+            href={button.href}
+          >
+            {button.label}
+          </a>
+        ) : null}
+      </figcaption>
+    </figure>
+  ) : (
+    <a
+      data-analytics="image-hover-link block"
+      href={href}
+      class={cn("@container not-prose group relative aspect-[4/3]", className)}
+    >
+      <img
+        {...props}
+        src={image.src}
+        alt={image.alt}
+        class="w-full h-full object-cover group-hover:opacity-75 group-focus:opacity-75 transition-opacity"
+      />
+      <span
+        class={cn(
+          "absolute left-0 top-0 duration-300 transition-all bg-primary-800/80 font-title font-bold uppercase mx-auto text-white py-2 leading-none",
+          {
+            "text-lg px-4 @sm:text-2xl @sm:px-12": size === "large",
+            "@xs:text-lg px-4": size === "small",
+          }
+        )}
+      >
+        {caption}
+      </span>
+    </a>
+  )
+}
