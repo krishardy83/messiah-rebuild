@@ -44,6 +44,43 @@ import WithoutHero from "../../layouts/without-hero.astro";
     > homepage.
   </p>
 
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    {
+      new Array(2).fill(null).map(() => (
+        <ImageHoverLink
+          size="small"
+          caption="Example image hover link"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          image={{
+            src: "/images/image-hover-widget-example.jpg",
+            alt: "Example image",
+          }}
+          button={{
+            label: "Example Button Link Text",
+            href: "/",
+          }}
+          href="/"
+        />
+      ))
+    }
+  </div>
+  <h2 class="text-2xl font-bold mb-4">Example with no description/content added</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    {
+      new Array(2).fill(null).map(() => (
+        <ImageHoverLink
+          size="small"
+          caption="Example image hover link"
+          image={{
+            src: "/images/image-hover-widget-example.jpg",
+            alt: "Example image",
+          }}
+          href="/"
+        />
+      ))
+    }
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
     {
       new Array(6).fill(null).map(() => (
@@ -59,22 +96,6 @@ import WithoutHero from "../../layouts/without-hero.astro";
             label: "Example Button Link Text",
             href: "/",
           }}
-        />
-      ))
-    }
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    {
-      new Array(4).fill(null).map(() => (
-        <ImageHoverLink
-          size="small"
-          caption="Example image hover link"
-          image={{
-            src: "/images/image-hover-widget-example.jpg",
-            alt: "Example image",
-          }}
-          href="/"
         />
       ))
     }
