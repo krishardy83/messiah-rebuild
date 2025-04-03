@@ -53,14 +53,14 @@ const items = [
   <div class="wrapper" x-data="{ selected: null }">
     <h2 class="h2 text-primary-800 text-center">Where in the world will you go?</h2>
 
-    <ul class="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto mt-12">
+    <ul class="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl mx-auto mt-12 mb-24">
       {
         items.map((item, index) => (
           <li>
             <button
               @click={`selected = 'index-${index}'`}
               type="button"
-              class="group font-title w-full font-bold text-center text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
+              class="group font-title w-full text-center font-bold text-xl sm:text-2xl md:text-3xl flex flex-col items-center"
             >
               <img
                 src={item.preview}
@@ -74,7 +74,19 @@ const items = [
       }
     </ul>
 
-    <TabbedDialog tabs={items} class="bg-black/75">
+    <div class="text-center">
+      <h2 class="h2 text-primary-800">Ready to go?</h2>
+      <p class="paragraph mb-4">
+        Are you intrigued and ready to learn more? Do you already know exactly where you want to go?
+        Messiah's Agape Center for Local and Global Engagment is ready to help you choose the
+        perfect program so you can see the world in a whole new light. Bon Voyage!
+      </p>
+      <a href="https://www.messiah.edu/info/24154/semester_long_programs" class="btn btn-primary"
+        >Learn more about our programs</a
+      >
+    </div>
+
+    <TabbedDialog tabs={items} class="bg-black/85">
       {
         items.map((item, index) => (
           <div
