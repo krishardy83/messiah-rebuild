@@ -81,6 +81,24 @@ import WithoutHero from "../../layouts/without-hero.astro";
     }
   </div>
 
+  <h2 class="text-2xl font-bold mb-4">Example with no link added</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    {
+      new Array(2).fill(null).map(() => (
+        <ImageHoverLink
+          size="small"
+          caption="Example image hover link"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          image={{
+            src: "/images/image-hover-widget-example.jpg",
+            alt: "Example image",
+          }}
+          
+        />
+      ))
+    }
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
     {
       new Array(6).fill(null).map(() => (
