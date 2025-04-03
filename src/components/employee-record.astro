@@ -33,7 +33,7 @@ const {
 <article
   data-analytics="employee-record"
   {...props}
-  class={cn("@container not-prose border border-gray-300 bg-gray-100 px-6 py-4", className, {
+  class={cn("@container border border-gray-300 bg-gray-100 px-6 py-4", className, {
     "!mb-12": spacingBottom,
   })}
 >
@@ -97,7 +97,7 @@ const {
 
       {
         Astro.slots.has("default") ? (
-          <div class="text-sm">
+          <div class="text-sm rich-text">
             <slot />
           </div>
         ) : null
