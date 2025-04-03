@@ -21,7 +21,9 @@ const { tabs, class: className, ...props } = Astro.props;
     selected: null,
 
     init() {
-      this.$nextTick(() => this.select(this.$id('tab', 1)));
+      const hash = location.hash.slice(1);
+
+      this.$nextTick(() => this.select(hash || 'overview'));
     },
 
     select(id) {
@@ -50,12 +52,7 @@ const { tabs, class: className, ...props } = Astro.props;
     isSelected(id) {
       return this.selected === id;
     },
-
-    whichChild(el, parent) {
-      return Array.from(parent.children).indexOf(el) + 1;
-    }
   }"
-  x-id="['tab']"
   {...props}
 >
   <ul
@@ -70,11 +67,11 @@ const { tabs, class: className, ...props } = Astro.props;
   {tabs.map((tab) => (
     <li>
       <button
-        @click="select($el.id)"
-        @focus="select($el.id)"
-        :aria-selected="isSelected($el.id)"
-        :tabindex="isSelected($el.id) ? 0 : -1"
-        :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+        @click={`select('${tab.id}')`}
+        @focus={`select('${tab.id}')`}
+        :aria-selected={`isSelected('${tab.id}')`}
+        :tabindex={`isSelected('${tab.id}') ? 0 : -1`}
+        id={tab.id}
         type="button"
         role="tab"
         class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
@@ -90,8 +87,8 @@ const { tabs, class: className, ...props } = Astro.props;
       <div class="md:w-2/3 py-8" x-ref="panels">
         {tabs.map((tab) => (
           <div
-            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+            x-show={`isSelected('${tab.id}')`}
+            aria-labelledby={tab.id}
             role="tabpanel"
           >
             <tab.Component />

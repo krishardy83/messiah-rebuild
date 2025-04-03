@@ -21,7 +21,9 @@ const { tabs, class: className, ...props } = Astro.props;
     selected: null,
 
     init() {
-      this.$nextTick(() => this.select(this.$id('tab', 1)));
+      const hash = location.hash.slice(1);
+
+      this.$nextTick(() => this.select(hash || 'overview'));
     },
 
     select(id) {
@@ -50,12 +52,7 @@ const { tabs, class: className, ...props } = Astro.props;
     isSelected(id) {
       return this.selected === id;
     },
-
-    whichChild(el, parent) {
-      return Array.from(parent.children).indexOf(el) + 1;
-    }
   }"
-  x-id="['tab']"
   {...props}
 >
   <ul
@@ -70,11 +67,11 @@ const { tabs, class: className, ...props } = Astro.props;
   {tabs.map((tab) => (
     <li>
       <button
-        @click="select($el.id)"
-        @focus="select($el.id)"
-        :aria-selected="isSelected($el.id)"
-        :tabindex="isSelected($el.id) ? 0 : -1"
-        :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
+        @click={`select('${tab.id}')`}
+        @focus={`select('${tab.id}')`}
+        :aria-selected={`isSelected('${tab.id}')`}
+        :tabindex={`isSelected('${tab.id}') ? 0 : -1`}
+        id={tab.id}
         type="button"
         role="tab"
         class="text-primary-800 font-title font-bold link uppercase text-lg py-2 md:py-4 border-y-4 border-transparent aria-selected:border-b-tertiary-400 aria-selected:text-tertiary-400"
@@ -91,8 +88,8 @@ const { tabs, class: className, ...props } = Astro.props;
         {tabs.map((tab) => (
           <div
             role="tabpanel"
-            x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
-            :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
+            x-show={`isSelected('${tab.id}')`}
+            aria-labelledby={tab.id}
           >
             <tab.Component />
           </div>
@@ -102,15 +99,6 @@ const { tabs, class: className, ...props } = Astro.props;
       <aside class="md:border-l md:border-gray-200 md:ml-8 md:pl-8 md:max-w-xs w-full mb-8">
         <div class="md:sticky md:top-24">
           <nav class="space-y-2 mt-8">
-            <!--
-            <a
-              href="https://www.messiah.edu/info/20437/business_and_leadership_mba_ma"
-              class="flex flex-col bg-tertiary-300 transition-opacity hover:opacity-75 bg-[url(/images/view-homepage-btn-bg.png)] bg-no-repeat bg-cover text-white p-4 font-title"
-              ><span class="text-sm uppercase">View homepage</span><span
-                class="font-bold text-xl uppercase leading-none">Graduate program in Business and Leadership</span
-              ></a
-            >
-               -->
             <a
               href="https://www.messiah.edu/info/20437/business_and_leadership_mba_ma"
               class="flex flex-col bg-primary-800 transition-opacity hover:opacity-75 text-white p-4 font-title"
