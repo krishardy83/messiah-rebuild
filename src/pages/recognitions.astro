@@ -20,13 +20,37 @@ import SingleColumn from "../layouts/single-column.astro";
         fetch('https://cascade-prod.messiah.edu/rankings/_data/rankings-json.json')
           .then((response) => response.json())
           .then((data) => {
-            const categories = ['Academics and Value', 'Undergraduate Programs', 'Graduate Programs', 'Athletics', 'Service and community', 'Sustainability'];
+            const categories = [
+              {
+                name: 'Academics and Value',
+                slug: 'academics-and-value',
+              },
+              {
+                name: 'Undergraduate Programs',
+                slug: 'undergraduate-programs',
+              },
+              {
+                name: 'Graduate Programs',
+                slug: 'graduate-programs',
+              },
+              {
+                name: 'Athletics',
+                slug: 'athletics',
+              },
+              {
+                name: 'Service and community',
+                slug: 'service-community',
+              },
+              {
+                name: 'Sustainability',
+                slug: 'sustainability',
+              }
+            ];
 
             this.categories = categories.map((category) => ({
-              name: category,
-              slug: category.trim().toLowerCase().replace(/ /g, '-'),
+              ...category,
               recognitions: data.listing_data.filter((recognition) => {
-                return recognition.category.trim() === category && recognition.live === 'yes';
+                return recognition.category === category.slug && recognition.live === 'yes';
               })
             }));
             this.loading = false;
@@ -92,15 +116,22 @@ import SingleColumn from "../layouts/single-column.astro";
                         x-show="recognition.link"
                         :href="recognition.link"
                         x-text="recognition.entry_name"
-                        class="after:absolute after:inset-0"></a>
+                        class="after:absolute after:inset-0 after:z-10"></a>
                       <span x-text="recognition.entry_name" x-show="!recognition.link"></span>
                     </h3>
 
                     <p x-text="recognition.description" class="mb-4 text-sm"></p>
                   </header>
 
-                  <div class="bg-white border-t border-gray-300 p-4">
-                    <img :src="recognition.image" :alt="recognition.entry_name" class="w-full" />
+                  <div
+                    :class="recognition.image_type === 'Logo or icon' ? 'p-4' : ''"
+                    class="bg-white border-t border-gray-300"
+                  >
+                    <img
+                      :src="recognition.image"
+                      :alt="recognition.entry_name"
+                      :class="recognition.image_type === 'Logo or icon' ? 'mx-auto max-h-52' : 'w-full'"
+                    />
                   </div>
 
                   <template x-if="recognition.link">
