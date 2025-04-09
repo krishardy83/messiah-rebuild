@@ -166,7 +166,7 @@
   }
 
   .rich-text {
-    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-h4:text-xl prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8;
+    @apply prose max-w-none prose-headings:mb-2 prose-headings:mt-8 prose-headings:font-title prose-headings:text-primary-800 prose-headings:first-of-type:mt-0 prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h3:text-tertiary-500 prose-h4:text-xl prose-p:first-of-type:mt-0 prose-a:transition-colors hover:prose-a:text-tertiary-400 focus-visible:prose-a:text-tertiary-400 prose-li:marker:text-gray-500 prose-hr:my-8 prose-th:bg-primary-800 prose-th:text-white prose-table:border prose-table:border-gray-300 prose-td:px-4 prose-th:px-4 prose-td:border-l prose-td:border-l-gray-300 even:prose-tr:bg-gray-100 prose-th:font-sans prose-th:py-2 prose-td:py-2;
   }
 
   .wrapper-sm {

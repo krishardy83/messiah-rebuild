@@ -1,0 +1,69 @@
+---
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Table example"
+  description="Example of a table"
+  analyticsKey="web-services/quote-example"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Quote Widget", href: "/" },
+  ]}
+>
+  <div class="rich-text !mb-12">
+    <table>
+      <thead>
+        <tr>
+          <th>Tarifas y Cobros (Año Académico 2024-25)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tarifa básica</td>
+          <td>$41,300</td>
+        </tr>
+        <tr>
+          <td
+            >Cobros básicos (monto mínimo, cobros del Consejo de Estudiantes y servicios
+            estudiantiles)</td
+          >
+          <td>$940</td>
+        </tr>
+        <tr>
+          <td>Alojamiento (ocupación doble)</td>
+          <td>$6,590</td>
+        </tr>
+        <tr> <td>Comidas (costos máximos)</td><td>$5,800</td></tr>
+        <tr> <td>Total tarifas, cobros, alojamiento y comidas</td><td>$54,630</td></tr>
+        <tr>
+          <td
+            >Menos asistencia financiera (asistencia promedio para un estudiante de primer año en
+            2023-24, excluyendo PLUS y otros préstamos)</td
+          >
+          <td>($33,405)</td>
+        </tr>
+        <tr>
+          <td>Promedio de gastos totales</td>
+          <td><strong>$21,225</strong></td>
+        </tr></tbody
+      >
+    </table>
+  </div>
+</WithoutHero>
