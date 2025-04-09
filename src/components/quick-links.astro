@@ -25,8 +25,8 @@ const { title, variant = "link", links, class: className, ...props } = Astro.pro
   <ul class={cn(variant === "link" ? "space-y-1" : "space-y-2")}>
     {
       links.map((link) => (
-        <li class="flex items-center gap-2">
-          {variant === "link" ? <Icon name="chevron-right" class="size-4" /> : null}
+        <li class="flex gap-2">
+          {variant === "link" ? <Icon name="chevron-right" class="size-4 shrink-0 mt-0.5" /> : null}
           <a
             href={link.href}
             class:list={[
