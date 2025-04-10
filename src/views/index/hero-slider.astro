@@ -1,124 +1,118 @@
 ---
-interface Props {
-  randomStart?: boolean;
-}
+import type { ComponentProps } from "astro/types";
+import Icon from "../../components/icon.astro";
 
-const slides = [
-  {
-    title: "30+ graduate degree programs and certificates",
-    description:
-      "Various program formats available to fit the needs of working adults.",
-    button: "Become a student",
-    image: "/images/homepage/become_a_student_grad.jpg",
-    mobileImage: "/images/homepage/become_a_student_grad_mobile.jpg",
-    links: [
-      {
-        href: "https://www.messiah.edu/info/22860/degrees_and_certificates",
-        label: "View grad programs",
-      },
-    ],
-    type: 'graduate',
-  },
-  {
-    title: "Join us for a fall open house!",
-    description:
-      "Come visit to explore our academic programs, experience campus culture, take a campus tour and see what it means to be part of the Messiah community. And, of course, lunch is on us!",
-    button: "Become a student",
-    image: "/images/homepage/students_on_sidewalk.jpg",
-    mobileImage: "/images/homepage/students_on_sidewalk_mobile.jpg",
-    links: [
-      {
-        href: "https://www.messiah.edu/openhouse?element=homepage-carousel",
-        label: "Learn more",
-      },
-    ],
-    type: 'undergraduate',
-  },
-  {
-    title: "Academic Excellence",
-    description: "Experience the academic distinction of a nationally ranked Christian college",
-    image: "/images/homepage/hero_academics.jpg",
-    mobileImage: "/images/homepage/hero_academics_mobile.jpg",
-    button: "Academic excellence",
-    links: [
-      {
-        href: "https://www.messiah.edu/majors-minors-programs",
-        label: "Undergrad programs",
-      },
-      {
-        href: "http://www.messiah.edu/info/20436/degrees",
-        label: "Graduate programs",
-      },
-    ],
-  },
-  {
-    title: "Careers and Internships",
-    description: "Explore your calling — from your first year through graduation",
-    button: "Careers & internships",
-    image: "/images/homepage/career_hero.jpg",
-    mobileImage: "/images/homepage/career_hero_mobile.jpg",
-    links: [
-      {
-        href: "https://www.messiah.edu/career-outcomes",
-        label: "Undergrad outcomes",
-      },
-      {
-        href: "https://www.messiah.edu/grad-careers",
-        label: "Graduate outcomes",
-      },
-    ],
-  },
-  {
-    title: "Study Abroad",
-    description: "Where in the world will you go?",
-    button: "Study abroad",
-    image: "/images/homepage/travel_hero.jpg",
-    mobileImage: "/images/homepage/travel_hero_mobile.jpg",
-    links: [
-      {
-        href: "https://www.messiah.edu/study-abroad",
-        label: "Explore undergrad opportunities",
-      },
-    ],
-  },
+const nextSteps: {
+  name: string;
+  href: string;
+  type: string;
+  icon: ComponentProps<typeof Icon>["name"];
+}[] = [
+  { icon: "book", name: "Academic programs", href: "/", type: "undergraduate" },
+  { icon: "marker", name: "Visit campus", href: "/", type: "undergraduate" },
+  { icon: "edit", name: "Apply", href: "/", type: "undergraduate" },
+  { icon: "chevron-right", name: "Deposit", href: "/", type: "undergraduate" },
+  { icon: "computer", name: "Request info", href: "/", type: "both" },
+  { icon: "dollar", name: "Tuition & aid", href: "/", type: "undergraduate" },
+  { icon: "pencil", name: "Apply online", href: "/", type: "graduate" },
+  { icon: "book", name: "Degrees & certificates", href: "/", type: "graduate" },
+  { icon: "dollar", name: "Cost & aid", href: "/", type: "graduate" },
+  { icon: "check", name: "Next steps", href: "/", type: "graduate" },
 ];
-
-const { randomStart  = false } = Astro.props;
-// const studentType = Astro.cookies.get("mc_student_type")?.value || "undergraduate";
-const studentType = "undergraduate";
-
-function getSlidesByCookie() {
-  return slides.filter((slide) => {
-    if (!slide.type) {
-      return true;
-    }
-
-    return slide.type === studentType;
-  });
-}
-
-function getFirstSlide() {
-  if (randomStart) {
-    // return Math.floor(Math.random() * getSlidesByCookie().length) + 1;
-    return Math.floor(Math.random() * 4) + 1;
-  }
-
-  return 1;
-}
 ---
 
 <div
-  class="relative flex flex-col-reverse -mt-48"
-  data-analytics="hero"
   x-data={`{
     selected: null,
+    studentType: localStorage.getItem('mc_student_type') || 'undergraduate',
+    randomStart: true,
+
+    tabs: [
+      {
+        title: "30+ graduate degree programs and certificates",
+        description:
+          "Various program formats available to fit the needs of working adults.",
+        button: "Become a student",
+        image: "/images/homepage/become_a_student_grad.jpg",
+        mobileImage: "/images/homepage/become_a_student_grad_mobile.jpg",
+        links: [
+          {
+            href: "https://www.messiah.edu/info/22860/degrees_and_certificates",
+            label: "View grad programs",
+          },
+        ],
+        type: 'graduate',
+      },
+      {
+        title: "Join us for a fall open house!",
+        description:
+          "Come visit to explore our academic programs, experience campus culture, take a campus tour and see what it means to be part of the Messiah community. And, of course, lunch is on us!",
+        button: "Become a student",
+        image: "/images/homepage/students_on_sidewalk.jpg",
+        mobileImage: "/images/homepage/students_on_sidewalk_mobile.jpg",
+        links: [
+          {
+            href: "https://www.messiah.edu/openhouse?element=homepage-carousel",
+            label: "Learn more",
+          },
+        ],
+        type: 'undergraduate',
+      },
+      {
+        title: "Academic Excellence",
+        description: "Experience the academic distinction of a nationally ranked Christian college",
+        image: "/images/homepage/hero_academics.jpg",
+        mobileImage: "/images/homepage/hero_academics_mobile.jpg",
+        button: "Academic excellence",
+        links: [
+          {
+            href: "https://www.messiah.edu/majors-minors-programs",
+            label: "Undergrad programs",
+          },
+          {
+            href: "http://www.messiah.edu/info/20436/degrees",
+            label: "Graduate programs",
+          },
+        ],
+      },
+      {
+        title: "Careers and Internships",
+        description: "Explore your calling — from your first year through graduation",
+        button: "Careers & internships",
+        image: "/images/homepage/career_hero.jpg",
+        mobileImage: "/images/homepage/career_hero_mobile.jpg",
+        links: [
+          {
+            href: "https://www.messiah.edu/career-outcomes",
+            label: "Undergrad outcomes",
+          },
+          {
+            href: "https://www.messiah.edu/grad-careers",
+            label: "Graduate outcomes",
+          },
+        ],
+      },
+      {
+        title: "Study Abroad",
+        description: "Where in the world will you go?",
+        button: "Study abroad",
+        image: "/images/homepage/travel_hero.jpg",
+        mobileImage: "/images/homepage/travel_hero_mobile.jpg",
+        links: [
+          {
+            href: "https://www.messiah.edu/study-abroad",
+            label: "Explore undergrad opportunities",
+          },
+        ],
+      },
+    ],
 
     init() {
-      const shouldStartAtFirstSlide = localStorage.getItem('mc_slider_start_first') === 'true';
+      this.$nextTick(() => this.select(this.$id('tab', this.randomStart ? this.getRandomTab() : 2)));
+    },
 
-      this.$nextTick(() => this.select(this.$id('tab', shouldStartAtFirstSlide ? 1 : ${getFirstSlide()})));
-
-      localStorage.removeItem('mc_slider_start_first');
+    getRandomTab() {
+      return Math.floor(Math.random() * this.getTabs().length) + 2;
     },
 
     select(id) {
@@ -131,21 +125,89 @@ function getFirstSlide() {
 
     whichChild(el, parent) {
       return Array.from(parent.children).indexOf(el) + 1;
+    },
+
+    getTabs() {
+      return this.tabs.filter((tab) => {
+        if (!tab.type) return true;
+
+        return tab.type === this.studentType;
+      });
+    },
+
+    isNextStepVisible(element) {
+      const { type } = element.dataset;
+
+      if (type === 'both') return true;
+
+      return type === this.studentType;
+    },
+
+    switchProgram() {
+      this.studentType = this.studentType === 'undergraduate' ? 'graduate' : 'undergraduate';
+      localStorage.setItem('mc_student_type', this.studentType);
+      this.select(this.$id('tab', 2));
     }
   }`}
   x-id="['tab']"
 >
-  <ul
-    x-ref="tablist"
-    @keydown.right.prevent.stop="$focus.wrap().next()"
-    @keydown.left.prevent.stop="$focus.wrap().prev()"
-    @keydown.home.prevent.stop="$focus.first()"
-    @keydown.end.prevent.stop="$focus.last()"
-    role="tablist"
-    class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap z-10"
+  <nav
+    data-analytics="next-steps"
+    class="bg-white w-60 hidden lg:block absolute right-0 top-[300px] z-20"
   >
-    {
-      getSlidesByCookie().map((slide) => (
+    <h3 class="text-primary-800 leading-tight px-4 py-2">
+      <span class="uppercase font-title text-lg font-bold block">Next steps</span>
+      <span
+        class="text-sm"
+        x-text="studentType === 'undergraduate' ? 'Undergrad students' : 'Graduate students'"
+      ></span>
+    </h3>
+
+    <ul>
+      {
+        nextSteps.map((nextStep) => (
+          <li data-type={nextStep.type} x-show="isNextStepVisible($el)">
+            <a
+              href={nextStep.href}
+              class="bg-primary-800 text-white py-2 px-4 flex gap-4 font-title uppercase font-bold border-b border-primary-700 justify-between items-center"
+            >
+              {nextStep.name}
+              <Icon name={nextStep.icon} class="size-5" />
+            </a>
+          </li>
+        ))
+      }
+
+      <li>
+        <button
+          type="button"
+          class="bg-gray-800 text-white text-left w-full py-2 px-4 flex gap-4 justify-between items-center"
+          @click="switchProgram()"
+        >
+          <span>
+            <span class="font-title uppercase font-bold block">Switch to</span>
+            <span
+              class="text-sm"
+              x-text="studentType === 'undergraduate' ? 'Graduate programs' : 'Undergraduate programs'"
+            ></span>
+          </span>
+          <Icon name="switch" class="size-5" />
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="relative flex flex-col-reverse -mt-48" data-analytics="hero">
+    <ul
+      x-ref="tablist"
+      @keydown.right.prevent.stop="$focus.wrap().next()"
+      @keydown.left.prevent.stop="$focus.wrap().prev()"
+      @keydown.home.prevent.stop="$focus.first()"
+      @keydown.end.prevent.stop="$focus.last()"
+      role="tablist"
+      class="hidden sm:flex absolute bottom-0 left-0 right-0 sm:bg-gradient-to-t from-black/75 to-transparent items-center flex-wrap z-10"
+    >
+      <template x-for="tab in getTabs()">
         <li class="w-full sm:w-1/2 md:w-1/4 flex justify-center">
           <button
             @click="select($el.id)"
@@ -154,44 +216,37 @@ function getFirstSlide() {
             :tabindex="isSelected($el.id) ? 0 : -1"
             :id="$id('tab', whichChild($el.parentElement, $refs.tablist))"
             type="button"
-            role="tab" 
+            role="tab"
             class="text-white text-lg uppercase p-4 md:p-8 link text-center font-title font-bold aria-selected:text-tertiary-400 group"
           >
-            <span class="inline-block border-b-4 border-transparent group-aria-selected:border-tertiary-400 pointer-events-none">
-              {slide.button}
-            </span>
+            <span
+              class="inline-block border-b-4 border-transparent group-aria-selected:border-tertiary-400 pointer-events-none"
+              x-text="tab.button"></span>
           </button>
         </li>
-      ))
-    }
-  </ul>
+      </template>
+    </ul>
 
-  <div>
-    {
-      getSlidesByCookie().map((slide) => (
+    <div>
+      <template x-for="tab in getTabs()">
         <div
           role="tabpanel"
           x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
           :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
           class="w-full flex h-[calc(100vh_+_6rem)] md:h-[calc(90vh_+_8rem)] max-h-[1200px] min-h-[500px] items-end sm:items-center bg-primary-800 md:bg-[image:var(--bg-banner-desktop)] bg-[image:var(--bg-banner-mobile)] bg-cover bg-no-repeat pb-4 sm:pb-0 relative after:absolute after:inset-0 after:bg-gradient-to-br after:from-black/50 after:to-transparent"
-          style={{
-            "--bg-banner-desktop": `url(${slide.image})`,
-            "--bg-banner-mobile": `url(${slide.mobileImage})`,
-          }}
+          :style="{ '--bg-banner-desktop': `url(${tab.image})`, '--bg-banner-mobile': `url(${tab.mobileImage})` }"
         >
           <div class="max-w-[2100px] mx-auto px-4 lg:px-12 w-full z-10">
-            <p class="text-white h2 max-w-2xl">{slide.title}</p>
-            <p class="text-white text-lg md:text-xl max-w-xl mb-8">{slide.description}</p>
+            <p class="text-white h2 max-w-2xl" x-text="tab.title"></p>
+            <p class="text-white text-lg md:text-xl max-w-xl mb-8" x-text="tab.description"></p>
             <div class="flex gap-2">
-              {slide.links.map((link) => (
-                <a href={link.href} class="btn-secondary">
-                  {link.label}
-                </a>
-              ))}
+              <template x-for="link in tab.links">
+                <a :href="link.href" class="btn-secondary" x-text="link.label"></a>
+              </template>
             </div>
           </div>
         </div>
-      ))
-    }
+      </template>
+    </div>
   </div>
 </div>

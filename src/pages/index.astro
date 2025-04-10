@@ -1,5 +1,4 @@
 ---
-import NextSteps from "../components/next-steps.astro";
 import Base from "../layouts/base.astro";
 import ExperienceMessiah from "../views/index/experience-messiah.astro";
 import WhatToStudy from "../views/index/what-to-study.astro";
@@ -11,9 +10,7 @@ import HeroSlider from "../views/index/hero-slider.astro";
 
 <Base title="Graduate Studies" description="Graduate-level academics at Messiah">
   <main id="content" data-analytics="index">
-    <NextSteps class="hidden lg:block absolute right-0 top-[300px] z-20" />
-
-    <HeroSlider randomStart />
+    <HeroSlider />
 
     <ExperienceMessiah />
 
