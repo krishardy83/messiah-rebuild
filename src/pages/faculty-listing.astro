@@ -1,0 +1,282 @@
+---
+import Icon from "../components/icon.astro";
+import WithoutHero from "../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Meet our faculty"
+  description="Meet our faculty"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Academics", href: "/" },
+    { name: "Meet our faculty", href: "/" },
+  ]}
+>
+  <div class="rich-text mb-8">
+    <img src="https://www.messiah.edu/images/Communciations_Faculty.jpg" />
+    <h2 class="h3">Meet our faculty</h2>
+    <p>
+      Our faculty draw from a wide range of communication backgrounds and areas of expertise. You'll
+      find each one committed to top-quality teaching and scholarship as well as advising and
+      mentoring students in our Department.
+    </p>
+  </div>
+
+  <div
+    x-data="{
+      faculties: [],
+      loading: true,
+      error: null,
+      department: 'Communication',
+      gradSubjects: '',
+      
+      filters: {
+        query: '',
+        type: '',
+      },
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/faculty/_data/faculty-directory-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.faculties = data.items;
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch faculty data (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      getLastName(name) {
+        const parts = name.trim().split(' ');
+
+        return parts[parts.length - 1];
+      },
+
+      isMatchingType(faculty) {
+        const { type } = this.filters;
+
+        if (type === 'full-time') {
+          return faculty.staff !== 'Yes' && faculty.adjunct !== 'Yes';
+        } else if (type === 'adjunct') {
+          return faculty.staff !== 'Yes' && faculty.adjunct === 'Yes';
+        } else if (type === 'emeritus') {
+          return faculty.emeritus === 'Yes';
+        }
+
+        return true;
+      },
+
+      getFilteredFaculties() {
+        const { department, gradSubjects, filters } = this;
+        const query = filters.query.trim().toLowerCase();
+
+        if (department.length === 0 && gradSubjects.length === 0) {
+          return this.faculties;
+        }
+
+        return this.faculties.filter((faculty) => {
+          const matchesDepartment = department.length ? faculty.department === department : true;
+          const matchesGradSubjects = gradSubjects.length ? faculty.grad_subjects === gradSubjects : true;
+          const matchesQuery = faculty.first_name.toLowerCase().includes(query) || faculty.last_name.toLowerCase().includes(query);
+          const matchesType = this.isMatchingType(faculty);
+
+          return matchesDepartment && matchesGradSubjects && matchesQuery && matchesType;
+        });
+      },
+
+      getSortedFaculties() {
+        return this.getFilteredFaculties().sort((a, b) => {
+          const aLastName = this.getLastName(a.last_name);
+          const bLastName = this.getLastName(b.last_name);
+          
+          return aLastName.localeCompare(bLastName);
+        });
+      },
+
+      getFaculties() {
+        const sorted = this.getSortedFaculties();
+
+        const first = sorted.filter((faculty) => faculty.staff !== 'Yes');
+
+        return first;
+      },
+
+      getStaff() {
+        const sorted = this.getSortedFaculties();
+
+        const first = sorted.filter((faculty) => faculty.staff === 'Yes');
+
+        return first;
+      }
+    }"
+  >
+    <div class="flex gap-4 mb-8">
+      <select
+        class="bg-white min-h-12 px-4 border border-gray-300 w-full md:w-1/4 select"
+        x-model="filters.type"
+      >
+        <option value="" disabled="" selected="">Filter faculties</option>
+        <option value="full-time">Full time faculty</option>
+        <option value="adjunct">Adjunct</option>
+        <option value="emeritus">Emeritus</option>
+      </select>
+
+      <div class="relative md:w-1/3">
+        <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
+        <input
+          type="text"
+          x-model="filters.query"
+          autocomplete="off"
+          placeholder="Search by name"
+          aria-label="Search by name"
+          class="bg-white w-full min-h-12 px-4 pl-12 border border-gray-300"
+        />
+        <button
+          type="button"
+          title="Clear input"
+          x-show="filters.query.length > 0"
+          @click="filters.query = ''"
+          class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+        >
+          <Icon name="close" class="size-5" />
+        </button>
+      </div>
+
+      <button
+        x-show="filters.type || filters.query"
+        type="button"
+        @click="filters.type = ''; filters.query = ''"
+      >
+        Reset
+      </button>
+    </div>
+
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading faculty list...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <div x-show="!loading && !error">
+      <h2 class="h3">Faculties</h2>
+
+      <template x-if="getFaculties().length === 0 && !loading && !error">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p>No faculty matches your filter.</p>
+        </div>
+      </template>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+        <template x-for="faculty in getFaculties()">
+          <article class="bg-gray-100 border border-gray-300 p-4 flex gap-4">
+            <img
+              :src="faculty.headshotURL"
+              :alt="faculty.first_name + ' ' + faculty.last_name"
+              width="200"
+              height="300"
+              class="w-52 h-80 object-cover shrink-0"
+            />
+
+            <div>
+              <h3
+                class="font-title uppercase text-primary-800 font-bold text-xl mb-2"
+                x-text="faculty.first_name + ' ' + faculty.last_name"
+              >
+              </h3>
+              <p x-text="faculty.job_title" class="mb-8"></p>
+
+              <ul class="mb-8 space-y-2">
+                <li x-show="faculty.email">
+                  <a class="flex items-center gap-2 link" :href="`mailto:${faculty.email}`">
+                    <Icon class="size-5" name="envelope" /><span x-text="faculty.email"></span></a
+                  >
+                </li>
+                <li x-show="faculty.phone">
+                  <a class="flex items-center gap-2 link" :href="`tel:${faculty.phone}`">
+                    <Icon class="size-5" name="phone" /><span x-text="faculty.phone"></span></a
+                  >
+                </li>
+                <li x-show="faculty.website">
+                  <a class="flex items-center gap-2 link" :href="faculty.website">
+                    <Icon class="size-5" name="globe" /><span x-text="faculty.website"></span>
+                  </a>
+                </li>
+              </ul>
+
+              <a class="btn btn-tertiary" :href="faculty.profile_url">View profile</a>
+            </div>
+          </article>
+        </template>
+      </div>
+
+      <h2 class="h3">Department Staff</h2>
+
+      <template x-if="getStaff().length === 0 && !loading && !error">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p>No staff member matches your filter.</p>
+        </div>
+      </template>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+        <template x-for="faculty in getStaff()">
+          <article class="bg-gray-100 border border-gray-300 p-4 flex gap-4">
+            <img
+              :src="faculty.headshotURL"
+              :alt="faculty.first_name + ' ' + faculty.last_name"
+              width="200"
+              height="300"
+              class="w-52 h-80 object-cover shrink-0"
+            />
+
+            <div>
+              <h3
+                class="font-title uppercase text-primary-800 font-bold text-xl mb-2"
+                x-text="faculty.first_name + ' ' + faculty.last_name"
+              >
+              </h3>
+              <p x-text="faculty.job_title" class="mb-8"></p>
+
+              <ul class="mb-8 space-y-2">
+                <li x-show="faculty.email">
+                  <a class="flex items-center gap-2 link" :href="`mailto:${faculty.email}`">
+                    <Icon class="size-5" name="envelope" /><span x-text="faculty.email"></span></a
+                  >
+                </li>
+                <li x-show="faculty.phone">
+                  <a class="flex items-center gap-2 link" :href="`tel:${faculty.phone}`">
+                    <Icon class="size-5" name="phone" /><span x-text="faculty.phone"></span></a
+                  >
+                </li>
+                <li x-show="faculty.website">
+                  <a class="flex items-center gap-2 link" :href="faculty.website">
+                    <Icon class="size-5" name="globe" /><span x-text="faculty.website"></span>
+                  </a>
+                </li>
+              </ul>
+
+              <a class="btn btn-tertiary" :href="faculty.profile_url">View profile</a>
+            </div>
+          </article>
+        </template>
+      </div>
+    </div>
+  </div>
+</WithoutHero>
