@@ -39,7 +39,12 @@ import WithoutHero from "../layouts/without-hero.astro";
         fetch('https://cascade-prod.messiah.edu/faculty/_data/faculty-directory-json.json')
           .then((response) => response.json())
           .then((data) => {
-            this.faculties = data.items;
+            this.faculties = data.items.filter((faculty) => {
+              const matchesDepartment = this.department.length ? faculty.department === this.department : true;
+              const matchesGradSubjects = this.gradSubjects.length ? faculty.grad_subjects === this.gradSubjects : true;
+
+              return matchesDepartment && matchesGradSubjects;
+            });
             this.loading = false;
           })
           .catch((error) => {
@@ -69,30 +74,49 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       getFilteredFaculties() {
-        const { department, gradSubjects, filters } = this;
-        const query = filters.query.trim().toLowerCase();
+        const query = this.filters.query.trim().toLowerCase();
 
-        if (department.length === 0 && gradSubjects.length === 0) {
-          return this.faculties;
-        }
-
-        return this.faculties.filter((faculty) => {
-          const matchesDepartment = department.length ? faculty.department === department : true;
-          const matchesGradSubjects = gradSubjects.length ? faculty.grad_subjects === gradSubjects : true;
+        const t = this.faculties.filter((faculty) => {
           const matchesQuery = faculty.first_name.toLowerCase().includes(query) || faculty.last_name.toLowerCase().includes(query);
           const matchesType = this.isMatchingType(faculty);
 
-          return matchesDepartment && matchesGradSubjects && matchesQuery && matchesType;
+          return matchesQuery && matchesType;
         });
+
+        console.log(t);
+        return t;
+      },
+
+      getFacultyOptions() {
+        const options = new Map();
+
+        options.set('full-time', 'Full time faculty');
+
+        for (const faculty of this.faculties) {
+          if (faculty.adjunct === 'Yes') {
+            options.set('adjunct', 'Adjunct');
+          }
+
+          if (faculty.emeritus === 'Yes') {
+            options.set('emeritus', 'Emeritus');
+          }
+        }
+
+        return Array.from(options);
       },
 
       getSortedFaculties() {
-        return this.getFilteredFaculties().sort((a, b) => {
+        const sorted = this.getFilteredFaculties().sort((a, b) => {
           const aLastName = this.getLastName(a.last_name);
           const bLastName = this.getLastName(b.last_name);
           
           return aLastName.localeCompare(bLastName);
         });
+
+        const chairs = sorted.filter((faculty) => faculty.chair === 'Yes');
+        const nonChairs = sorted.filter((faculty) => faculty.chair !== 'Yes');
+
+        return [...chairs, ...nonChairs];
       },
 
       getFaculties() {
@@ -118,9 +142,9 @@ import WithoutHero from "../layouts/without-hero.astro";
         x-model="filters.type"
       >
         <option value="" disabled="" selected="">Filter faculties</option>
-        <option value="full-time">Full time faculty</option>
-        <option value="adjunct">Adjunct</option>
-        <option value="emeritus">Emeritus</option>
+        <template x-for="[value, label] in getFacultyOptions()">
+          <option :value="value" x-text="label"></option>
+        </template>
       </select>
 
       <div class="relative md:w-1/3">
@@ -181,9 +205,9 @@ import WithoutHero from "../layouts/without-hero.astro";
         </div>
       </template>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+      <div class="grid grid-cols-1 gap-4 mb-8">
         <template x-for="faculty in getFaculties()">
-          <article class="bg-gray-100 border border-gray-300 p-4 flex gap-4">
+          <article class="bg-gray-100 border border-gray-300 flex gap-4 p-4">
             <img
               :src="faculty.headshotURL"
               :alt="faculty.first_name + ' ' + faculty.last_name"
@@ -235,7 +259,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         </div>
       </template>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+      <div class="grid grid-cols-1 gap-4 mb-8">
         <template x-for="faculty in getStaff()">
           <article class="bg-gray-100 border border-gray-300 p-4 flex gap-4">
             <img
