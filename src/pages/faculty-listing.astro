@@ -28,7 +28,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       loading: true,
       error: null,
       department: '',
-      gradSubjects: 'Business and Leadership',
+      gradSubjects: 'Counseling',
       
       filters: {
         query: '',
@@ -76,15 +76,12 @@ import WithoutHero from "../layouts/without-hero.astro";
       getFilteredFaculties() {
         const query = this.filters.query.trim().toLowerCase();
 
-        const t = this.faculties.filter((faculty) => {
+        return this.faculties.filter((faculty) => {
           const matchesQuery = faculty.first_name.toLowerCase().includes(query) || faculty.last_name.toLowerCase().includes(query);
           const matchesType = this.isMatchingType(faculty);
 
           return matchesQuery && matchesType;
         });
-
-        console.log(t);
-        return t;
       },
 
       getFacultyOptions() {
