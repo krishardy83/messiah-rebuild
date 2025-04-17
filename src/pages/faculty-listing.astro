@@ -27,8 +27,8 @@ import WithoutHero from "../layouts/without-hero.astro";
       faculties: [],
       loading: true,
       error: null,
-      department: 'Communication',
-      gradSubjects: '',
+      department: '',
+      gradSubjects: 'Business and Leadership',
       
       filters: {
         query: '',
@@ -41,7 +41,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           .then((data) => {
             this.faculties = data.items.filter((faculty) => {
               const matchesDepartment = this.department.length ? faculty.department === this.department : true;
-              const matchesGradSubjects = this.gradSubjects.length ? faculty.grad_subjects === this.gradSubjects : true;
+              const matchesGradSubjects = this.gradSubjects.length ? faculty.gradSubjects === this.gradSubjects : true;
 
               return matchesDepartment && matchesGradSubjects;
             });
