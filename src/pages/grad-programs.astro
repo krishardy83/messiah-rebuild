@@ -30,7 +30,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       filters: {
         type: '',
         format: '',
-        id: 'Business and leadership',
+        id: 'Education',
       },
 
       types: [
@@ -48,7 +48,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         },
         {
           key: 'P',
-          label: 'PA Teaching Certification',
+          label: 'Pa Teaching Certification',
           color: '#ab4e42',
           description: 'A certification granted by the Pennsylvania Department of Education upon program completion.',
         },
@@ -197,13 +197,19 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       getDegreePrograms() {
         return this.getFilteredPrograms().filter((program) => {
-          return program.type !== 'Graduate Certificate';
+          return program.type !== 'Graduate Certificate' && program.type !== 'Pa Teaching Certification';
         });
       },
 
       getGraduateCertificates() {
         return this.getFilteredPrograms().filter((program) => {
           return program.type === 'Graduate Certificate';
+        });
+      },
+
+      getPdeCertificates() {
+        return this.getFilteredPrograms().filter((program) => {
+          return program.type === 'Pa Teaching Certification';
         });
       },
 
@@ -330,6 +336,55 @@ import WithoutHero from "../layouts/without-hero.astro";
           </template>
         </tbody>
       </table>
+
+      <div x-show="getPdeCertificates().length > 0">
+        <h3 class="h3 mb-4 mt-8">PDE certification</h3>
+
+        <table
+          class="text-sm w-full border-t border-gray-200"
+          x-show="getPdeCertificates().length > 0 && !error && !loading"
+        >
+          <tbody class="scroll-m-28">
+            <template x-for="program in getPdeCertificates()">
+              <tr
+                class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28"
+              >
+                <td class="p-2" :class="program.is_child ? 'pl-8' : ''">
+                  <a
+                    x-text="program.program_name"
+                    class="text-primary-800 hover:underline mr-2"
+                    :href="getProgramURL(program)"></a>
+
+                  <span
+                    x-text="program.degree_short"
+                    x-show="program.degree_short"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"></span>
+                </td>
+
+                <td>
+                  <button
+                    x-data
+                    @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${getProgramFormat(program).label}</b>${getProgramFormat(program).description}`)"
+                    x-html="getProgramFormat(program).icon"
+                    class="flex"></button>
+                </td>
+
+                <template x-for="type in types">
+                  <td class="w-8">
+                    <button
+                      x-data
+                      @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                      x-show="hasType(program, type.label)"
+                      x-text="type.key"
+                      class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                      :style="`background-color: ${type.color}`"></button>
+                  </td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
 
       <div x-show="getGraduateCertificates().length > 0">
         <h3 class="h3 mb-4 mt-8">Graduate certificates</h3>
