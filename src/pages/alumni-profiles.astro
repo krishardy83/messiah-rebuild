@@ -120,6 +120,7 @@ import Icon from "../components/icon.astro";
     <template x-if="alumni.length > 0">
       <div>
         <div
+          x-show="getFeaturedAlumni().length > 0"
           x-data="{
             embla: null,
             
@@ -212,7 +213,9 @@ import Icon from "../components/icon.astro";
         </div>
 
         <template x-for="student, index in getFilteredAlumni()">
-          <article class="flex gap-4 md:gap-8 relative border-t border-gray-300 pt-12 mt-12">
+          <article
+            class="flex gap-4 md:gap-8 relative border-b border-gray-300 pb-12 mb-12 last-of-type:border-0 last-of-type:mb-0 last-of-type:pb-0"
+          >
             <span
               x-text="student.major"
               x-show="student.major"
