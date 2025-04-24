@@ -6,6 +6,18 @@ import WithoutHero from "../layouts/without-hero.astro";
 <WithoutHero
   title="Meet our faculty"
   description="Meet our faculty"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Academics", href: "/" },
@@ -130,6 +142,10 @@ import WithoutHero from "../layouts/without-hero.astro";
         const first = sorted.filter((faculty) => faculty.staff === 'Yes');
 
         return first;
+      },
+
+      hasContactInfo(faculty) {
+        return faculty.email || faculty.phone || faculty.website;
       }
     }"
   >
@@ -161,7 +177,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           @click="filters.query = ''"
           class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
         >
-          <Icon name="close" class="size-5" />
+          <Icon name="close" class="size-5 shrink-0" />
         </button>
       </div>
 
@@ -202,46 +218,52 @@ import WithoutHero from "../layouts/without-hero.astro";
         </div>
       </template>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         <template x-for="faculty in getFaculties()">
-          <article
-            class="bg-gray-100 border border-gray-300 flex items-start gap-4 p-4 @container break-all"
-          >
-            <img
-              :src="faculty.headshotURL"
-              :alt="faculty.first_name + ' ' + faculty.last_name"
-              width="200"
-              height="300"
-              class="w-24 h-auto object-cover shrink-0 @md:w-52 @md:h-80"
-            />
+          <article class="@container border border-gray-300 bg-gray-100 px-6 py-4">
+            <div class="flex flex-col @md:flex-row gap-4 h-full">
+              <figure class="@md:w-1/3">
+                <img
+                  :src="faculty.headshotURL"
+                  :alt="faculty.first_name + ' ' + faculty.last_name"
+                  class="w-full object-cover shrink-0 @md:w-52 h-56"
+                />
+              </figure>
 
-            <div>
-              <h3
-                class="font-title uppercase text-primary-800 font-bold text-xl mb-2"
-                x-text="faculty.first_name + ' ' + faculty.last_name"
-              >
-              </h3>
-              <p x-text="faculty.job_title" class="mb-8"></p>
+              <div class="flex flex-col flex-1 @md:w-2/3">
+                <h3
+                  class="h4 text-primary-800 !leading-none mb-2"
+                  x-text="faculty.first_name + ' ' + faculty.last_name"
+                >
+                </h3>
+                <p
+                  class="text-tertiary-500 leading-none font-title uppercase font-bold"
+                  :class="hasContactInfo(faculty) ? 'border-b border-gray-300  pb-4' : 'mb-4'"
+                  x-text="faculty.job_title"
+                >
+                </p>
 
-              <ul class="mb-8 space-y-2">
-                <li x-show="faculty.email">
-                  <a class="flex items-center gap-2 link" :href="`mailto:${faculty.email}`">
-                    <Icon class="size-5" name="envelope" /><span x-text="faculty.email"></span></a
-                  >
-                </li>
-                <li x-show="faculty.phone">
-                  <a class="flex items-center gap-2 link" :href="`tel:${faculty.phone}`">
-                    <Icon class="size-5" name="phone" /><span x-text="faculty.phone"></span></a
-                  >
-                </li>
-                <li x-show="faculty.website">
-                  <a class="flex items-center gap-2 link" :href="faculty.website">
-                    <Icon class="size-5" name="globe" /><span>Visit my website</span>
-                  </a>
-                </li>
-              </ul>
+                <ul class="space-y-2 py-4 text-sm">
+                  <li class="flex items-center gap-2" x-show="faculty.email">
+                    <Icon name="envelope" class="size-5 shrink-0" />
+                    <a class="link text-primary-800" :href="`mailto:${faculty.email}`">Send email</a
+                    >
+                  </li>
+                  <li class="flex items-center gap-2" x-show="faculty.phone">
+                    <Icon name="phone" class="size-5 shrink-0" />
+                    <a
+                      class="link text-primary-800"
+                      :href="`tel:${faculty.phone}`"
+                      x-text="faculty.phone"></a>
+                  </li>
+                  <li class="flex items-center gap-2" x-show="faculty.website">
+                    <Icon name="globe" class="size-5 shrink-0" />
+                    <a class="link text-primary-800" :href="faculty.website">Visit my website</a>
+                  </li>
+                </ul>
 
-              <a class="btn btn-tertiary" :href="faculty.profile_url">View profile</a>
+                <a class="btn-primary w-max mt-auto" :href="faculty.profile_url">Read bio</a>
+              </div>
             </div>
           </article>
         </template>
@@ -258,44 +280,52 @@ import WithoutHero from "../layouts/without-hero.astro";
         </div>
       </template>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         <template x-for="faculty in getStaff()">
-          <article class="bg-gray-100 border border-gray-300 flex items-start gap-4 p-4 @container">
-            <img
-              :src="faculty.headshotURL"
-              :alt="faculty.first_name + ' ' + faculty.last_name"
-              width="200"
-              height="300"
-              class="w-24 h-auto object-cover shrink-0 @md:w-52 @md:h-80"
-            />
+          <article class="@container border border-gray-300 bg-gray-100 px-6 py-4">
+            <div class="flex flex-col @md:flex-row gap-4 h-full">
+              <figure class="@md:w-1/3">
+                <img
+                  :src="faculty.headshotURL"
+                  :alt="faculty.first_name + ' ' + faculty.last_name"
+                  class="w-full object-cover shrink-0 @md:w-52 h-56"
+                />
+              </figure>
 
-            <div>
-              <h3
-                class="font-title uppercase text-primary-800 font-bold text-xl mb-2"
-                x-text="faculty.first_name + ' ' + faculty.last_name"
-              >
-              </h3>
-              <p x-text="faculty.job_title" class="mb-8"></p>
+              <div class="flex flex-col flex-1 @md:w-2/3">
+                <h3
+                  class="h4 text-primary-800 !leading-none mb-2"
+                  x-text="faculty.first_name + ' ' + faculty.last_name"
+                >
+                </h3>
+                <p
+                  class="text-tertiary-500 leading-none font-title uppercase font-bold"
+                  :class="hasContactInfo(faculty) ? 'border-b border-gray-300 pb-4' : 'mb-4'"
+                  x-text="faculty.job_title"
+                >
+                </p>
 
-              <ul class="mb-8 space-y-2">
-                <li x-show="faculty.email">
-                  <a class="flex items-center gap-2 link" :href="`mailto:${faculty.email}`">
-                    <Icon class="size-5" name="envelope" /><span x-text="faculty.email"></span></a
-                  >
-                </li>
-                <li x-show="faculty.phone">
-                  <a class="flex items-center gap-2 link" :href="`tel:${faculty.phone}`">
-                    <Icon class="size-5" name="phone" /><span x-text="faculty.phone"></span></a
-                  >
-                </li>
-                <li x-show="faculty.website">
-                  <a class="flex items-center gap-2 link" :href="faculty.website">
-                    <Icon class="size-5" name="globe" /><span x-text="faculty.website"></span>
-                  </a>
-                </li>
-              </ul>
+                <ul class="space-y-2 py-4 text-sm">
+                  <li class="flex items-center gap-2" x-show="faculty.email">
+                    <Icon name="envelope" class="size-5 shrink-0" />
+                    <a class="link text-primary-800" :href="`mailto:${faculty.email}`">Send email</a
+                    >
+                  </li>
+                  <li class="flex items-center gap-2" x-show="faculty.phone">
+                    <Icon name="phone" class="size-5 shrink-0" />
+                    <a
+                      class="link text-primary-800"
+                      :href="`tel:${faculty.phone}`"
+                      x-text="faculty.phone"></a>
+                  </li>
+                  <li class="flex items-center gap-2" x-show="faculty.website">
+                    <Icon name="globe" class="size-5 shrink-0" />
+                    <a class="link text-primary-800" :href="faculty.website">Visit my website</a>
+                  </li>
+                </ul>
 
-              <a class="btn btn-tertiary" :href="faculty.profile_url">View profile</a>
+                <a class="btn-primary w-max mt-auto" :href="faculty.profile_url">Read bio</a>
+              </div>
             </div>
           </article>
         </template>
