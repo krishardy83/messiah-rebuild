@@ -154,7 +154,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         class="bg-white min-h-12 px-4 border border-gray-300 w-full md:w-1/4 select"
         x-model="filters.type"
       >
-        <option value="" disabled="" selected="">Filter faculties</option>
+        <option value="" disabled="" selected="">Filter faculty</option>
         <template x-for="[value, label] in getFacultyOptions()">
           <option :value="value" x-text="label"></option>
         </template>
@@ -207,7 +207,7 @@ import WithoutHero from "../layouts/without-hero.astro";
     </template>
 
     <div x-show="!loading && !error">
-      <h2 class="h3">Faculties</h2>
+      <h2 class="h3">Faculty</h2>
 
       <template x-if="getFaculties().length === 0 && !loading && !error">
         <div
