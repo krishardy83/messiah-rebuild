@@ -32,7 +32,7 @@ const { title, description, analyticsKey, sidebarLinks, image, breadcrumbs } = A
     <h1
       class="text-shadow uppercase lg:w-max bg-primary-800/85 px-6 py-4 font-title tracking-widest text-white text-2xl md:text-3xl mb-6 md:mb-1"
     >
-      Web Services at Messiah University
+      {title}
     </h1>
 
     <CtaSidebarLinks />
@@ -45,7 +45,7 @@ const { title, description, analyticsKey, sidebarLinks, image, breadcrumbs } = A
         {sidebarLinks ? <Sidebar links={sidebarLinks} /> : null}
         {Astro.slots.has("sidebar") ? <slot name="sidebar" /> : null}
 
-        <div class="space-y-4 md:px-10 md:py-8">
+        <div class="space-y-4 md:px-10 md:py-8 flex-1">
           <slot />
         </div>
       </div>

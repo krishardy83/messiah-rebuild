@@ -1,0 +1,443 @@
+---
+import WithHero from "../layouts/with-hero.astro";
+---
+
+<WithHero
+  title="Messiah at a glance"
+  description="Messiah at a glance"
+  image="/images/by-the-numbers.jpg"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "About", href: "/" },
+    { name: "University profile", href: "/" },
+  ]}
+>
+  <div>
+    <h2
+      class="h3 relative before:absolute before:h-px before:w-full before:bg-tertiary-300 before:top-1/2 before:left-0 text-center"
+    >
+      <span class="bg-white inline-block relative px-4 md:px-8">Messiah at a glance</span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 border-b border-tertiary-300 md:pb-8 md:mb-8">
+      <div class="px-4 lg:px-8 md:border-r border-tertiary-300 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="block mb-2">Founded in</span>
+          <span class="font-bold block">1909</span>
+        </p>
+      </div>
+      <div class="px-4 lg:px-8 flex md:border-r border-tertiary-300 gap-4 items-start py-4">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/location-marker.png"
+          alt=""
+          width="40"
+          class="mt-2 hidden md:block"
+        />
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="block mb-2">Located in</span>
+          <span class="font-bold block">Mechanicsburg, Pennsylvania</span>
+        </p>
+      </div>
+      <div class="px-4 lg:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="block mb-2">University Motto</span>
+          <span class="font-bold block">Christ Preeminent</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 border-b border-tertiary-300 md:pb-8 mb-8">
+      <div
+        class="md:border-r border-b md:border-b-0 border-tertiary-300 py-4 flex md:items-end flex-col px-4 lg:px-8"
+      >
+        <p class="font-title text-primary-800 text-2xl md:text-3xl">School colors</p>
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/school-colors.png"
+          alt=""
+        />
+      </div>
+      <div class="flex gap-4 items-start py-4 px-4 lg:px-8">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/falcon-athletics-logo.png"
+          alt=""
+          width="166"
+          height="77"
+        />
+
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="text-3xl md:text-5xl font-bold block">Falcons</span>
+          <span class="block">Athletics mascot</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 mb-12 gap-y-8">
+      <div class="px-4 md:px-8 flex flex-col">
+        <h3 class="h4 mb-2">Mission and Identity</h3>
+        <p class="mb-4">
+          Messiah University is a Christian university of the liberal and applied arts and sciences.
+          Our mission is to educate men and women toward maturity of intellect, character and
+          Christian faith in preparation for lives of service, leadership and reconciliation in
+          church and society.
+        </p>
+        <a
+          href="http://www.messiah.edu/info/20001/mission_and_identity"
+          class="mt-auto btn btn-tertiary w-max">Read more</a
+        >
+      </div>
+      <div class="px-4 md:px-8 flex flex-col">
+        <h3 class="h4 mb-2">Our History</h3>
+        <p class="mb-4">
+          Messiah University was founded in 1909 by the Brethren in Christ Church. Now, the
+          University's faith base is broadly evangelical and includes students and employees from a
+          variety of denominations and Christian faith traditions.
+        </p>
+        <a
+          href="http://www.messiah.edu/info/20013/our_history"
+          class="mt-auto btn btn-tertiary w-max">Read more</a
+        >
+      </div>
+    </div>
+
+    <h2
+      class="h3 relative before:absolute before:h-px before:w-full before:bg-tertiary-300 before:top-1/2 before:left-0 text-center"
+    >
+      <span class="bg-white inline-block relative px-4 md:px-8">Academic Programs</span>
+    </h2>
+
+    <div class="flex flex-wrap border-b border-tertiary-300 pb-8 mb-8">
+      <div class="sm:border-r border-tertiary-300 px-4 md:px-8 py-4 w-full sm:w-1/2 md:w-1/4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">80+</span> Undergraduate academic programs
+        </p>
+      </div>
+      <div class="md:border-r border-tertiary-300 px-4 md:px-8 py-4 w-full sm:w-1/2 md:w-1/4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">20</span> Graduate and adult degrees
+        </p>
+      </div>
+      <div class="px-4 md:px-8 py-4 md:w-2/4 w-full relative flex md:flex-col items-end">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/honors-medal.png"
+          alt=""
+          class="md:absolute bottom-4 left-8 w-24 sm:w-auto"
+          width="180"
+        />
+        <p
+          class="font-title text-primary-800 text-2xl md:text-3xl leading-none text-right mt-auto w-2/3"
+        >
+          Rigorous University Honors Program
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 mb-8">
+      <div class="md:border-r border-tertiary-300 px-4 md:px-8 py-4 relative">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/cursor.png"
+          alt=""
+          class="absolute bottom-4 right-8"
+          width="20"
+        />
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">Summer</span>
+          <span>online</span>
+          <span>courses</span>
+        </p>
+      </div>
+      <div class="md:border-r border-tertiary-300 px-4 md:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">3-year</span>
+          <span>degree options</span>
+        </p>
+      </div>
+      <div class="px-4 md:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">72.2%</span>
+          <span class="block mb-2">4-year grad rate</span>
+          <span class="text-xl block leading-none">(vs. 55.8% national average)</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="flex justify-center mb-12">
+      <a href="http://www.messiah.edu/info/20005/academics" class="btn btn-tertiary">Learn more</a>
+    </div>
+
+    <h2
+      class="h3 relative before:absolute before:h-px before:w-full before:bg-tertiary-300 before:top-1/2 before:left-0 text-center"
+    >
+      <span class="bg-white inline-block relative px-4 md:px-8">Student Body</span>
+    </h2>
+
+    <div class="grid sm:grid-cols-2 mb-8">
+      <div class="px-4 md:px-8 py-4">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/students-icon.png"
+          alt=""
+          class="mx-auto sm:ml-auto"
+        />
+      </div>
+      <div class="px-4 md:px-8 py-4">
+        <p
+          class="text-center sm:text-left font-title text-primary-800 text-2xl md:text-3xl leading-none"
+        >
+          <span class="font-bold text-3xl md:text-5xl block">3,392</span>
+          <span class="block">Undergraduate and graduate students</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="sm:flex sm:gap-8 mb-12">
+      <div class="sm:border-y border-tertiary-300 px-4 md:px-8 py-4 flex-1">
+        <p
+          class="font-title text-primary-800 text-2xl md:text-3xl leading-none text-center sm:text-right"
+        >
+          <span class="block">Undergraduate</span>
+          <span class="font-bold text-2xl">58% female |</span>
+          <span class="font-bold text-2xl text-tertiary-500">42% male</span>
+        </p>
+      </div>
+
+      <img
+        src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/male-female-icon.png"
+        alt=""
+        class="hidden sm:block"
+      />
+
+      <div class="sm:border-y border-b border-tertiary-300 px-4 md:px-8 py-4 flex-1">
+        <p
+          class="font-title text-primary-800 text-2xl md:text-3xl text-center sm:text-leftleading-none"
+        >
+          <span class="block">Graduate</span>
+          <span class="font-bold text-2xl">74% female |</span>
+          <span class="font-bold text-2xl text-tertiary-500">26% male</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 mb-8 pb-8 border-b border-tertiary-300">
+      <div class="sm:border-r border-tertiary-300 px-4 md:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none sm:text-right">
+          <span class="font-bold text-3xl md:text-5xl block">2,618</span> undergraduate students from
+          <span class="text-tertiary-500">39 states</span> and
+          <span class="text-tertiary-500">23 countries</span>
+        </p>
+      </div>
+
+      <div class="px-4 md:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">774</span> graduate students from <span
+            class="text-tertiary-500">40 states</span
+          >
+        </p>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 pb-8 mb-8 border-b border-tertiary-300">
+      <div class="sm:border-r border-tertiary-300 px-4 md:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none sm:text-right">
+          <span class="font-bold text-3xl md:text-5xl block">2.1%</span> international students
+        </p>
+      </div>
+
+      <div class="px-4 md:px-8 py-4">
+        <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">21%</span> undergrad students from underrepresented
+          racial, ethnic and cultural populations
+        </p>
+      </div>
+    </div>
+
+    <div class="flex mb-12 gap-4 justify-center items-start">
+      <img
+        src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/residential-icon.png"
+        alt=""
+        width="80"
+      />
+      <p class="font-title text-primary-800 text-2xl md:text-3xl leading-none">
+        <span class="font-bold text-3xl md:text-5xl block">85%</span> undergrad students live in <span
+          class="text-tertiary-500">on-campus</span
+        > housing
+      </p>
+    </div>
+
+    <div class="bg-[url(/images/tuition-and-aid.png)] bg-cover bg-no-repeat mb-12 text-white p-8">
+      <h2 class="h3 text-center">Tuition and Aid</h2>
+
+      <div class="sm:flex gap-8 mb-12 items-center">
+        <div class="sm:border-y border-tertiary-300 md:px-8 py-4 flex-1">
+          <p class="font-title text-2xl md:text-3xl leading-none">
+            <span class="font-bold text-3xl md:text-5xl block">100%</span>
+            <span>of undergraduate students receive financial aid</span>
+          </p>
+        </div>
+
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/award.png"
+          alt=""
+          class="hidden md:block"
+        />
+
+        <div class="sm:border-y border-tertiary-300 md:px-8 py-4 flex-1">
+          <p class="font-title text-2xl md:text-3xl leading-none mb-4">
+            <span class="font-bold text-3xl md:text-5xl block">Best Value</span>
+            <span>in its region</span>
+          </p>
+          <p>Source: 2025 U.S. News and World Report</p>
+        </div>
+      </div>
+
+      <p class="mb-8 text-center">
+        <span class="uppercase font-bold">Average aid package</span> = $33,440 for first-year students
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-2 justify-center">
+        <a href="http://www.messiah.edu/info/21344/tuition_and_aid" class="btn btn-quaternary"
+          >Undergrad tuition and fees</a
+        >
+        <a href="http://www.messiah.edu/info/21207/tuition_and_fees" class="btn btn-quaternary"
+          >Grad tuition and fees</a
+        >
+      </div>
+    </div>
+
+    <h2
+      class="h3 relative before:absolute before:h-px before:w-full before:bg-tertiary-300 before:top-1/2 before:left-0 text-center"
+    >
+      <span class="bg-white inline-block relative px-4 md:px-8">Careers and Internships</span>
+    </h2>
+
+    <div class="grid md:grid-cols-2 md:mb-8 md:pb-8 md:border-b border-tertiary-300">
+      <div class="md:border-r border-tertiary-300 px-4 md:px-8 py-4 flex gap-8 items-start">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/internship-sites-icon.png"
+          alt=""
+          width="80"
+        />
+
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">89</span>
+          <span>internship sites per year</span>
+        </p>
+      </div>
+
+      <div class="px-4 md:px-8 py-4 flex-1 flex gap-8 items-start">
+        <img
+          src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/internship-icon.png"
+          alt=""
+          width="80"
+        />
+
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">400+</span>
+          <span>available internships per year(average)</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="px-4 md:px-8 py-4 flex-1 flex gap-8 items-start">
+      <img
+        src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/employment-icon.png"
+        alt=""
+        width="80"
+      />
+
+      <p class="font-title text-2xl md:text-3xl leading-none">
+        <span class="font-bold text-3xl md:text-5xl block">99%</span>
+        <span
+          >of the undergraduate Class of 2023 respondents indicated they were employed or in
+          grad/professional programs <span class="text-tertiary-500"
+            >within 6-9 months after graduation</span
+          ></span
+        >
+      </p>
+    </div>
+
+    <div class="flex justify-center mb-12">
+      <a href="https://www.messiah.edu/career-outcomes" class="btn btn-tertiary">Learn more</a>
+    </div>
+
+    <h2
+      class="h3 relative before:absolute before:h-px before:w-full before:bg-tertiary-300 before:top-1/2 before:left-0 text-center"
+    >
+      <span class="bg-white inline-block relative px-4 md:px-8">Athletics</span>
+    </h2>
+
+    <div class="sm:grid grid-cols-4 border-b border-tertiary-300 pb-8 mb-8">
+      <div
+        class="md:col-span-2 col-span-4 md:border-r border-tertiary-300 px-4 md:px-8 py-4 flex gap-8 items-start"
+      >
+        <img src="http://www.messiah.edu/site/custom_scripts/styles/img/glance/trophy.png" alt="" />
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">35</span>
+          <span>NCAA Division III Championships</span>
+        </p>
+      </div>
+
+      <div class="sm:border-r border-tertiary-300 px-4 md:px-8 py-4 col-span-2 md:col-span-1">
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">188</span>
+          <span>Conference team champions</span>
+        </p>
+      </div>
+
+      <div class="px-4 md:px-8 py-4 col-span-2 md:col-span-1">
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">387</span>
+          <span>NCAA Division III All-Americans</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 mb-12">
+      <div class="md:border-r border-tertiary-300 px-4 md:px-8 py-4">
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">23</span>
+          <span>NCAA Division III National Players of the Year</span>
+        </p>
+      </div>
+
+      <div class="md:border-r border-tertiary-300 px-4 md:px-8 py-4">
+        <p class="font-title text-2xl md:text-3xl leading-none">
+          <span class="font-bold text-3xl md:text-5xl block">22</span>
+          <span>NCAA Division III sports</span>
+        </p>
+      </div>
+
+      <div class="px-4 md:px-8 py-4">
+        <ul class="text-xs columns-2">
+          <li>baseball (M)</li>
+          <li>basketball (M/W)</li>
+          <li>cross country (M/W)</li>
+          <li>field hockey (W)</li>
+          <li>indoor track and field (M/W)</li>
+          <li>lacrosse (M/W)</li>
+          <li>outdoor track and field (M/W)</li>
+          <li>soccer (M/W)</li>
+          <li>softball (W)</li>
+          <li>tennis (M/W)</li>
+          <li>wrestling (M)</li>
+          <li>swimming (M/W)</li>
+          <li>volleyball (M/W)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2
+      class="h3 relative before:absolute before:h-px before:w-full before:bg-tertiary-300 before:top-1/2 before:left-0 text-center"
+    >
+      <span class="bg-white inline-block relative px-4 md:px-8">Rankings and Recognitions</span>
+    </h2>
+
+    <p class="text-center mb-4">
+      Messiah is nationally recognized for its outstanding academics and value.
+    </p>
+
+    <div class="flex justify-center">
+      <a href="https://www.messiah.edu/info/20020/recognitions" class="btn btn-tertiary"
+        >Learn more</a
+      >
+    </div>
+  </div>
+</WithHero>
