@@ -23,7 +23,7 @@ const { tabs, class: className, ...props } = Astro.props;
     init() {
       const hash = location.hash.slice(1);
 
-      this.$nextTick(() => this.select(hash || 'overview'));
+      this.$nextTick(() => this.selected = hash || 'overview');
     },
 
     select(id) {

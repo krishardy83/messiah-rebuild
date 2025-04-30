@@ -81,7 +81,7 @@ const people = [
       selected: null,
 
       init() {
-        this.$nextTick(() => this.select(this.$id('tab', 1)));
+        this.$nextTick(() => this.selected = this.$id('tab', 1));
       },
 
       select(id) {
