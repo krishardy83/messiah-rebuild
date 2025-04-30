@@ -23,13 +23,13 @@ const { tabs, class: className, ...props } = Astro.props;
     init() {
       const hash = location.hash.slice(1);
 
-      this.$nextTick(() => this.selected = hash || 'overview');
+      this.$nextTick(() => this.select(hash || 'overview', Boolean(hash)));
     },
 
-    select(id) {
+    select(id, scroll = true) {
       this.selected = id;
 
-      if (!this.isInViewport(this.$refs.panels) && this.isMobileView()) {
+      if (scroll && !this.isInViewport(this.$refs.panels) && this.isMobileView()) {
         this.$refs.panels.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     },
