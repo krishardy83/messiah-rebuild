@@ -47,7 +47,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       error: null,
       filters: {
         type: '',
-        id: 'communication',
+        id: ['business', 'nursing'],
       },
       open: null,
 
@@ -218,12 +218,12 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       get filteredPrograms() {
         return this.transformedPrograms.filter((program) => {
-          return this.hasType(program, this.filters.type) && program.department_id === this.filters.id;
+          return this.hasType(program, this.filters.type) && this.filters.id.includes(program.department_id);
         });
       },
 
       get filteredTypes() {
-        const current = this.programs.filter((program) => program.department_id === this.filters.id);
+        const current = this.programs.filter((program) => this.filters.id.includes(program.department_id));
 
         return Object.entries(this.types).filter(([key, type]) => {
           return current.some((program) => this.hasType(program, key));
