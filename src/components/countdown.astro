@@ -1,0 +1,117 @@
+---
+import Icon from "./icon.astro";
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  text: string;
+}
+
+const { text, class: className, ...props } = Astro.props;
+---
+
+<div
+  class={cn(
+    "bg-primary-800 text-white px-6 py-4 w-full max-w-xs flex flex-col items-center",
+    className
+  )}
+  x-data="{
+    date: new Date('2025-06-02T15:42:00'),
+
+    init() {
+      this.refresh(); 
+
+      setInterval(() => this.refresh(), 1000);
+    },
+
+    refresh() {
+      this.seconds--;
+
+      if (this.seconds < 0) {
+        this.minutes--
+        this.seconds = 59
+      }
+
+      if (this.minutes < 0) {
+        this.hours--
+        this.minutes = 59
+      }
+
+      if (this.hours < 0) {
+        this.days--
+        this.hours = 23
+      }
+    },
+
+    getPaddedNumber(number) {
+      return String(number).padStart(2, '0');
+    },
+
+    get days() {
+      const result = Math.round((this.date.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+      
+      return result < 0 ? 0 : result;
+    },
+
+    get hours() {
+      const result = Math.round((this.date.getTime() - Date.now()) / (3600000) % 24);
+      
+      return result < 0 ? 0 : result;
+    },
+
+    get minutes() {
+      const result = Math.round((this.date.getTime() - Date.now()) / (60000) % 60);
+
+      return result < 0 ? 0 : result;
+    },
+
+    get seconds() {
+      const result = Math.round((this.date.getTime() - Date.now()) / (1000) % 60);
+
+      return result < 0 ? 0 : result;
+    }
+  }"
+  {...props}
+>
+  <div
+    class="flex justify-center relative after:absolute after:h-px after:w-full after:bg-tertiary-300 after:left-0 after:top-1/2 mb-4 w-full"
+  >
+    <Icon name="clock" class="size-8 bg-primary-800 relative z-10" />
+  </div>
+
+  <dl class="flex gap-4 mb-6">
+    <div class="flex flex-col-reverse items-center">
+      <dt class="text-xs opacity-70">days</dt>
+      <dd
+        class="font-bold font-title text-5xl relative after:absolute after:content-['.'] after:right-0 after:top-0 after:translate-x-4"
+        x-text="getPaddedNumber(days)"
+      >
+        00
+      </dd>
+    </div>
+    <div class="flex flex-col-reverse items-center">
+      <dt class="text-xs opacity-70 block">hours</dt>
+      <dd
+        class="font-bold font-title text-5xl relative after:absolute after:content-[':'] after:right-0 after:top-0 after:translate-x-4"
+        x-text="getPaddedNumber(hours)"
+      >
+        00
+      </dd>
+    </div>
+    <div class="flex flex-col-reverse items-center">
+      <dt class="text-xs opacity-70">minutes</dt>
+      <dd
+        class="font-bold font-title text-5xl relative after:absolute after:content-[':'] after:right-0 after:top-0 after:translate-x-4"
+        x-text="getPaddedNumber(minutes)"
+      >
+        00
+      </dd>
+    </div>
+    <div class="flex flex-col-reverse items-center">
+      <dt class="text-xs opacity-70">seconds</dt>
+      <dd class="font-bold font-title text-5xl" x-text="getPaddedNumber(seconds)">00</dd>
+    </div>
+  </dl>
+
+  <p>{text}</p>
+</div>

@@ -1,0 +1,35 @@
+---
+import WithoutHero from "../../layouts/without-hero.astro";
+import CountdownComponent from "../../components/countdown.astro";
+---
+
+<WithoutHero
+  title="Email signatures"
+  description="Email signatures"
+  sidebarLinks={[
+    {
+      title: "Academics",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Email signatures", href: "/" },
+  ]}
+>
+  <h2 class="h3">Countdown component</h2>
+
+  <p class="mb-4">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, deserunt? Recusandae dolore
+    quis atque illum, animi quos rerum fugit adipisci tempora a iste culpa, id eum vitae eaque
+    dolorem esse?
+  </p>
+
+  <CountdownComponent text="until Welcome Week at Messiah" />
+</WithoutHero>
