@@ -1,0 +1,83 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+import Icon from "./icon.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  title: string;
+}
+
+const { title, class: className, ...props } = Astro.props;
+---
+
+<section
+  data-analytics="event-list"
+  {...props}
+  class={cn("@container not-prose border border-gray-300 bg-gray-100", className)}
+  x-data="{
+    events: [],
+    loading: true,
+    error: null,
+
+    init() {
+      fetch('https://mcadmissions.messiah.edu/manage/query/run?id=aecd61df-22cd-4ff5-8d70-ebf773e4abe5&cmd=service&output=json&h=364a8918-7a60-459f-80d2-962f3affda36')
+        .then((response) => response.json())
+        .then((data) => {
+          this.events = data.row;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch event list. (${error.message})`;
+          this.loading = false;
+        });
+    },
+
+    getMonth(date) {
+      return Intl.DateTimeFormat('en-US', { month: 'short' }).format(new Date(date));
+    },
+
+    getDay(date) {
+      return Intl.DateTimeFormat('en-US', { day: '2-digit' }).format(new Date(date));
+    },
+  }"
+>
+  <div class="p-4
+  @md:p-8">
+    <h3 class="mb-4 h4 text-primary-800">{title}</h3>
+
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading event list...</p>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <ul class="space-y-2 @md:space-y-4">
+      <template x-for="event in events">
+        <li class="p-4 bg-white shadow-md w-full flex items-center gap-4 relative group">
+          <time
+            datetime="2012"
+            class="bg-gray-800 uppercase font-title font-bold text-white w-12 text-center aspect-square leading-none flex flex-col items-center justify-center group-hover:bg-primary-700 transition-colors flex-shrink-0"
+          >
+            <span x-text="getMonth(event.StartDate)"></span>
+            <span x-text="getDay(event.StartDate)"></span>
+          </time>
+          <a
+            :href="event.URL"
+            class="after:absolute after:inset-0 @md:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
+            x-text="event.Title"></a>
+          <Icon name="chevron-right" class="ml-auto size-5 hidden @md:block" />
+        </li>
+      </template>
+    </ul>
+  </div>
+</section>

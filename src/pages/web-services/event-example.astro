@@ -1,4 +1,5 @@
 ---
+import EventListXhr from "../../components/event-list-xhr.astro";
 import EventList from "../../components/event-list.astro";
 import FeaturedEventList from "../../components/featured-event-list.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
@@ -102,4 +103,8 @@ import WithoutHero from "../../layouts/without-hero.astro";
       },
     ]}
   />
+
+  <hr class="my-8" />
+
+  <EventListXhr title="Dynamic events" />
 </WithoutHero>
