@@ -233,13 +233,13 @@ const nextSteps: {
           role="tabpanel"
           x-show="isSelected($id('tab', whichChild($el, $el.parentElement)))"
           :aria-labelledby="$id('tab', whichChild($el, $el.parentElement))"
-          class="w-full flex h-[calc(100vh_+_6rem)] md:h-[calc(90vh_+_8rem)] max-h-[1200px] min-h-[500px] items-end sm:items-center bg-primary-800 md:bg-[image:var(--bg-banner-desktop)] bg-[image:var(--bg-banner-mobile)] bg-cover bg-no-repeat pb-4 sm:pb-0 relative after:absolute after:inset-0 after:bg-gradient-to-br after:from-black/50 after:to-transparent"
+          class="w-full flex h-[calc(90vh_+_6rem)] md:h-[calc(90vh_+_8rem)] max-h-[1200px] md:min-h-[750px] items-end sm:items-center bg-primary-800 md:bg-[image:var(--bg-banner-desktop)] bg-[image:var(--bg-banner-mobile)] bg-cover bg-no-repeat pb-4 sm:pb-0 relative after:absolute after:inset-0 after:bg-gradient-to-br after:from-black/50 after:to-transparent"
           :style="{ '--bg-banner-desktop': `url(${tab.image})`, '--bg-banner-mobile': `url(${tab.mobileImage})` }"
         >
           <div class="max-w-[2100px] mx-auto px-4 lg:px-12 w-full z-10">
             <p class="text-white h2 max-w-2xl" x-text="tab.title"></p>
             <p class="text-white text-lg md:text-xl max-w-xl mb-8" x-text="tab.description"></p>
-            <div class="flex gap-2">
+            <div class="flex gap-2 flex-wrap">
               <template x-for="link in tab.links">
                 <a :href="link.href" class="btn-secondary" x-text="link.label"></a>
               </template>
