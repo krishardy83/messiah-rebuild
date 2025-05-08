@@ -1,0 +1,78 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<section class="pt-16" x-show="getAlumni().length > 0" x-data="{
+    selectedAlumni: null,
+  }">
+  <h2 class="h2 text-primary-800 text-center">Alumni Success</h2>
+
+  <div class="grid grid-cols-3">
+    <template x-for="alumni in getAlumni()">
+      <article class="relative h-[450px] flex flex-col items-center">
+        <header class="text-center bg-primary-800/50 w-full text-white py-2 px-4">
+          <h3 x-text="alumni.name" class="text-lg"></h3>
+          <p x-text="alumni.heading"></p>
+        </header>
+
+        <img
+          :src="alumni.image"
+          :alt="alumni.name"
+          class="absolute w-full h-full inset-0 object-cover -z-10"
+        />
+
+        <button class="btn btn-primary mt-auto mb-8" type="button" @click="selectedAlumni = alumni"
+          >Read story</button
+        >
+      </article>
+    </template>
+  </div>
+
+  <template x-teleport="body">
+    <div
+      x-show="Boolean(selectedAlumni)"
+      style="display: none"
+      x-on:keydown.escape.prevent.stop="selectedAlumni = null"
+      role="dialog"
+      aria-modal="true"
+      x-id="['modal-title']"
+      :aria-labelledby="$id('modal-title')"
+      class="dialog"
+    >
+      <div
+        x-show="Boolean(selectedAlumni)"
+        @click="selectedAlumni = null"
+        x-transition.opacity.duration.300
+        class="fixed inset-0 bg-primary-800/80 z-50"
+      >
+      </div>
+
+      <div
+        x-show="Boolean(selectedAlumni)"
+        x-transition.opacity.duration.300
+        x-trap.noscroll.inert="selectedAlumni"
+        class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+      >
+        <div class="flex justify-end p-4">
+          <button type="button" @click="selectedAlumni = null" aria-label="Close dialog">
+            <Icon name="close" class="size-10" />
+          </button>
+        </div>
+
+        <img
+          :src="selectedAlumni?.image"
+          :alt="selectedAlumni?.name"
+          class="w-full h-[400px] object-cover object-top mb-8"
+        />
+
+        <div class="p-4">
+          <h2 :id="$id('modal-title')" class="text-primary h3 !mb-0" x-text="selectedAlumni?.name">
+          </h2>
+          <p x-text="selectedAlumni?.heading" class="mb-8 text-primary-800"></p>
+
+          <div x-html="selectedAlumni?.story" class="rich-text"></div>
+        </div>
+      </div>
+    </div>
+  </template>
+</section>

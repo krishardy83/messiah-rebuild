@@ -1,0 +1,21 @@
+---
+import Icon from "../../components/icon.astro";
+import Stats from "../../components/stats.astro";
+---
+
+<section class="max-w-6xl mx-auto px-4 py-16 relative">
+  <h2 x-text="selected?.departmentName" class="h3 text-center"></h2>
+
+  <div>
+    <div>
+      <Stats value={66} />
+    </div>
+    <div>
+      <p>Hello World</p>
+    </div>
+  </div>
+
+  <button @click="open = true" class="absolute right-0 bottom-8">
+    <Icon name="info" class="size-8" />
+  </button>
+</section>

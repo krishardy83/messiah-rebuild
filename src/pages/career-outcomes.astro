@@ -1,0 +1,117 @@
+---
+import SingleColumn from "../layouts/single-column.astro";
+import Filter from "../views/career-outcomes/filter.astro";
+import EmploymentRate from "../views/career-outcomes/employment-rate.astro";
+import EmploymentPlaces from "../views/career-outcomes/employment-places.astro";
+import Drawer from "../views/career-outcomes/drawer.astro";
+import AlumniSuccess from "../views/career-outcomes/alumni-success.astro";
+import SchoolInformation from "../views/career-outcomes/school-information.astro";
+import Industries from "../views/career-outcomes/industries.astro";
+---
+
+<SingleColumn
+  title="Great Jobs, Great Lives"
+  description="Messiah University Undergraduate Career and Outcome Data"
+  subtitle="Messiah University Undergraduate Career and Outcome Data"
+  image="/images/career-hero-gradient2.jpg"
+  analyticsKey="career-outcomes"
+>
+  <div
+    x-data="{
+      entries: [],
+      loading: true,
+      error: null,
+      selected: null,
+      open: false,
+
+      init() {
+        fetch('https://cascade-prod.messiah.edu/career-outcomes/_data/career-options.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.entries = data.listing_data;
+            this.selected = this.entries.find((entry) => entry.departmentName === 'all');
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch career outcomes data. (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      isSelected(entry) {
+        if (!this.selected) {
+          return false;
+        }
+
+        return this.selected.entryId === entry.entryId;
+      },
+
+      isAggregateSelected() {
+        if (!this.selected) {
+          return false;
+        }  
+
+        return this.selected.departmentName === 'all';
+      },
+
+      getWorkplaces() {
+        if (!this.selected) {
+          return [];
+        }
+
+        return this.selected.whereGradsWork.split('|');
+      },
+
+      getCompanyLogos() {
+        const logos = [];
+
+        if (!this.selected) {
+          return logos;
+        }
+
+        for (let i = 1; i < 11; i++) {
+          if (this.selected[`logo${i}`]) {
+            logos.push(this.selected[`logo${i}`]);
+          }
+        }
+
+        return logos;
+      },
+
+      getAlumni() {
+        const alumni = [];
+
+        if (!this.selected) {
+          return alumni;
+        }
+
+        for (let i = 1; i < 4; i++) {
+          if (this.selected[`alumni${i}Name`]) {
+            alumni.push({
+              name: this.selected[`alumni${i}Name`],
+              heading: this.selected[`alumni${i}Heading`],
+              image: this.selected[`alumni${i}Image`],
+              story: this.selected[`alumni${i}Story`],
+            });
+          }
+        }
+
+        return alumni;
+      }
+    }"
+  >
+    <Filter />
+
+    <EmploymentRate />
+
+    <EmploymentPlaces />
+
+    <AlumniSuccess />
+
+    <Industries />
+
+    <SchoolInformation />
+
+    <Drawer />
+  </div>
+</SingleColumn>

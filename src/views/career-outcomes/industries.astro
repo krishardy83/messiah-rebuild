@@ -1,0 +1,181 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<section class="bg-gray-100" x-show="isAggregateSelected()">
+  <div class="max-w-6xl mx-auto px-4 py-16 relative">
+    <h2 class="h2 text-primary-800 text-center">Industries represented by our 2022 graduates</h2>
+
+    <div class="grid grid-cols-2 gap-16 mt-16">
+      <div>
+        <div class="flex items-end h-full">
+          <div
+            :style="`--color: #00777B; height: ${Math.min(80, parseInt(selected?.industriesArt) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-data="{ value: selected?.industriesArt }"
+            x-tooltip="`${selected?.industriesArt}% Arts / Music / Entertainment`"
+          >
+          </div>
+          <div
+            :style="`--color: #DCAC42; height: ${Math.min(80, parseInt(selected?.industriesAthletics) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesAthletics}% Athletics / Recreation / Sports`"
+          >
+          </div>
+          <div
+            :style="`--color: #5890B1; height: ${Math.min(80, parseInt(selected?.industriesBusiness) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesBusiness}% Business / Accounting / Financial Services`"
+          >
+          </div>
+          <div
+            :style="`--color: #E1B085; height: ${Math.min(80, parseInt(selected?.industriesCommunications) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesCommunications}% Communications / Media`"
+          >
+          </div>
+          <div
+            :style="`--color: #CF661F; height: ${Math.min(80, parseInt(selected?.industriesComputerScience) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesComputerScience}% Computer Science / IT`"
+          >
+          </div>
+          <div
+            :style="`--color: #74ACCF; height: ${Math.min(80, parseInt(selected?.industriesEducation) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesEducation}% Education`"
+          >
+          </div>
+          <div
+            :style="`--color: #5879BC; height: ${Math.min(80, parseInt(selected?.industriesEngineering) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesEngineering}% Engineering`"
+          >
+          </div>
+          <div
+            :style="`--color: #97B29A; height: ${Math.min(80, parseInt(selected?.industriesGovernment) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesGovernment}% Government`"
+          >
+          </div>
+          <div
+            :style="`--color: #C85C4F; height: ${Math.min(80, parseInt(selected?.industriesHumanServices) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesHumanServices}% Human Services / Social Services`"
+          >
+          </div>
+          <div
+            :style="`--color: #293D5E; height: ${Math.min(80, parseInt(selected?.industriesNonProfit) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesNonProfit}% Non Profit`"
+          >
+          </div>
+          <div
+            :style="`--color: #7376B8; height: ${Math.min(80, parseInt(selected?.industriesNursing) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesNursing}% Nursing / Health care`"
+          >
+          </div>
+          <div
+            :style="`--color: #64856C; height: ${Math.min(80, parseInt(selected?.industriesReligious) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesReligious}% Religious / Ministry Organization`"
+          >
+          </div>
+          <div
+            :style="`--color: #AA4D42; height: ${Math.min(80, parseInt(selected?.industriesScience) * 4)}%`"
+            class="flex-1 bg-[var(--color)]"
+            x-tooltip="`${selected?.industriesScience}% Science / Research`"
+          >
+          </div>
+        </div>
+        <p class="text-sm mt-1 text-center">Hover over bar to see percentage</p>
+      </div>
+
+      <ul class="grid grid-cols-2 gap-4 text-sm">
+        <li
+          style="--color: #00777B"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Arts / Music / Entertainment
+        </li>
+        <li
+          style="--color: #DCAC42"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Athletics / Recreation / Sports
+        </li>
+        <li
+          style="--color: #5890B1"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Business / Accounting / Financial Services
+        </li>
+        <li
+          style="--color: #E1B085"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Communications / Media
+        </li>
+        <li
+          style="--color: #CF661F"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Computer Science / IT
+        </li>
+        <li
+          style="--color: #74ACCF"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Education
+        </li>
+        <li
+          style="--color: #5879BC"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Engineering
+        </li>
+        <li
+          style="--color: #97B29A"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Government
+        </li>
+        <li
+          style="--color: #C85C4F"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Human Services / Social Services
+        </li>
+        <li
+          style="--color: #293D5E"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Non Profit
+        </li>
+        <li
+          style="--color: #7376B8"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Nursing / Health care
+        </li>
+        <li
+          style="--color: #64856C"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Religious / Ministry Organization
+        </li>
+        <li
+          style="--color: #AA4D42"
+          class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
+        >
+          Science / Research
+        </li>
+      </ul>
+    </div>
+
+    <button @click="open = true" class="absolute right-0 bottom-8">
+      <Icon name="info" class="size-8" />
+    </button>
+  </div>
+</section>

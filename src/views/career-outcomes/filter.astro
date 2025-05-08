@@ -1,0 +1,52 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<div x-data="{ expanded: false }">
+  <div class="bg-primary-800 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-center">
+      <button
+        type="button"
+        class="inline-flex items-center gap-2"
+        aria-controls="filter-content"
+        id="button-filter-content"
+        :aria-expanded="expanded"
+        @click="expanded = !expanded"
+      >
+        Click here to filter results based on academic department
+        <Icon
+          name="chevron-down"
+          :class="expanded && 'rotate-180'"
+          class="transition-transform duration-300"
+        />
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="bg-primary-900 text-white relative after:absolute after:size-8 after:bg-primary-900 after:top-full after:left-1/2 after:rotate-45 after:-translate-y-1/2"
+    role="region"
+    id="filter-content"
+    aria-labelledby="button-filter-content"
+    x-show="expanded"
+    x-collapse
+  >
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <ul class="grid grid-cols-4 gap-6">
+        <template x-for="entry in entries">
+          <li>
+            <button
+              type="button"
+              class="cursor-pointer hover:opacity-100 flex items-center gap-4"
+              :class="isSelected(entry) ? 'opacity-100' : 'opacity-75'"
+              @click="selected = entry"
+            >
+              <img :src="entry.iconImage" alt="" class="size-6" />
+              <span x-text="entry.entryTitle"></span>
+            </button>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </div>
+</div>

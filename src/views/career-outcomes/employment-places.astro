@@ -1,0 +1,78 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<section class="bg-tertiary-400 text-white">
+  <div class="max-w-6xl mx-auto px-4 py-16 relative">
+    <p x-show="!isAggregateSelected()" class="h3 text-center">
+      Department of <span x-text="selected?.departmentName"></span>
+    </p>
+    <h2 class="h2 text-center">Where our graduates work</h2>
+    <p class="paragraph text-center mb-16" x-show="!isAggregateSelected()">
+      Here is a sample of what some of our 2022 <span x-text="selected?.departmentName"></span> grads
+      are doing and where they work.
+    </p>
+    <p class="paragraph text-center mb-16" x-show="isAggregateSelected()">
+      Among the various industries employing Messiah graduates, below is a sample of places our 2022
+      graduates are working.
+    </p>
+
+    <div
+      x-show="getCompanyLogos().length > 0"
+      x-data="{
+        embla: null,
+        
+        init() {
+          this.embla = EmblaCarousel(this.$refs.embla);
+        },
+
+        scrollNext() {
+          this.embla.scrollNext();
+        },
+
+        scrollPrev() {
+          this.embla.scrollPrev();
+        },
+      }"
+      class="overflow-hidden relative mb-16"
+      x-ref="embla"
+    >
+      <div class="flex touch-pan-y">
+        <template x-for="logo in getCompanyLogos()">
+          <div class="basis-1/4 flex-shrink-0 flex-grow-0">
+            <div class="px-16">
+              <img :src="logo" alt="" class="max-h-24" />
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <nav>
+        <button
+          type="button"
+          class="absolute top-1/2 -translate-y-1/2 text-white left-0"
+          @click="scrollPrev"
+        >
+          <Icon name="chevron-right" class="size-10 rotate-180" />
+        </button>
+        <button
+          type="button"
+          class="absolute top-1/2 -translate-y-1/2 text-white right-0"
+          @click="scrollNext"
+        >
+          <Icon name="chevron-right" class="size-10" />
+        </button>
+      </nav>
+    </div>
+
+    <ul class="columns-2 text-center text-sm">
+      <template x-for="workplace in getWorkplaces()">
+        <li x-text="workplace"></li>
+      </template>
+    </ul>
+
+    <button @click="open = true" class="absolute right-0 bottom-8">
+      <Icon name="info" class="size-8" />
+    </button>
+  </div>
+</section>

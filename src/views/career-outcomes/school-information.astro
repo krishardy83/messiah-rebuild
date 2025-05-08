@@ -1,0 +1,100 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<section class="max-w-6xl mx-auto px-4 py-16 relative" x-show="isAggregateSelected()">
+  <h2 class="h2 text-primary-800 text-center">Graduate and professional school information</h2>
+  <p class="paragraph text-center mb-16">
+    13% of the survey respondents from the Class of 2022 reported graduate or professional school as
+    their primary activity following graduation. The numbers below represent the graduate level
+    fields of study pursued by these graduates.
+  </p>
+
+  <div class="grid grid-cols-4 bg-gray-300 gap-px">
+    <div class="relative row-span-2 bg-white px-8 py-4 flex justify-center">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/science.png"
+        alt=""
+      />
+      <div class="absolute bottom-6 w-full text-center text-white">
+        <span
+          class="block text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolScience + '%'"></span>
+        <span>Science</span>
+      </div>
+    </div>
+    <div class="bg-white px-8 py-4 flex items-center gap-4">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/medicine.png"
+        alt=""
+      />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolMedicine + '%'"></span>
+        <span>Medicine</span>
+      </div>
+    </div>
+    <div class="bg-white px-8 py-4 flex items-center gap-4">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/humanities.png"
+        alt=""
+      />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolHumanities + '%'"></span>
+        <span>Humanities</span>
+      </div>
+    </div>
+    <div class="bg-white px-8 py-4 flex items-center gap-4">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/arts.png"
+        alt=""
+      />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolArts + '%'"></span>
+        <span>Arts & Music</span>
+      </div>
+    </div>
+    <div class="bg-white px-8 py-4 flex items-center gap-4">
+      <img src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/law.png" alt="" />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolLaw + '%'"></span>
+        <span>Law</span>
+      </div>
+    </div>
+    <div class="bg-white px-8 py-4 flex items-center gap-4">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/education.png"
+        alt=""
+      />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolEducation + '%'"></span>
+        <span>Education, Social, Sciences, Government</span>
+      </div>
+    </div>
+    <div class="bg-white px-8 py-4 flex items-center gap-4">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/business.png"
+        alt=""
+      />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolBusiness + '%'"></span>
+        <span>Business, Math, Engineering, IT</span>
+      </div>
+    </div>
+  </div>
+
+  <button @click="open = true" class="absolute right-0 bottom-8">
+    <Icon name="info" class="size-8" />
+  </button>
+</section>
