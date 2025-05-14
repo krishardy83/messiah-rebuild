@@ -16,26 +16,26 @@ const { transparent } = Astro.props;
 
 <div
   data-menu
-  class="sticky -top-px before:absolute before:top-0 before:h-2 lg:before:h-4 before:w-full before:bg-gradient-to-r before:from-primary-600 lg:data-[scrolling='true']:bg-white before:to-secondary-600 pt-6 lg:pt-4 pb-2 lg:pb-6 z-30 group border-b border-transparent lg:data-[scrolling='true']:border-gray-300 lg:data-[compress='true']:-translate-y-12 transition-all"
+  class="group sticky -top-px z-30 border-b border-transparent pb-2 pt-6 transition-all before:absolute before:top-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600 lg:pb-6 lg:pt-4 lg:before:h-4 lg:data-[compress='true']:-translate-y-12 lg:data-[scrolling='true']:border-gray-300 lg:data-[scrolling='true']:bg-white"
 >
   <header class="mx-auto max-w-6xl px-4">
-    <nav class="flex items-end flex-wrap" data-analytics="navigation">
+    <nav class="flex flex-wrap items-end" data-analytics="navigation">
       <a
         href="/"
         aria-label="home page"
         class:list={[
-          "hidden lg:block mr-auto mt-4 group-data-[compress='true']:opacity-0 transition-opacity",
+          "slate-hidden mr-auto mt-4 transition-opacity group-data-[compress='true']:opacity-0 lg:block",
           transparent
-            ? "text-white group-data-[scrolling='true']:text-primary-800 transition-colors"
+            ? "text-white transition-colors group-data-[scrolling='true']:text-primary-800"
             : "text-primary-800",
         ]}
       >
         <Logo />
       </a>
 
-      <div class="flex-col justify-end transition-opacity grow hidden lg:flex">
+      <div class="slate-hidden grow flex-col justify-end transition-opacity lg:flex">
         <ul
-          class="flex justify-end mb-4 items-center group-data-[compress='true']:opacity-0 transition-opacity leading-none"
+          class="mb-4 flex items-center justify-end leading-none transition-opacity group-data-[compress='true']:opacity-0"
         >
           {
             topGroups.map((group) => (
@@ -47,7 +47,7 @@ const { transparent } = Astro.props;
                   aria-expanded="false"
                   aria-haspopup="true"
                   class:list={[
-                    "hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white transition-colors px-4 py-3 uppercase group-data-[scrolling='true']:aria-expanded:text-white flex items-center gap-x-2 group text-xs xl:text-sm",
+                    "group flex items-center gap-x-2 px-4 py-3 text-xs uppercase transition-colors hover:text-tertiary-400 aria-expanded:bg-primary-800 aria-expanded:text-white group-data-[scrolling='true']:aria-expanded:text-white xl:text-sm",
                     transparent
                       ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                       : "text-primary-800",
@@ -57,7 +57,7 @@ const { transparent } = Astro.props;
 
                   <Icon
                     name="chevron-down"
-                    class="size-4 pointer-events-none group-aria-expanded:rotate-180 transition-transform"
+                    class="pointer-events-none size-4 transition-transform group-aria-expanded:rotate-180"
                   />
                 </button>
 
@@ -65,13 +65,13 @@ const { transparent } = Astro.props;
                   aria-labelledby={`group-button-${slugify(group.title)}`}
                   aria-hidden="true"
                   id={`group-${slugify(group.title)}`}
-                  class="opacity-0 hidden absolute right-0 w-72 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
+                  class="slate-hidden absolute right-0 z-10 w-72 bg-primary-800 p-8 text-white opacity-0 transition-opacity duration-300 before:absolute before:bottom-0 before:left-0 before:h-2 before:w-full before:bg-gradient-to-r before:from-primary-600 before:to-secondary-600"
                   role="region"
                 >
                   <ul class="flex flex-col">
                     {group.children.map((child) => {
                       if (child.type === "separator") {
-                        return <li role="separator" class="w-full h-px bg-primary-500 my-4" />;
+                        return <li role="separator" class="my-4 h-px w-full bg-primary-500" />;
                       }
 
                       return (
@@ -80,7 +80,7 @@ const { transparent } = Astro.props;
                             href={child.href}
                             class:list={[
                               child.type === "button"
-                                ? "btn-quaternary w-full mb-2"
+                                ? "btn-quaternary mb-2 w-full"
                                 : "link my-2 block",
                             ]}
                           >
@@ -99,7 +99,7 @@ const { transparent } = Astro.props;
             <a
               href="/"
               class:list={[
-                "uppercase hover:text-tertiary-400 px-4 py-3 block transition-colors text-xs xl:text-sm",
+                "block px-4 py-3 text-xs uppercase transition-colors hover:text-tertiary-400 xl:text-sm",
                 transparent
                   ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                   : "text-primary-800",
@@ -118,18 +118,18 @@ const { transparent } = Astro.props;
               id="search-form-toggle"
               aria-controls="search-form"
               class:list={[
-                "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
+                "ml-4 mt-1 transition-colors hover:text-tertiary-400",
                 transparent
-                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  ? "group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 md:text-white"
                   : "text-primary-800",
               ]}
             >
-              <Icon name="search" class="size-4 xl:size-5 pointer-events-none" />
+              <Icon name="search" class="pointer-events-none size-4 xl:size-5" />
             </button>
           </li>
         </ul>
 
-        <ul class="flex gap-4 lg:gap-6 justify-end items-center">
+        <ul class="flex items-center justify-end gap-4 lg:gap-6">
           {
             bottomGroups.map((group) => (
               <li>
@@ -140,7 +140,7 @@ const { transparent } = Astro.props;
                   aria-controls={`group-${slugify(group.title)}`}
                   aria-haspopup="true"
                   class:list={[
-                    "text-sm group xl:text-lg flex items-center gap-x-2 font-bold hover:text-tertiary-400 aria-expanded:after:bg-gray-100 after:bg-transparent relative after:absolute after:top-10 after:h-3 after:left-0 after:right-0 after:transition-colors after:duration-300 transition-colors",
+                    "group relative flex items-center gap-x-2 text-sm font-bold transition-colors after:absolute after:left-0 after:right-0 after:top-10 after:h-3 after:bg-transparent after:transition-colors after:duration-300 hover:text-tertiary-400 aria-expanded:after:bg-gray-100 xl:text-lg",
                     transparent
                       ? "text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
                       : "text-primary-800",
@@ -150,13 +150,13 @@ const { transparent } = Astro.props;
 
                   <Icon
                     name="chevron-down"
-                    class="size-4 group-aria-expanded:rotate-180 pointer-events-none transition-transform"
+                    class="pointer-events-none size-4 transition-transform group-aria-expanded:rotate-180"
                   />
                 </button>
 
                 <div
                   id={`group-${slugify(group.title)}`}
-                  class="opacity-0 hidden absolute left-0 mt-6 w-full bg-gray-100 py-12 transition-opacity duration-300 z-30"
+                  class="slate-hidden absolute left-0 z-30 mt-6 w-full bg-gray-100 py-12 opacity-0 transition-opacity duration-300"
                   aria-labelledby={`group-button-${slugify(group.title)}`}
                   aria-hidden="true"
                   role="region"
@@ -181,7 +181,7 @@ const { transparent } = Astro.props;
                               class:list={[
                                 "link",
                                 {
-                                  "text-primary-800 font-title uppercase font-bold text-xl":
+                                  "font-title text-xl font-bold uppercase text-primary-800":
                                     link.heading,
                                 },
                               ]}
@@ -197,7 +197,7 @@ const { transparent } = Astro.props;
               </li>
             ))
           }
-          <li class="hidden group-data-[compress='true']:block">
+          <li class="slate-hidden group-data-[compress='true']:block">
             <button
               type="button"
               aria-label="show search form"
@@ -206,13 +206,13 @@ const { transparent } = Astro.props;
               id="search-form-toggle"
               aria-controls="search-form"
               class:list={[
-                "hover:text-tertiary-400 ml-4 mt-1 transition-colors",
+                "ml-4 mt-1 transition-colors hover:text-tertiary-400",
                 transparent
-                  ? "md:text-white group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400"
+                  ? "group-data-[scrolling='true']:text-primary-800 group-data-[scrolling='true']:hover:text-tertiary-400 md:text-white"
                   : "text-primary-800",
               ]}
             >
-              <Icon name="search" class="size-5 pointer-events-none" />
+              <Icon name="search" class="pointer-events-none size-5" />
             </button>
           </li>
         </ul>
@@ -224,12 +224,12 @@ const { transparent } = Astro.props;
     id="search-form"
     aria-labelledby="search-form-toggle"
     aria-hidden="true"
-    class="opacity-0 hidden absolute left-0 top-0 right-0 bg-primary-800 text-white transition-opacity duration-300 p-8 z-10 group-data-[scrolling='true']:translate-y-12"
+    class="slate-hidden absolute left-0 right-0 top-0 z-10 bg-primary-800 p-8 text-white opacity-0 transition-opacity duration-300 group-data-[scrolling='true']:translate-y-12"
   >
-    <form class="max-w-6xl mx-auto px-4 flex relative">
+    <form class="relative mx-auto flex max-w-6xl px-4">
       <input
         type="search"
-        class="border border-white/50 w-full px-4 py-2 bg-transparent placeholder:text-white/50"
+        class="w-full border border-white/50 bg-transparent px-4 py-2 placeholder:text-white/50"
         placeholder="What are you searching for?"
         name="s"
         autofocus
@@ -237,9 +237,9 @@ const { transparent } = Astro.props;
       <button
         type="submit"
         aria-label="submit search form"
-        class="absolute right-4 top-0 text-white/50 transition-colors h-full flex items-center justify-center aspect-square hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
+        class="absolute right-4 top-0 flex aspect-square h-full items-center justify-center text-white/50 transition-colors hover:bg-white/50 hover:text-white focus-visible:bg-white/50 focus-visible:text-white"
       >
-        <Icon name="search" class="size-5 pointer-events-none" />
+        <Icon name="search" class="pointer-events-none size-5" />
       </button>
     </form>
   </search>
@@ -258,7 +258,7 @@ const { transparent } = Astro.props;
       group.addEventListener(
         "transitionend",
         () => {
-          group.classList.add("hidden");
+          group.classList.add("slate-hidden");
         },
         { once: true }
       );
@@ -269,7 +269,7 @@ const { transparent } = Astro.props;
     let group = menu?.querySelector<HTMLDivElement>(`#${button.getAttribute("aria-controls")}`);
 
     if (group) {
-      group.classList.remove("hidden");
+      group.classList.remove("slate-hidden");
       button.setAttribute("aria-expanded", "true");
       group.setAttribute("aria-hidden", "false");
 
