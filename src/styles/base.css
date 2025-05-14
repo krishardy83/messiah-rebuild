@@ -191,4 +191,8 @@
   .bg-gradient {
     @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600;
   }
+  
+  .slate-hidden {
+    @apply hidden;
+  }
 }
