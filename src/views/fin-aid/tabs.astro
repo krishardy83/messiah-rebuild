@@ -44,6 +44,12 @@ import Icon from "../../components/icon.astro";
         .then((response) => response.json())
         .then((data) => {
           this.entries = data.listing_data;
+
+          const hash = location.hash.slice(1);
+
+          if (hash) {
+            this.select(decodeURIComponent(hash));
+          }
         });
     },
 
