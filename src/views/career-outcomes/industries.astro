@@ -6,8 +6,8 @@ import Icon from "../../components/icon.astro";
   <div class="max-w-6xl mx-auto px-4 py-16 relative">
     <h2 class="h2 text-primary-800 text-center">Industries represented by our 2022 graduates</h2>
 
-    <div class="grid grid-cols-2 gap-16 mt-16">
-      <div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-16 mt-16">
+      <div class="h-72 sm:h-auto">
         <div class="flex items-end h-full">
           <div
             :style="`--color: #00777B; height: ${Math.min(80, parseInt(selected?.industriesArt) * 4)}%`"
@@ -92,7 +92,7 @@ import Icon from "../../components/icon.astro";
         <p class="text-sm mt-1 text-center">Hover over bar to see percentage</p>
       </div>
 
-      <ul class="grid grid-cols-2 gap-4 text-sm">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
         <li
           style="--color: #00777B"
           class="flex items-center gap-2 before:size-4 before:rounded-full before:bg-[var(--color)]"
@@ -174,7 +174,7 @@ import Icon from "../../components/icon.astro";
       </ul>
     </div>
 
-    <button @click="open = true" class="absolute right-0 bottom-8">
+    <button @click="open = true" class="absolute right-4 bottom-8">
       <Icon name="info" class="size-8" />
     </button>
   </div>

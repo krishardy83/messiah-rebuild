@@ -10,8 +10,10 @@ import Icon from "../../components/icon.astro";
     fields of study pursued by these graduates.
   </p>
 
-  <div class="grid grid-cols-4 bg-gray-300 gap-px">
-    <div class="relative row-span-2 bg-white px-8 py-4 flex justify-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 bg-gray-300 gap-px">
+    <div
+      class="hidden sm:flex relative sm:row-span-2 md:row-span-3 lg:row-span-2 bg-white px-8 py-4 justify-center"
+    >
       <img
         src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/science.png"
         alt=""
@@ -19,6 +21,20 @@ import Icon from "../../components/icon.astro";
       <div class="absolute bottom-6 w-full text-center text-white">
         <span
           class="block text-5xl font-bold font-title"
+          x-text="selected?.graduateSchoolScience + '%'"></span>
+        <span>Science</span>
+      </div>
+    </div>
+    <div class="sm:hidden bg-white px-8 py-4 flex items-center gap-4">
+      <img
+        src="https://www.messiah.edu/career-outcomes/_images/grad-school-icons/science.png"
+        alt=""
+        width="70"
+        height="80"
+      />
+      <div>
+        <span
+          class="block text-primary-800 text-5xl font-bold font-title"
           x-text="selected?.graduateSchoolScience + '%'"></span>
         <span>Science</span>
       </div>
@@ -94,7 +110,7 @@ import Icon from "../../components/icon.astro";
     </div>
   </div>
 
-  <button @click="open = true" class="absolute right-0 bottom-8">
+  <button @click="open = true" class="absolute right-4 bottom-8">
     <Icon name="info" class="size-8" />
   </button>
 </section>
