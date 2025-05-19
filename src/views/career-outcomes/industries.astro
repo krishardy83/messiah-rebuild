@@ -10,81 +10,93 @@ import Icon from "../../components/icon.astro";
       <div class="h-72 sm:h-auto">
         <div class="flex items-end h-full">
           <div
-            :style="`--color: #00777B; height: ${Math.min(80, parseInt(selected?.industriesArt) * 4)}%`"
+            :style="`--color: #00777B; height: ${getEmploymentPercentage(selected?.industriesArt)}%`"
             class="flex-1 bg-[var(--color)]"
-            x-data="{ value: selected?.industriesArt }"
+            :class="selected?.industriesArt === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesArt}% Arts / Music / Entertainment`"
           >
           </div>
           <div
-            :style="`--color: #DCAC42; height: ${Math.min(80, parseInt(selected?.industriesAthletics) * 4)}%`"
-            class="flex-1 bg-[var(--color)]"
+            :style="`--color: #DCAC42; height: ${getEmploymentPercentage(selected?.industriesAthletics)}%`"
+            class="flex-1"
+            :class="selected?.industriesAthletics === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesAthletics}% Athletics / Recreation / Sports`"
           >
           </div>
           <div
-            :style="`--color: #5890B1; height: ${Math.min(80, parseInt(selected?.industriesBusiness) * 4)}%`"
+            :style="`--color: #5890B1; height: ${getEmploymentPercentage(selected?.industriesBusiness)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesBusiness === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesBusiness}% Business / Accounting / Financial Services`"
           >
           </div>
           <div
-            :style="`--color: #E1B085; height: ${Math.min(80, parseInt(selected?.industriesCommunications) * 4)}%`"
+            :style="`--color: #E1B085; height: ${getEmploymentPercentage(selected?.industriesCommunications)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesCommunications === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesCommunications}% Communications / Media`"
           >
           </div>
           <div
-            :style="`--color: #CF661F; height: ${Math.min(80, parseInt(selected?.industriesComputerScience) * 4)}%`"
+            :style="`--color: #CF661F; height: ${getEmploymentPercentage(selected?.industriesComputerScience)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesComputerScience === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesComputerScience}% Computer Science / IT`"
           >
           </div>
           <div
-            :style="`--color: #74ACCF; height: ${Math.min(80, parseInt(selected?.industriesEducation) * 4)}%`"
+            :style="`--color: #74ACCF; height: ${getEmploymentPercentage(selected?.industriesEducation)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesEducation === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesEducation}% Education`"
           >
           </div>
           <div
-            :style="`--color: #5879BC; height: ${Math.min(80, parseInt(selected?.industriesEngineering) * 4)}%`"
+            :style="`--color: #5879BC; height: ${getEmploymentPercentage(selected?.industriesEngineering)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesEngineering === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesEngineering}% Engineering`"
           >
           </div>
           <div
-            :style="`--color: #97B29A; height: ${Math.min(80, parseInt(selected?.industriesGovernment) * 4)}%`"
+            :style="`--color: #97B29A; height: ${getEmploymentPercentage(selected?.industriesGovernment)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesGovernment === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesGovernment}% Government`"
           >
           </div>
           <div
-            :style="`--color: #C85C4F; height: ${Math.min(80, parseInt(selected?.industriesHumanServices) * 4)}%`"
+            :style="`--color: #C85C4F; height: ${getEmploymentPercentage(selected?.industriesHumanServices)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesHumanServices === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesHumanServices}% Human Services / Social Services`"
           >
           </div>
           <div
-            :style="`--color: #293D5E; height: ${Math.min(80, parseInt(selected?.industriesNonProfit) * 4)}%`"
+            :style="`--color: #293D5E; height: ${getEmploymentPercentage(selected?.industriesNonProfit)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesNonProfit === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesNonProfit}% Non Profit`"
           >
           </div>
           <div
-            :style="`--color: #7376B8; height: ${Math.min(80, parseInt(selected?.industriesNursing) * 4)}%`"
+            :style="`--color: #7376B8; height: ${getEmploymentPercentage(selected?.industriesNursing)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesNursing === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesNursing}% Nursing / Health care`"
           >
           </div>
           <div
-            :style="`--color: #64856C; height: ${Math.min(80, parseInt(selected?.industriesReligious) * 4)}%`"
+            :style="`--color: #64856C; height: ${getEmploymentPercentage(selected?.industriesReligious)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesReligious === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesReligious}% Religious / Ministry Organization`"
           >
           </div>
           <div
-            :style="`--color: #AA4D42; height: ${Math.min(80, parseInt(selected?.industriesScience) * 4)}%`"
+            :style="`--color: #AA4D42; height: ${getEmploymentPercentage(selected?.industriesScience)}%`"
             class="flex-1 bg-[var(--color)]"
+            :class="selected?.industriesScience === '0' ? 'bg-transparent' : 'bg-[var(--color)]'"
             x-tooltip="`${selected?.industriesScience}% Science / Research`"
           >
           </div>
