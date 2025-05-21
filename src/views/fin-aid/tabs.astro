@@ -11,24 +11,24 @@ import Icon from "../../components/icon.astro";
 
     filters: [
       {
-        id: 'Scholarships',
+        id: 'scholarships',
         label: 'Scholarships',
         icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/graduation-cap-new.svg',
       },
       {
-        id: 'Grants',
+        id: 'grants',
         label: 'Grants',
         icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/grants-new.svg',
         description:
           'The grants listed below are available to U.S. citizens and permanent residents only.',
       },
       {
-        id: 'Federal Loans',
+        id: 'federal-loans',
         label: 'Federal Loans',
         icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/fel-loan-new.svg',
       },
       {
-        id: 'Other Assistance',
+        id: 'other-assistance',
         label: 'Other Assistance',
         icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/hand-shake.svg',
       },
@@ -43,30 +43,41 @@ import Icon from "../../components/icon.astro";
       fetch('https://cascade-prod.messiah.edu/fin-aid/_data/fin-aid-options.json')
         .then((response) => response.json())
         .then((data) => {
-          this.entries = data.listing_data;
+          this.entries = data.listing_data.map((entry) => {
+            const filter = this.filters.find((filter) => filter.id === this.slugify(entry.category));
+
+            return { ...entry, icon: filter?.icon || null };
+          });
 
           const hash = location.hash.slice(1);
+          const url = new URL(location.href);
+          const modal = url.searchParams.get('modal');
+          const entry = this.getEntryById(modal);
 
-          if (hash) {
-            this.select(decodeURIComponent(hash));
+          if (entry) {
+            this.isDialogVisible = true;
+            this.activeEntry = entry;
           }
+
+          this.select(hash || 'scholarships');
         });
     },
 
-    entriesWithIcon() {
-      return this.entries.map((entry) => {
-        const filter = this.filters.find((filter) => filter.id === entry.category);
-
-        return { ...entry, icon: filter?.icon || null };
-      });
+    slugify(str) {
+      return str
+        .trim()
+        .toLowerCase()
+        .replaceAll(' ', '-');
     },
 
     filteredEntries() {
       if (!this.selected) {
-        return this.entriesWithIcon();
+        return this.entries;
       }
 
-      return this.entriesWithIcon().filter((entry) => entry.category === this.selected);
+      return this.entries.filter((entry) => {
+        return this.slugify(entry.category) === this.selected
+      });
     },
 
     description() {
@@ -84,6 +95,12 @@ import Icon from "../../components/icon.astro";
         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
       );
+    },
+
+    getEntryById(id) {
+      return this.entries.find((entry) => {
+        return this.slugify(entry.entry_name) === id;
+      });
     },
 
     getStudentTypes(activeEntry) {
