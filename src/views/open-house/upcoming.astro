@@ -23,6 +23,21 @@ import Icon from "../../components/icon.astro";
         day: 'numeric',
         year: 'numeric',
       }).format(new Date(start));
+    },
+
+    getURL(href) {
+      const url = new URL(location.href);
+      const person = url.searchParams.get('person');
+
+      if (person) {
+        const target = new URL(href);
+
+        target.searchParams.set('person', person);
+        
+        return target.toString();
+      }
+
+      return href;
     }
   }"
 >
@@ -32,7 +47,7 @@ import Icon from "../../components/icon.astro";
     <template x-for="date in dates">
       <li>
         <a
-          :href="date.URL"
+          :href="getURL(date.URL)"
           class="border-4 border-tertiary-300 flex flex-col p-4 h-32 hover:bg-tertiary-300 group transition-colors focus-visible:bg-tertiary-300"
         >
           <span class="font-title uppercase font-bold text-2xl" x-text="getTitle(date.StartDate)"
