@@ -121,6 +121,14 @@ import Industries from "../views/career-outcomes/industries.astro";
         }
 
         return Math.min(80, parsed * 4);
+      },
+
+      getDepartmentGraduatesNames() {
+        if (!this.selected) {
+          return 'Messiah graduates';
+        }
+
+        return `${this.selected.departmentName} graduates`;
       }
     }"
   >
