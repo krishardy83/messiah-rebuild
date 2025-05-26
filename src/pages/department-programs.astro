@@ -47,7 +47,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       error: null,
       filters: {
         type: '',
-        id: ['business', 'nursing'],
+        id: ['theatreanddance'],
       },
       open: null,
 
@@ -216,14 +216,18 @@ import WithoutHero from "../layouts/without-hero.astro";
         return result;
       },
 
+      hasDepartmentId(program) {
+        return program.department_id.split('|').some((id) => this.filters.id.includes(id));
+      },
+
       get filteredPrograms() {
         return this.transformedPrograms.filter((program) => {
-          return this.hasType(program, this.filters.type) && this.filters.id.includes(program.department_id);
+          return this.hasType(program, this.filters.type) && this.hasDepartmentId(program);
         });
       },
 
       get filteredTypes() {
-        const current = this.programs.filter((program) => this.filters.id.includes(program.department_id));
+        const current = this.programs.filter((program) => this.hasDepartmentId(program));
 
         return Object.entries(this.types).filter(([key, type]) => {
           return current.some((program) => this.hasType(program, key));
