@@ -6,6 +6,8 @@ import Icon from "../../components/icon.astro";
   class="max-w-6xl mx-auto px-4 py-24"
   x-data="{
     dates: [],
+    loading: true,
+    error: null,
     
     init() {
       fetch(
@@ -14,6 +16,11 @@ import Icon from "../../components/icon.astro";
         .then((response) => response.json())
         .then((data) => {
           this.dates = data.row;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch event list. (${error.message})`;
+          this.loading = false;
         });
     },
 
@@ -42,6 +49,28 @@ import Icon from "../../components/icon.astro";
   }"
 >
   <h2 class="h2 text-primary-800">Join us for an upcoming Open House</h2>
+
+  <template x-if="loading">
+    <div
+      role="alert"
+      class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+    >
+      <p>Loading upcoming events...</p>
+    </div>
+  </template>
+
+  <template x-if="error">
+    <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+      <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+      <code x-text="error" class="text-sm leading-none"></code>
+    </div>
+  </template>
+
+  <template x-if="dates.length === 0 && !loading && !error">
+    <div role="alert" class="bg-gray-100 border border-gray-200 text-gray-800 px-4 py-2">
+      <p>No upcoming events at this time, please check back later.</p>
+    </div>
+  </template>
 
   <ol class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
     <template x-for="date in dates">
