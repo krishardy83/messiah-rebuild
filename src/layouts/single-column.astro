@@ -21,7 +21,7 @@ const { title, description, analyticsKey, subtitle, buttons, image, mobileImage 
 <BaseLayout title={title} description={description}>
   <header
     data-analytics={`${analyticsKey}-header`}
-    class="relative md:bg-[image:var(--bg-banner-desktop)] bg-[image:var(--bg-banner-mobile)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-48 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent"
+    class="relative md:bg-[image:var(--bg-banner-desktop)] bg-[image:var(--bg-banner-mobile)] isolate bg-cover bg-no-repeat after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/60 after:to-transparent -mt-32 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/60 before:to-transparent"
     style={{
       "--bg-banner-desktop": `url(${image})`,
       "--bg-banner-mobile": `url(${mobileImage || image})`,
