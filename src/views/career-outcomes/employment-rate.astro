@@ -3,7 +3,7 @@ import Icon from "../../components/icon.astro";
 ---
 
 <section class="max-w-6xl mx-auto px-4 py-16 relative" x-show="meetsEmploymentRateThreshold()">
-  <h2 x-text="selected?.departmentName" class="h3 text-center" x-show="!isAggregateSelected()"></h2>
+  <h2 class="h3 text-center" x-show="!isAggregateSelected()">Department of <span x-text="selected?.departmentName"></span></h2>
 
   <div
     aria-hidden="true"
