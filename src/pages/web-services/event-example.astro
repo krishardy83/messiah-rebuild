@@ -1,4 +1,5 @@
 ---
+import EventDetailsWidget from "../../components/event-details-widget.astro";
 import EventListXhr from "../../components/event-list-xhr.astro";
 import EventList from "../../components/event-list.astro";
 import FeaturedEventList from "../../components/featured-event-list.astro";
@@ -107,4 +108,28 @@ import WithoutHero from "../../layouts/without-hero.astro";
   <hr class="my-8" />
 
   <EventListXhr title="Dynamic events" />
+
+  <hr class="my-8" />
+
+  <div class="rich-text">
+    <h3>Event Details Widget</h3>
+
+    <EventDetailsWidget
+      class="float-right w-1/2 ml-8"
+      title="Details"
+      date="2024-06-01"
+      startTime="8am"
+      endTime="5pm"
+      location="Old Main"
+      url="http://localhost:4321/web-services/event-example"
+      cost="Free"
+      categories={["Music Department", "Student Recital"]}
+    />
+
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut perferendis quibusdam hic dolor
+      labore blanditiis neque fugit. Corporis quod ipsum beatae temporibus doloremque, consequuntur
+      minus ullam quae quo sunt modi!
+    </p>
+  </div>
 </WithoutHero>

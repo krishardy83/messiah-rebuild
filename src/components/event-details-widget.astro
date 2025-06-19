@@ -1,0 +1,102 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+import Icon from "./icon.astro";
+
+interface Props extends HTMLAttributes<"section"> {
+  title: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  cost: string;
+  url: string;
+  categories: string[];
+}
+
+const {
+  title,
+  date,
+  startTime,
+  endTime,
+  location,
+  url,
+  cost,
+  categories,
+  class: className,
+  ...props
+} = Astro.props;
+---
+
+<section
+  data-analytics="event-list"
+  {...props}
+  class={cn("not-prose w-full bg-primary-800/80 text-white", className)}
+>
+  <div class="p-8">
+    <h3 class="mb-2 h4">{title}</h3>
+
+    <ul class="space-y-4 mb-8">
+      <li class="flex gap-2 items-center"><Icon name="calendar" class="size-6" />{date}</li>
+      <li class="flex gap-2 items-center">
+        <Icon name="clock" class="size-6" />{startTime} to {endTime}
+      </li>
+      <li class="flex gap-2 items-center"><Icon name="marker" class="size-6" />{location}</li>
+      <li class="flex gap-2 items-center"><Icon name="dollar" class="size-6" />{cost}</li>
+    </ul>
+
+    <h3 class="mb-2 h4">Categories</h3>
+    <p class="mb-8">
+      {categories.join(", ").toLowerCase()}
+    </p>
+
+    <h3 class="mb-2 h4">Share</h3>
+    <ul class="flex gap-4">
+      <li>
+        <a
+          target="_blank"
+          href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+          class="hover:text-tertiary-200 transition-colors"
+          title="Share on Facebook"
+        >
+          <svg width="24" height="24" viewBox="0 0 32 32" class="size-6">
+            <path
+              fill="currentColor"
+              d="M29 0h-26c-1.65 0-3 1.35-3 3v26c0 1.65 1.35 3 3 3h13v-14h-4v-4h4v-2c0-3.306 2.694-6 6-6h4v4h-4c-1.1 0-2 0.9-2 2v2h6l-1 4h-5v14h9c1.65 0 3-1.35 3-3v-26c0-1.65-1.35-3-3-3z"
+            ></path>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a
+          target="_blank"
+          href={`https://x.com/intent/tweet?text=${title}&url=${url}`}
+          class="hover:text-tertiary-200 transition-colors"
+          title="Share on X"
+        >
+          <svg width="24" height="24" viewBox="0 0 32 32" class="size-6">
+            <path
+              fill="currentColor"
+              d="M24.325 3h4.411l-9.636 11.013 11.336 14.987h-8.876l-6.952-9.089-7.955 9.089h-4.413l10.307-11.78-10.875-14.22h9.101l6.284 8.308zM22.777 26.36h2.444l-15.776-20.859h-2.623z"
+            ></path>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a
+          target="_blank"
+          href={`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}`}
+          class="hover:text-tertiary-200 transition-colors"
+          title="Share on LinkedIn"
+        >
+          <svg width="24" height="24" viewBox="0 0 32 32" class="size-6">
+            <path
+              fill="currentColor"
+              d="M29 0h-26c-1.65 0-3 1.35-3 3v26c0 1.65 1.35 3 3 3h26c1.65 0 3-1.35 3-3v-26c0-1.65-1.35-3-3-3zM12 26h-4v-14h4v14zM10 10c-1.106 0-2-0.894-2-2s0.894-2 2-2c1.106 0 2 0.894 2 2s-0.894 2-2 2zM26 26h-4v-8c0-1.106-0.894-2-2-2s-2 0.894-2 2v8h-4v-14h4v2.481c0.825-1.131 2.087-2.481 3.5-2.481 2.488 0 4.5 2.238 4.5 5v9z"
+            ></path>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
