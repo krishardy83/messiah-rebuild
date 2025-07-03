@@ -17,15 +17,17 @@ const { title, class: className, ...props } = Astro.props;
   x-data="{
     events: [],
     loading: true,
+    categories: ['The Arts of Messiah'],
     error: null,
 
     init() {
       fetch('https://www.messiah.edu/events/_data/all-events.json')
         .then((response) => response.json())
         .then((data) => {
-          this.events = data.items;
+          this.events = data.items.filter((item) => {
+            return item.category.some((category) => this.categories.includes(category));
+          });
           this.loading = false;
-          console.log(this.getCurrentEvents());
         })
         .catch((error) => {
           this.error = `Could not fetch event list. (${error.message})`;
