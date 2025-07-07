@@ -17,7 +17,8 @@ const { title, class: className, ...props } = Astro.props;
   x-data="{
     events: [],
     loading: true,
-    categories: ['The Arts of Messiah'],
+    categories: ['Concerts'],
+    calendars: ['The Arts at Messiah'],
     error: null,
 
     init() {
@@ -25,7 +26,10 @@ const { title, class: className, ...props } = Astro.props;
         .then((response) => response.json())
         .then((data) => {
           this.events = data.items.filter((item) => {
-            return item.category.some((category) => this.categories.includes(category));
+            const matchesCategory = this.categories.length === 0 || item.category.some((category) => this.categories.includes(category));
+            const matchesCalendar = this.calendars.length === 0 || item.calendars.some((calendar) => this.calendars.includes(calendar));
+
+            return matchesCategory && matchesCalendar;
           });
           this.loading = false;
         })
