@@ -2,6 +2,7 @@
 import EventDetailsWidget from "../../components/event-details-widget.astro";
 import EventListXhr from "../../components/event-list-xhr.astro";
 import EventList from "../../components/event-list.astro";
+import FeaturedEventListXhr from "../../components/featured-event-list-xhr.astro";
 import FeaturedEventList from "../../components/featured-event-list.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
 ---
@@ -104,6 +105,10 @@ import WithoutHero from "../../layouts/without-hero.astro";
       },
     ]}
   />
+
+  <hr class="my-8" />
+
+  <FeaturedEventListXhr title="Dynamic Upcoming Events" />
 
   <hr class="my-8" />
 

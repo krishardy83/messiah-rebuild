@@ -1,0 +1,169 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"div"> {
+  title: string;
+}
+
+const { title, class: className, ...props } = Astro.props;
+---
+
+<div
+  data-analytics="featured-event-list"
+  {...props}
+  class={cn("@container not-prose", className)}
+  x-data="{
+    events: [],
+    loading: true,
+    categories: [],
+    calendars: ['The Arts at Messiah'],
+    error: null,
+
+    init() {
+      fetch('https://www.messiah.edu/events/_data/all-events.json')
+        .then((response) => response.json())
+        .then((data) => {
+          this.events = data.items.filter((item) => {
+            const matchesCategory = this.categories.length === 0 || item.category.some((category) => this.categories.includes(category));
+            const matchesCalendar = this.calendars.length === 0 || item.calendars.some((calendar) => this.calendars.includes(calendar));
+
+            return matchesCategory && matchesCalendar;
+          });
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch event list. (${error.message})`;
+          this.loading = false;
+        });
+    },
+
+    getDate(timestring) {
+      const date = timestring ? new Date(timestring) : new Date();
+      
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0, 0);
+      
+      return date;
+    },
+
+    transformEvent(event, date) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dez'];
+      
+      return {
+        title: event.title,
+        url: event.url,
+        month: months[date.getMonth()],
+        day: date.getDate(),
+        time: event.start,
+      };
+    },
+
+    getNextViableEvent(event) {
+      const today = this.getDate();
+      const dayMap = {
+        Sunday: 0,
+        Monday: 1,
+        Tuesday: 2,
+        Wednesday: 3,
+        Thursday: 4,
+        Friday: 5,
+        Saturday: 6,
+      };
+      
+      if (event.repeat === 'Daily') {
+        return this.transformEvent(event, today);
+      } else {
+        const startDate = this.getDate(event.date);
+        const endDate = this.getDate(event.repeatEnd);
+        const repeatDays = event.repeatDays.map(day => dayMap[day]);
+        let date = new Date(Math.max(today, startDate));
+
+        while (date <= endDate) {
+          if (repeatDays.includes(date.getDay())) {
+            return this.transformEvent(event, date);
+          }
+
+          date.setDate(date.getDate() + 1);
+        }
+      }
+    },
+
+    getCurrentEvents() {
+      const today = this.getDate();
+      const results = [];
+
+      for (const event of this.events) {
+        if (event.repeat === 'No repeat') {
+          const start = this.getDate(event.date);
+          
+          if (today.getTime() <= start.getTime()) {
+            results.push(this.transformEvent(event, start));
+          }
+        } else {
+          const end = this.getDate(event.repeatEnd);
+          
+          if (today.getTime() <= end.getTime()) {
+            results.push(this.getNextViableEvent(event));
+          }
+        }
+      }
+      
+      return results;
+    },
+  }"
+>
+  <h3 class="mb-4 h4 text-primary-800">{title}</h3>
+
+  <template x-if="loading">
+    <div
+      role="alert"
+      class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+    >
+      <p>Loading event list...</p>
+    </div>
+  </template>
+
+  <template x-if="error">
+    <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+      <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+      <code x-text="error" class="text-sm leading-none"></code>
+    </div>
+  </template>
+
+  <template x-if="events.length === 0 && !loading && !error">
+    <p>No upcoming events, check back later.</p>
+  </template>
+
+  <div class="flex flex-col gap-4">
+    <template x-for="event in getCurrentEvents()">
+      <article class="flex flex-col @md:flex-row gap-4">
+        <figure class="@md:w-1/3">
+          <img src="/images/nursing-rotating.jpg" alt="" class="h-full object-cover" />
+        </figure>
+
+        <div class="@md:w-2/3 relative @md:pr-28">
+          <time
+            datetime="2012"
+            class="bg-primary-800 w-max uppercase font-title px-6 py-1 font-bold text-white leading-none flex flex-col items-center mb-4 justify-center @md:absolute right-0 top-0"
+          >
+            <span x-text="event.month"></span>
+            <span class="text-3xl" x-text="event.day"></span>
+            <span x-text="event.time"></span>
+          </time>
+
+          <h4
+            class="font-title mb-1 uppercase text-xl font-bold text-primary-800"
+            x-text="event.title"
+          >
+          </h4>
+
+          <p class="leading-snug">lorem ipsum dolor sit amet</p>
+
+          <a :href="event.url" class="btn-tertiary mt-4"> Read more </a>
+        </div>
+      </article>
+    </template>
+  </div>
+</div>
