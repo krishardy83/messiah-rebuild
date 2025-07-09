@@ -17,17 +17,22 @@ const { title, class: className, ...props } = Astro.props;
   x-data="{
     events: [],
     loading: true,
-    categories: ['Concerts'],
-    calendars: ['The Arts at Messiah'],
     error: null,
+    filters: {
+      categories: [],
+      calendars: [],
+      limit: 3,
+    },
 
     init() {
       fetch('https://www.messiah.edu/events/_data/all-events.json')
         .then((response) => response.json())
         .then((data) => {
           this.events = data.items.filter((item) => {
-            const matchesCategory = this.categories.length === 0 || item.category.some((category) => this.categories.includes(category));
-            const matchesCalendar = this.calendars.length === 0 || item.calendars.some((calendar) => this.calendars.includes(calendar));
+            const { categories, calendars } = this.filters;
+            
+            const matchesCategory = categories.length === 0 || item.category.some((category) => categories.includes(category));
+            const matchesCalendar = calendars.length === 0 || item.calendars.some((calendar) => calendars.includes(calendar));
 
             return matchesCategory && matchesCalendar;
           });
@@ -56,7 +61,8 @@ const { title, class: className, ...props } = Astro.props;
         title: event.title,
         url: event.url,
         month: months[date.getMonth()],
-        day: date.getDate()
+        day: date.getDate(),
+        date: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`),
       };
     },
 
@@ -90,6 +96,10 @@ const { title, class: className, ...props } = Astro.props;
       }
     },
 
+    sortEventsByDate(events) {
+      return events.sort((a, b) => a.date.getTime() - b.date.getTime());
+    },
+
     getCurrentEvents() {
       const today = this.getDate();
       const results = [];
@@ -110,7 +120,7 @@ const { title, class: className, ...props } = Astro.props;
         }
       }
       
-      return results;
+      return this.sortEventsByDate(results).slice(0, this.filters.limit);
     },
   }"
 >
