@@ -23,7 +23,7 @@ const { title, events, class: className, ...props } = Astro.props;
   <div class="p-4 @md:p-8">
     <h3 class="mb-4 h4 text-primary-800">{title}</h3>
 
-    <ul class="space-y-2 @md:space-y-4">
+    <ul class="space-y-4 @md:space-y-8">
       {
         events.map((event) => (
           <li class="p-4 bg-white shadow-md w-full flex items-center gap-4 relative group">
