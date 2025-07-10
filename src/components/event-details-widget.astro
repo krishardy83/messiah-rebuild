@@ -37,12 +37,16 @@ const {
     <h3 class="mb-2 h4">{title}</h3>
 
     <ul class="space-y-4 mb-8">
-      <li class="flex gap-2 items-center"><Icon name="calendar" class="size-6" />{date}</li>
-      <li class="flex gap-2 items-center">
-        <Icon name="clock" class="size-6" />{startTime} to {endTime}
+      <li class="flex gap-2">
+        <Icon name="calendar" class="mt-0.5 size-6 shrink-0" />{date}
       </li>
-      <li class="flex gap-2 items-center"><Icon name="marker" class="size-6" />{location}</li>
-      <li class="flex gap-2 items-center"><Icon name="dollar" class="size-6" />{cost}</li>
+      <li class="flex gap-2">
+        <Icon name="clock" class="mt-0.5 size-6 shrink-0" />{startTime} to {endTime}
+      </li>
+      <li class="flex gap-2">
+        <Icon name="marker" class="mt-0.5 size-6 shrink-0" />{location}
+      </li>
+      <li class="flex gap-2"><Icon name="dollar" class="mt-0.5 size-6 shrink-0" />{cost}</li>
     </ul>
 
     <h3 class="mb-2 h4">Categories</h3>
