@@ -124,6 +124,16 @@ const { title, class: className, ...props } = Astro.props;
       
       return this.sortEventsByDate(results).slice(0, this.filters.limit);
     },
+
+    getSummary(summary) {
+      const words = summary.split(' ');
+
+      if (words.length > 10) {
+        return words.slice(0, 10).join(' ') + '...';
+      } else {
+        return summary;
+      }
+    }
   }"
 >
   <h3 class="mb-4 h4 text-primary-800">{title}</h3>
@@ -154,7 +164,12 @@ const { title, class: className, ...props } = Astro.props;
         class="flex flex-col @md:flex-row gap-8 border-b border-gray-200 pb-8 last-of-type:border-b-0 last-of-type:pb-0"
       >
         <figure class="@md:w-1/3">
-          <img :src="event.image" x-show="event.image" :alt="event.title" />
+          <img
+            :src="event.image"
+            x-show="event.image"
+            :alt="event.title"
+            class="h-full object-cover"
+          />
         </figure>
 
         <div class="@md:w-2/3 relative @md:pr-28">
@@ -173,9 +188,9 @@ const { title, class: className, ...props } = Astro.props;
           >
           </h4>
 
-          <p class="leading-snug" x-text="event.summary"></p>
+          <p class="leading-snug" x-text="getSummary(event.summary)"></p>
 
-          <a :href="event.url" class="btn-tertiary mt-4"> Read more </a>
+          <a :href="event.url" class="btn-tertiary mt-4">Read more</a>
         </div>
       </article>
     </template>
