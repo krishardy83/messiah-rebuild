@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
+import Icon from "./icon.astro";
 
 interface Props extends HTMLAttributes<"div"> {
   title: string;
@@ -17,10 +18,16 @@ const { title, class: className, ...props } = Astro.props;
     events: [],
     loading: true,
     error: null,
+
+    searchEnabled: true,
+    filterEnabled: true,
+
     filters: {
       categories: [],
       calendars: [],
       limit: 3,
+      query: '',
+      category: '',
     },
 
     init() {
@@ -65,6 +72,7 @@ const { title, class: className, ...props } = Astro.props;
         day: date.getDate(),
         time: event.start,
         date: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`),
+        categories: event.category,
       };
     },
 
@@ -102,6 +110,29 @@ const { title, class: className, ...props } = Astro.props;
       return events.sort((a, b) => a.date.getTime() - b.date.getTime());
     },
 
+    filterEvents(events) {
+      const { category, query } = this.filters;
+
+      return events.filter((event) => {
+        const matchesTitle = event.title.toLowerCase().includes(query.toLowerCase());
+        const matchesSummary = event.summary.toLowerCase().includes(query.toLowerCase());
+        
+        const matchesCategory = category ? event.categories.includes(category) : true;
+
+        return (matchesTitle || matchesSummary) && matchesCategory;
+      });
+    },
+
+    getEventCategories() {
+      const categories = new Set();
+      
+      for (const event of this.getCurrentEvents()) {
+        event.categories.forEach((category) => categories.add(category));
+      }
+      
+      return Array.from(categories);
+    },
+
     getCurrentEvents() {
       const today = this.getDate();
       const results = [];
@@ -133,10 +164,54 @@ const { title, class: className, ...props } = Astro.props;
       } else {
         return summary;
       }
+    },
+
+    getFilteredEvents() {
+      return this.filterEvents(this.sortEventsByDate(this.getCurrentEvents()));
+    },
+
+    resetFilters() {
+      this.filters.category = '';
+      this.filters.query = '';
     }
   }"
 >
   <h3 class="mb-4 h4 text-primary-800">{title}</h3>
+
+  <div class="flex flex-col sm:flex-row gap-4 mb-8" x-show="searchEnabled || filterEnabled">
+    <select
+      class="bg-white min-h-12 px-4 border border-gray-300 sm:w-1/2 select"
+      x-model="filters.category"
+      x-show="filterEnabled"
+    >
+      <option value="">All categories</option>
+      <template x-for="category in getEventCategories()">
+        <option :value="category" x-text="category"></option>
+      </template>
+    </select>
+
+    <div class="relative sm:w-1/2" x-show="searchEnabled">
+      <Icon name="search" class="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
+      <input
+        type="text"
+        x-model="filters.query"
+        autocomplete="off"
+        placeholder="Search by title or summary"
+        aria-label="Search by title or summary"
+        class="bg-white w-full min-h-12 px-4 pl-12 border border-gray-300"
+      />
+      <button
+        type="button"
+        title="Clear input"
+        x-show="filters.query.length > 0"
+        @click="filters.query = ''"
+        class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+        style="display: none;"
+      >
+        <Icon name="close" class="size-5 shrink-0" />
+      </button>
+    </div>
+  </div>
 
   <template x-if="loading">
     <div
@@ -155,11 +230,23 @@ const { title, class: className, ...props } = Astro.props;
   </template>
 
   <template x-if="events.length === 0 && !loading && !error">
-    <p>No upcoming events, check back later.</p>
+    <p class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">
+      No upcoming events, check back later.
+    </p>
+  </template>
+
+  <template x-if="getFilteredEvents().length === 0 && !loading && !error">
+    <p class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">
+      No events match your filter or search. <button
+        type="button"
+        @click="resetFilters"
+        class="hover:underline">Reset</button
+      >
+    </p>
   </template>
 
   <div class="flex flex-col gap-8">
-    <template x-for="event in getCurrentEvents()">
+    <template x-for="event in getFilteredEvents()">
       <article
         class="flex flex-col @md:flex-row gap-8 border-b border-gray-200 pb-8 last-of-type:border-b-0 last-of-type:pb-0"
       >
