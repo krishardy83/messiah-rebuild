@@ -149,7 +149,9 @@ import WithoutHero from "../layouts/without-hero.astro";
         fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
           .then((response) => response.json())
           .then((data) => {
-            this.programs = data.items;
+            this.programs = data.items.filter((item) => {
+              return item.hide_on_program_listing !== 'yes';
+            });
             this.loading = false;
           })
           .catch((error) => {
