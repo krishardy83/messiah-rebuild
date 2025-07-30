@@ -1,22 +1,126 @@
 ---
 import Icon from "../components/icon.astro";
-import SingleColumn from "../layouts/single-column.astro";
+import WithoutHero from "../layouts/without-hero.astro";
 ---
 
-<SingleColumn
-  title="News Test"
-  description="News Test"
-  image="/images/child_adult.jpg"
-  mobileImage="/images/mobile-ot-hero.webp"
+<WithoutHero
+  title="News"
+  description="News"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Quick Links Example", href: "/" },
+  ]}
 >
-  <div class="max-w-7xl px-4 mx-auto py-16">
+  <div
+    class="max-w-7xl py-8"
+    x-data="{
+      news: [],
+      loading: true,
+      error: null,
+      
+      filters: {
+        query: '',
+        category: '',
+      },
+
+      pagination: {
+        itemsPerPage: 15,
+        page: 1,
+      },
+
+      init() {
+        fetch('https://www.messiah.edu/news/index.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.news = data.posts;
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not load news: (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      formatDate(date) {
+        return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(date));
+      },
+
+      reset() {
+        this.filters.query = '';
+        this.filters.category = '';
+      },
+
+      scrollToTop() {
+        this.$refs.title.scrollIntoView({ behavior: 'smooth' });
+      },
+
+      get featuredNews() {
+        return this.news.slice(0, 3);
+      },
+
+      get filteredNews() {
+        return this.news.slice(3, this.news.length).filter((news) => {
+          const matchesQuery = news.title.toLowerCase().includes(this.filters.query.toLowerCase());
+          const matchesCategory = !this.filters.category || news.category.includes(this.filters.category);
+
+          return matchesQuery && matchesCategory;
+        });
+      },
+
+      get paginatedNews() {
+        const startIndex = (this.pagination.page - 1) * this.pagination.itemsPerPage;
+        const endIndex = startIndex + this.pagination.itemsPerPage;
+
+        return this.filteredNews.slice(startIndex, endIndex);
+      },
+
+      get totalPages() {
+        return Math.ceil(this.filteredNews.length / this.pagination.itemsPerPage);
+      }
+  }"
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-12">
+      <template x-for="post, index in featuredNews">
+        <article class="relative group" :class="{ 'sm:col-span-2 md:row-span-2': index === 0 }">
+          <figure class="overflow-hidden h-full">
+            <img
+              :src="post.image"
+              :alt="post.description"
+              class="object-cover w-full h-full bg-gray-100 group-hover:scale-105 transition-transform duration-500 group-focus-within:scale-105"
+              width="350"
+              height="196"
+              decoding="async"
+            />
+          </figure>
+
+          <div
+            class="pt-6 absolute bottom-0 left-0 bg-[linear-gradient(to_bottom,transparent_5%,rgba(0,0,0,.6)_20%)]"
+            :class="{ 'p-6': index === 0, 'p-2': index !== 0 }"
+          >
+            <h3 class="h4 mb-2">
+              <a
+                :href="post.link"
+                class="text-white after:absolute after:inset-0"
+                x-text="post.title"></a>
+            </h3>
+
+            <p class="text-white text-sm">
+              <span x-show="post.author" x-text="post.author" class="after:content-['•'] after:mx-2"
+              ></span>
+              <span x-text="formatDate(post.pubDate)" class="after:content-['•'] after:mx-2"></span>
+              <span x-text="post.category.replace('|', ', ')"></span>
+            </p>
+          </div>
+        </article>
+      </template>
+    </div>
+
     <search>
-      <form
-        class="flex flex-col md:flex-row gap-4"
-        action="[system-asset]site://News/topical[/system-asset]
-"
-      >
-        <div class="relative md:w-1/2 lg:w-1/3">
+      <form class="flex flex-col md:flex-row gap-4 mb-8">
+        <div class="relative md:w-1/3">
           <Icon
             name="search"
             class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400"
@@ -26,59 +130,145 @@ import SingleColumn from "../layouts/single-column.astro";
             class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white"
             placeholder="Search articles"
             name="q"
+            x-model="filters.query"
           />
         </div>
 
-        <div
-          class="relative md:w-1/2 lg:w-1/3"
-          x-data="{
-            navigate(event) {
-              window.location.href = `${window.location.href}/${event.target.value}`;
-            }
-          }"
-        >
+        <div class="relative md:w-1/3">
           <Icon name="bars" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
           <select
             class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white select"
-            @change="navigate"
+            x-model="filters.category"
           >
-            <option value="" selected disabled>View articles by category</option>
-            <option value="">All</option>
-            <option
-              value="[system-asset:id=95039a640a0000a971be1dd1f1b9b359]/academics[/system-asset]"
-              >Academics</option
-            >
-            <option
-              value="[system-asset:id=9509bca50a0000a971be1dd173d0b1d8]/athletics[/system-asset]"
-              >Athletics</option
-            >
-            <option
-              value="[system-asset:id=950a8c370a0000a971be1dd18fd3b5fa]/campus-news[/system-asset]"
-              >Campus news</option
-            >
-            <option
-              value="[system-asset:id=6782ba7f0a0000a906da0355422e74f9]/event-news[/system-asset]"
-              >Event news</option
-            >
-            <option
-              value="[system-asset:id=b27464370a0000a971be1dd1d914641a]/faculty-and-staff[/system-asset]"
-              >Faculty and staff</option
-            >
-            <option
-              value="[system-asset:id=b275186d0a0000a971be1dd1573dac1c]/profiles[/system-asset]"
-              >Profiles</option
-            >
-            <option
-              value="[system-asset:id=b275d96b0a0000a971be1dd16d1dd49c]/students-and-alumni[/system-asset]"
-              >Students and alumni</option
-            >
-            <option
-              value="[system-asset:id=94ec31580a0000a971be1dd150bab2ec]/topical[/system-asset]"
-              >Topical</option
-            >
+            <option value="">All categories</option>
+            <option value="Academics">Academics</option>
+            <option value="Athletics">Athletics</option>
+            <option value="Campus news">Campus news</option>
+            <option value="Event news">Event news</option>
+            <option value="Faculty and staff">Faculty and staff</option>
+            <option value="Profiles">Profiles</option>
+            <option value="Students and alumni">Students and alumni</option>
+            <option value="Topical">Topical</option>
           </select>
         </div>
       </form>
     </search>
+
+    <template x-if="loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p>Loading news...</p>
+      </div>
+    </template>
+
+    <template x-if="filteredNews.length === 0 && !loading">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <p class="mb-2">No news matches your search and category.</p>
+        <button type="button" @click="reset()" class="btn btn-quaternary">Reset filters</button>
+      </div>
+    </template>
+
+    <template x-if="error">
+      <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        <p class="mb-2">Snap! Something went wrong. Please refresh the page or try again later.</p>
+        <code x-text="error" class="text-sm leading-none"></code>
+      </div>
+    </template>
+
+    <template x-if="filteredNews.length > 0 && !loading && !error">
+      <div>
+        <h2 class="h3 scroll-m-32" x-ref="title">Recent posts</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <template x-for="post, index in paginatedNews">
+            <article class="relative group">
+              <figure class="overflow-hidden aspect-video">
+                <img
+                  :src="post.image"
+                  :alt="post.description"
+                  class="object-cover w-full h-full bg-gray-100 group-hover:scale-105 transition-transform duration-500 group-focus-within:scale-105"
+                  width="350"
+                  height="196"
+                  decoding="async"
+                  :loading="index < 3 ? 'eager' : 'lazy'"
+                />
+              </figure>
+
+              <div class="bg-white p-2">
+                <h3 class="h4 mb-2">
+                  <a
+                    :href="post.link"
+                    class="text-primary-700 hover:text-tertiary-500 transition-colors after:absolute after:inset-0"
+                    x-text="post.title"></a>
+                </h3>
+
+                <p class="text-gray-600 text-sm">
+                  <span
+                    x-show="post.author"
+                    x-text="post.author"
+                    class="after:content-['•'] after:mx-2"></span>
+                  <span x-text="formatDate(post.pubDate)" class="after:content-['•'] after:mx-2"
+                  ></span>
+                  <span x-text="post.category.replace('|', ', ')"></span>
+                </p>
+              </div>
+            </article>
+          </template>
+        </div>
+
+        <template x-if="filteredNews.length > 9">
+          <nav class="flex gap-2 mt-12 items-center justify-center">
+            <button
+              type="button"
+              class="btn-tertiary"
+              @click="pagination.page = 1; scrollToTop()"
+              :disabled="pagination.page === 1"
+              aria-label="Go to first page"
+            >
+              <Icon name="chevron-double-right" class="size-5 rotate-180" />
+            </button>
+
+            <button
+              type="button"
+              class="btn-tertiary"
+              @click="pagination.page--; scrollToTop()"
+              :disabled="pagination.page === 1"
+              aria-label="Go to previous page"
+            >
+              <Icon name="chevron-right" class="size-5 rotate-180" />
+            </button>
+
+            <span
+              x-text="`Page ${pagination.page} of ${totalPages}`"
+              x-show="pagination.page"
+              class="mx-2"></span>
+
+            <button
+              type="button"
+              class="btn-tertiary"
+              @click="pagination.page++; scrollToTop();"
+              :disabled="pagination.page === totalPages"
+              aria-label="Go to next page"
+            >
+              <Icon name="chevron-right" class="size-5" />
+            </button>
+            <button
+              type="button"
+              class="btn-tertiary"
+              @click="pagination.page = totalPages; scrollToTop()"
+              :disabled="pagination.page === totalPages"
+              aria-label="Go to last page"
+            >
+              <Icon name="chevron-double-right" class="size-5" />
+            </button>
+          </nav>
+        </template>
+      </div>
+    </template>
   </div>
-</SingleColumn>
+</WithoutHero>

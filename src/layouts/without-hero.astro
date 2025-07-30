@@ -43,7 +43,7 @@ const { title, description, sidebarLinks, analyticsKey, breadcrumbs } = Astro.pr
         {Astro.slots.has("sidebar") ? <slot name="sidebar" /> : null}
 
         <div
-          class:list={cn({
+          class:list={cn("flex-1", {
             "md:px-10 md:py-8": sidebarLinks || Astro.slots.has("sidebar"),
             "py-8": !sidebarLinks && !Astro.slots.has("sidebar"),
           })}

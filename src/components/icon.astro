@@ -10,6 +10,7 @@ interface Props extends HTMLAttributes<"svg"> {
     | "megaphone"
     | "chevron-down"
     | "chevron-right"
+    | "chevron-double-right"
     | "search"
     | "envelope"
     | "globe"
@@ -95,6 +96,15 @@ const { name, class: className, ...props } = Astro.props;
   {
     name === "chevron-right" ? (
       <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+    ) : null
+  }
+  {
+    name === "chevron-double-right" ? (
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
+      />
     ) : null
   }
   {

@@ -154,7 +154,7 @@
   }
 
   .btn-tertiary {
-    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800;
+    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800 disabled:bg-gray-200 disabled:text-gray-600 disabled:cursor-not-allowed;
   }
 
   .btn-quaternary {
@@ -172,7 +172,7 @@
   .wrapper-sm {
     @apply mx-auto max-w-4xl px-4;
   }
-  
+
   .wrapper-md {
     @apply mx-auto max-w-5xl px-4;
   }
