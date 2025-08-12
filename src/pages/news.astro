@@ -87,7 +87,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         <article class="relative group" :class="{ 'sm:col-span-2 md:row-span-2': index === 0 }">
           <figure class="overflow-hidden h-full">
             <img
-              :src="post.image"
+              :src="post.image || 'https://www.messiah.edu/news/images/messiah-university.png'"
               :alt="post.description"
               class="object-cover w-full h-full bg-gray-100 group-hover:scale-105 transition-transform duration-500 group-focus-within:scale-105"
               width="350"
@@ -189,7 +189,7 @@ import WithoutHero from "../layouts/without-hero.astro";
             <article class="relative group">
               <figure class="overflow-hidden aspect-video">
                 <img
-                  :src="post.image"
+                  :src="post.image || 'https://www.messiah.edu/news/images/messiah-university.png'"
                   :alt="post.description"
                   class="object-cover w-full h-full bg-gray-100 group-hover:scale-105 transition-transform duration-500 group-focus-within:scale-105"
                   width="350"
