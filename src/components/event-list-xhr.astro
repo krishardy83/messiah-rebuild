@@ -24,8 +24,8 @@ const { title, class: className, ...props } = Astro.props;
 
     filters: {
       categories: [],
-      calendars: [],
-      limit: 3,
+      calendars: ['The Arts at Messiah'],
+      limit: 150,
       query: '',
       category: '',
     },
@@ -104,8 +104,14 @@ const { title, class: className, ...props } = Astro.props;
       }
     },
 
-    sortEventsByDate(events) {
-      return events.sort((a, b) => a.date.getTime() - b.date.getTime());
+    sortEvents(events) {
+      return events.sort((a, b) => {
+        const dateDiff = a.date.getTime() - b.date.getTime();
+
+        if (dateDiff !== 0) return dateDiff;
+
+        return a.title.localeCompare(b.title);
+      });
     },
 
     filterEvents(events) {
@@ -155,11 +161,11 @@ const { title, class: className, ...props } = Astro.props;
         }
       }
       
-      return this.sortEventsByDate(results).slice(0, this.filters.limit);
+      return this.sortEvents(results).slice(0, this.filters.limit);
     },
 
     getFilteredEvents() {
-      return this.filterEvents(this.sortEventsByDate(this.getCurrentEvents()));
+      return this.filterEvents(this.sortEvents(this.getCurrentEvents()));
     },
 
     resetFilters() {
