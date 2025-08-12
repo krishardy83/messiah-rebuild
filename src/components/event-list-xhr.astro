@@ -24,7 +24,7 @@ const { title, class: className, ...props } = Astro.props;
 
     filters: {
       categories: [],
-      calendars: ['The Arts at Messiah'],
+      calendars: ['Chapel Calendar'],
       limit: 150,
       query: '',
       category: '',
@@ -62,13 +62,13 @@ const { title, class: className, ...props } = Astro.props;
 
     transformEvent(event, date) {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dez'];
-      
+
       return {
         title: event.title,
         url: event.url,
         month: months[date.getMonth()],
         day: date.getDate(),
-        date: new Date(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`),
+        date,
         summary: event.summary,
         categories: event.category,
       };
