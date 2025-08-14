@@ -1,0 +1,437 @@
+---
+import Icon from "../components/icon.astro";
+import WithoutHero from "../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Event Listing"
+  description="Event Listing"
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Quick Links Example", href: "/" },
+  ]}
+>
+  <div
+    class="max-w-7xl py-4 md:grid md:grid-cols-3 md:gap-8"
+    x-data="{
+      events: [],
+      loading: true,
+      error: null,
+
+      filtersVisible: false,
+
+      calendar: {
+        year: new Date().getFullYear(),
+        month: new Date().getMonth() + 1,
+      },
+      
+      filters: {
+        category: '',
+        calendar: '',
+        query: '',
+        date: null,
+      },
+
+      init() {
+        fetch('https://www.messiah.edu/events/_data/all-events.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.events = data.items;
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch events. (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      formatDate(date) {
+        return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(date));
+      },
+
+      reset() {
+        this.filters = {
+          category: '',
+          calendar: '',
+          query: '',
+          date: null,
+        };
+      },
+
+      getEventCountForCategory(category) {
+        return this.events.filter((event) => event.category.includes(category)).length;
+      },
+
+      getEventCountForCalendar(calendar) {
+        return this.events.filter((event) => event.calendars.includes(calendar)).length;
+      },
+
+      get currentEvents() {
+        const query = this.filters.query.toLowerCase();
+        const date = this.filters.date ? new Date(this.filters.date) : null;
+        const category = this.filters.category;
+        const calendar = this.filters.calendar;
+
+        return this.events.filter((event) => {
+          const eventDate = new Date(event.date);
+
+          const matchesTitle = event.title.toLowerCase().includes(query);
+          const matchesLocation = event.location.toLowerCase().includes(query);
+          const matchesDate = date ? eventDate.getFullYear() === date.getFullYear() && eventDate.getMonth() === date.getMonth() && eventDate.getDate() === date.getDate() : true;
+
+          const matchesCategory = category ? event.category.includes(category) : true;
+          const matchesCalendar = calendar ? event.calendars.includes(calendar) : true;
+          
+          return (matchesTitle || matchesLocation) && matchesDate && matchesCategory && matchesCalendar;
+        }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      },
+
+      get eventCategories() {
+        const categories = new Set();
+        
+        for (const event of this.events) {
+          event.category.forEach((category) => {
+            if (category) {
+              categories.add(category)
+            }
+          });
+        }
+        
+        return Array.from(categories);
+      },
+
+      get eventCalendars() {
+        const calendars = new Set();
+        
+        for (const event of this.events) {
+          event.calendars.forEach((calendar) => {
+            if (calendar) {
+              calendars.add(calendar)
+            }
+          });
+        }
+        
+        return Array.from(calendars);
+      }
+  }"
+  >
+    <div class="md:col-span-2">
+      <template x-if="loading">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p>Loading events...</p>
+        </div>
+      </template>
+
+      <template x-if="error">
+        <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+          <p class="mb-2">
+            Snap! Something went wrong. Please refresh the page or try again later.
+          </p>
+          <code x-text="error" class="text-sm leading-none"></code>
+        </div>
+      </template>
+
+      <template x-if="!loading && !error">
+        <div class="md:hidden flex justify-end">
+          <button type="button" class="btn-tertiary" @click="filtersVisible = true">
+            <Icon name="filters" /> Filter
+          </button>
+        </div>
+      </template>
+
+      <div
+        class="flex gap-2 flex-wrap mb-8"
+        x-show="filters.category || filters.calendar || filters.query || filters.date"
+      >
+        <div
+          x-show="filters.query"
+          class="text-sm bg-primary-800 text-white px-2 py-1 inline-flex gap-1 tems-center"
+        >
+          <b>Search:</b>
+          <span x-text="filters.query"></span>
+          <button type="button" class="ml-2"
+            ><Icon name="close" class="size-5" @click="filters.query = ''" /></button
+          >
+        </div>
+        <div
+          x-show="filters.date"
+          class="text-sm bg-primary-800 text-white px-2 py-1 inline-flex gap-1 tems-center"
+        >
+          <b>Date:</b>
+          <span x-text="formatDate(filters.date)"></span>
+          <button type="button" class="ml-2"
+            ><Icon name="close" class="size-5" @click="filters.date = null" /></button
+          >
+        </div>
+
+        <div
+          x-show="filters.category"
+          class="text-sm bg-primary-800 text-white px-2 py-1 inline-flex gap-1 tems-center"
+        >
+          <b>Category:</b>
+          <span x-text="filters.category"></span>
+          <button type="button" class="ml-2"
+            ><Icon name="close" class="size-5" @click="filters.category = ''" /></button
+          >
+        </div>
+
+        <div
+          x-show="filters.calendar"
+          class="text-sm bg-primary-800 text-white px-2 py-1 inline-flex gap-1 tems-center"
+        >
+          <b>Calendar:</b>
+          <span x-text="filters.calendar"></span>
+          <button type="button" class="ml-2"
+            ><Icon name="close" class="size-5" @click="filters.calendar = ''" /></button
+          >
+        </div>
+      </div>
+
+      <template x-if="currentEvents.length > 0 && !loading && !error">
+        <div>
+          <template x-for="event in currentEvents">
+            <article
+              class="border-b border-gray-300 pb-4 mb-4 group relative last-of-type:border-b-0 last-of-type:pb-0 last-of-type:mb-0"
+            >
+              <h3 class="h4 mb-2">
+                <a
+                  :href="event.url"
+                  class="after:absolute after:inset-0 @md:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
+                  x-text="event.title"></a>
+              </h3>
+
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li class="flex items-center">
+                  <Icon name="clock" class="size-6 mr-2 flex-shrink-0" />
+                  <span x-text="formatDate(event.date) + ','" class="mr-1"></span>
+                  <span x-text="event.start"></span>
+                  <span x-show="event.end" class="mx-1">-</span>
+                  <span x-text="event.end"></span>
+                </li>
+                <li class="flex items-center">
+                  <Icon name="marker" class="size-6 mr-2 flex-shrink-0" />
+                  <span x-text="event.location"></span>
+                </li>
+                <li class="flex items-center">
+                  <Icon name="dollar" class="size-6 mr-2 flex-shrink-0" />
+                  <span x-text="event.cost"></span>
+                </li>
+              </ul>
+            </article>
+          </template>
+        </div>
+      </template>
+
+      <template x-if="currentEvents.length === 0 && !loading && !error">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p class="mb-2">No events found with your filter preferences.</p>
+          <button type="button" class="btn btn-quaternary" @click="reset">Reset all filters</button>
+        </div>
+      </template>
+    </div>
+
+    <aside
+      class="md:block fixed md:static bg-white border-l border-gray-300 md:border-l-0 h-screen md:h-auto z-50 md:z-0 top-0 right-0 w-full sm:w-1/2 py-8 px-4 overflow-auto md:w-auto md:p-0"
+      :class="filtersVisible ? 'block' : 'hidden'"
+    >
+      <div class="flex justify-end mb-8 md:hidden">
+        <button type="button" @click="filtersVisible = false">
+          <Icon name="close" class="size-8" />
+        </button>
+      </div>
+
+      <div class="relative mb-8">
+        <Icon name="search" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
+        <input
+          type="search"
+          class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white"
+          placeholder="Search events"
+          x-model="filters.query"
+        />
+      </div>
+
+      <div
+        class="mb-8"
+        x-data="{
+          currentMonth: new Date().getMonth(),
+          currentYear: new Date().getFullYear(),
+
+          prev() {
+            if (this.currentMonth === 0) {
+              this.currentMonth = 11;
+              this.currentYear--;
+            } else {
+              this.currentMonth--;
+            }
+          },
+
+          next() {
+            if (this.currentMonth === 11) {
+              this.currentMonth = 0;
+              this.currentYear++;
+            } else {
+              this.currentMonth++;
+            }
+          },
+
+          getEventDatesForCurrentMonth() {
+            const dates = this.events.filter((event) => {
+              const eventDate = new Date(event.date);
+              
+              return (
+                eventDate.getFullYear() === this.currentYear &&
+                eventDate.getMonth() === this.currentMonth
+              );
+            }).map((event) => {
+              const eventDate = new Date(event.date);
+
+              return `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
+            });
+
+            return Array.from(new Set(dates));
+          },
+
+          get days() {
+            const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+            const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+            const days = [];
+            const events = this.getEventDatesForCurrentMonth();
+
+            for (let i = 0; i < firstDay; i++) {
+              days.push(null);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+              const dateKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+              days.push({
+                day,
+                dateKey,
+                hasEvent: events.includes(dateKey),
+              });
+            }
+
+            return days;
+          },
+
+          get title() {
+            return new Date(this.currentYear, this.currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
+          }
+        }"
+      >
+        <header class="flex items-center justify-between mb-4">
+          <button type="button" @click="prev" aria-label="Go to previous month">
+            <Icon name="chevron-right" class="size-6 rotate-180" />
+          </button>
+
+          <span x-text="title" class="font-title font-bold uppercase text-primary-800 text-xl"
+          ></span>
+
+          <button type="button" @click="next" aria-label="Go to next month">
+            <Icon name="chevron-right" class="size-6" />
+          </button>
+        </header>
+
+        <div
+          class="grid grid-cols-7 gap-px font-title font-bold uppercase text-center border-y border-gray-300"
+        >
+          <div class="py-2">Sun</div>
+          <div class="py-2">Mon</div>
+          <div class="py-2">Tue</div>
+          <div class="py-2">Wed</div>
+          <div class="py-2">Thu</div>
+          <div class="py-2">Fri</div>
+          <div class="py-2">Sat</div>
+        </div>
+        <div class="grid grid-cols-7 gap-px">
+          <template x-for="day in days">
+            <div class="aspect-square">
+              <template x-if="day !== null">
+                <button
+                  type="button"
+                  class="relative flex items-center justify-center w-full h-full hover:bg-gray-100"
+                  :class="day.hasEvent ? 'bg-tertiary-100' : ''"
+                  @click="filters.date = day.dateKey"
+                >
+                  <span x-text="day.day"></span>
+                  <span
+                    x-show="day.hasEvent"
+                    class="bg-primary-800 block size-2 rounded-full absolute top-1 right-1"></span>
+                </button>
+              </template>
+
+              <template x-if="day === null">
+                <div></div>
+              </template>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <h4 class="h4 border-b border-gray-300 mb-4">Event Categories</h4>
+      <template x-if="loading">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p>Loading event categories...</p>
+        </div>
+      </template>
+
+      <ul class="mb-8 space-y-1">
+        <template x-for="category in eventCategories">
+          <li>
+            <button
+              type="button"
+              class="link flex justify-between w-full items-center text-left gap-2"
+              @click="filters.category = category"
+            >
+              <span x-text="category"></span>
+              <span
+                x-text="getEventCountForCategory(category)"
+                class="bg-tertiary-100 size-6 flex items-center justify-center font-bold font-title shrink-0"
+              ></span>
+            </button>
+          </li>
+        </template>
+      </ul>
+
+      <h4 class="h4 border-b border-gray-300 mb-4">Event Calendars</h4>
+      <template x-if="loading">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p>Loading event calendars...</p>
+        </div>
+      </template>
+
+      <ul class="space-y-1">
+        <template x-for="calendar in eventCalendars">
+          <li>
+            <button
+              type="button"
+              class="link flex justify-between w-full items-center text-left gap-2"
+              @click="filters.calendar = calendar"
+            >
+              <span x-text="calendar"></span>
+              <span
+                x-text="getEventCountForCalendar(calendar)"
+                class="bg-tertiary-100 size-6 flex items-center justify-center font-bold font-title shrink-0"
+              ></span>
+            </button>
+          </li>
+        </template>
+      </ul>
+    </aside>
+  </div>
+</WithoutHero>
