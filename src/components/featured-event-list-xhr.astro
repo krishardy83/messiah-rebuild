@@ -88,21 +88,20 @@ const { title, class: className, ...props } = Astro.props;
         Saturday: 6,
       };
       
-      if (event.repeat === 'Daily') {
-        return this.transformEvent(event, today);
-      } else {
-        const startDate = this.getDate(event.date);
-        const endDate = this.getDate(event.repeatEnd);
-        const repeatDays = event.repeatDays.map(day => dayMap[day]);
-        let date = new Date(Math.max(today, startDate));
+      const startDate = this.getDate(event.date);
+      const endDate = this.getDate(event.repeatEnd);
+      const repeatDays = event.repeatDays.map(day => dayMap[day]);
 
-        while (date <= endDate) {
-          if (repeatDays.includes(date.getDay())) {
-            return this.transformEvent(event, date);
-          }
+      let date = new Date(Math.max(today, startDate));
 
-          date.setDate(date.getDate() + 1);
+      while (date <= endDate) {
+        if (event.repeat === 'Daily') {
+          return this.transformEvent(event, date);
+        } else if (repeatDays.includes(date.getDay())) {
+          return this.transformEvent(event, date);
         }
+        
+        date.setDate(date.getDate() + 1);
       }
     },
 
