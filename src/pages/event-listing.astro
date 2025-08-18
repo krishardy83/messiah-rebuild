@@ -15,7 +15,7 @@ import WithoutHero from "../layouts/without-hero.astro";
   ]}
 >
   <div
-    class="max-w-7xl py-4 md:grid md:grid-cols-3 md:gap-8"
+    class="max-w-7xl py-4 lg:grid lg:grid-cols-3 lg:gap-8"
     x-data="{
       events: [],
       loading: true,
@@ -32,7 +32,8 @@ import WithoutHero from "../layouts/without-hero.astro";
         category: '',
         calendar: '',
         query: '',
-        date: null,
+        startDate: null,
+        endDate: null,
       },
 
       init() {
@@ -52,6 +53,40 @@ import WithoutHero from "../layouts/without-hero.astro";
         return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(date));
       },
 
+      getDay(date) {
+        return Intl.DateTimeFormat('en-US', { day: '2-digit' }).format(new Date(date));
+      },
+
+      getMonth(date) {
+        return Intl.DateTimeFormat('en-US', { month: 'short' }).format(new Date(date));
+      },
+
+      setDate(dateKey) {
+        this.filters.startDate = dateKey;
+        this.filters.endDate = null;
+      },
+  
+      setToday() {
+        this.filters.startDate = new Date();
+        this.filters.endDate = null;
+      },
+
+      setTomorrow() {
+        const date = new Date();
+        date.setDate(date.getDate() + 1);
+
+        this.filters.startDate = date;
+        this.filters.endDate = null;
+      },
+
+      setThisWeek() {
+        this.filters.startDate = new Date();
+        this.filters.startDate.setDate(this.filters.startDate.getDate() - this.filters.startDate.getDay());
+        
+        this.filters.endDate = new Date();
+        this.filters.endDate.setDate(this.filters.endDate.getDate() + (6 - this.filters.endDate.getDay()));
+      },
+
       reset() {
         this.filters = {
           category: '',
@@ -69,9 +104,21 @@ import WithoutHero from "../layouts/without-hero.astro";
         return this.events.filter((event) => event.calendars.includes(calendar)).length;
       },
 
+      matchesDateRange(eventDate) {
+        const startDate = this.filters.startDate ? new Date(this.filters.startDate) : null;
+        const endDate = this.filters.endDate ? new Date(this.filters.endDate) : null;
+
+        if (endDate) {
+          return eventDate >= startDate && eventDate <= endDate;
+        }
+
+        return startDate ? eventDate.getFullYear() === startDate.getFullYear() && eventDate.getMonth() === startDate.getMonth() && eventDate.getDate() === startDate.getDate() : true;
+      },
+
       get currentEvents() {
         const query = this.filters.query.toLowerCase();
-        const date = this.filters.date ? new Date(this.filters.date) : null;
+        const startDate = this.filters.startDate ? new Date(this.filters.startDate) : null;
+        const endDate = this.filters.endDate ? new Date(this.filters.endDate) : null;
         const category = this.filters.category;
         const calendar = this.filters.calendar;
 
@@ -80,7 +127,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
           const matchesTitle = event.title.toLowerCase().includes(query);
           const matchesLocation = event.location.toLowerCase().includes(query);
-          const matchesDate = date ? eventDate.getFullYear() === date.getFullYear() && eventDate.getMonth() === date.getMonth() && eventDate.getDate() === date.getDate() : true;
+          const matchesDate = this.matchesDateRange(eventDate);
 
           const matchesCategory = category ? event.category.includes(category) : true;
           const matchesCalendar = calendar ? event.calendars.includes(calendar) : true;
@@ -118,7 +165,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       }
   }"
   >
-    <div class="md:col-span-2">
+    <div class="lg:col-span-2">
       <template x-if="loading">
         <div
           role="alert"
@@ -138,7 +185,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       </template>
 
       <template x-if="!loading && !error">
-        <div class="md:hidden flex justify-end">
+        <div class="lg:hidden flex justify-end">
           <button type="button" class="btn-tertiary" @click="filtersVisible = true">
             <Icon name="filters" /> Filter
           </button>
@@ -147,7 +194,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       <div
         class="flex gap-2 flex-wrap mb-8"
-        x-show="filters.category || filters.calendar || filters.query || filters.date"
+        x-show="filters.category || filters.calendar || filters.query || filters.startDate"
       >
         <div
           x-show="filters.query"
@@ -160,13 +207,15 @@ import WithoutHero from "../layouts/without-hero.astro";
           >
         </div>
         <div
-          x-show="filters.date"
+          x-show="filters.startDate"
           class="text-sm bg-primary-800 text-white px-2 py-1 inline-flex gap-1 tems-center"
         >
           <b>Date:</b>
-          <span x-text="formatDate(filters.date)"></span>
+          <span x-text="formatDate(filters.startDate)"></span>
+          <span x-show="filters.endDate">-</span>
+          <span x-show="filters.endDate" x-text="formatDate(filters.endDate)"></span>
           <button type="button" class="ml-2"
-            ><Icon name="close" class="size-5" @click="filters.date = null" /></button
+            ><Icon name="close" class="size-5" @click="filters.startDate = null" /></button
           >
         </div>
 
@@ -197,32 +246,38 @@ import WithoutHero from "../layouts/without-hero.astro";
         <div>
           <template x-for="event in currentEvents">
             <article
-              class="border-b border-gray-300 pb-4 mb-4 group relative last-of-type:border-b-0 last-of-type:pb-0 last-of-type:mb-0"
+              class="border-b flex gap-8 border-gray-300 pb-4 mb-4 group relative last-of-type:border-b-0 last-of-type:pb-0 last-of-type:mb-0"
             >
-              <h3 class="h4 mb-2">
-                <a
-                  :href="event.url"
-                  class="after:absolute after:inset-0 @md:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
-                  x-text="event.title"></a>
-              </h3>
+              <div class="w-12 flex flex-col items-center text-gray-400">
+                <span class="font-bold text-lg uppercase" x-text="getMonth(event.date)"></span>
+                <span class="font-bold text-3xl -mt-1" x-text="getDay(event.date)"></span>
+              </div>
+              <div>
+                <h3 class="font-title font-bold uppercase text-primary-800 text-2xl mb-2">
+                  <a
+                    :href="event.url"
+                    class="after:absolute after:inset-0 @lg:text-lg leading-tight group-hover:text-tertiary-400 transition-colors"
+                    x-text="event.title"></a>
+                </h3>
 
-              <ul class="text-sm text-gray-600 space-y-1">
-                <li class="flex items-center">
-                  <Icon name="clock" class="size-6 mr-2 flex-shrink-0" />
-                  <span x-text="formatDate(event.date) + ','" class="mr-1"></span>
-                  <span x-text="event.start"></span>
-                  <span x-show="event.end" class="mx-1">-</span>
-                  <span x-text="event.end"></span>
-                </li>
-                <li class="flex items-center">
-                  <Icon name="marker" class="size-6 mr-2 flex-shrink-0" />
-                  <span x-text="event.location"></span>
-                </li>
-                <li class="flex items-center">
-                  <Icon name="dollar" class="size-6 mr-2 flex-shrink-0" />
-                  <span x-text="event.cost"></span>
-                </li>
-              </ul>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li class="flex items-center">
+                    <Icon name="clock" class="size-6 mr-2 flex-shrink-0" />
+                    <span x-text="formatDate(event.date) + ','" class="mr-1"></span>
+                    <span x-text="event.start"></span>
+                    <span x-show="event.end" class="mx-1">-</span>
+                    <span x-text="event.end"></span>
+                  </li>
+                  <li class="flex items-center">
+                    <Icon name="marker" class="size-6 mr-2 flex-shrink-0" />
+                    <span x-text="event.location"></span>
+                  </li>
+                  <li class="flex items-center">
+                    <Icon name="dollar" class="size-6 mr-2 flex-shrink-0" />
+                    <span x-text="event.cost"></span>
+                  </li>
+                </ul>
+              </div>
             </article>
           </template>
         </div>
@@ -240,10 +295,10 @@ import WithoutHero from "../layouts/without-hero.astro";
     </div>
 
     <aside
-      class="md:block fixed md:static bg-white border-l border-gray-300 md:border-l-0 h-screen md:h-auto z-50 md:z-0 top-0 right-0 w-full sm:w-1/2 py-8 px-4 overflow-auto md:w-auto md:p-0"
+      class="lg:block self-start fixed lg:static bg-gray-50 border border-gray-300 h-screen lg:h-auto z-50 lg:z-0 top-0 right-0 w-full sm:w-1/2 py-8 px-4 overflow-auto lg:w-auto lg:p-4"
       :class="filtersVisible ? 'block' : 'hidden'"
     >
-      <div class="flex justify-end mb-8 md:hidden">
+      <div class="flex justify-end mb-8 lg:hidden">
         <button type="button" @click="filtersVisible = false">
           <Icon name="close" class="size-8" />
         </button>
@@ -358,9 +413,9 @@ import WithoutHero from "../layouts/without-hero.astro";
               <template x-if="day !== null">
                 <button
                   type="button"
-                  class="relative flex items-center justify-center w-full h-full hover:bg-gray-100"
+                  class="relative flex items-center justify-center w-full h-full hover:bg-gray-200"
                   :class="day.hasEvent ? 'bg-tertiary-100' : ''"
-                  @click="filters.date = day.dateKey"
+                  @click="setDate(day.dateKey)"
                 >
                   <span x-text="day.day"></span>
                   <span
@@ -377,7 +432,14 @@ import WithoutHero from "../layouts/without-hero.astro";
         </div>
       </div>
 
-      <h4 class="h4 border-b border-gray-300 mb-4">Event Categories</h4>
+      <h4 class="h4 border-b border-gray-300 mb-4">Views</h4>
+      <ul class="mb-8 space-y-1">
+        <li><button type="button" @click="setToday">Today</button></li>
+        <li><button type="button" @click="setTomorrow">Tomorrow</button></li>
+        <li><button type="button" @click="setThisWeek">This week</button></li>
+      </ul>
+
+      <h4 class="h4 border-b border-gray-300 mb-4">Event categories</h4>
       <template x-if="loading">
         <div
           role="alert"
@@ -405,7 +467,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         </template>
       </ul>
 
-      <h4 class="h4 border-b border-gray-300 mb-4">Event Calendars</h4>
+      <h4 class="h4 border-b border-gray-300 mb-4">Event calendars</h4>
       <template x-if="loading">
         <div
           role="alert"
@@ -415,7 +477,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         </div>
       </template>
 
-      <ul class="space-y-1">
+      <ul class="mb-8 space-y-1">
         <template x-for="calendar in eventCalendars">
           <li>
             <button
@@ -431,6 +493,16 @@ import WithoutHero from "../layouts/without-hero.astro";
             </button>
           </li>
         </template>
+      </ul>
+
+      <h4 class="h4 border-b border-gray-300 mb-4">Other calendars</h4>
+      <ul class="space-y-1">
+        <li>
+          <a href="https://www.messiah.edu/academic-calendars/" class="link"> Academic Calendar </a>
+        </li>
+        <li>
+          <a href="https://gomessiah.com/calendar" class="link"> Athletic Calendar </a>
+        </li>
       </ul>
     </aside>
   </div>
