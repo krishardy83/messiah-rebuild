@@ -102,11 +102,21 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       getEventCountForCategory(category) {
-        return this.events.filter((event) => event.category.includes(category)).length;
+        return this.events.filter((event) => {
+          const matchesCategory = event.category.includes(category);
+          const matchesCalendar = this.filters.calendar ? event.calendars.includes(this.filters.calendar) : true;
+          
+          return matchesCategory && matchesCalendar;
+        }).length;
       },
 
       getEventCountForCalendar(calendar) {
-        return this.events.filter((event) => event.calendars.includes(calendar)).length;
+        return this.events.filter((event) => {
+          const matchesCalendar = event.calendars.includes(calendar);
+          const matchesCategory = this.filters.category ? event.category.includes(this.filters.category) : true;
+
+          return matchesCalendar && matchesCategory;
+        }).length;
       },
 
       isEventInRange(event, startDate, endDate = null) {
@@ -244,7 +254,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         return event;
       },
 
-      get currentEvents() {
+      get filteredEvents() {
         const query = this.filters.query.toLowerCase();
         const category = this.filters.category;
         const calendar = this.filters.calendar;
@@ -259,7 +269,11 @@ import WithoutHero from "../layouts/without-hero.astro";
             const matchesCalendar = calendar ? event.calendars.includes(calendar) : true;
 
             return (matchesTitle || matchesLocation) && inRange && matchesCategory && matchesCalendar;
-          })
+          });
+      },
+
+      get currentEvents() {
+        return this.filteredEvents
           .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
           .map((event) => this.transformEventDate(event));
       },
@@ -469,7 +483,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           },
 
           getEventDatesForCurrentMonth(date) {
-            return this.events.some((event) => {
+            return this.filteredEvents.some((event) => {
               return this.isEventInRange(event, date);
             });
           },
