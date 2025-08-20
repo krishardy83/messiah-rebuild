@@ -62,6 +62,11 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       setDate(dateKey) {
+        console.log('DEBUG------------');
+        console.log(dateKey);
+        console.log(new Date(dateKey).toISOString());
+        console.log(new Date(`${dateKey}T00:00:00Z`).toISOString());
+
         this.filters.startDate = dateKey;
         this.filters.endDate = null;
       },
