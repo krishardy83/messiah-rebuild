@@ -58,7 +58,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       get featuredNews() {
-        return this.news.slice(0, 3);
+        return this.news.filter((entry) => entry.featured === 'yes').slice(0, 3);
       },
 
       get filteredNews() {
