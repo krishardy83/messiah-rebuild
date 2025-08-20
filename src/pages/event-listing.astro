@@ -105,8 +105,8 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       matchesDateRange(eventDate) {
-        const startDate = this.filters.startDate ? new Date(this.filters.startDate) : null;
-        const endDate = this.filters.endDate ? new Date(this.filters.endDate) : null;
+        const startDate = this.filters.startDate ? new Date(`${this.filters.startDate}T00:00:00`) : null;
+        const endDate = this.filters.endDate ? new Date(`${this.filters.endDate}T00:00:00`) : null;
 
         if (endDate) {
           return eventDate >= startDate && eventDate <= endDate;
@@ -117,8 +117,8 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       get currentEvents() {
         const query = this.filters.query.toLowerCase();
-        const startDate = this.filters.startDate ? new Date(this.filters.startDate) : null;
-        const endDate = this.filters.endDate ? new Date(this.filters.endDate) : null;
+        const startDate = this.filters.startDate ? new Date(`${this.filters.startDate}T00:00:00`) : null;
+        const endDate = this.filters.endDate ? new Date(`${this.filters.endDate}T00:00:00`) : null;
         const category = this.filters.category;
         const calendar = this.filters.calendar;
 
