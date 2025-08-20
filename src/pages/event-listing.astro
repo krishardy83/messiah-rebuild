@@ -246,9 +246,11 @@ import WithoutHero from "../layouts/without-hero.astro";
         <div>
           <template x-for="event in currentEvents">
             <article
-              class="border-b flex gap-8 border-gray-300 pb-4 mb-4 group relative last-of-type:border-b-0 last-of-type:pb-0 last-of-type:mb-0"
+              class="border-b flex items-start gap-8 border-gray-300 pb-4 mb-4 group relative last-of-type:border-b-0 last-of-type:pb-0 last-of-type:mb-0"
             >
-              <div class="w-12 flex flex-col items-center text-gray-400">
+              <div
+                class="size-16 mt-1 flex flex-col items-center justify-center bg-primary-800 text-white shrink-0"
+              >
                 <span class="font-bold text-lg uppercase" x-text="getMonth(event.date)"></span>
                 <span class="font-bold text-3xl -mt-1" x-text="getDay(event.date)"></span>
               </div>
