@@ -67,24 +67,29 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
   
       setToday() {
-        this.filters.startDate = new Date();
+        const today = new Date();
+
+        this.filters.startDate = today.toISOString().slice(0, 10);
         this.filters.endDate = null;
       },
 
       setTomorrow() {
-        const date = new Date();
-        date.setDate(date.getDate() + 1);
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
 
-        this.filters.startDate = date;
+        this.filters.startDate = tomorrow.toISOString().slice(0, 10);
         this.filters.endDate = null;
       },
 
       setThisWeek() {
-        this.filters.startDate = new Date();
-        this.filters.startDate.setDate(this.filters.startDate.getDate() - this.filters.startDate.getDay());
+        const start = new Date();
+        start.setDate(start.getDate() - start.getDay());
         
-        this.filters.endDate = new Date();
-        this.filters.endDate.setDate(this.filters.endDate.getDate() + (6 - this.filters.endDate.getDay()));
+        const end = new Date();
+        end.setDate(end.getDate() + (6 - end.getDay()));
+        
+        this.filters.startDate = start.toISOString().slice(0, 10);
+        this.filters.endDate = end.toISOString().slice(0, 10);
       },
 
       reset() {
@@ -104,36 +109,159 @@ import WithoutHero from "../layouts/without-hero.astro";
         return this.events.filter((event) => event.calendars.includes(calendar)).length;
       },
 
-      matchesDateRange(eventDate) {
-        const startDate = this.filters.startDate ? new Date(`${this.filters.startDate}T00:00:00`) : null;
-        const endDate = this.filters.endDate ? new Date(`${this.filters.endDate}T00:00:00`) : null;
+      isEventInRange(event, startDate, endDate = null) {
+        const start = startDate ? new Date(`${startDate}T00:00:00Z`) : null;
+        const end = endDate ? new Date(`${endDate}T00:00:00Z`) : new Date(`${startDate}T00:00:00Z`);
 
-        if (endDate) {
-          return eventDate >= startDate && eventDate <= endDate;
+        if (!start) return true;
+        
+        const eventStart = new Date(event.date);
+        const repeatEnd = event.repeatEnd ? new Date(event.repeatEnd) : null;
+
+        // Normalize to midnight UTC for day-level comparison
+        const normalize = d => {
+          const n = new Date(d);
+          n.setUTCHours(0, 0, 0, 0);
+          return n;
+        };
+
+        const startDay = normalize(start);
+        const endDay = normalize(end);
+        const eventDay = normalize(eventStart);
+
+        // Helper: check if two dates are the same day
+        const isSameDay = (d1, d2) => d1.getTime() === d2.getTime();
+
+        if (event.repeat === 'No repeat') {
+          return eventDay >= startDay && eventDay <= endDay;
         }
 
-        return startDate ? eventDate.getFullYear() === startDate.getFullYear() && eventDate.getMonth() === startDate.getMonth() && eventDate.getDate() === startDate.getDate() : true;
+        if (event.repeat === 'Daily') {
+          // Daily events occur every day from eventStart until repeatEnd
+          return (
+            // range and recurrence overlap
+            endDay >= eventDay &&
+            (!repeatEnd || startDay <= repeatEnd)
+          );
+        }
+
+        if (event.repeat === 'Weekly') {
+          // Weekly events: must overlap in range and recurrence window
+          if (endDay < eventDay) return false;
+          if (repeatEnd && startDay > repeatEnd) return false;
+
+          const dayMap = {
+            Sunday: 0,
+            Monday: 1,
+            Tuesday: 2,
+            Wednesday: 3,
+            Thursday: 4,
+            Friday: 5,
+            Saturday: 6
+          };
+          const repeatDaysNums = event.repeatDays.map(d => dayMap[d]);
+
+          // Check if at least one day in [startDay..endDay] matches
+          let current = new Date(startDay);
+          while (current <= endDay) {
+            if (current >= eventDay && (!repeatEnd || current <= repeatEnd)) {
+              if (repeatDaysNums.includes(current.getUTCDay())) {
+                return true;
+              }
+            }
+            current.setUTCDate(current.getUTCDate() + 1);
+          }
+          return false;
+        }
+
+        return false;
+      },
+
+      transformEventDate(event) {
+        const getNow = () => {
+          if (this.filters.endDate) {
+            return new Date();
+          }
+
+          return this.filters.startDate ? new Date(`${this.filters.startDate}T00:00:00Z`) : new Date();
+        };
+
+        const now = getNow();
+        now.setUTCHours(0, 0, 0, 0); // normalize to day only
+
+        const eventStart = new Date(event.date);
+        const repeatEnd = event.repeatEnd ? new Date(event.repeatEnd) : null;
+
+        // Normalize eventStart too
+        const eventDay = new Date(eventStart);
+        eventDay.setUTCHours(0, 0, 0, 0);
+
+        // No repeat → return event unchanged
+        if (event.repeat === 'No repeat') {
+          return { ...event };
+        }
+
+        // Daily repeat
+        if (event.repeat === 'Daily') {
+          if (now < eventDay) {
+            // hasn't started yet → first date
+            return { ...event, date: eventDay.toISOString() };
+          }
+          if (repeatEnd && now > repeatEnd) {
+            return null; // recurrence already ended
+          }
+          return { ...event, date: now.toISOString() }; // today
+        }
+
+        // Weekly repeat
+        if (event.repeat === 'Weekly') {
+          const dayMap = {
+            Sunday: 0,
+            Monday: 1,
+            Tuesday: 2,
+            Wednesday: 3,
+            Thursday: 4,
+            Friday: 5,
+            Saturday: 6
+          };
+          const repeatDaysNums = event.repeatDays.map(d => dayMap[d]);
+
+          // start searching from today
+          let current = new Date(now);
+
+          // Cap search to avoid infinite loops (e.g. missing repeatDays)
+          for (let i = 0; i < 14; i++) { // 2 weeks max search
+            if (current >= eventDay && (!repeatEnd || current <= repeatEnd)) {
+              if (repeatDaysNums.includes(current.getUTCDay())) {
+                return { ...event, date: current.toISOString() };
+              }
+            }
+            current.setUTCDate(current.getUTCDate() + 1);
+          }
+          return event; // no valid occurrence found
+        }
+
+        return event;
       },
 
       get currentEvents() {
         const query = this.filters.query.toLowerCase();
-        const startDate = this.filters.startDate ? new Date(`${this.filters.startDate}T00:00:00`) : null;
-        const endDate = this.filters.endDate ? new Date(`${this.filters.endDate}T00:00:00`) : null;
         const category = this.filters.category;
         const calendar = this.filters.calendar;
 
-        return this.events.filter((event) => {
-          const eventDate = new Date(event.date);
+        return this.events
+          .filter((event) => {
+            const matchesTitle = event.title.toLowerCase().includes(query);
+            const matchesLocation = event.location.toLowerCase().includes(query);
+            const inRange = this.isEventInRange(event, this.filters.startDate, this.filters.endDate);
 
-          const matchesTitle = event.title.toLowerCase().includes(query);
-          const matchesLocation = event.location.toLowerCase().includes(query);
-          const matchesDate = this.matchesDateRange(eventDate);
+            const matchesCategory = category ? event.category.includes(category) : true;
+            const matchesCalendar = calendar ? event.calendars.includes(calendar) : true;
 
-          const matchesCategory = category ? event.category.includes(category) : true;
-          const matchesCalendar = calendar ? event.calendars.includes(calendar) : true;
-          
-          return (matchesTitle || matchesLocation) && matchesDate && matchesCategory && matchesCalendar;
-        }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            return (matchesTitle || matchesLocation) && inRange && matchesCategory && matchesCalendar;
+          })
+          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+          .map((event) => this.transformEventDate(event));
       },
 
       get eventCategories() {
@@ -340,21 +468,10 @@ import WithoutHero from "../layouts/without-hero.astro";
             }
           },
 
-          getEventDatesForCurrentMonth() {
-            const dates = this.events.filter((event) => {
-              const eventDate = new Date(event.date);
-              
-              return (
-                eventDate.getFullYear() === this.currentYear &&
-                eventDate.getMonth() === this.currentMonth
-              );
-            }).map((event) => {
-              const eventDate = new Date(event.date);
-
-              return `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
+          getEventDatesForCurrentMonth(date) {
+            return this.events.some((event) => {
+              return this.isEventInRange(event, date);
             });
-
-            return Array.from(new Set(dates));
           },
 
           get days() {
@@ -373,7 +490,7 @@ import WithoutHero from "../layouts/without-hero.astro";
               days.push({
                 day,
                 dateKey,
-                hasEvent: events.includes(dateKey),
+                hasEvent: this.getEventDatesForCurrentMonth(dateKey),
               });
             }
 
