@@ -35,7 +35,7 @@ import WithoutHero from "../layouts/without-hero.astro";
         fetch('https://www.messiah.edu/news/index.json')
           .then((response) => response.json())
           .then((data) => {
-            this.news = data.posts;
+            this.news = data.posts.filter((post) => post.include === 'yes');
             this.loading = false;
           })
           .catch((error) => {
