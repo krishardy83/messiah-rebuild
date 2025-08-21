@@ -298,7 +298,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           });
         }
         
-        return Array.from(categories);
+        return Array.from(categories).sort();
       },
 
       get eventCalendars() {
@@ -312,7 +312,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           });
         }
         
-        return Array.from(calendars);
+        return Array.from(calendars).sort();
       }
   }"
   >
