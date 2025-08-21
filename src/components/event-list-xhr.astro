@@ -24,7 +24,7 @@ const { title, class: className, ...props } = Astro.props;
 
     filters: {
       categories: [],
-      calendars: ['Chapel Calendar'],
+      calendars: ['Student Events'],
       limit: 150,
       query: '',
       category: '',
@@ -71,6 +71,7 @@ const { title, class: className, ...props } = Astro.props;
         date,
         summary: event.summary,
         categories: event.category,
+        start: event.start,
       };
     },
 
@@ -109,7 +110,7 @@ const { title, class: className, ...props } = Astro.props;
 
         if (dateDiff !== 0) return dateDiff;
 
-        return a.title.localeCompare(b.title);
+        return a.start.localeCompare(b.start);
       });
     },
 
