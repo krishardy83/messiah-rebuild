@@ -137,7 +137,7 @@ const { title, class: className, ...props } = Astro.props;
         });
       }
       
-      return Array.from(categories);
+      return Array.from(categories).sort();
     },
 
     getCurrentEvents() {
