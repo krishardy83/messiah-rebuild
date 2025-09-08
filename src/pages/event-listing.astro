@@ -31,6 +31,8 @@ import WithoutHero from "../layouts/without-hero.astro";
       filters: {
         category: '',
         calendar: '',
+        showOtherCalendars: true,
+        public: false,
         query: '',
         startDate: null,
         endDate: null,
@@ -40,7 +42,13 @@ import WithoutHero from "../layouts/without-hero.astro";
         fetch('https://www.messiah.edu/events/_data/all-events.json')
           .then((response) => response.json())
           .then((data) => {
-            this.events = data.items;
+            this.events = data.items.filter((item) => {
+              if (this.filters.public) {
+                return item.public === 'Yes';
+              }
+
+              return true;
+            });
             this.loading = false;
           })
           .catch((error) => {
@@ -619,43 +627,49 @@ import WithoutHero from "../layouts/without-hero.astro";
         </template>
       </ul>
 
-      <h4 class="h4 border-b border-gray-300 mb-4">Event calendars</h4>
-      <template x-if="loading">
-        <div
-          role="alert"
-          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
-        >
-          <p>Loading event calendars...</p>
+      <template x-if="filters.showOtherCalendars">
+        <div>
+          <h4 class="h4 border-b border-gray-300 mb-4">Event calendars</h4>
+          <template x-if="loading">
+            <div
+              role="alert"
+              class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+            >
+              <p>Loading event calendars...</p>
+            </div>
+          </template>
+
+          <ul class="mb-8 space-y-1">
+            <template x-for="calendar in eventCalendars">
+              <li>
+                <button
+                  type="button"
+                  class="link flex justify-between w-full items-center text-left gap-2"
+                  @click="filters.calendar = calendar"
+                >
+                  <span x-text="calendar"></span>
+                  <span
+                    x-text="getEventCountForCalendar(calendar)"
+                    class="bg-tertiary-100 size-6 flex items-center justify-center font-bold font-title shrink-0"
+                  ></span>
+                </button>
+              </li>
+            </template>
+          </ul>
+
+          <h4 class="h4 border-b border-gray-300 mb-4">Other calendars</h4>
+          <ul class="space-y-1">
+            <li>
+              <a href="https://www.messiah.edu/academic-calendars/" class="link">
+                Academic Calendar
+              </a>
+            </li>
+            <li>
+              <a href="https://gomessiah.com/calendar" class="link"> Athletic Calendar </a>
+            </li>
+          </ul>
         </div>
       </template>
-
-      <ul class="mb-8 space-y-1">
-        <template x-for="calendar in eventCalendars">
-          <li>
-            <button
-              type="button"
-              class="link flex justify-between w-full items-center text-left gap-2"
-              @click="filters.calendar = calendar"
-            >
-              <span x-text="calendar"></span>
-              <span
-                x-text="getEventCountForCalendar(calendar)"
-                class="bg-tertiary-100 size-6 flex items-center justify-center font-bold font-title shrink-0"
-              ></span>
-            </button>
-          </li>
-        </template>
-      </ul>
-
-      <h4 class="h4 border-b border-gray-300 mb-4">Other calendars</h4>
-      <ul class="space-y-1">
-        <li>
-          <a href="https://www.messiah.edu/academic-calendars/" class="link"> Academic Calendar </a>
-        </li>
-        <li>
-          <a href="https://gomessiah.com/calendar" class="link"> Athletic Calendar </a>
-        </li>
-      </ul>
     </aside>
   </div>
 </WithoutHero>

@@ -109,8 +109,8 @@ const { title, class: className, ...props } = Astro.props;
         const dateDiff = a.date.getTime() - b.date.getTime();
 
         if (dateDiff !== 0) return dateDiff;
-
-        return a.start.localeCompare(b.start);
+        
+        return Date.parse('1970/01/01 ' + a.start.slice(0, -2) + ' ' + a.start.slice(-2)) - Date.parse('1970/01/01 ' + b.start.slice(0, -2) + ' ' + b.start.slice(-2));
       });
     },
 
