@@ -62,11 +62,12 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       get filteredNews() {
-        return this.news.slice(3, this.news.length).filter((news) => {
+        return this.news.filter((news) => {
+          const featured = news.featured === 'yes';
           const matchesQuery = news.title.toLowerCase().includes(this.filters.query.toLowerCase());
           const matchesCategory = !this.filters.category || news.category.includes(this.filters.category);
 
-          return matchesQuery && matchesCategory;
+          return matchesQuery && matchesCategory && !featured;
         });
       },
 
