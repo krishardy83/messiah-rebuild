@@ -63,7 +63,7 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       get filteredNews() {
         return this.news.filter((news) => {
-          const featured = news.featured === 'yes';
+          const featured = this.featuredNews.find((post) => post.link === news.link);
           const matchesQuery = news.title.toLowerCase().includes(this.filters.query.toLowerCase());
           const matchesCategory = !this.filters.category || news.category.includes(this.filters.category);
 
@@ -140,6 +140,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           <select
             class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white select"
             x-model="filters.category"
+            @change="pagination.page = 1"
           >
             <option value="">All categories</option>
             <option value="Academics">Academics</option>
