@@ -35,7 +35,11 @@ import WithoutHero from "../layouts/without-hero.astro";
         fetch('https://www.messiah.edu/the_bridge/index.json')
           .then((response) => response.json())
           .then((data) => {
-            this.news = data.posts;
+            this.news = data.posts.filter((entry) => {
+              if (this.filters.volume) return entry.volume === this.filters.volume;
+
+              return true;
+            });
             this.loading = false;
           })
           .catch((error) => {
@@ -61,12 +65,11 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       get filteredNews() {
-        return this.news.filter((news) => {
-          const featured = this.featuredNews.find((post) => post.link === news.link);
-          const matchesVolume = !this.filters.volume || news.volume === this.filters.volume;
-          const matchesCategory = news.category === this.filters.category;
+        return this.news.filter((entry) => {
+          const featured = this.featuredNews.find((post) => post.link === entry.link);
+          const matchesCategory = entry.category === this.filters.category;
 
-          return matchesVolume && matchesCategory && !featured;
+          return matchesCategory && !featured;
         });
       },
 
@@ -82,41 +85,46 @@ import WithoutHero from "../layouts/without-hero.astro";
       }
   }"
   >
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-12">
-      <template x-for="post, index in featuredNews">
-        <article class="relative group" :class="{ 'sm:col-span-2 md:row-span-2': index === 0 }">
-          <figure class="overflow-hidden h-full">
-            <img
-              :src="post.image || 'https://www.messiah.edu/news/images/messiah-university.png'"
-              :alt="post.description"
-              class="object-cover w-full h-full bg-gray-100 group-hover:scale-105 transition-transform duration-500 group-focus-within:scale-105"
-              width="350"
-              height="196"
-              decoding="async"
-            />
-          </figure>
+    <template x-if="featuredNews.length > 0">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-12">
+        <template x-for="post, index in featuredNews">
+          <article class="relative group" :class="{ 'sm:col-span-2 md:row-span-2': index === 0 }">
+            <figure class="overflow-hidden h-full">
+              <img
+                :src="post.image || 'https://www.messiah.edu/news/images/messiah-university.png'"
+                :alt="post.description"
+                class="object-cover w-full h-full bg-gray-100 group-hover:scale-105 transition-transform duration-500 group-focus-within:scale-105"
+                width="350"
+                height="196"
+                decoding="async"
+              />
+            </figure>
 
-          <div
-            class="pt-6 absolute bottom-0 left-0 bg-[linear-gradient(to_bottom,transparent_5%,rgba(0,0,0,.6)_20%)]"
-            :class="{ 'p-6': index === 0, 'p-2': index !== 0 }"
-          >
-            <h3 class="h4 mb-2">
-              <a
-                :href="post.link"
-                class="text-white after:absolute after:inset-0"
-                x-text="post.title"></a>
-            </h3>
+            <div
+              class="pt-6 absolute bottom-0 left-0 bg-[linear-gradient(to_bottom,transparent_5%,rgba(0,0,0,.6)_20%)] w-full"
+              :class="{ 'p-6': index === 0, 'p-2': index !== 0 }"
+            >
+              <h3 class="h4 mb-2">
+                <a
+                  :href="post.link"
+                  class="text-white after:absolute after:inset-0"
+                  x-text="post.title"></a>
+              </h3>
 
-            <p class="text-white text-sm">
-              <span x-show="post.author" x-text="post.author" class="after:content-['•'] after:mx-2"
-              ></span>
-              <span x-text="formatDate(post.pubDate)" class="after:content-['•'] after:mx-2"></span>
-              <span x-text="post.category.replace('|', ', ')"></span>
-            </p>
-          </div>
-        </article>
-      </template>
-    </div>
+              <p class="text-white text-sm">
+                <span
+                  x-show="post.author"
+                  x-text="post.author"
+                  class="after:content-['•'] after:mx-2"></span>
+                <span x-text="formatDate(post.pubDate)" class="after:content-['•'] after:mx-2"
+                ></span>
+                <span x-text="post.category.replace('|', ', ')"></span>
+              </p>
+            </div>
+          </article>
+        </template>
+      </div>
+    </template>
 
     <div class="flex items-center justify-center gap-8 mb-8">
       <button
