@@ -4,8 +4,8 @@ import WithoutHero from "../layouts/without-hero.astro";
 ---
 
 <WithoutHero
-  title="News"
-  description="News"
+  title="The Bridge"
+  description="The Bridge"
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Campus Directory", href: "/" },
@@ -23,7 +23,8 @@ import WithoutHero from "../layouts/without-hero.astro";
       
       filters: {
         query: '',
-        category: '',
+        volume: '',
+        category: 'Our Campus',
       },
 
       pagination: {
@@ -32,10 +33,10 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       init() {
-        fetch('https://www.messiah.edu/news/index.json')
+        fetch('https://www.messiah.edu/the_bridge/index.json')
           .then((response) => response.json())
           .then((data) => {
-            this.news = data.posts.filter((post) => post.include === 'yes');
+            this.news = data.posts;
             this.loading = false;
           })
           .catch((error) => {
@@ -50,11 +51,15 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       reset() {
         this.filters.query = '';
-        this.filters.category = '';
+        this.filters.volume = '';
       },
 
       scrollToTop() {
         this.$refs.title.scrollIntoView({ behavior: 'smooth' });
+      },
+
+      get volumes() {
+        return Array.from(new Set(this.news.map((news) => news.volume))).filter(Boolean);
       },
 
       get featuredNews() {
@@ -65,9 +70,10 @@ import WithoutHero from "../layouts/without-hero.astro";
         return this.news.filter((news) => {
           const featured = this.featuredNews.find((post) => post.link === news.link);
           const matchesQuery = news.title.toLowerCase().includes(this.filters.query.toLowerCase());
-          const matchesCategory = !this.filters.category || news.category.includes(this.filters.category);
+          const matchesVolume = !this.filters.volume || news.volume === this.filters.volume;
+          const matchesCategory = news.category === this.filters.category;
 
-          return matchesQuery && matchesCategory && !featured;
+          return matchesQuery && matchesVolume && matchesCategory && !featured;
         });
       },
 
@@ -139,22 +145,32 @@ import WithoutHero from "../layouts/without-hero.astro";
           <Icon name="bars" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
           <select
             class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white select"
-            x-model="filters.category"
+            x-model="filters.volume"
             @change="pagination.page = 1"
           >
-            <option value="">All categories</option>
-            <option value="Academics">Academics</option>
-            <option value="Athletics">Athletics</option>
-            <option value="Campus News">Campus news</option>
-            <option value="Event News">Event news</option>
-            <option value="Faculty and Staff">Faculty and staff</option>
-            <option value="Profiles">Profiles</option>
-            <option value="Students and Alumni">Students and alumni</option>
-            <option value="Topical">Topical</option>
+            <option value="">All volumes</option>
+            <template x-for="volume in volumes">
+              <option :value="volume" x-text="volume"></option>
+            </template>
           </select>
         </div>
       </form>
     </search>
+
+    <div class="flex items-center justify-center gap-8 mb-8">
+      <button
+        type="button"
+        class="font-title text-2xl text-primary-800 font-bold border-b-2"
+        :class="{ 'border-tertiary-400': filters.category === 'Our Campus', 'border-transparent': filters.category !== 'Our Campus' }"
+        @click="filters.category = 'Our Campus'; pagination.page = 1">Our Campus</button
+      >
+      <button
+        type="button"
+        class="font-title text-2xl text-primary-800 font-bold border-b-2"
+        :class="{ 'border-tertiary-400': filters.category === 'Our Alumni', 'border-transparent': filters.category !== 'Our Alumni' }"
+        @click="filters.category = 'Our Alumni'; pagination.page = 1">Our Alumni</button
+      >
+    </div>
 
     <template x-if="loading">
       <div
