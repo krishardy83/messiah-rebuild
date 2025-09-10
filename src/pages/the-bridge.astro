@@ -22,7 +22,6 @@ import WithoutHero from "../layouts/without-hero.astro";
       error: null,
       
       filters: {
-        query: '',
         volume: '',
         category: 'Our Campus',
       },
@@ -49,13 +48,8 @@ import WithoutHero from "../layouts/without-hero.astro";
         return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(date));
       },
 
-      reset() {
-        this.filters.query = '';
-        this.filters.volume = '';
-      },
-
       scrollToTop() {
-        this.$refs.title.scrollIntoView({ behavior: 'smooth' });
+        this.$refs.container.scrollIntoView({ behavior: 'smooth' });
       },
 
       get volumes() {
@@ -69,11 +63,10 @@ import WithoutHero from "../layouts/without-hero.astro";
       get filteredNews() {
         return this.news.filter((news) => {
           const featured = this.featuredNews.find((post) => post.link === news.link);
-          const matchesQuery = news.title.toLowerCase().includes(this.filters.query.toLowerCase());
           const matchesVolume = !this.filters.volume || news.volume === this.filters.volume;
           const matchesCategory = news.category === this.filters.category;
 
-          return matchesQuery && matchesVolume && matchesCategory && !featured;
+          return matchesVolume && matchesCategory && !featured;
         });
       },
 
@@ -125,38 +118,6 @@ import WithoutHero from "../layouts/without-hero.astro";
       </template>
     </div>
 
-    <search>
-      <form class="flex flex-col md:flex-row gap-4 mb-8">
-        <div class="relative md:w-1/3">
-          <Icon
-            name="search"
-            class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400"
-          />
-          <input
-            type="search"
-            class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white"
-            placeholder="Search articles"
-            name="q"
-            x-model.debounce="filters.query"
-          />
-        </div>
-
-        <div class="relative md:w-1/3">
-          <Icon name="bars" class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400" />
-          <select
-            class="border border-gray-300 w-full px-4 pl-12 min-h-12 bg-white select"
-            x-model="filters.volume"
-            @change="pagination.page = 1"
-          >
-            <option value="">All volumes</option>
-            <template x-for="volume in volumes">
-              <option :value="volume" x-text="volume"></option>
-            </template>
-          </select>
-        </div>
-      </form>
-    </search>
-
     <div class="flex items-center justify-center gap-8 mb-8">
       <button
         type="button"
@@ -187,7 +148,6 @@ import WithoutHero from "../layouts/without-hero.astro";
         class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
       >
         <p class="mb-2">No news matches your search and category.</p>
-        <button type="button" @click="reset()" class="btn btn-quaternary">Reset filters</button>
       </div>
     </template>
 
@@ -199,9 +159,7 @@ import WithoutHero from "../layouts/without-hero.astro";
     </template>
 
     <template x-if="filteredNews.length > 0 && !loading && !error">
-      <div>
-        <h2 class="h3 scroll-m-32" x-ref="title">Recent posts</h2>
-
+      <div class="scroll-m-32" x-ref="container">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <template x-for="post, index in paginatedNews">
             <article class="relative group">
