@@ -1,27 +1,76 @@
----
-import ByTheNumbers from "../../components/by-the-numbers.astro";
----
+<section class="wrapper py-24">
+  <h2 class="text-primary-800 text-center h2">Messiah by the numbers</h2>
 
-<ByTheNumbers
-  class="wrapper py-24"
-  links={[{ label: "Learn more", href: "https://www.messiah.edu/info/20002/college_profile" }]}
->
-  <li class="bg-white p-8 flex items-center">
-    <img src="/graphics/financial-aid-rate.png" alt="" />
-  </li>
-  <li class="bg-white p-8 flex items-center">
-    <img src="/graphics/class_employed.svg" alt="" />
-  </li>
-  <li class="bg-white p-8 flex items-center">
-    <img src="/graphics/class_size_2022.png" alt="" />
-  </li>
-  <li class="bg-white p-8 flex items-center">
-    <img src="/graphics/total_under_grad_students.svg" alt="" />
-  </li>
-  <li class="bg-white p-8 flex items-center">
-    <img src="/graphics/student_faculty_ratio.svg" alt="" />
-  </li>
-  <li class="bg-white p-8 flex items-center">
-    <img src="/graphics/under_grad_students.svg" alt="" />
-  </li>
-</ByTheNumbers>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 my-8 bg-tertiary-300 gap-px">
+    <div class="px-4 md:px-8 py-8 flex gap-3 bg-white">
+      <div>
+        <span class="font-bold text-2xl block">100%</span>
+        <img src="/graphics/home/fin-aid.svg" alt="" width="60" role="presentation" />
+      </div>
+      <div class="font-title text-3xl">
+        of first-year<br />students receive <span
+          class="text-tertiary-400 uppercase block font-semibold">financial aid</span
+        >
+      </div>
+    </div>
+    <div class="px-4 md:px-8 py-8 flex-1 flex gap-3 bg-white">
+      <div class="relative shrink-0">
+        <span class="font-bold text-3xl block text-white absolute top-8 left-6">96%</span>
+        <img src="/graphics/home/employed.svg" alt="" width="106" role="presentation" />
+      </div>
+      <div class="font-title text-lg leading-none">
+        of the class of 2022 were<br />
+        <span class="text-tertiary-400 font-bold block text-3xl">employed</span>
+        or in a <span class="text-tertiary-400 font-bold">graduate program</span><br />
+        <span class="text-base italic">within 6 - 9 months after graduation</span>
+      </div>
+    </div>
+    <div
+      class="px-4 md:px-8 py-8 flex-1 flex gap-1 items-center font-title lg:justify-center bg-white"
+    >
+      <span class="leading-[0.8] text-3xl">Average<br /> class size:</span>
+      <span class="text-tertiary-400 font-bold text-7xl mt-1">20</span>
+      <img src="/graphics/home/class-size.svg" alt="" width="40" role="presentation" />
+    </div>
+    <div class="px-4 md:px-8 py-8 flex-1 font-title uppercase font-bold text-primary-800 bg-white">
+      <span class="text-6xl text-tertiary-400">3,320</span>
+      <div class="flex gap-2 items-baseline">
+        <span class="text-2xl">undergradate</span>
+        <img src="/graphics/home/number-of-students.svg" alt="" width="100" role="presentation" />
+      </div>
+      <span class="text-2xl">& graduate <span class="text-tertiary-400">students</span></span>
+    </div>
+    <div class="px-4 md:px-8 py-8 flex-1 font-title font-bold text-primary-800 bg-white">
+      <div class="flex gap-2 -mb-2">
+        <span class="text-8xl">12:1</span>
+        <img src="/graphics/home/faculty.svg" alt="" width="100" role="presentation" />
+      </div>
+      <span class="text-xl text-primary-800">student to faculty ratio</span>
+    </div>
+    <div class="px-4 md:px-8 py-8 flex-1 font-title font-bold bg-white">
+      <div class="text-xl text-primary-800 mb-2">our undergrad students are from</div>
+
+      <div class="text-white flex gap-4 text-center leading-none">
+        <div class="relative">
+          <span class="absolute top-2 left-12">
+            <span class="block text-5xl -mb-2">38</span>
+            <span class="text-lg">states</span>
+          </span>
+          <img src="/graphics/home/states.svg" alt="" width="150" role="presentation" />
+        </div>
+
+        <div class="relative">
+          <span class="absolute left-4 top-2">
+            <span class="block text-5xl -mb-2">21</span>
+            <span class="text-lg">countries</span>
+          </span>
+          <img src="/graphics/home/countries.svg" alt="" width="90" role="presentation" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center">
+    <a href="/gn-about/at-a-glance" class="btn-primary"> Messiah at a glance </a>
+  </div>
+</section>
