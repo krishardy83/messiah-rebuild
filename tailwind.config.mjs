@@ -71,7 +71,10 @@ export default {
     "md:w-1/4",
     "md:w-1/4",
     "md:w-1/3",
-    "md:w-2/3"
+    "md:w-2/3",
+    "md:-mt-48",
+    "lg:-mt-48",
+    "-mt-24"
   ],
   theme: {
     extend: {
