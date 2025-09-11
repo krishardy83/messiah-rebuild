@@ -39,7 +39,7 @@ import WithoutHero from "../layouts/without-hero.astro";
               if (this.filters.volume) return entry.volume === this.filters.volume;
 
               return true;
-            });
+            }).sort((a, b) => a.title.trim().localeCompare(b.title.trim()));
             this.loading = false;
           })
           .catch((error) => {
