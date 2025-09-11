@@ -56,8 +56,8 @@ import WithoutHero from "../layouts/without-hero.astro";
         this.$refs.container.scrollIntoView({ behavior: 'smooth' });
       },
 
-      get volumes() {
-        return Array.from(new Set(this.news.map((news) => news.volume))).filter(Boolean);
+      get categories() {
+        return Array.from(new Set(this.news.map((news) => news.category))).filter(Boolean);
       },
 
       get featuredNews() {
@@ -127,18 +127,14 @@ import WithoutHero from "../layouts/without-hero.astro";
     </template>
 
     <div class="flex items-center justify-center gap-8 mb-8">
-      <button
-        type="button"
-        class="font-title text-2xl text-primary-800 font-bold border-b-2"
-        :class="{ 'border-tertiary-400': filters.category === 'Our Campus', 'border-transparent': filters.category !== 'Our Campus' }"
-        @click="filters.category = 'Our Campus'; pagination.page = 1">Our Campus</button
-      >
-      <button
-        type="button"
-        class="font-title text-2xl text-primary-800 font-bold border-b-2"
-        :class="{ 'border-tertiary-400': filters.category === 'Our Alumni', 'border-transparent': filters.category !== 'Our Alumni' }"
-        @click="filters.category = 'Our Alumni'; pagination.page = 1">Our Alumni</button
-      >
+      <template x-for="category in categories">
+        <button
+          type="button"
+          class="font-title text-2xl text-primary-800 font-bold border-b-2"
+          :class="{ 'border-tertiary-400': filters.category === category, 'border-transparent': filters.category !== category }"
+          @click="filters.category = category; pagination.page = 1"
+          x-text="category"></button>
+      </template>
     </div>
 
     <template x-if="loading">
