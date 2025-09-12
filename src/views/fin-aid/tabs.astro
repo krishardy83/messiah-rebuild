@@ -13,24 +13,24 @@ import Icon from "../../components/icon.astro";
       {
         id: 'scholarships',
         label: 'Scholarships',
-        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/graduation-cap-new.svg',
+        icon: '//www.messiah.edu/fin-aid/_images/icons/graduation-cap-new.svg',
       },
       {
         id: 'grants',
         label: 'Grants',
-        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/grants-new.svg',
+        icon: '//www.messiah.edu/fin-aid/_images/icons/grants-new.svg',
         description:
           'The grants listed below are available to U.S. citizens and permanent residents only.',
       },
       {
         id: 'federal-loans',
         label: 'Federal Loans',
-        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/fel-loan-new.svg',
+        icon: '//www.messiah.edu/fin-aid/_images/icons/fel-loan-new.svg',
       },
       {
         id: 'other-assistance',
         label: 'Other Assistance',
-        icon: 'https://www.messiah.edu/site/custom_scripts/styles/img/grants-and-scholarships/hand-shake.svg',
+        icon: '//www.messiah.edu/fin-aid/_images/icons/hand-shake.svg',
       },
       {
         id: null,
@@ -40,7 +40,7 @@ import Icon from "../../components/icon.astro";
     ],
 
     init() {
-      fetch('https://cascade-prod.messiah.edu/fin-aid/_data/fin-aid-options.json')
+      fetch('https://www.messiah.edu/fin-aid/_data/fin-aid-options.json')
         .then((response) => response.json())
         .then((data) => {
           this.entries = data.listing_data
