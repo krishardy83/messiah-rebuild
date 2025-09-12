@@ -43,11 +43,29 @@ import Icon from "../../components/icon.astro";
       fetch('https://cascade-prod.messiah.edu/fin-aid/_data/fin-aid-options.json')
         .then((response) => response.json())
         .then((data) => {
-          this.entries = data.listing_data.map((entry) => {
-            const filter = this.filters.find((filter) => filter.id === this.slugify(entry.category));
+          this.entries = data.listing_data
+            .map((entry) => {
+              const filter = this.filters.find((filter) => filter.id === this.slugify(entry.category));
 
-            return { ...entry, icon: filter?.icon || null };
-          });
+              return { ...entry, icon: filter?.icon || null };
+            })
+            .sort((a, b) => {
+              const hasPriorityA = a.priority !== undefined && a.priority !== null && a.priority !== '';
+              const hasPriorityB = b.priority !== undefined && b.priority !== null && b.priority !== '';
+
+              if (hasPriorityA && hasPriorityB) {
+                // Both have priorities → sort by priority (desc), then by name (asc)
+                const diff = Number(b.priority) - Number(a.priority);
+                if (diff !== 0) return diff;
+                return a.entry_name.localeCompare(b.entry_name);
+              }
+
+              if (hasPriorityA) return -1; // A has priority, B does not → A first
+              if (hasPriorityB) return 1;  // B has priority, A does not → B first
+
+              // Neither has priority → sort alphabetically
+              return a.entry_name.localeCompare(b.entry_name);
+            });
 
           const hash = location.hash.slice(1);
           const url = new URL(location.href);
