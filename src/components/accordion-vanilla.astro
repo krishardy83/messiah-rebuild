@@ -1,0 +1,102 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn, createId } from "../lib/utils";
+import Icon from "./icon.astro";
+
+interface Props extends HTMLAttributes<"div"> {
+  title: string;
+  subtitle?: string;
+  id?: string;
+  allowProse?: boolean;
+  image?: {
+    src: string;
+    size?: number;
+  };
+}
+
+const { title, id, subtitle, allowProse = false, image, class: className, ...props } = Astro.props;
+const accordionId = id || createId();
+---
+
+<div
+  data-analytics="accordion"
+  class={cn("border border-gray-300 mb-4", { "not-prose": !allowProse }, className)}
+  {...props}
+>
+  <h3>
+    <button
+      type="button"
+      aria-controls={accordionId}
+      id={`button-${accordionId}`}
+      class="group relative flex w-full items-center gap-x-4 bg-gray-100 py-4 pl-4 pr-14 text-left transition-colors aria-expanded:bg-white"
+      aria-expanded="false"
+      data-accordion-trigger
+    >
+      {
+        image ? (
+          <img
+            src={image.src}
+            alt=""
+            aria-hidden="true"
+            width={image.size || 56}
+            height={image.size || 56}
+          />
+        ) : null
+      }
+
+      <span class="flex flex-1 flex-wrap gap-x-2">
+        <span
+          class="mr-auto font-sans text-sm text-primary-800 sm:text-base md:text-lg"
+          set:html={title}
+        />
+        {
+          subtitle ? (
+            <span class="font-title font-bold uppercase text-tertiary-500">{subtitle}</span>
+          ) : null
+        }
+      </span>
+
+      <Icon
+        name="chevron-down"
+        class="absolute right-4 top-1/2 size-5 shrink-0 -translate-y-1/2 transition-transform duration-300 group-aria-expanded:rotate-180"
+      />
+    </button>
+  </h3>
+
+  <div
+    role="region"
+    id={accordionId}
+    aria-labelledby={`button-${accordionId}`}
+    class="rich-text invisible h-0 overflow-hidden border-t border-gray-300 transition-all duration-500 ease-out"
+    data-accordion-content
+  >
+    <div class="p-4">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("button[data-accordion-trigger]");
+  const content = document.querySelector<HTMLDivElement>("div[data-accordion-content]");
+
+  let show = false;
+
+  if (button && content) {
+    button.addEventListener("click", () => {
+      show = !show;
+
+      button.setAttribute("aria-expanded", String(show));
+
+      if (show) {
+        content.style.setProperty("height", content.scrollHeight + "px");
+        content.classList.remove("h-0", "invisible");
+        content.classList.add("h-auto");
+      } else {
+        content.style.removeProperty("height");
+        content.classList.remove("h-auto");
+        content.classList.add("h-0", "invisible");
+      }
+    });
+  }
+</script>
