@@ -33,6 +33,8 @@ import Icon from "../components/icon.astro";
       error: null,
       open: null,
 
+      sortByClassYear: true,
+
       filters: {
         department: 'Business',
         major: '',
@@ -43,13 +45,35 @@ import Icon from "../components/icon.astro";
         fetch('https://cascade-prod.messiah.edu/alumni_directory/_data/alumni-directory-json.json')
           .then((response) => response.json())
           .then((data) => {
-            this.alumni = data.listing_data.filter((student) => student.ugDept === this.filters.department);
+            this.alumni = data.listing_data
+              .filter((student) => student.ugDept === this.filters.department)
+              .sort((a, b) => {
+                if (this.sortByClassYear) {
+                  return this.getClassYear(b.classYear) - this.getClassYear(a.classYear);
+                }
+
+                return a.entry_name.localeCompare(b.entry_name);
+              });
             this.loading = false;
           })
           .catch((error) => {
             this.error = `Could not fetch program data (${error.message})`;
             this.loading = false;
           });
+      },
+
+      getClassYear(year) {
+        if (year.length === 4) {
+          return Number(year);
+        }
+
+        const converted = Number(year);
+
+        if (new Date().getFullYear() - 2000 >= converted) {
+          return converted + 2000;
+        }
+
+        return converted + 1900;
       },
 
       getMajors() {
