@@ -1,4 +1,5 @@
 ---
+import AccordionVanilla from "../../components/accordion-vanilla.astro";
 import Accordion from "../../components/accordion.astro";
 import WithoutHero from "../../layouts/without-hero.astro";
 ---
@@ -81,11 +82,28 @@ import WithoutHero from "../../layouts/without-hero.astro";
       necessitatibus voluptate alias harum reprehenderit odit!
     </p>
 
-    <ul class="list-disc pl-6 mt-4">
+    <ul class="mt-4 list-disc pl-6">
       <li>Matthew</li>
       <li>Mark</li>
       <li>Luke</li>
       <li>John</li>
     </ul>
   </Accordion>
+
+  <hr />
+
+  <AccordionVanilla title="Accordion without Alpine.js">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti, quos omnis adipisci
+      dolorem sequi impedit earum, doloribus tempore suscipit amet officia tempora voluptatum
+      necessitatibus voluptate alias harum reprehenderit odit!
+    </p>
+
+    <ul class="mt-4 list-disc pl-6">
+      <li>Matthew</li>
+      <li>Mark</li>
+      <li>Luke</li>
+      <li>John</li>
+    </ul>
+  </AccordionVanilla>
 </WithoutHero>
