@@ -77,26 +77,28 @@ const accordionId = id || createId();
 </div>
 
 <script>
-  const button = document.querySelector<HTMLButtonElement>("button[data-accordion-trigger]");
-  const content = document.querySelector<HTMLDivElement>("div[data-accordion-content]");
+  const buttons = document.querySelectorAll<HTMLButtonElement>("button[data-accordion-trigger]");
 
-  let show = false;
-
-  if (button && content) {
+  buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      show = !show;
+      const content = document.querySelector<HTMLDivElement>(
+        `#${button.getAttribute("aria-controls")}`
+      );
+      const visible = button.getAttribute("aria-expanded") === "true";
 
-      button.setAttribute("aria-expanded", String(show));
+      button.setAttribute("aria-expanded", visible ? "false" : "true");
 
-      if (show) {
-        content.style.setProperty("height", content.scrollHeight + "px");
-        content.classList.remove("h-0", "invisible");
-        content.classList.add("h-auto");
-      } else {
+      if (!content) return;
+
+      if (visible) {
         content.style.removeProperty("height");
         content.classList.remove("h-auto");
         content.classList.add("h-0", "invisible");
+      } else {
+        content.style.setProperty("height", content.scrollHeight + "px");
+        content.classList.remove("h-0", "invisible");
+        content.classList.add("h-auto");
       }
     });
-  }
+  });
 </script>
