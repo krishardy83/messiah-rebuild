@@ -36,13 +36,13 @@ import Icon from "../components/icon.astro";
       sortByClassYear: true,
 
       filters: {
-        department: 'Business',
+        department: 'Engineering',
         major: '',
         area: '',
       },
 
       init() {
-        fetch('https://cascade-prod.messiah.edu/alumni_directory/_data/alumni-directory-json.json')
+        fetch('https://www.messiah.edu/alumni_directory/_data/alumni-directory-json.json')
           .then((response) => response.json())
           .then((data) => {
             this.alumni = data.listing_data
