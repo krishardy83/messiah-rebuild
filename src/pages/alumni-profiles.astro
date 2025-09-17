@@ -110,8 +110,8 @@ import Icon from "../components/icon.astro";
         }
 
         return this.alumni.filter((student) => {
-          const matchesMajor = student.major === this.filters.major;
-          const matchesArea = student.gradSubjectArea === this.filters.area;
+          const matchesMajor = this.filters.major ? student.major === this.filters.major : true;
+          const matchesArea = this.filters.area ? student.gradSubjectArea === this.filters.area : true;
           
           return matchesMajor && matchesArea;
         });
@@ -212,28 +212,30 @@ import Icon from "../components/icon.astro";
           </nav>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2 mb-4">
-          <select
-            x-model="filters.major"
-            x-show="getMajors().length > 0"
-            class="w-full flex-1 border border-gray-300 md:bg-transparent p-2 select"
-          >
-            <option value="" selected="">Filter by major...</option>
-            <template x-for="major in getMajors()">
-              <option x-text="major" :value="major"></option>
-            </template>
-          </select>
+        <div class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-8">
+          <div>
+            <label for="major-filter" class="font-semibold">Filter by major:</label>
+            <select
+              x-model="filters.major"
+              x-show="getMajors().length > 0"
+              class="p-2 bg-transparent"
+            >
+              <option value="" selected="">View all</option>
+              <template x-for="major in getMajors()">
+                <option x-text="major" :value="major"></option>
+              </template>
+            </select>
+          </div>
 
-          <select
-            x-model="filters.area"
-            x-show="getGradSubjectAreas().length > 0"
-            class="w-full flex-1 border border-gray-300 md:bg-transparent p-2 select"
-          >
-            <option value="" selected="">Filter by subject area...</option>
-            <template x-for="area in getGradSubjectAreas()">
-              <option x-text="area" :value="area"></option>
-            </template>
-          </select>
+          <div x-show="getGradSubjectAreas().length > 0">
+            <label for="major-filter" class="font-semibold">Filter by subject area:</label>
+            <select x-model="filters.area" class="p-2 bg-transparent">
+              <option value="" selected="">View all</option>
+              <template x-for="area in getGradSubjectAreas()">
+                <option x-text="area" :value="area"></option>
+              </template>
+            </select>
+          </div>
         </div>
 
         <template x-for="student, index in getFilteredAlumni()">
