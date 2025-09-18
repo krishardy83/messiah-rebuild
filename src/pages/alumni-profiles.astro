@@ -36,7 +36,7 @@ import Icon from "../components/icon.astro";
       sortByClassYear: true,
 
       filters: {
-        department: 'Engineering',
+        department: 'Business',
         major: '',
         area: '',
       },
@@ -212,14 +212,13 @@ import Icon from "../components/icon.astro";
           </nav>
         </div>
 
-        <div class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-8">
-          <div>
+        <div
+          x-show="getMajors().length > 0 || getGradSubjectAreas().length > 0"
+          class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-8"
+        >
+          <div x-show="getMajors().length > 0">
             <label for="major-filter" class="font-semibold">Filter by major:</label>
-            <select
-              x-model="filters.major"
-              x-show="getMajors().length > 0"
-              class="p-2 bg-transparent"
-            >
+            <select x-model="filters.major" class="p-2 bg-transparent">
               <option value="" selected="">View all</option>
               <template x-for="major in getMajors()">
                 <option x-text="major" :value="major"></option>
