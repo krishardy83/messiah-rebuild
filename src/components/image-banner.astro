@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../lib/utils";
+
+interface Props extends HTMLAttributes<"figure"> {
+  title: string;
+  subtitle: string;
+  image: string;
+}
+
+const { title, subtitle, image, class: className, ...props } = Astro.props;
+---
+
+<header
+  class={cn(
+    "w-full aspect-video relative after:absolute after:bg-gradient-to-r after:from-primary-800 after:via-primary-800 after:from after:to-transparent after:inset-0",
+    className,
+  )}
+  {...props}
+>
+  <img src={image} alt="" class="w-full h-full object-cover bg-primary-700" />
+  <div class="absolute left-8 top-1/2 -translate-y-1/2 text-white z-10">
+    <p class="font-title font-bold text-7xl">{title}</p>
+    <p class="font-title text-4xl uppercase">{subtitle}</p>
+  </div>
+</header>
