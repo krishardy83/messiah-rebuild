@@ -1,0 +1,30 @@
+---
+import ImageBanner from "../../components/image-banner.astro";
+import WithoutHero from "../../layouts/without-hero.astro";
+---
+
+<WithoutHero
+  title="Image Banner Example"
+  description="Example of an image banner"
+  sidebarLinks={[
+    {
+      title: "Web Services",
+      children: [
+        { href: "/", name: "FAQ's" },
+        { href: "/", name: "Project planning" },
+        { href: "/", name: "Services provided" },
+        { href: "/", name: "Support & training" },
+        { href: "/", name: "Website governance" },
+      ],
+    },
+  ]}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Campus Directory", href: "/" },
+    { name: "Offices", href: "/" },
+    { name: "Web Services", href: "/" },
+    { name: "Accordion", href: "/" },
+  ]}
+>
+  <ImageBanner title="Next steps" subtitle="at Messiah University" image="/images/659601219-image-2.jpg" />
+</WithoutHero>
