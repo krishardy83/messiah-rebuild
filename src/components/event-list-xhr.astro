@@ -75,7 +75,7 @@ const { title, class: className, ...props } = Astro.props;
       };
     },
 
-    getNextViableEvent(event) {
+    getViableEvents(event, getAll = false) {
       const today = this.getDate();
       const dayMap = {
         Sunday: 0,
@@ -90,18 +90,25 @@ const { title, class: className, ...props } = Astro.props;
       const startDate = this.getDate(event.date);
       const endDate = this.getDate(event.repeatEnd);
       const repeatDays = event.repeatDays.map(day => dayMap[day]);
+      const results = [];
 
       let date = new Date(Math.max(today, startDate));
 
       while (date <= endDate) {
-        if (event.repeat === 'Daily') {
-          return this.transformEvent(event, date);
-        } else if (repeatDays.includes(date.getDay())) {
-          return this.transformEvent(event, date);
+        if (event.repeat === 'Daily' || repeatDays.includes(date.getDay())) {
+          const transformedEvent = this.transformEvent(event, new Date(date));
+
+          if (getAll) {
+            results.push(transformedEvent);
+          } else {
+            return transformedEvent;
+          }
         }
         
         date.setDate(date.getDate() + 1);
       }
+
+      return results;
     },
 
     sortEvents(events) {
@@ -156,7 +163,14 @@ const { title, class: className, ...props } = Astro.props;
           const end = this.getDate(event.repeatEnd);
           
           if (today.getTime() <= end.getTime()) {
-            results.push(this.getNextViableEvent(event));
+            // Check if event should be listed multiple times
+            if (event.repeatListing === 'Yes') {
+              // Get all viable events for this repeating event
+              results.push(...this.getViableEvents(event, true));
+            } else {
+              // Original behavior: show only the next viable event
+              results.push(this.getViableEvents(event, false));
+            }
           }
         }
       }
