@@ -39,8 +39,8 @@ import WithoutHero from "../layouts/without-hero.astro";
       faculties: [],
       loading: true,
       error: null,
-      department: '',
-      gradSubjects: 'Counseling',
+      department: 'Chemistry and Biochemistry',
+      gradSubjects: '',
       entryIds: '',
       
       filters: {
@@ -53,7 +53,7 @@ import WithoutHero from "../layouts/without-hero.astro";
           .then((response) => response.json())
           .then((data) => {
             this.faculties = data.items.filter((faculty) => {
-              const matchesDepartment = this.department.length ? faculty.department === this.department : true;
+              const matchesDepartment = this.department.length ? faculty.department.split('|').includes(this.department) : true;
               const matchesGradSubjects = this.gradSubjects.length ? faculty.gradSubjects.split('|').includes(this.gradSubjects) : true;
               
               if (this.entryIds.length) {
