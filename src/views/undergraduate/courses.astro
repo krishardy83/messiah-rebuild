@@ -32,4 +32,402 @@
       >
     </li>
   </ul>
+
+  <div x-data="{
+    curriculumText: '',
+    sampleCoursePlanText: '',
+    loading: true,
+    error: null,
+
+    async init() {
+      try {
+        /*const response = await fetch('https://catalog.qu.edu/arts-sciences/economics/economics-bs/index.xml');
+        if (!response.ok) {
+          throw new Error('Failed to fetch XML');
+        }
+        const xmlText = await response.text();*/
+        
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(window.courseData, 'text/xml');
+
+        this.curriculumText = doc.querySelector('curriculumtext').innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+        this.sampleCoursePlanText = doc.querySelector('samplecourseplantext').innerHTML.replace('<![CDATA[', '').replace(']]>', '');
+  
+        this.loading = false;
+      } catch (err) {
+        this.error = err.message;
+        this.loading = false;
+      }
+    }
+  }">
+    <template x-if="loading">
+      <p role="alert" class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">Loading course data...</p>
+    </template>
+    
+    <template x-if="error">
+      <p role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+        Snap! Something went wrong. Please refresh the page or try again later.
+        <code x-text="error" class="text-sm leading-none mt-2"></code>
+      </p>
+    </template>
+    
+    <template x-if="!loading && !error">
+      <div x-show="curriculumText" x-html="curriculumText"></div>
+      <div x-show="sampleCoursePlanText" x-html="sampleCoursePlanText"></div>
+    </template>
+  </div>
 </div>
+
+<script is:inline>
+  window.courseData = `<?xml version="1.0"?>
+  <courseleaf>
+
+  <title>Bachelor of Science in Economics</title>
+
+
+  <text>
+  <![CDATA[  
+  <p class="headB">Program Contact: <a href="mailto:Donn.Johnson@quinnipiac.edu">Donn Johnson</a>   203-582-8205</p>
+  <p class="text">The BS in Economics program teaches students the core theories of economics. Students learn to analyze social and business problems and to examine the proper role of the market and the government in solving these problems. They are able to apply their analytical skills to analyze and interpret economic behavior and forecast political and societal trends. Students have the opportunity to take specialized courses such as Environmental Economics (<span class="sc_courseinline"><span class="code_bubble" data-code-bubble="EC 304">EC 304</span></span>), Game Theory (<span class="sc_courseinline"><span class="code_bubble" data-code-bubble="EC 355">EC 355</span></span>), Law and Economics (<span class="sc_courseinline"><span class="code_bubble" data-code-bubble="EC 320">EC 320</span></span>), Money and Banking (<span class="sc_courseinline"><span class="code_bubble" data-code-bubble="EC 341">EC 341</span></span>) and Public Finance (<span class="sc_courseinline"><span class="code_bubble" data-code-bubble="EC 330">EC 330</span></span>).  </p>
+
+  <div class="parbase aem-GridColumn text">
+  <p>Besides studying essential economic theories, students also learn to analyze individual markets and assess the impact public policy has on the economy. The Economics major has four tracks allowing students the flexibility to choose their own path through the major. This versatile major makes students attractive to employers and prepares students for a successful career in banking, government, law, the insurance industry and elsewhere. </p>
+  <p>Recent economics majors have secured prominent jobs with the Federal Reserve Board, General Electric, Liberty Mutual, Oppenheimer Funds and other industrial and insurance firms.</p>
+  </div>
+    
+  ]]>
+  </text>
+  <curriculumtext name="Curriculum">
+  <![CDATA[
+  <p><strong>The BS in Economics requires 120 credits for degree completion.</strong> </p>
+  <p>Please see footnotes for additional information.</p>
+  <table class="sc_courselist">
+  <caption class="hidden noscript">Course List</caption>
+  <colgroup>
+  <col class="codecol"/>
+  <col class="titlecol"/>
+  <col align="char" char="." class="hourscol"/>
+  </colgroup>
+  <thead>
+  <tr class="hidden noscript">
+  <th scope="col">Code</th>
+  <th scope="col">Title</th>
+  <th scope="col" class="hourscol">Credits</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="even areaheader  firstrow"><td colspan="2"><span class="courselistcomment areaheader "><a href="/academics/university-curriculum/">University Curriculum</a></span></td><td class="hourscol">46</td></tr>
+  <tr class="odd areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Modern Language Requirement</span> <sup>1</sup></td><td class="hourscol">3-6</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Economics Core Requirements</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 111">EC 111</span></td><td>Principles of Microeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 112">EC 112</span></td><td>Principles of Macroeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 211">EC 211</span></td><td>Intermediate Microeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 212">EC 212</span></td><td>Intermediate Macroeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 272">EC 272</span></td><td>Advanced Applied Statistics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 450">EC 450</span></td><td>Senior Seminar</td><td class="hourscol">3</td></tr>
+  <tr class="odd areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Additional coursework to satisfy Economics track chosen</span> <sup>2</sup></td><td class="hourscol">15-18</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Free Electives</span></td><td class="hourscol">35-38</td></tr>
+  <tr class="odd areaheader  lastrow"><td colspan="2"><span class="courselistcomment areaheader ">Total Credits</span></td><td class="hourscol">120</td></tr>
+  </tbody>
+  </table>
+
+  <dl class="sc_footnotes" aria-label="Footnotes"><dt> <sup> 1 </sup> </dt><dd><p class="noindent"><strong><u>All</u> </strong>CAS students must complete one modern language through the 102 level. Students who have taken a language in high school should take the modern language placement test for that language. Placement scores at the 201 level or higher demonstrate language competency and will place out of the language requirement<strong>.</strong></p></dd><dt> <sup> 2 </sup> </dt><dd><p class="noindent">Students may request permission from the Economics Department Chair to use one non-economics course to fulfill their major requirements.</p></dd></dl>
+  <h2>Track Options (Complete One Track)</h2>
+  <h3>General Economics Track</h3>
+  <p>This track provides students with a well-rounded curriculum to prepare them for any number of careers including, but not limited to banking, consulting, financial research, the government, the hedge fund industry and insurance firms.</p>
+  <table class="sc_courselist">
+  <caption class="hidden noscript">Course List</caption>
+  <colgroup>
+  <col class="codecol"/>
+  <col class="titlecol"/>
+  <col align="char" char="." class="hourscol"/>
+  </colgroup>
+  <thead>
+  <tr class="hidden noscript">
+  <th scope="col">Code</th>
+  <th scope="col">Title</th>
+  <th scope="col" class="hourscol">Credits</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="even firstrow"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 365">EC 365</span></td><td>Econometrics</td><td class="hourscol">3</td></tr>
+  <tr class="odd lastrow"><td colspan="2"><span class="courselistcomment">Four additional Economics courses at the 200 level or above</span></td><td class="hourscol">12</td></tr>
+  </tbody>
+  </table>
+
+  <h3>Policy Track</h3>
+  <p>This track allows students who are leaning toward a career in public policy to focus more on courses in that area, while still maintaining flexibility for other career options.</p>
+  <table class="sc_courselist">
+  <caption class="hidden noscript">Course List</caption>
+  <colgroup>
+  <col class="codecol"/>
+  <col class="titlecol"/>
+  <col align="char" char="." class="hourscol"/>
+  </colgroup>
+  <thead>
+  <tr class="hidden noscript">
+  <th scope="col">Code</th>
+  <th scope="col">Title</th>
+  <th scope="col" class="hourscol">Credits</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="even firstrow"><td colspan="2"><span class="courselistcomment">Four additional Economics courses at the 200 level or above</span></td><td class="hourscol">12</td></tr>
+  <tr class="odd lastrow"><td colspan="2"><span class="courselistcomment">Two additional Social Science courses at the 200 level or above</span></td><td class="hourscol">6</td></tr>
+  </tbody>
+  </table>
+
+  <h3>Commerce Track</h3>
+  <p>This track allows students who are leaning toward a career in commerce or industry to focus more on courses in business, while still maintaining flexibility for other career options.</p>
+  <table class="sc_courselist">
+  <caption class="hidden noscript">Course List</caption>
+  <colgroup>
+  <col class="codecol"/>
+  <col class="titlecol"/>
+  <col align="char" char="." class="hourscol"/>
+  </colgroup>
+  <thead>
+  <tr class="hidden noscript">
+  <th scope="col">Code</th>
+  <th scope="col">Title</th>
+  <th scope="col" class="hourscol">Credits</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="even firstrow"><td colspan="2"><span class="courselistcomment">Four additional Economics courses at the 200 level or above</span></td><td class="hourscol">12</td></tr>
+  <tr class="odd lastrow"><td colspan="2"><span class="courselistcomment">Two additional School of Business courses at the 200 level or above</span></td><td class="hourscol">6</td></tr>
+  </tbody>
+  </table>
+
+  <h3>Quantitative Track</h3>
+  <p>This track provides students with strong mathematical and analytic skills to further develop those skills in preparation for the more data-driven careers in government and business, as well as develop the skills to help them succeed at the graduate level in economics.</p>
+  <table class="sc_courselist">
+  <caption class="hidden noscript">Course List</caption>
+  <colgroup>
+  <col class="codecol"/>
+  <col class="titlecol"/>
+  <col align="char" char="." class="hourscol"/>
+  </colgroup>
+  <thead>
+  <tr class="hidden noscript">
+  <th scope="col">Code</th>
+  <th scope="col">Title</th>
+  <th scope="col" class="hourscol">Credits</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="even firstrow"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 365">EC 365</span></td><td>Econometrics</td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Three additional Economics courses at the 200 level or above</span></td><td class="hourscol">9</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Two additional quantitative courses including:</span></td><td class="hourscol">6</td></tr>
+  <tr class="odd"><td colspan="2"><div style="margin-left:20px;" class="blockindent"><span class="courselistcomment commentindent">Any Data Science Course</span></div></td><td class="hourscol"></td></tr>
+  <tr class="even"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="EC 366">EC 366</span></div></td><td>Advanced Econometrics</td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 140">MA 140</span></div></td><td>Pre-Calculus</td><td class="hourscol"></td></tr>
+  <tr class="even"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 141">MA 141</span></div></td><td>Calculus of a Single Variable</td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 150">MA 150</span></div></td><td>Integral Calculus With Applications</td><td class="hourscol"></td></tr>
+  <tr class="even"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 151">MA 151</span></div></td><td>Calculus I</td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 152">MA 152</span></div></td><td>Calculus II</td><td class="hourscol"></td></tr>
+  <tr class="even"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 153">MA 153</span></div></td><td>Calculus II: Part A</td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 154">MA 154</span></div></td><td>Calculus II: Part B</td><td class="hourscol"></td></tr>
+  <tr class="even"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 229">MA 229</span></div></td><td>Linear Algebra</td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 251">MA 251</span></div></td><td>Calculus III</td><td class="hourscol"></td></tr>
+  <tr class="even"><td class="codecol"><div style="margin-left:20px;" class="blockindent"><span class="code_bubble" data-code-bubble="MA 265">MA 265</span></div></td><td>Matrix Algebra and Differential Equations</td><td class="hourscol"></td></tr>
+  <tr class="odd lastrow"><td colspan="2"><div style="margin-left:20px;" class="blockindent"><span class="courselistcomment commentindent">Any 300-level Mathematics Course</span></div></td><td class="hourscol"></td></tr>
+  </tbody>
+  </table>
+
+  ]]>
+  </curriculumtext>
+  <samplecourseplantext name="Sample Course Plan">
+  <![CDATA[
+  <p><strong>Shown below is one of many possible paths through the curriculum. Each student's individual academic plan is crafted in consultation with their academic adviser.</strong></p>
+  <table class="sc_courselist">
+  <caption class="hidden noscript">Course List</caption>
+  <colgroup>
+  <col class="codecol"/>
+  <col class="titlecol"/>
+  <col align="char" char="." class="hourscol"/>
+  </colgroup>
+  <thead>
+  <tr class="hidden noscript">
+  <th scope="col">Code</th>
+  <th scope="col">Title</th>
+  <th scope="col" class="hourscol">Credits</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="even areaheader  firstrow"><td colspan="2"><span class="courselistcomment areaheader ">First Year</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Milestones: Earn 30 credits, meet with your adviser at least once a semester and have a GPA of 2.00 or higher.</span></td><td class="hourscol"></td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Fall Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 111">EC 111</span></td><td>Principles of Microeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td class="codecol"><span class="code_bubble" data-code-bubble="MA 170">MA 170</span></td><td>Probability and Data Analysis (UC Math)</td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EN 101">EN 101</span></td><td>Introduction to Academic Reading and Writing (UC First Year Writing)</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td class="codecol"><span class="code_bubble" data-code-bubble="FYS 101">FYS 101</span></td><td>First-Year Seminar (UC Foundations Inquiry)</td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Spring Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 112">EC 112</span></td><td>Principles of Macroeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 272">EC 272</span></td><td>Advanced Applied Statistics</td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EN 102">EN 102</span></td><td>Academic Writing and Research (UC First Year Writing)</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Second Year</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Milestones: Earn 60 credits and a GPA of 2.00 or higher. Meet with your adviser at least once per semester to discuss academic, experiential learning, career and co-curricular opportunities.</span></td><td class="hourscol"></td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Fall Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 212">EC 212</span></td><td>Intermediate Macroeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Economics Elective at 200 level</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Language at the 101 level</span></td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">University Curriculum course</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Spring Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 211">EC 211</span></td><td>Intermediate Microeconomics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Economics  Elective at the 200 level</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Language at the 102 level (Satisfies CAS Language Requirement)</span></td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">University Curriculum course</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Third Year</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Milestones: Earn 90 credits and a GPA of 2.00 or higher. Meet with your adviser at least once per semester. Participate in study abroad, complete internship or research opportunities.</span></td><td class="hourscol"></td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Fall Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 365">EC 365</span></td><td>Econometrics</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Economics Elective at the 200 level</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">University Curriculum course</span></td><td class="hourscol">4</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Spring Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Economics Elective at the 200 level</span></td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">University Curriculum course</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">University Curriculum course</span></td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">University Curriculum course</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Fourth Year</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Milestones: Earn 120 credits and a GPA of 2.00 or higher. Complete possible minor or double major and prepare for graduation.</span></td><td class="hourscol"></td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Fall Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="EC 450">EC 450</span></td><td>Senior Seminar</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even areaheader "><td colspan="2"><span class="courselistcomment areaheader ">Spring Semester</span></td><td class="hourscol"></td></tr>
+  <tr class="odd"><td class="codecol"><span class="code_bubble" data-code-bubble="CAS 420">CAS 420</span></td><td>CAS Integrative Capstone</td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="even"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">3</td></tr>
+  <tr class="odd lastrow"><td colspan="2"><span class="courselistcomment">Open Elective</span></td><td class="hourscol">2</td></tr>
+  <tr class="listsum"><td colspan="2">Total Credits</td><td class="hourscol">120</td></tr></tbody>
+  </table>
+
+  ]]>
+  </samplecourseplantext>
+  <missiontext name="Outcomes">
+  <![CDATA[
+  <h2 class="text">Student Learning Outcomes</h2>
+  <p class="text">Upon completion of the program, students will demonstrate the following competencies:</p>
+  <ol>
+    <li class="text"><strong>Knowledge of Economics:</strong> Students demonstrate and can apply the core theories of economics.</li>
+    <li class="text"><strong>Quantitative Reasoning:</strong> Students develop the ability to represent mathematical information symbolically, visually, numerically and verbally, and to interpret mathematical models such as graphs, tables and schematics to draw inferences. They also develop an ability to use arithmetical, algebraic, geometric and statistical methods to solve social and business problems.</li>
+    <li class="text"><strong>Critical Thinking:</strong> Students develop the ability to recognize problems and to acquire, assess and synthesize information to analyze social and business problems.</li>
+  </ol>
+  ]]>
+  </missiontext>
+  <admissiontext name="Admission">
+  <![CDATA[
+  <h2>Admission Requirements: College of Arts &amp; Sciences</h2> <p class="text">The requirements for admission into the undergraduate College of Arts &amp; Sciences programs are the same as those for admission to Quinnipiac University.</p> <p class="text">Admission to the university is competitive, and applicants are expected to present a strong college prep program in high school. Prospective first-year students are strongly encouraged to file an application as early in the senior year as possible, and arrange to have first quarter grades sent from their high school counselor as soon as they are available.</p> <p class="text">For detailed admission requirements, including required documents, please visit the <a href="/general-information/admissions/">Admissions</a> page of this catalog.</p>
+  ]]>
+  </admissiontext>
+  <transferstext name="Transfers">
+  <![CDATA[
+  <p><!--class="Mso"--><!--class="Mso"--></p>
+  <h2>Seamless Transfer Agreement with Gateway Community College (GCC), Housatonic Community College (HCC) and Norwalk Community College (NCC)</h2>
+  <p>Under this Transfer Agreement, GCC, HCC and NCC graduates will be guaranteed admission into a bachelor’s degree program with third year (junior) status at Quinnipiac University on the condition that they: </p>
+  <ul>
+    <li>Graduate with an associate in arts, an associate in science in business, College of Technology engineering science, nursing or an allied health degree with a minimum cumulative GPA of 3.00 (this may be higher in specific programs). </li>
+    <li>Satisfy all other Quinnipiac University transfer admission requirements and requirements for intended major.</li>
+  </ul>
+  <p>Quinnipiac University agrees to accept the general education embedded in these associate degree programs in accordance with Quinnipiac preferred choices for general education as meeting all the requirements of its undergraduate general education except for the Integrative Capstone Experience and where courses are encumbered by the major (e.g., General Chemistry for the Disciplinary Inquiry Natural Science requirement for a Biochemistry major).</p>
+  <h2>Suggested Transfer Curriculum for BS in Economics</h2>
+  <p>A minimum of 60 credits is required for transfer into the BS in Economics program.  Below is a recommended plan of study for the first two years prior to matriculation at Quinnipiac University.</p>
+  <table pdfnorepeatheader="true" class="sc_plangrid">
+  <caption>Plan of Study Grid</caption><colgroup>
+    <col pdfwidth="28" class="codecol"/>
+    <col pdfwidth="57" class="titlecol"/>
+    <col pdfwidth="15" class="hourscol"/>
+  </colgroup>
+  <tr class="plangridyear"><th id="Kpn5YH_plangrid1_0" class="year" colspan="3">First Year</th></tr>
+  <tr class="plangridterm"><th id="Kpn5YH_plangrid1_0_0" colspan="2">Fall Semester</th><th id="Kpn5YH_plangrid1_hoursheader" scope="col" class="hourscol">Credits</th></tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_0_0" colspan="2" class="codecol"><span class="comment">English I</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_0_0" colspan="2" class="codecol"><span class="comment">Principles of Microeconomics</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_0_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_0_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_0_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="plangridsum odd"><td> </td><td headers=" Kpn5YH_plangrid1_0_0" class="titlecol">Credits</td><td headers=" Kpn5YH_plangrid1_0_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">15</td></tr>
+  <tr class="plangridterm"><th id="Kpn5YH_plangrid1_0_1" colspan="3">Spring Semester</th></tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_0_1" colspan="2" class="codecol"><span class="comment">English II</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_0_1" colspan="2" class="codecol"><span class="comment">Principles of Macroeconomics</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_0_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3-4</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_0_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3-4</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_0_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_0_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="plangridsum odd"><td> </td><td headers=" Kpn5YH_plangrid1_0_1" class="titlecol">Credits</td><td headers=" Kpn5YH_plangrid1_0_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">15-17</td></tr>
+  <tr class="plangridyear"><th id="Kpn5YH_plangrid1_1" class="year" colspan="3">Second Year</th></tr>
+  <tr class="plangridterm"><th id="Kpn5YH_plangrid1_1_0" colspan="3">Fall Semester</th></tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_1_0" colspan="2" class="codecol"><span class="comment">Statistics</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_1_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_1_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_1_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_1_0" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">3-4</td>
+  </tr>
+  <tr class="plangridsum odd"><td> </td><td headers=" Kpn5YH_plangrid1_1_0" class="titlecol">Credits</td><td headers=" Kpn5YH_plangrid1_1_0 Kpn5YH_plangrid1_hoursheader" class="hourscol">15-16</td></tr>
+  <tr class="plangridterm"><th id="Kpn5YH_plangrid1_1_1" colspan="3">Spring Semester</th></tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_1_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_1_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_1_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="odd"><td headers=" Kpn5YH_plangrid1_1_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="even"><td headers=" Kpn5YH_plangrid1_1_1" colspan="2" class="codecol"><span class="comment">Elective</span></td>
+  <td headers=" Kpn5YH_plangrid1_1_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">3</td>
+  </tr>
+  <tr class="plangridsum odd"><td> </td><td headers=" Kpn5YH_plangrid1_1_1" class="titlecol">Credits</td><td headers=" Kpn5YH_plangrid1_1_1 Kpn5YH_plangrid1_hoursheader" class="hourscol">15</td></tr>
+  <tr class="plangridtotal lastrow even"><td> </td><td>Total Credits</td><td headers="Kpn5YH_plangrid1_hoursheader" class="hourscol">60-63</td></tr>
+  </table>
+  <p>Students planning to transfer into the BS in Economics major at Quinnipiac University are highly encouraged to contact the Economics Department Chair, <a href="mailto:Donn.Johnson@qu.edu">Donn Johnson</a>.</p>
+  ]]>
+  </transferstext>
+  <faculty>
+  <![CDATA[
+  ]]>
+  </faculty>
+  </courseleaf>`;
+</script>
