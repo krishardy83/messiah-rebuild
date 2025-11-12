@@ -75,6 +75,24 @@ const { title, class: className, ...props } = Astro.props;
       };
     },
 
+    formatExcludeDate(date) {
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const year = date.getFullYear();
+
+      return `${month}-${day}-${year}`;
+    },
+
+    isExcludedDate(event, date) {
+      if (!Array.isArray(event.excludeDays) || event.excludeDays.length === 0) {
+        return false;
+      }
+
+      const formattedDate = this.formatExcludeDate(date);
+
+      return event.excludeDays.includes(formattedDate);
+    },
+
     getViableEvents(event, getAll = false) {
       const today = this.getDate();
       const dayMap = {
@@ -89,13 +107,13 @@ const { title, class: className, ...props } = Astro.props;
 
       const startDate = this.getDate(event.date);
       const endDate = this.getDate(event.repeatEnd);
-      const repeatDays = event.repeatDays.map(day => dayMap[day]);
-      const results = [];
+      const repeatDays = Array.isArray(event.repeatDays) ? event.repeatDays.map(day => dayMap[day]) : [];
 
       let date = new Date(Math.max(today, startDate));
+      const results = [];
 
       while (date <= endDate) {
-        if (event.repeat === 'Daily' || repeatDays.includes(date.getDay())) {
+        if ((event.repeat === 'Daily' || repeatDays.includes(date.getDay())) && !this.isExcludedDate(event, date)) {
           const transformedEvent = this.transformEvent(event, new Date(date));
 
           if (getAll) {
@@ -108,7 +126,7 @@ const { title, class: className, ...props } = Astro.props;
         date.setDate(date.getDate() + 1);
       }
 
-      return results;
+      return getAll ? results : null;
     },
 
     sortEvents(events) {
@@ -156,7 +174,7 @@ const { title, class: className, ...props } = Astro.props;
         if (event.repeat === 'No repeat') {
           const start = this.getDate(event.date);
           
-          if (today.getTime() <= start.getTime()) {
+          if (today.getTime() <= start.getTime() && !this.isExcludedDate(event, start)) {
             results.push(this.transformEvent(event, start));
           }
         } else {
@@ -166,10 +184,18 @@ const { title, class: className, ...props } = Astro.props;
             // Check if event should be listed multiple times
             if (event.repeatListing === 'Yes') {
               // Get all viable events for this repeating event
-              results.push(...this.getViableEvents(event, true));
+              const occurrences = this.getViableEvents(event, true);
+
+              if (occurrences.length > 0) {
+                results.push(...occurrences);
+              }
             } else {
               // Original behavior: show only the next viable event
-              results.push(this.getViableEvents(event, false));
+              const nextEvent = this.getViableEvents(event, false);
+
+              if (nextEvent) {
+                results.push(nextEvent);
+              }
             }
           }
         }
