@@ -78,6 +78,24 @@ import WithoutHero from "../layouts/without-hero.astro";
         return Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(new Date(date));
       },
 
+      formatExcludeDate(date) {
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const year = date.getUTCFullYear();
+
+        return `${month}-${day}-${year}`;
+      },
+
+      isExcludedDate(event, date) {
+        if (!Array.isArray(event.excludeDays) || event.excludeDays.length === 0) {
+          return false;
+        }
+
+        const formattedDate = this.formatExcludeDate(date);
+
+        return event.excludeDays.includes(formattedDate);
+      },
+
       setDate(dateKey) {
         this.filters.startDate = dateKey;
         this.filters.endDate = null;
@@ -160,16 +178,31 @@ import WithoutHero from "../layouts/without-hero.astro";
         const isSameDay = (d1, d2) => d1.getTime() === d2.getTime();
 
         if (event.repeat === 'No repeat') {
-          return eventDay >= startDay && eventDay <= endDay;
+          if (eventDay < startDay || eventDay > endDay) {
+            return false;
+          }
+          // Check if the event date is excluded
+          return !this.isExcludedDate(event, eventDay);
         }
 
         if (event.repeat === 'Daily') {
-          // Daily events occur every day from eventStart until repeatEnd
-          return (
-            // range and recurrence overlap
-            endDay >= eventDay &&
-            (!repeatEnd || startDay <= repeatEnd)
-          );
+          // Check if range and recurrence overlap
+          if (endDay < eventDay || (repeatEnd && startDay > repeatEnd)) {
+            return false;
+          }
+
+          // Check if there's at least one non-excluded day in the range
+          const searchStart = new Date(Math.max(startDay, eventDay));
+          const searchEnd = new Date(Math.min(endDay, repeatEnd || endDay));
+
+          let current = new Date(searchStart);
+          while (current <= searchEnd) {
+            if (!this.isExcludedDate(event, current)) {
+              return true;
+            }
+            current.setUTCDate(current.getUTCDate() + 1);
+          }
+          return false;
         }
 
         if (event.repeat === 'Weekly') {
@@ -188,11 +221,11 @@ import WithoutHero from "../layouts/without-hero.astro";
           };
           const repeatDaysNums = event.repeatDays.map(d => dayMap[d]);
 
-          // Check if at least one day in [startDay..endDay] matches
+          // Check if at least one day in [startDay..endDay] matches and is not excluded
           let current = new Date(startDay);
           while (current <= endDay) {
             if (current >= eventDay && (!repeatEnd || current <= repeatEnd)) {
-              if (repeatDaysNums.includes(current.getUTCDay())) {
+              if (repeatDaysNums.includes(current.getUTCDay()) && !this.isExcludedDate(event, current)) {
                 return true;
               }
             }
@@ -223,21 +256,49 @@ import WithoutHero from "../layouts/without-hero.astro";
         const eventDay = new Date(eventStart);
         eventDay.setUTCHours(0, 0, 0, 0);
 
-        // No repeat → return event unchanged
+        // No repeat → check if excluded
         if (event.repeat === 'No repeat') {
+          if (this.isExcludedDate(event, eventDay)) {
+            return null;
+          }
           return { ...event };
         }
 
         // Daily repeat
         if (event.repeat === 'Daily') {
           if (now < eventDay) {
-            // hasn't started yet → first date
+            // hasn't started yet → first date (if not excluded)
+            if (this.isExcludedDate(event, eventDay)) {
+              // Find next non-excluded date
+              let current = new Date(eventDay);
+              current.setUTCDate(current.getUTCDate() + 1);
+              const maxSearch = repeatEnd || new Date(eventDay.getTime() + 365 * 24 * 60 * 60 * 1000);
+              
+              while (current <= maxSearch) {
+                if (!this.isExcludedDate(event, current)) {
+                  return { ...event, date: current.toISOString() };
+                }
+                current.setUTCDate(current.getUTCDate() + 1);
+              }
+              return null;
+            }
             return { ...event, date: eventDay.toISOString() };
           }
           if (repeatEnd && now > repeatEnd) {
             return null; // recurrence already ended
           }
-          return { ...event, date: now.toISOString() }; // today
+          
+          // Find next non-excluded date from now
+          let current = new Date(now);
+          const maxSearch = repeatEnd || new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+          
+          while (current <= maxSearch) {
+            if (!this.isExcludedDate(event, current)) {
+              return { ...event, date: current.toISOString() };
+            }
+            current.setUTCDate(current.getUTCDate() + 1);
+          }
+          return null;
         }
 
         // Weekly repeat
@@ -259,13 +320,13 @@ import WithoutHero from "../layouts/without-hero.astro";
           // Cap search to avoid infinite loops (e.g. missing repeatDays)
           for (let i = 0; i < 14; i++) { // 2 weeks max search
             if (current >= eventDay && (!repeatEnd || current <= repeatEnd)) {
-              if (repeatDaysNums.includes(current.getUTCDay())) {
+              if (repeatDaysNums.includes(current.getUTCDay()) && !this.isExcludedDate(event, current)) {
                 return { ...event, date: current.toISOString() };
               }
             }
             current.setUTCDate(current.getUTCDate() + 1);
           }
-          return event; // no valid occurrence found
+          return null; // no valid occurrence found
         }
 
         return event;
@@ -291,8 +352,9 @@ import WithoutHero from "../layouts/without-hero.astro";
 
       get currentEvents() {
         return this.filteredEvents
-          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-          .map((event) => this.transformEventDate(event));
+          .map((event) => this.transformEventDate(event))
+          .filter((event) => event !== null)
+          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
       },
 
       get eventCategories() {
@@ -423,14 +485,14 @@ import WithoutHero from "../layouts/without-hero.astro";
 
                 <ul class="text-sm text-gray-600 space-y-1">
                   <template x-if="event.repeat === 'Daily'">
-                    <li class="flex items-center">
-                      <Icon name="arrow-path" class="size-6 mr-2 flex-shrink-0" />
+                    <li class="flex">
+                      <Icon name="arrow-path" class="size-5 mr-2 flex-shrink-0" />
                       <span x-text="formatDate(event.date) + ' - ' + formatDate(event.repeatEnd)"
                       ></span>
                     </li>
                   </template>
-                  <li class="flex items-center">
-                    <Icon name="clock" class="size-6 mr-2 flex-shrink-0" />
+                  <li class="flex">
+                    <Icon name="clock" class="size-5 mr-2 flex-shrink-0" />
                     <span
                       x-show="event.repeat !== 'Daily'"
                       x-text="formatDate(event.date) + ','"
@@ -439,12 +501,12 @@ import WithoutHero from "../layouts/without-hero.astro";
                     <span x-show="event.end" class="mx-1">-</span>
                     <span x-text="event.end"></span>
                   </li>
-                  <li class="flex items-center">
-                    <Icon name="marker" class="size-6 mr-2 flex-shrink-0" />
+                  <li class="flex">
+                    <Icon name="marker" class="size-5 mr-2 flex-shrink-0" />
                     <span x-text="event.location"></span>
                   </li>
-                  <li class="flex items-center">
-                    <Icon name="dollar" class="size-6 mr-2 flex-shrink-0" />
+                  <li class="flex">
+                    <Icon name="dollar" class="size-5 mr-2 flex-shrink-0" />
                     <span x-text="event.cost"></span>
                   </li>
                 </ul>
@@ -614,13 +676,13 @@ import WithoutHero from "../layouts/without-hero.astro";
           <li>
             <button
               type="button"
-              class="link flex justify-between w-full items-center text-left gap-2"
+              class="link flex justify-between w-full text-left gap-2"
               @click="filters.category = category"
             >
               <span x-text="category"></span>
               <span
                 x-text="getEventCountForCategory(category)"
-                class="bg-tertiary-100 size-6 flex items-center justify-center font-bold font-title shrink-0"
+                class="bg-tertiary-100 size-6 flex items-center justify-center font-bold font-title shrink-0 mt-0.5"
               ></span>
             </button>
           </li>
