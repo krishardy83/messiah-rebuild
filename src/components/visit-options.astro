@@ -275,6 +275,21 @@ const questions = [
 
       return true;
     },
+
+    getURL(href) {
+      const url = new URL(location.href);
+      const person = url.searchParams.get('person');
+
+      if (person) {
+        const target = new URL(href);
+
+        target.searchParams.set('person', person);
+        
+        return target.toString();
+      }
+
+      return href;
+    }
   }"
   x-effect="document.body.classList.toggle('overflow-hidden', isDialogVisible)"
 >
@@ -408,7 +423,7 @@ const questions = [
 
                 <div class="flex gap-2 mb-8 flex-wrap">
                   {item.buttons.map((button) => (
-                    <a href={button.url} class="btn btn-tertiary">
+                    <a href={button.url} :href="getURL($el.getAttribute('href'))" class="btn btn-tertiary">
                       {button.label}
                     </a>
                   ))}
