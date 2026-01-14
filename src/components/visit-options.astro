@@ -277,18 +277,14 @@ const questions = [
     },
 
     getURL(href) {
-      const url = new URL(location.href);
-      const person = url.searchParams.get('person');
+      const currentUrl = new URL(location.href);
+      const targetUrl = new URL(href, location.origin);
 
-      if (person) {
-        const target = new URL(href);
+      currentUrl.searchParams.forEach((value, key) => {
+        targetUrl.searchParams.set(key, value);
+      });
 
-        target.searchParams.set('person', person);
-        
-        return target.toString();
-      }
-
-      return href;
+      return targetUrl.toString();
     }
   }"
   x-effect="document.body.classList.toggle('overflow-hidden', isDialogVisible)"
