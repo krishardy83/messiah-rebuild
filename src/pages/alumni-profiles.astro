@@ -36,7 +36,7 @@ import Icon from "../components/icon.astro";
       sortByClassYear: true,
 
       filters: {
-        department: 'Business',
+        department: 'Engineering',
         major: '',
         area: '',
       },
@@ -213,7 +213,7 @@ import Icon from "../components/icon.astro";
         </div>
 
         <div
-          x-show="getMajors().length > 0 || getGradSubjectAreas().length > 0"
+          x-show="(getMajors().length > 0 || getGradSubjectAreas().length > 0) && filters.area.length === 0"
           class="flex flex-wrap items-center bg-primary-800 text-white px-4 py-2 gap-2 mb-8"
         >
           <div x-show="getMajors().length > 0">
@@ -241,11 +241,6 @@ import Icon from "../components/icon.astro";
           <article
             class="flex gap-4 md:gap-8 relative border-b border-gray-300 pb-12 mb-12 last-of-type:border-0 last-of-type:mb-0 last-of-type:pb-0"
           >
-            <span
-              x-text="student.major"
-              x-show="student.major"
-              class="bg-primary-800 text-white uppercase absolute top-0 right-0 font-title inline-block text-lg px-2 md:py-1"
-            ></span>
             <img
               :src="student.banner_image"
               :alt="student.entry_name"
@@ -262,6 +257,7 @@ import Icon from "../components/icon.astro";
                 x-text="student.entry_name + ` '` + student.classYear"
               >
               </h2>
+              <p x-text="`${student.major} Major`" x-show="student.major" class="text-gray-500 mb-4"></p>
               <p class="text-primary-800 font-bold mb-2" x-text="student.heading"></p>
               <p x-text="student.teaser" class="mb-4"></p>
 
