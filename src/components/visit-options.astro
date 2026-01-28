@@ -278,8 +278,8 @@ const questions = [
 
     getURL(href) {
       const currentUrl = new URL(location.href);
-      const targetUrl = new URL(href, location.origin);
-
+      // Fix URL to ensure path from current page is included
+      const targetUrl = new URL(href, currentUrl);
       currentUrl.searchParams.forEach((value, key) => {
         targetUrl.searchParams.set(key, value);
       });
