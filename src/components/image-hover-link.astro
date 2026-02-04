@@ -40,7 +40,7 @@ const {
 
       <figcaption
         class={cn(
-          "absolute left-0 top-0 duration-300 transition-all bg-primary-800/80 text-center group-hover:overflow-y-auto group-focus:overflow-y-auto group-focus-within:overflow-y-auto group-hover:w-full group-hover:h-full group-focus:w-full group-focus:h-full group-focus-within:w-full group-focus-within:h-full",
+          "absolute left-0 top-0 duration-300 transition-all bg-primary-800/80 text-center group-hover:overflow-y-clip group-focus:overflow-y-clip group-focus-within:overflow-y-auto group-hover:w-full group-hover:h-full group-focus:w-full group-focus:h-full group-focus-within:w-full group-focus-within:h-full",
           {
             "group-hover:p-4 @md:group-hover:p-8 group-focus-within:p-4 @md:group-focus-within:p-8 h-12":
               size === "large",
@@ -49,14 +49,14 @@ const {
           }
         )}
       >
-        <h4
+        <p
           class={cn("font-title font-bold uppercase mx-auto text-white py-2 leading-none", {
             "text-lg px-4 @sm:text-2xl @sm:px-12": size === "large",
             "@xs:text-lg px-4": size === "small",
           })}
         >
           {caption}
-        </h4>
+        </p>
 
         {description ? (
           <p
