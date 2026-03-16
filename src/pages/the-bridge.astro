@@ -22,7 +22,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       error: null,
       
       filters: {
-        volume: '',
+        volume: 'Volume 1, 2026',
         category: 'Our Campus',
       },
 
@@ -39,7 +39,8 @@ import WithoutHero from "../layouts/without-hero.astro";
               if (this.filters.volume) return entry.volume === this.filters.volume;
 
               return true;
-            }).sort((a, b) => a.title.trim().localeCompare(b.title.trim()));
+            }).sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+
             this.loading = false;
           })
           .catch((error) => {
