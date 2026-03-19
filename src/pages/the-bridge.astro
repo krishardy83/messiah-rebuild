@@ -54,7 +54,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       get categories() {
-        return Array.from(new Set(this.news.map((news) => news.category))).filter(Boolean);
+        return ['Our Campus', 'Our Alumni', 'In Memoriam'];
       },
 
       get featuredNews() {
