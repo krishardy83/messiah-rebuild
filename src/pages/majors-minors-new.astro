@@ -1,0 +1,1320 @@
+---
+import Icon from "../components/icon.astro";
+import BaseLayout from "../layouts/base.astro";
+import Header from "../views/majors-minors-new/header.astro";
+---
+
+<BaseLayout
+  title="Undergraduate Programs"
+  description="Undergraduate Programs"
+>
+  <Header />
+
+  <main id="content" class="max-w-6xl mx-auto px-4 py-12" x-data="{
+    programs: [],
+    loading: true,
+    error: null,
+    layout: 'cards',
+    open: null,
+    
+    bookmarks: {
+      active: false,
+      programIds: [],
+    },
+    
+    filters: {
+      query: '',
+      type: '',
+      interestGroup: 'all',
+    },
+
+    types: {
+      major: {
+        key: 'M',
+        label:'Major',
+        color: '#273d5e',
+        description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+      },
+      minor: {
+        key: 'm',
+        label: 'Minor',
+        color: '#4d87a9',
+        description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+      },
+      concentration: {
+        key: 'C',
+        label: 'Concentration',
+        color: '#ab4e42',
+        description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+      },
+      pre_health: {
+        key: 'P',
+        label: 'Pre-Health Advising',
+        color: '#7477b8',
+        description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+      },
+      'partner_program': {
+        key: '3+',
+        label: '3+ Partner Programs',
+        color: '#84ab8b',
+        description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+      },
+      teaching_certification: {
+        key: 'T',
+        label: 'Teaching Certificate',
+        color: '#e37b65',
+        description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+      },
+      accelerated: {
+        key: 'A',
+        label: 'Accelerated',
+        color: '#DCAC42',
+        description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+      },
+      early_assurance: {
+        key: 'E',
+        label: 'Early Assurance',
+        color: '#afafaf',
+        description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+      },
+      undergrad_certificate: {
+        key: 'UC',
+        label: 'Undergrad Certificate',
+        color: '#0a0a0ab3',
+        description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+      },
+    },
+
+    init() {
+      this.loadBookmarks();
+
+      fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+        .then((response) => response.json())
+        .then((data) => {
+          this.programs = data.items.filter((item) => {
+            return item.hide_on_program_listing !== 'yes';
+          });
+          this.syncBookmarksWithPrograms();
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch program data (${error.message})`;
+          this.loading = false;
+        });
+    },
+
+    reset() {
+      this.filters.type = '';
+      this.filters.query = '';
+      this.filters.interestGroup = 'all';
+      this.bookmarks.active = false;
+    },
+
+    loadBookmarks() {
+      try {
+        const parsedBookmarkIds = JSON.parse(localStorage.getItem('ug-program-bookmarks'));
+
+        if (Array.isArray(parsedBookmarkIds)) {
+          this.bookmarks.programIds = parsedBookmarkIds;
+        }
+      } catch {
+        this.error = 'Could not load bookmarks.';
+      }
+    },
+
+    saveBookmarks() {
+      localStorage.setItem('ug-program-bookmarks', JSON.stringify(this.bookmarks.programIds));
+    },
+
+    syncBookmarksWithPrograms() {
+      const availableIds = new Set(this.programs.map((program) => String(program.entry_id)));
+      const filteredBookmarks = this.bookmarks.programIds.filter((id) => availableIds.has(id));
+
+      if (filteredBookmarks.length !== this.bookmarks.programIds.length) {
+        this.bookmarks.programIds = filteredBookmarks;
+        this.saveBookmarks();
+      }
+    },
+
+    isBookmarked(program) {
+      return this.bookmarks.programIds.includes(String(program.entry_id));
+    },
+
+    toggleBookmark(program) {
+      if (this.bookmarks.programIds.includes(program.entry_id)) {
+        this.bookmarks.programIds = this.bookmarks.programIds.filter((id) => id !== program.entry_id);
+      } else {
+        this.bookmarks.programIds = [...this.bookmarks.programIds, program.entry_id];
+      }
+
+      this.saveBookmarks();
+    },
+
+    toggleBookmarkedView() {
+      this.bookmarks.active = !this.bookmarks.active;
+    },
+
+    getProgramURL(program) {
+      if (!program) {
+        return '#';
+      }
+
+      const url = new URL(location.origin);
+
+      url.pathname = program.program_url;
+
+      return url.toString();
+    },
+
+    getProgramDegrees(program) {
+      if (!program) {
+        return [];
+      }
+
+      if (program.degree !== 'none' && program.degree !== '') {
+        return program.degree.split('|');
+      }
+
+      return [];
+    },
+
+    hasType(program, type) {
+      if (program === null) {
+        return false;
+      }
+
+      if (type === '') {
+        return true;
+      }
+
+      return program[type] === 'true';
+    },
+
+    getRelatedPrograms(program) {
+      if (!program) {
+        return [];
+      }
+
+      const related = program.related_programs.split('|');
+
+      if (related.length === 0) {
+        return [];
+      }
+
+      return related
+        .map((id) => this.programs.find((p) => p.entry_id === id))
+        .filter(Boolean);
+    },
+
+    get filteredPrograms() {
+      const query = this.filters.query.trim().toLowerCase();
+      const { type, interestGroup } = this.filters;
+      const matches = [];
+
+      this.programs.forEach((program) => {
+        const isTypeMatch = this.hasType(program, type);
+        const searchFields = [
+          program.program_name,
+          program.keywords,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
+        
+        const isSearchMatch = searchFields.includes(query);
+        const isInterestGroupMatch = interestGroup === 'all' ? true : program.interest_group_name.split('|').includes(interestGroup);
+        const isBookmarkMatch = this.bookmarks.active ? this.isBookmarked(program) : true;
+
+        if (isTypeMatch && isSearchMatch && isInterestGroupMatch && isBookmarkMatch) {
+          matches.push(program);
+        }
+      });
+
+      return matches;
+    },
+  }">
+    <form class="relative mb-8">
+      <Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-800" />
+      <input type="text" placeholder="Search the program list" class="w-full border border-gray-300 pr-4 pl-12 h-12" aria-label="Search the program list" x-model.debounce.200ms="filters.query" />
+    </form>
+
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="flex col-span-2 gap-x-8 gap-y-2 flex-wrap">
+        <template x-for="[key, type] in Object.entries(types)">
+          <label
+            class="text-xs flex items-center gap-2 cursor-pointer group"
+          >
+            <input type="radio" :value="key" x-model="filters.type" class="sr-only" />
+            <span
+              x-text="type.key"
+              class="size-5 text-white rounded-full flex items-center justify-center"
+              :style="`background-color: ${type.color}`"></span>
+            <span
+              x-text="type.label"
+              class="uppercase group-hover:underline"
+              :class="filters.type === key ? 'text-primary-400' : ''"></span>
+          </label>
+        </template>
+      </div>
+
+      <div class="col-span-1 flex justify-end gap-1">
+        <button
+          type="button"
+          @click="layout = 'cards'"
+          class="size-10 flex items-center justify-center transition-colors"
+          title="Card layout"
+          :class="layout === 'cards' ? 'bg-primary-800 text-white' : 'bg-white text-primary-800 hover:bg-gray-100'"
+        >
+          <Icon name="grid" class="size-5" />
+        </button>
+        <button
+          type="button"
+          @click="layout = 'table'"
+          class="size-10 flex items-center justify-center transition-colors"
+          title="Table layout"
+          :class="layout === 'table' ? 'bg-primary-800 text-white' : 'bg-white text-primary-800 hover:bg-gray-100'"
+        >
+          <Icon name="list" class="size-5" />
+        </button>
+        <button
+          type="button"
+          @click="toggleBookmarkedView"
+          class="size-10 flex items-center justify-center transition-colors"
+          :title="bookmarks.active ? 'Show all' : 'Show bookmarks'"
+          :class="bookmarks.active ? 'bg-primary-800 text-white' : 'bg-white text-primary-800 hover:bg-gray-100'"
+        >
+          <Icon name="bookmark" class="size-6" />
+        </button>
+      </div>
+    </div>
+
+    <template x-if="loading">
+      <p role="alert" class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">Loading program list, please wait...</p>
+    </template>
+
+    <template x-if="error">
+      <p role="alert" class="bg-red-100 border border-red-200 text-red-800 px-4 py-2" x-text="error"></p>
+    </template>
+
+    <template x-if="!filteredPrograms.length && !loading && !error">
+      <div
+        role="alert"
+        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+      >
+        <template x-if="bookmarks.active && bookmarks.programIds.length === 0">
+          <p class="mb-4">
+            You have not bookmarked any programs yet. Use the bookmark button on a program card to save it here.
+          </p>
+        </template>
+
+        <template x-if="!(bookmarks.active && bookmarks.programIds.length === 0)">
+          <p class="mb-4">
+            No programs match your search "<span x-text="filters.query"></span>" and the selected
+            program type.
+          </p>
+        </template>
+
+        <template x-if="!(bookmarks.active && bookmarks.programIds.length === 0)">
+          <p class="mb-4">
+            <b>Search tip:</b> Try using interest keywords like accounting or mathematics than a potential
+            job title (accountant) to find more programs! And remember, you can always visit a full list
+            of our <a href="https://www.messiah.edu/majors-minors-programs" class="underline link"
+              >undergraduate programs</a
+            > and <a href="https://www.messiah.edu/info/20436/degrees" class="underline link"
+              >graduate programs</a
+            >.
+          </p>
+        </template>
+
+        <button type="button" @click="reset" class="btn btn-quaternary">Reset</button>
+      </div>
+    </template>
+
+    <template x-if="!loading && !error && filteredPrograms.length > 0">
+      <div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="layout === 'cards'">
+          <template x-for="program in filteredPrograms" :key="program.entry_id">
+            <article :href="getProgramURL(program)" class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+              <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full h-48 object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
+              
+              <button
+                type="button"
+                @click="toggleBookmark(program)"
+                class="absolute top-4 right-4 size-10 flex items-center justify-center"
+                :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+                :class="isBookmarked(program) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 border-gray-300 hover:bg-gray-100'"
+              >
+                <Icon name="bookmark" class="size-6" :class="isBookmarked(program) ? 'hidden' : 'block'" />
+                <Icon name="bookmark-slash" class="size-6" :class="isBookmarked(program) ? 'block' : 'hidden'" />
+              </button>
+
+              <div class="p-4 flex-1 flex flex-col">
+              <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
+                <button type="button" @click="open = program" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></button>
+              </h3>
+
+                <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
+                  <template x-for="degree in getProgramDegrees(program)">
+                    <li
+                      x-text="degree"
+                      class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
+                    >
+                    </li>
+                  </template>
+                </ol>
+                
+                <ol class="flex gap-x-4 gap-y-2 flex-wrap mt-auto">
+                  <template x-for="[key, type] in Object.entries(types)">
+                    <li x-show="hasType(program, key)" class="flex items-center gap-2 text-xs">
+                      <span x-text="type.key" class="text-white size-5 flex items-center justify-center rounded-full" :style="`background-color: ${type.color}`"></span>
+                      <span x-text="type.label" class="uppercase"></span>
+                    </li>
+                  </template>
+                </ol>
+              </div>
+            </article>
+          </template>
+        </div>
+
+        <table class="text-sm w-full" x-show="layout === 'table'">
+          <thead>
+            <tr class="border-b border-b-gray-300 bg-gray-100">
+              <th class="py-2 px-4 text-left font-title uppercase">Program</th>
+              <th class="py-2 px-4 text-left font-title uppercase">Degree</th>
+              <th class="py-2 px-4 text-left font-title uppercase" :colspan="Object.keys(types).length">Type</th>
+              <th class="py-2 w-8"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="program in filteredPrograms" :key="program.entry_id">
+              <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors">
+                <td class="py-2 px-4">
+                  <button
+                    type="button"
+                    @click="open = program"
+                    x-text="program.program_name"
+                    class="text-primary-800 hover:underline cursor-pointer text-left"
+                  ></button>
+                </td>
+
+                <td class="py-2 px-4">
+                  <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                    <template x-for="degree in getProgramDegrees(program)">
+                      <span
+                        x-text="degree"
+                        class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                      ></span>
+                    </template>
+                  </span>
+                </td>
+
+                <template x-for="[key, type] in Object.entries(types)">
+                  <td class="py-2 px-4 w-8">
+                    <span
+                      x-show="hasType(program, key)"
+                      x-text="type.key"
+                      class="w-5 h-5 text-white rounded-full flex items-center justify-center text-xs"
+                      :style="`background-color: ${type.color}`"
+                    ></span>
+                  </td>
+                </template>
+
+                <td class="w-8">
+                  <button
+                    type="button"
+                    @click="toggleBookmark(program)"
+                    class="size-8 flex items-center justify-center transition-colors"
+                    :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+                    :class="isBookmarked(program) ? 'text-primary-800' : 'text-gray-400 hover:text-primary-800'"
+                  >
+                    <Icon name="bookmark" class="size-5" :class="isBookmarked(program) ? 'hidden' : 'block'" />
+                    <Icon name="bookmark-slash" class="size-5" :class="isBookmarked(program) ? 'block' : 'hidden'" />
+                  </button>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </template>
+
+    <template x-teleport="body">
+      <div
+        x-show="Boolean(open)"
+        style="display: none"
+        x-on:keydown.escape.prevent.stop="open = null"
+        role="dialog"
+        aria-modal="true"
+        x-id="['modal-title']"
+        :aria-labelledby="$id('modal-title')"
+        class="dialog"
+      >
+        <div
+          x-show="Boolean(open)"
+          @click="open = null"
+          x-transition.opacity.duration.300
+          class="fixed inset-0 bg-primary-800/80 z-50"
+        >
+        </div>
+
+        <div
+          x-show="Boolean(open)"
+          x-transition.opacity.duration.300
+          x-trap.noscroll.inert="open"
+          class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+        >
+          <div class="flex justify-end p-4">
+            <button type="button" @click="open = null" aria-label="Close dialog">
+              <Icon name="close" class="size-10" />
+            </button>
+          </div>
+
+          <img
+            :src="open?.thumbnail_small"
+            :alt="open?.thumbnail_small_alt"
+            class="w-full bg-gray-200 mb-4"
+          />
+
+          <div class="p-4">
+            <h4 class="mb-2">
+              <span
+                class="text-primary-800 font-title text-3xl font-bold mr-2"
+                x-text="open?.program_name"></span>
+              <span class="inline-flex gap-2 items-center">
+                <template x-for="degree in getProgramDegrees(open)">
+                  <span
+                    x-text="degree"
+                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  >
+                  </span>
+                </template>
+              </span>
+            </h4>
+
+            <p x-text="open?.department_name" class="mb-2"></p>
+
+            <ul class="flex gap-2 items-center mb-8">
+              <template x-for="[key, type] in Object.entries(types)">
+                <li
+                  x-show="hasType(open, key)"
+                  x-text="type.label"
+                  class="text-white text-xs px-2 py-1 rounded-full"
+                  :style="`background-color: ${type.color}`"
+                >
+                </li>
+              </template>
+            </ul>
+
+            <p x-text="open?.program_peek" class="mb-4"></p>
+
+            <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
+
+            <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
+              <h5 class="text-primary-800 mb-4 font-title">
+                <span class="block text-xl leading-none">Programs related to</span>
+                <span x-text="open?.program_name" class="text-2xl font-bold leading-none"></span>
+              </h5>
+
+              <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <template x-for="related in getRelatedPrograms(open)">
+                  <li
+                    class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden"
+                  >
+                    <img
+                      :src="related.thumbnail_small"
+                      :alt="related.thumbnail_small_alt"
+                      class="w-full h-32 object-cover"
+                    />
+                    <span class="p-2">
+                      <span x-text="related.program_name" class="block mb-2"></span>
+
+                      <span class="flex gap-2">
+                        <template x-for="[key, type] in Object.entries(types)">
+                          <span
+                            x-text="type.key"
+                            class="w-5 h-5 text-white rounded-full flex text-xs items-center justify-center mb-4"
+                            :style="`background-color: ${type.color}`"
+                            x-show="hasType(related, key)"
+                          >
+                          </span>
+                        </template>
+                      </span>
+                    </span>
+                    <a
+                      :href="getProgramURL(related)"
+                      class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
+                      >Read more</a
+                    >
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </main>
+  <!-- <h2 class="h3">Majors, Minors and Programs</h2>
+
+  <div
+    class="flex flex-col lg:flex-row gap-4"
+    x-data="{
+      programs: [],
+      letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+      loading: true,
+      error: null,
+      filters: {
+        type: '',
+        query: new URL(location).searchParams.get('s')  || '',
+        interestGroup: 'all',
+      },
+      open: null,
+
+      search: {
+        value: '',
+        open: false,
+      },
+
+      types: {
+        major: {
+          key: 'M',
+          label:'Major',
+          color: '#273d5e',
+          description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+        },
+        minor: {
+          key: 'm',
+          label: 'Minor',
+          color: '#4d87a9',
+          description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+        },
+        concentration: {
+          key: 'C',
+          label: 'Concentration',
+          color: '#ab4e42',
+          description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+        },
+        pre_health: {
+          key: 'P',
+          label: 'Pre-Health Advising',
+          color: '#7477b8',
+          description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+        },
+        'partner_program': {
+          key: '3+',
+          label: '3+ Partner Programs',
+          color: '#84ab8b',
+          description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+        },
+        teaching_certification: {
+          key: 'T',
+          label: 'Teaching Certificate',
+          color: '#e37b65',
+          description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+        },
+        accelerated: {
+          key: 'A',
+          label: 'Accelerated',
+          color: '#DCAC42',
+          description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+        },
+        early_assurance: {
+          key: 'E',
+          label: 'Early Assurance',
+          color: '#afafaf',
+          description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+        },
+        undergrad_certificate: {
+          key: 'UC',
+          label: 'Undergrad Certificate',
+          color: '#0a0a0ab3',
+          description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+        },
+      },
+
+      hasType(program, type) {
+        if (program === null) {
+          return false;
+        }
+
+        if (type === '') {
+          return true;
+        }
+
+        return program[type] === 'true';
+      },
+
+      getProgramDegrees(program) {
+        if (!program) {
+          return [];
+        }
+
+        if (program.degree !== 'none' && program.degree !== '') {
+          return program.degree.split('|');
+        }
+
+        return [];
+      },
+
+      getProgramURL(program) {
+        if (!program) {
+          return null;
+        }
+
+        const url = new URL(location.origin);
+        url.pathname = program.program_url;
+
+        return url.toString();
+      },
+
+      getRelatedPrograms(program) {
+        if (!program) {
+          return [];
+        }
+
+        const related = program.related_programs.split('|');
+
+        if (related.length === 0) {
+          return [];
+        }
+
+        return related.map((program) => {
+          return this.programs.find((p) => p.entry_id === program);
+        });
+      },
+
+      init() {
+        if (this.filters.query) {
+          this.$refs.search.scrollIntoView();
+        }
+        
+        fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+          .then((response) => response.json())
+          .then((data) => {
+            this.programs = data.items.filter((item) => {
+              return item.hide_on_program_listing !== 'yes';
+            });
+            this.loading = false;
+          })
+          .catch((error) => {
+            this.error = `Could not fetch program data (${error.message})`;
+            this.loading = false;
+          });
+      },
+
+      isLetterAvailable(letter) {
+        const direct = this.filtered.direct.some((program) => {
+          return program.program_name.at(0) === letter;
+        });
+
+        const related = this.filtered.related.some((program) => {
+          return program.program_name.at(0) === letter;
+        });
+
+        return direct || related;
+      },
+
+      scrollToProgram(letter) {
+        const row = document.querySelector(`tr[data-letter='${letter}']`);
+
+        if (row) {
+          row.scrollIntoView({ behavior: 'smooth' });
+          row.classList.add('bg-tertiary-200');
+
+          setTimeout(() => row.classList.remove('bg-tertiary-200'), 1000);
+        }
+      },
+
+      scrollToTable() {
+        const tbody = document.querySelector('tbody');
+
+        if (tbody) {
+          tbody.scrollIntoView({ behavior: 'smooth' });
+        }
+      },
+
+      reset() {
+        this.filters.type = '';
+        this.filters.query = '';
+        this.filters.interestGroup = 'all';
+      },
+
+      resetSearch() {
+        this.filters.query = '';
+
+        this.search.value = '';
+        this.search.open = false;
+      },
+
+      get filtered() {
+        const query = this.filters.query.trim().toLowerCase();
+        const matches = { direct: [], related: [] };
+
+        this.programs.forEach((program) => {
+          const { type, interestGroup } = this.filters;
+
+          const isTypeMatch = this.hasType(program, type);
+          const isNameMatch = program.program_name.toLowerCase().includes(query);
+          const isKeywordMatch = program.keywords.split(',').some((keyword) => keyword.toLowerCase().includes(query));
+          const isInterestGroupMatch = interestGroup === 'all' ? true : program.interest_group_name.split('|').includes(interestGroup);
+
+          if (isTypeMatch && isNameMatch && isInterestGroupMatch) {
+            matches.direct.push(program);
+          }
+
+          if (isTypeMatch && isKeywordMatch && isInterestGroupMatch && !isNameMatch) {
+            matches.related.push(program);
+          }
+        });
+
+        return matches;
+      },
+
+      get keywords() {
+        const keywords = new Set();
+
+        this.programs.forEach((program) => {
+          program.keywords.split(',').forEach((keyword) => {
+            keywords.add(keyword.trim().toLowerCase());
+          });
+        });
+
+        return Array.from(keywords);
+      },
+
+      get interestGroups() {
+        const groups = new Set();
+
+        this.programs.forEach((program) => {
+          program.interest_group_name.split('|').forEach((group) => {
+            groups.add(group);
+          });
+        });
+
+        return Array.from(groups).filter(Boolean).sort();
+      },
+
+      get filteredKeywords() {
+        const search = this.search.value.trim().toLowerCase();
+
+        return this.keywords.map((keyword) => {
+          const lowerKeyword = keyword.toLowerCase();
+          let score = 0;
+
+          if (lowerKeyword === search) {
+            score += 100;
+          } else if (lowerKeyword.startsWith(search)) {
+            score += 50;
+          } else if (lowerKeyword.includes(` ${search}`)) {
+            score += 30;
+          } else if (lowerKeyword.includes(search)) {
+            score += 10;
+          }
+
+          return { keyword, score };
+        })
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map((item) => item.keyword);
+      },
+
+      handleChange(event) {
+        this.search.value = event.target.value;
+        this.search.open = event.target.value.length > 1;
+      },
+
+      handleKeyDown(event) {
+        const available = Array.from(this.$refs.panel.querySelectorAll(`button:not([style*='display:none']):not([style*='display: none'])`));
+        const index = available.findIndex((a) => a === document.activeElement);
+
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+
+          if (index <= 0) {
+            available[available.length - 1].focus();
+          } else {
+            available[index - 1].focus();
+          }
+        } else if (event.key === 'ArrowDown') {
+          event.preventDefault();
+
+          if (index === -1 || index === available.length - 1) {
+            available[0].focus();
+          } else {
+            available[index + 1].focus();
+          }
+        } else if (event.key === 'Enter') {
+          this.close();
+          this.scrollToTable();
+        } else if (document.activeElement !== this.$refs.input) {
+          this.$refs.input.focus();
+        }
+      },
+
+      handleKeywordClick(keyword) {
+        this.filters.query = keyword;
+        this.scrollToTable();
+
+        this.close();
+      },
+
+      close() {
+        this.search.open = false;
+      }
+    }"
+  >
+    <div>
+      <div
+        class="bg-gray-100 p-4 mb-8 scroll-m-28"
+        @keydown.escape.prevent.stop="close"
+        @keydown="handleKeyDown"
+        @focusin.window="!$refs.search.contains($event.target) && close()"
+        @click.outside="close"
+        x-ref="search"
+      >
+        <p class="mb-4">
+          We can help you find the right major. Search by keywords or interests to explore which of
+          Messiah's 80+ academic programs would be a good fit for you.
+        </p>
+
+        <label for="keywords" class="mb-1 block uppercase font-semibold font-title lg:hidden"
+          >Search by keywords or interest</label
+        >
+        <div class="relative">
+          <Icon
+            name="search"
+            class="absolute top-1/2 left-4 size-5 -translate-y-1/2 text-gray-400"
+          />
+          <input
+            x-ref="input"
+            type="text"
+            id="keywords"
+            @input.debounce="handleChange"
+            x-model.debounce="filters.query"
+            autocomplete="off"
+            placeholder="Search the program list..."
+            aria-label="Search the program list..."
+            class="bg-white w-full min-h-12 px-4 pl-12"
+          />
+          <button
+            type="button"
+            title="Clear input"
+            x-show="filters.query.length > 0"
+            @click="resetSearch"
+            class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+          >
+            <Icon name="close" class="size-5" />
+          </button>
+
+          <div
+            x-show="search.open"
+            class="absolute right-0 z-10 mt-2 max-h-80 w-full overflow-y-scroll overscroll-contain border border-gray-300 bg-white py-2 shadow-sm outline-none"
+            x-ref="panel"
+          >
+            <template x-for="keyword in filteredKeywords" :key="keyword">
+              <button
+                type="button"
+                x-text="keyword"
+                @click="handleKeywordClick(keyword)"
+                class="flex w-full cursor-pointer items-center py-2 px-4 transition-colors hover:bg-primary-100 focus-visible:bg-primary-100 focus-visible:outline-none"
+              >
+              </button>
+            </template>
+
+            <template x-if="filteredKeywords.length === 0">
+              <p class="py-2 px-4">No suggestions found.</p>
+            </template>
+          </div>
+        </div>
+
+        <div class="mt-4 lg:hidden">
+          <label for="interest" class="mb-1 block uppercase font-semibold font-title"
+            >Area of interest</label
+          >
+          <select
+            class="bg-white w-full min-h-12 px-4 select"
+            id="interest"
+            x-model="filters.interestGroup"
+            @change="scrollToTable()"
+          >
+            <option value="all">All</option>
+
+            <template x-for="group in interestGroups">
+              <option x-text="group" :value="group"></option>
+            </template>
+          </select>
+        </div>
+      </div>
+
+      <ol class="flex gap-2 flex-wrap mb-8">
+        <template x-for="letter in letters">
+          <li>
+            <button
+              class="font-semibold text-3xl font-title text-gray-600"
+              :class="isLetterAvailable(letter) ? '' : 'opacity-50 pointer-events-none cursor-not-allowed'"
+              x-text="letter.toUpperCase()"
+              @click="scrollToProgram(letter)"></button>
+          </li>
+        </template>
+      </ol>
+
+      <div class="mb-8 border-b border-gray-300">
+        <ul class="flex">
+          <li>
+            <a class="px-4 py-2 block bg-primary-800 text-white" href="/major-minor"
+              >Undergraduate programs</a
+            >
+          </li>
+          <li>
+            <a
+              class="px-4 py-2 block text-primary-800"
+              href="https://www.messiah.edu/info/20436/degrees">Graduate programs</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
+        <template x-for="[key, type] in Object.entries(types)">
+          <label
+            class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
+          >
+            <input type="radio" :value="key" x-model="filters.type" class="sr-only" />
+            <span
+              x-text="type.key"
+              class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+              :style="`background-color: ${type.color}`"></span>
+            <span
+              x-text="type.label"
+              class="uppercase group-hover:underline"
+              :class="filters.type === key ? 'text-primary-400' : ''"></span>
+          </label>
+        </template>
+      </div>
+
+      <template x-if="loading">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p>Loading program list...</p>
+        </div>
+      </template>
+
+      <template x-if="error">
+        <div role="alert" class="text-red-600 border border-red-200 bg-red-50 py-2 px-4">
+          <p class="mb-2">
+            Snap! Something went wrong. Please refresh the page or try again later.
+          </p>
+          <code x-text="error" class="text-sm leading-none"></code>
+        </div>
+      </template>
+
+      <template x-if="!filtered.direct.length && !filtered.related.length && !loading && !error">
+        <div
+          role="alert"
+          class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
+        >
+          <p class="mb-4">
+            No programs match your search "<span x-text="filters.query"></span>" and the selected
+            program type.
+          </p>
+
+          <p class="mb-4">
+            <b>Search tip:</b> Try using interest keywords like accounting or mathematics than a potential
+            job title (accountant) to find more programs! And remember, you can always visit a full list
+            of our <a href="https://www.messiah.edu/majors-minors-programs" class="underline link"
+              >undergraduate programs</a
+            > and <a href="https://www.messiah.edu/info/20436/degrees" class="underline link"
+              >graduate programs</a
+            >.
+          </p>
+
+          <button type="button" @click="reset" class="btn btn-quaternary">Reset</button>
+        </div>
+      </template>
+
+      <table class="text-sm w-full" x-show="!error && !loading">
+        <thead>
+          <tr
+            class="border-b border-b-gray-200 scroll-m-28-28"
+            x-show="filters.query && filtered.direct.length > 0"
+          >
+            <td colspan="11" class="py-2"
+              ><span class="h4">Programs for "<span x-text="filters.query"></span>"</span></td
+            >
+          </tr>
+          <tr class="border-b border-b-gray-300 bg-gray-100" x-show="filtered.direct.length > 0">
+            <td colspan="11" class="py-2 px-4 relative"
+              >* click an icon above to filter the list
+              <button
+                type="button"
+                @click="reset()"
+                x-show="filters.type !== ''"
+                class="absolute top-0 right-0 flex items-center gap-2 h-full px-4 hover:bg-gray-200 transition-colors"
+              >
+                <Icon name="close" class="size-5" />
+                Reset filter</button
+              >
+            </td>
+          </tr>
+        </thead>
+        <tbody class="scroll-m-28-28">
+          <template x-for="program in filtered.direct">
+            <tr
+              class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28-28"
+              :data-letter="program.program_name.at(0)"
+            >
+              <td class="bg-gray-100 w-8">
+                <button
+                  type="button"
+                  @click="open = program"
+                  class="h-full w-8 flex justify-center items-center"
+                >
+                  <Icon name="expand" class="size-5" />
+                </button>
+              </td>
+
+              <td class="p-2">
+                <a
+                  x-text="program.program_name"
+                  class="text-primary-800 hover:underline mr-2"
+                  :href="getProgramURL(program)"></a>
+
+                <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                  <template x-for="degree in getProgramDegrees(program)">
+                    <span
+                      x-text="degree"
+                      class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                    >
+                    </span>
+                  </template>
+                </span>
+              </td>
+
+              <template x-for="[key, type] in Object.entries(types)">
+                <td class="w-8">
+                  <button
+                    x-data
+                    @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                    x-show="hasType(program, key)"
+                    x-text="type.key"
+                    class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                    :style="`background-color: ${type.color}`"></button>
+                </td>
+              </template>
+            </tr>
+          </template>
+
+          <tr
+            class="border-b border-b-gray-200"
+            x-show="filters.query && filtered.related.length > 0"
+          >
+            <td colspan="11" class="pb-2 pt-8"
+              ><span class="h4">Programs related to "<span x-text="filters.query"></span>"</span
+              ></td
+            >
+          </tr>
+
+          <template x-for="program in filtered.related">
+            <tr
+              class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors scroll-m-28-28"
+              :data-letter="program.program_name.at(0)"
+            >
+              <td class="bg-gray-100 w-8">
+                <button
+                  type="button"
+                  @click="open = program"
+                  class="h-full w-8 flex justify-center items-center"
+                >
+                  <Icon name="expand" class="size-5" />
+                </button>
+              </td>
+
+              <td class="p-2">
+                <a
+                  x-text="program.program_name"
+                  class="text-primary-800 hover:underline mr-2"
+                  :href="getProgramURL(program)"></a>
+
+                <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+                  <template x-for="degree in getProgramDegrees(program)">
+                    <span
+                      x-text="degree"
+                      class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                    >
+                    </span>
+                  </template>
+                </span>
+              </td>
+
+              <template x-for="[key, type] in Object.entries(types)">
+                <td class="w-8">
+                  <button
+                    x-data
+                    @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+                    x-show="hasType(program, key)"
+                    x-text="type.key"
+                    class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+                    :style="`background-color: ${type.color}`"></button>
+                </td>
+              </template>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+
+      <template x-teleport="body">
+        <div
+          x-show="Boolean(open)"
+          style="display: none"
+          x-on:keydown.escape.prevent.stop="open = null"
+          role="dialog"
+          aria-modal="true"
+          x-id="['modal-title']"
+          :aria-labelledby="$id('modal-title')"
+          class="dialog"
+        >
+          <div
+            x-show="Boolean(open)"
+            @click="open = null"
+            x-transition.opacity.duration.300
+            class="fixed inset-0 bg-primary-800/80 z-50"
+          >
+          </div>
+
+          <div
+            x-show="Boolean(open)"
+            x-transition.opacity.duration.300
+            x-trap.noscroll.inert="open"
+            class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+          >
+            <div class="flex justify-end p-4">
+              <button type="button" @click="open = null" aria-label="Close dialog">
+                <Icon name="close" class="size-10" />
+              </button>
+            </div>
+
+            <img
+              :src="open?.thumbnail_small"
+              :alt="open?.thumbnail_small_alt"
+              class="w-full bg-gray-200 mb-4"
+            />
+
+            <div class="p-4">
+              <h4 class="mb-2">
+                <span
+                  class="text-primary-800 font-title text-3xl font-bold mr-2"
+                  x-text="open?.program_name"></span>
+                <span class="inline-flex gap-2 items-center">
+                  <template x-for="degree in getProgramDegrees(open)">
+                    <span
+                      x-text="degree"
+                      class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                    >
+                    </span>
+                  </template>
+                </span>
+              </h4>
+
+              <p x-text="open?.department_name" class="mb-2"></p>
+
+              <ul class="flex gap-2 items-center mb-8">
+                <template x-for="[key, type] in Object.entries(types)">
+                  <li
+                    x-show="hasType(open, key)"
+                    x-text="type.label"
+                    class="text-white text-xs px-2 py-1 rounded-full"
+                    :style="`background-color: ${type.color}`"
+                  >
+                  </li>
+                </template>
+              </ul>
+
+              <p x-text="open?.program_peek" class="mb-4"></p>
+
+              <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
+
+              <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
+                <h5 class="text-primary-800 mb-4 font-title">
+                  <span class="block text-xl leading-none">Programs related to</span>
+                  <span x-text="open?.program_name" class="text-2xl font-bold leading-none"></span>
+                </h5>
+
+                <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <template x-for="related in getRelatedPrograms(open)">
+                    <li
+                      class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden"
+                    >
+                      <img
+                        :src="related.thumbnail_small"
+                        :alt="related.thumbnail_small_alt"
+                        class="w-full h-32 object-cover"
+                      />
+                      <span class="p-2">
+                        <span x-text="related.program_name" class="block mb-2"></span>
+
+                        <span class="flex gap-2">
+                          <template x-for="[key, type] in Object.entries(types)">
+                            <span
+                              x-text="type.key"
+                              class="w-5 h-5 text-white rounded-full flex text-xs items-center justify-center mb-4"
+                              :style="`background-color: ${type.color}`"
+                              x-show="hasType(related, key)"
+                            >
+                            </span>
+                          </template>
+                        </span>
+                      </span>
+                      <a
+                        :href="getProgramURL(related)"
+                        class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
+                        >Read more</a
+                      >
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <aside
+      class="flex-shrink-0 bg-gray-100 lg:w-[270px] p-4 self-start sticky top-24 hidden lg:block"
+    >
+      <h4 class="h4 mb-4">Filter by your interest</h4>
+
+      <ul class="space-y-1">
+        <li>
+          <label class="flex gap-2 items-start cursor-pointer">
+            <input
+              type="radio"
+              name="interest-group"
+              class="mt-1"
+              value="all"
+              x-model="filters.interestGroup"
+            />
+            <span>All</span>
+          </label>
+        </li>
+
+        <template x-for="group in interestGroups">
+          <li>
+            <label class="flex gap-2 items-start cursor-pointer">
+              <input
+                type="radio"
+                name="interest-group"
+                :value="group"
+                class="mt-1"
+                x-model="filters.interestGroup"
+              />
+              <span x-text="group"></span>
+            </label>
+          </li>
+        </template>
+      </ul>
+    </aside>
+  </div> -->
+</BaseLayout>
