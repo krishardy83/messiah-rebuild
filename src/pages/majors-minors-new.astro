@@ -236,6 +236,10 @@ import Header from "../views/majors-minors-new/header.astro";
     get hasFilters() {
       return this.filters.type !== '' || this.filters.query !== '' || this.filters.interestGroup !== 'all';
     },
+
+    get bookmarksCount() {
+      return this.bookmarks.programIds.length;
+    },
   }">
     <form class="relative mb-8">
       <Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-800" />
@@ -292,11 +296,17 @@ import Header from "../views/majors-minors-new/header.astro";
         <button
           type="button"
           @click="toggleBookmarkedView"
-          class="btn"
-          :title="bookmarks.active ? 'Show all' : 'Show bookmarks'"
+          class="btn relative"
+          :title="bookmarks.active ? 'Show all programs' : `Show ${bookmarksCount} bookmarked ${bookmarksCount === 1 ? 'program' : 'programs'}`"
           :class="bookmarks.active ? 'btn-tertiary' : 'btn-white'"
         >
           <Icon name="bookmark" class="size-6" />
+          <span
+            x-text="bookmarksCount"
+            x-show="bookmarksCount > 0"
+            class="absolute top-2 right-2 size-4 rounded-full flex items-center justify-center text-xs"
+            :class="bookmarks.active ? 'bg-white text-primary-800' : 'bg-primary-800 text-white'"
+          ></span>
         </button>
       </div>
     </div>
