@@ -232,6 +232,10 @@ import Header from "../views/majors-minors-new/header.astro";
 
       return matches;
     },
+
+    get hasFilters() {
+      return this.filters.type !== '' || this.filters.query !== '' || this.filters.interestGroup !== 'all';
+    },
   }">
     <form class="relative mb-8">
       <Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-800" />
@@ -260,28 +264,37 @@ import Header from "../views/majors-minors-new/header.astro";
       <div class="col-span-1 flex justify-end gap-1">
         <button
           type="button"
+          @click="reset"
+          class="btn btn-quaternary"
+          x-show="hasFilters"
+        >
+          <Icon name="close" class="size-5" />
+          Reset filters
+        </button>
+        <button
+          type="button"
           @click="layout = 'cards'"
-          class="size-10 flex items-center justify-center transition-colors"
+          class="btn"
           title="Card layout"
-          :class="layout === 'cards' ? 'bg-primary-800 text-white' : 'bg-white text-primary-800 hover:bg-gray-100'"
+          :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
         >
           <Icon name="grid" class="size-5" />
         </button>
         <button
           type="button"
           @click="layout = 'table'"
-          class="size-10 flex items-center justify-center transition-colors"
+          class="btn"
           title="Table layout"
-          :class="layout === 'table' ? 'bg-primary-800 text-white' : 'bg-white text-primary-800 hover:bg-gray-100'"
+          :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"
         >
           <Icon name="list" class="size-5" />
         </button>
         <button
           type="button"
           @click="toggleBookmarkedView"
-          class="size-10 flex items-center justify-center transition-colors"
+          class="btn"
           :title="bookmarks.active ? 'Show all' : 'Show bookmarks'"
-          :class="bookmarks.active ? 'bg-primary-800 text-white' : 'bg-white text-primary-800 hover:bg-gray-100'"
+          :class="bookmarks.active ? 'btn-tertiary' : 'btn-white'"
         >
           <Icon name="bookmark" class="size-6" />
         </button>

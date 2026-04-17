@@ -154,11 +154,15 @@
   }
 
   .btn-tertiary {
-    @apply btn bg-primary-800 text-white hover:bg-gray-200 hover:text-primary-800 focus-visible:bg-gray-200 focus-visible:text-primary-800 disabled:bg-gray-200 disabled:text-gray-600 disabled:cursor-not-allowed;
+    @apply btn bg-primary-800 text-white hover:bg-primary-600 focus-visible:bg-primary-600 disabled:bg-gray-200 disabled:text-gray-600 disabled:cursor-not-allowed;
   }
 
   .btn-quaternary {
     @apply btn bg-gray-100 text-primary-800 hover:bg-gray-200 focus-visible:bg-gray-200;
+  }
+
+  .btn-white {
+    @apply btn bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100;
   }
 
   .link {
