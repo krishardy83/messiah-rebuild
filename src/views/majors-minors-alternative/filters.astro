@@ -1,0 +1,110 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<form
+  class="py-12 bg-gray-100 border-b border-gray-300"
+  @keydown.escape.prevent.stop="close"
+  @keydown="handleKeyDown"
+  @focusin.window="!$refs.search.contains($event.target) && close()"
+  @click.outside="close"
+  x-ref="search"
+>
+  <div class="max-w-6xl mx-auto px-4 flex gap-4">
+    <div class="relative w-1/2">
+      <Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-800" />
+      <input
+        x-ref="input"
+        type="text"
+        id="keywords"
+        @input.debounce="handleChange"
+        x-model.debounce.200ms="filters.query"
+        autocomplete="off"
+        placeholder="Search the program list"
+        aria-label="Search the program list"
+        class="border border-gray-300 pr-12 pl-12 h-12 w-full"
+      />
+      <button
+        type="button"
+        title="Clear input"
+        x-show="filters.query.length > 0"
+        @click="resetSearch"
+        class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+      >
+        <Icon name="close" class="size-5" />
+      </button>
+  
+      <div
+        x-show="search.open"
+        class="absolute right-0 z-10 mt-2 max-h-80 w-full overflow-y-auto overscroll-contain border border-gray-300 bg-white py-2 shadow-sm outline-none"
+        x-ref="panel"
+      >
+        <template x-for="keyword in filteredKeywords" :key="keyword">
+          <button
+            type="button"
+            x-text="keyword"
+            @click="handleKeywordClick(keyword)"
+            class="flex w-full cursor-pointer items-center py-2 px-4 transition-colors hover:bg-primary-100 focus-visible:bg-primary-100 focus-visible:outline-none"
+          >
+          </button>
+        </template>
+  
+        <template x-if="filteredKeywords.length === 0">
+          <p class="py-2 px-4">No suggestions found.</p>
+        </template>
+      </div>
+    </div>
+
+    <select class="bg-white min-h-12 px-4 border border-gray-300 select w-1/3" x-model="filters.type">
+      <option value="" selected="">Filter by program type</option>
+      <template x-for="[key, type] in Object.entries(types)">
+        <option :value="key" x-text="type.label"></option>
+      </template>
+    </select>
+
+    <div class="flex gap-1">
+      <button
+        type="button"
+        @click="reset"
+        class="btn btn-quaternary whitespace-nowrap"
+        x-show="hasFilters"
+      >
+        <Icon name="close" class="size-5" />
+        Reset filters
+      </button>
+      <button
+        type="button"
+        @click="layout = 'cards'"
+        class="btn"
+        title="Card layout"
+        :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
+      >
+        <Icon name="grid" class="size-5" />
+      </button>
+      <button
+        type="button"
+        @click="layout = 'table'"
+        class="btn"
+        title="Table layout"
+        :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"
+      >
+        <Icon name="list" class="size-5" />
+      </button>
+      <button
+        type="button"
+        @click="toggleBookmarkedView"
+        class="btn relative"
+        :title="bookmarks.active ? 'Show all programs' : `Show ${bookmarksCount} bookmarked ${bookmarksCount === 1 ? 'program' : 'programs'}`"
+        :class="bookmarks.active ? 'btn-tertiary' : 'btn-white'"
+      >
+        <Icon name="bookmark" class="size-6" />
+        <span
+          x-text="bookmarksCount"
+          x-show="bookmarksCount > 0"
+          class="absolute top-2 right-2 size-4 rounded-full flex items-center justify-center text-xs"
+          :class="bookmarks.active ? 'bg-white text-primary-800' : 'bg-primary-800 text-white'"
+        ></span>
+      </button>
+    </div>
+  </div>
+</form>

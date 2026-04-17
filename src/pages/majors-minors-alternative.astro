@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "../layouts/base.astro";
-import Header from "../views/majors-minors-new/header.astro";
-import Interests from "../views/majors-minors-new/interests.astro";
-import Categories from "../views/majors-minors-new/categories.astro";
+import Header from "../views/majors-minors-alternative/header.astro";
+import Interests from "../views/majors-minors-alternative/interests.astro";
+import Categories from "../views/majors-minors-alternative/categories.astro";
+import Filters from "../views/majors-minors-alternative/filters.astro";
 ---
 
 <BaseLayout
@@ -455,6 +456,8 @@ import Categories from "../views/majors-minors-new/categories.astro";
     },
   }">
     <Header />
+
+    <Filters />
 
     <main id="content" class="max-w-6xl mx-auto px-4 py-12">
       <Categories />
