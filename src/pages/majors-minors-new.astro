@@ -505,7 +505,7 @@ import Header from "../views/majors-minors-new/header.astro";
       <div x-ref="content" class="scroll-m-28">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="layout === 'cards'">
           <template x-for="program in filteredPrograms" :key="program.entry_id">
-            <article :href="getProgramURL(program)" class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+            <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
               <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full h-48 object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
               
               <button
@@ -513,15 +513,24 @@ import Header from "../views/majors-minors-new/header.astro";
                 @click="toggleBookmark(program)"
                 class="absolute top-4 right-4 size-10 flex items-center justify-center"
                 :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
-                :class="isBookmarked(program) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 border-gray-300 hover:bg-gray-100'"
+                :class="isBookmarked(program) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 hover:bg-gray-100'"
               >
                 <Icon name="bookmark" class="size-6" :class="isBookmarked(program) ? 'hidden' : 'block'" />
                 <Icon name="bookmark-slash" class="size-6" :class="isBookmarked(program) ? 'block' : 'hidden'" />
               </button>
 
+              <button
+                type="button"
+                @click="open = program"
+                title="View program details"
+                class="absolute top-4 right-16 size-10 flex items-center justify-center bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100 transition-colors"
+              >
+                <Icon name="expand" class="size-6" />
+              </button>
+
               <div class="p-4 flex-1 flex flex-col">
               <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
-                <button type="button" @click="open = program" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></button>
+                <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
               </h3>
 
                 <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
@@ -550,6 +559,7 @@ import Header from "../views/majors-minors-new/header.astro";
         <table class="text-sm w-full" x-show="layout === 'table'">
           <thead>
             <tr class="border-b border-b-gray-300 bg-gray-100">
+              <th></th>
               <th class="py-2 px-4 text-left font-title uppercase">Program</th>
               <th class="py-2 px-4 text-left font-title uppercase">Degree</th>
               <th class="py-2 px-4 text-left font-title uppercase" :colspan="Object.keys(types).length">Type</th>
@@ -559,13 +569,23 @@ import Header from "../views/majors-minors-new/header.astro";
           <tbody>
             <template x-for="program in filteredPrograms" :key="program.entry_id">
               <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors">
-                <td class="py-2 px-4">
+                <td class="bg-gray-100 w-8 hover:bg-gray-200 transition-colors focus-within:bg-gray-200">
                   <button
                     type="button"
                     @click="open = program"
+                    title="View program details"
+                    class="h-full w-8 flex justify-center items-center"
+                  >
+                    <Icon name="expand" class="size-5" />
+                  </button>
+                </td>
+                <td class="py-2 px-4">
+                  <a
+                    :href="getProgramURL(program)"
+                    @click="open = program"
                     x-text="program.program_name"
                     class="text-primary-800 hover:underline cursor-pointer text-left"
-                  ></button>
+                  ></a>
                 </td>
 
                 <td class="py-2 px-4">
