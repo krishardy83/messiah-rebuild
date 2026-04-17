@@ -329,28 +329,31 @@ import Categories from "../views/majors-minors-new/categories.astro";
     get filteredPrograms() {
       const query = this.filters.query.trim().toLowerCase();
       const { type, interestGroup } = this.filters;
-      const matches = [];
+      const matches = { direct: [], related: [] };
 
       this.programs.forEach((program) => {
         const isTypeMatch = this.hasType(program, type);
-        const searchFields = [
-          program.program_name,
-          program.keywords,
-        ]
-          .filter(Boolean)
-          .join(' ')
-          .toLowerCase();
-        
-        const isSearchMatch = searchFields.includes(query);
+        const isNameMatch = (program.program_name || '').toLowerCase().includes(query);
+        const isKeywordMatch = (program.keywords || '')
+          .split(',')
+          .some((keyword) => keyword.toLowerCase().includes(query));
         const isInterestGroupMatch = interestGroup === 'all' ? true : program.interest_group_name.split('|').includes(interestGroup);
         const isBookmarkMatch = this.bookmarks.active ? this.isBookmarked(program) : true;
 
-        if (isTypeMatch && isSearchMatch && isInterestGroupMatch && isBookmarkMatch) {
-          matches.push(program);
+        if (isTypeMatch && isNameMatch && isInterestGroupMatch && isBookmarkMatch) {
+          matches.direct.push(program);
+        }
+
+        if (isTypeMatch && isKeywordMatch && isInterestGroupMatch && isBookmarkMatch && !isNameMatch) {
+          matches.related.push(program);
         }
       });
 
       return matches;
+    },
+
+    get hasFilteredPrograms() {
+      return this.filteredPrograms.direct.length > 0 || this.filteredPrograms.related.length > 0;
     },
 
     setKeywords() {
@@ -428,9 +431,9 @@ import Categories from "../views/majors-minors-new/categories.astro";
         }
       } else if (event.key === 'Enter') {
         event.preventDefault();
+        
         this.scrollToContent();
-
-        this.search.open = false;
+        this.close();
       } else if (document.activeElement !== this.$refs.input) {
         this.$refs.input.focus();
       }
@@ -441,6 +444,10 @@ import Categories from "../views/majors-minors-new/categories.astro";
 
       this.filters.query = keyword;
       this.search.value = keyword;
+      this.close();
+    },
+
+    close() {
       this.search.open = false;
     },
 
