@@ -1,21 +1,99 @@
 ---
-import Icon from "../components/icon.astro";
 import BaseLayout from "../layouts/base.astro";
 import Header from "../views/majors-minors-new/header.astro";
+import Interests from "../views/majors-minors-new/interests.astro";
+import Categories from "../views/majors-minors-new/categories.astro";
 ---
 
 <BaseLayout
   title="Undergraduate Programs"
   description="Undergraduate Programs"
 >
-  <Header />
-
-  <main id="content" class="max-w-6xl mx-auto px-4 py-12" x-data="{
+  <div x-data="{
     programs: [],
     loading: true,
     error: null,
+    view: 'az',
     layout: 'cards',
     open: null,
+  
+    interestAreas: [
+      {
+        title: 'Art, Design and Performing Arts',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/art-and-performing-art/index',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/musicaltheatre_hero.jpg',
+      },
+      {
+        title: 'Business, Leadership and Innovation',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/business/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/mobile/business_administration_b.s.jpg',
+      },
+      {
+        title: 'Communication and Media',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/communication-and-media/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/communications_hero.jpg',
+      },
+      {
+        title: 'Education and Teaching',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/education-teaching/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/early_childhood_ed_hero.jpg',
+      },
+      {
+        title: 'Finance, Analytics and Mathematics',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/finance-analytics-mathematics/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/finance_hero1.jpg',
+      },
+      {
+        title: 'Government and Law',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/politics-history-and-public-service/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/politics_hero.jpg',
+      },
+      {
+        title: 'Health, Science and Human Services',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/health-science-human-services/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/nutritionanddietetics_hero_1.jpg',
+      },
+      {
+        title: 'History, Politics and Culture',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/history-politics-culture/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/aareligion.jpg',
+      },
+      {
+        title: 'Human Behavior, Society and Community Care',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/human-behavior-society-community-care/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/children_and_youth_services_hero.jpg',
+      },
+      {
+        title: 'Language',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/language/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/chinesestudies_1.jpg',
+      },
+      {
+        title: 'Faith, Ministry and Christian Leadership',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/ministry/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/cross_cultural_ministries_hero.jpg',
+      },
+      {
+        title: 'Music and Theatre',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/music-theatre-performing-arts/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/music_4.jpg',
+      },
+      {
+        title: 'Science, Health and the Natural World',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/science-health-the-natural-world/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/nutritionanddietetics_hero_1.jpg',
+      },
+      {
+        title: 'Sustainability, Environment and Community',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/sustainability-environment-community/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/sustainability_studies_major.jpg',
+      },
+      {
+        title: 'Technology, Computing and Data',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/technology-computing-data/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/cybersecurity_hero.jpg',
+      },
+    ],
     
     bookmarks: {
       active: false,
@@ -92,6 +170,7 @@ import Header from "../views/majors-minors-new/header.astro";
     },
 
     init() {
+      this.view = this.getViewFromQuery();
       this.loadBookmarks();
 
       fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
@@ -108,6 +187,32 @@ import Header from "../views/majors-minors-new/header.astro";
           this.error = `Could not fetch program data (${error.message})`;
           this.loading = false;
         });
+    },
+
+    getViewFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const selectedView = params.get('view');
+
+      return selectedView === 'interest' ? 'interest' : 'az';
+    },
+
+    setView(nextView) {
+      this.view = nextView === 'interest' ? 'interest' : 'az';
+      this.open = null;
+      this.search.open = false;
+      this.updateViewQueryParam();
+    },
+
+    updateViewQueryParam() {
+      const url = new URL(window.location.href);
+
+      if (this.view === 'interest') {
+        url.searchParams.set('view', 'interest');
+      } else {
+        url.searchParams.delete('view');
+      }
+
+      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
     },
 
     reset() {
@@ -343,408 +448,13 @@ import Header from "../views/majors-minors-new/header.astro";
       this.$refs.content?.scrollIntoView({ behavior: 'smooth' });
     },
   }">
-    <form
-      class="relative mb-8"
-      @keydown.escape.prevent.stop="close"
-      @keydown="handleKeyDown"
-      @focusin.window="!$refs.search.contains($event.target) && close()"
-      @click.outside="close"
-      x-ref="search"
-    >
-      <Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-800" />
-      <input
-        x-ref="input"
-        type="text"
-        id="keywords"
-        @input.debounce="handleChange"
-        x-model.debounce.200ms="filters.query"
-        autocomplete="off"
-        placeholder="Search the program list"
-        aria-label="Search the program list"
-        class="w-full border border-gray-300 pr-12 pl-12 h-12"
-      />
-      <button
-        type="button"
-        title="Clear input"
-        x-show="filters.query.length > 0"
-        @click="resetSearch"
-        class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
-      >
-        <Icon name="close" class="size-5" />
-      </button>
+    <Header />
 
-      <div
-        x-show="search.open"
-        class="absolute right-0 z-10 mt-2 max-h-80 w-full overflow-y-auto overscroll-contain border border-gray-300 bg-white py-2 shadow-sm outline-none"
-        x-ref="panel"
-      >
-        <template x-for="keyword in filteredKeywords" :key="keyword">
-          <button
-            type="button"
-            x-text="keyword"
-            @click="handleKeywordClick(keyword)"
-            class="flex w-full cursor-pointer items-center py-2 px-4 transition-colors hover:bg-primary-100 focus-visible:bg-primary-100 focus-visible:outline-none"
-          >
-          </button>
-        </template>
-
-        <template x-if="filteredKeywords.length === 0">
-          <p class="py-2 px-4">No suggestions found.</p>
-        </template>
-      </div>
-    </form>
-
-    <div class="grid grid-cols-3 gap-4 mb-8">
-      <div class="flex col-span-2 gap-x-8 gap-y-2 flex-wrap">
-        <template x-for="[key, type] in Object.entries(types)">
-          <label
-            class="text-xs flex items-center gap-2 cursor-pointer group"
-          >
-            <input type="radio" :value="key" x-model="filters.type" class="sr-only" />
-            <span
-              x-text="type.key"
-              class="size-5 text-white rounded-full flex items-center justify-center"
-              :style="`background-color: ${type.color}`"></span>
-            <span
-              x-text="type.label"
-              class="uppercase group-hover:underline"
-              :class="filters.type === key ? 'text-primary-400' : ''"></span>
-          </label>
-        </template>
-      </div>
-
-      <div class="col-span-1 flex justify-end gap-1">
-        <button
-          type="button"
-          @click="reset"
-          class="btn btn-quaternary"
-          x-show="hasFilters"
-        >
-          <Icon name="close" class="size-5" />
-          Reset filters
-        </button>
-        <button
-          type="button"
-          @click="layout = 'cards'"
-          class="btn"
-          title="Card layout"
-          :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
-        >
-          <Icon name="grid" class="size-5" />
-        </button>
-        <button
-          type="button"
-          @click="layout = 'table'"
-          class="btn"
-          title="Table layout"
-          :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"
-        >
-          <Icon name="list" class="size-5" />
-        </button>
-        <button
-          type="button"
-          @click="toggleBookmarkedView"
-          class="btn relative"
-          :title="bookmarks.active ? 'Show all programs' : `Show ${bookmarksCount} bookmarked ${bookmarksCount === 1 ? 'program' : 'programs'}`"
-          :class="bookmarks.active ? 'btn-tertiary' : 'btn-white'"
-        >
-          <Icon name="bookmark" class="size-6" />
-          <span
-            x-text="bookmarksCount"
-            x-show="bookmarksCount > 0"
-            class="absolute top-2 right-2 size-4 rounded-full flex items-center justify-center text-xs"
-            :class="bookmarks.active ? 'bg-white text-primary-800' : 'bg-primary-800 text-white'"
-          ></span>
-        </button>
-      </div>
-    </div>
-
-    <template x-if="loading">
-      <p role="alert" class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">Loading program list, please wait...</p>
-    </template>
-
-    <template x-if="error">
-      <p role="alert" class="bg-red-100 border border-red-200 text-red-800 px-4 py-2" x-text="error"></p>
-    </template>
-
-    <template x-if="!filteredPrograms.length && !loading && !error">
-      <div
-        role="alert"
-        class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2"
-      >
-        <template x-if="bookmarks.active && bookmarks.programIds.length === 0">
-          <p class="mb-4">
-            You have not bookmarked any programs yet. Use the bookmark button on a program card to save it here.
-          </p>
-        </template>
-
-        <template x-if="!(bookmarks.active && bookmarks.programIds.length === 0)">
-          <p class="mb-4">
-            No programs match your search "<span x-text="filters.query"></span>" and the selected
-            program type.
-          </p>
-        </template>
-
-        <template x-if="!(bookmarks.active && bookmarks.programIds.length === 0)">
-          <p class="mb-4">
-            <b>Search tip:</b> Try using interest keywords like accounting or mathematics than a potential
-            job title (accountant) to find more programs! And remember, you can always visit a full list
-            of our <a href="https://www.messiah.edu/majors-minors-programs" class="underline link"
-              >undergraduate programs</a
-            > and <a href="https://www.messiah.edu/info/20436/degrees" class="underline link"
-              >graduate programs</a
-            >.
-          </p>
-        </template>
-
-        <button type="button" @click="reset" class="btn btn-quaternary">Reset</button>
-      </div>
-    </template>
-
-    <template x-if="!loading && !error && filteredPrograms.length > 0">
-      <div x-ref="content" class="scroll-m-28">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="layout === 'cards'">
-          <template x-for="program in filteredPrograms" :key="program.entry_id">
-            <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
-              <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full h-48 object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
-              
-              <button
-                type="button"
-                @click="toggleBookmark(program)"
-                class="absolute top-4 right-4 size-10 flex items-center justify-center"
-                :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
-                :class="isBookmarked(program) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 hover:bg-gray-100'"
-              >
-                <Icon name="bookmark" class="size-6" :class="isBookmarked(program) ? 'hidden' : 'block'" />
-                <Icon name="bookmark-slash" class="size-6" :class="isBookmarked(program) ? 'block' : 'hidden'" />
-              </button>
-
-              <button
-                type="button"
-                @click="open = program"
-                title="View program details"
-                class="absolute top-4 right-16 size-10 flex items-center justify-center bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100 transition-colors"
-              >
-                <Icon name="expand" class="size-6" />
-              </button>
-
-              <div class="p-4 flex-1 flex flex-col">
-              <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
-                <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
-              </h3>
-
-                <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
-                  <template x-for="degree in getProgramDegrees(program)">
-                    <li
-                      x-text="degree"
-                      class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
-                    >
-                    </li>
-                  </template>
-                </ol>
-                
-                <ol class="flex gap-x-4 gap-y-2 flex-wrap mt-auto">
-                  <template x-for="[key, type] in Object.entries(types)">
-                    <li x-show="hasType(program, key)" class="flex items-center gap-2 text-xs">
-                      <span x-text="type.key" class="text-white size-5 flex items-center justify-center rounded-full" :style="`background-color: ${type.color}`"></span>
-                      <span x-text="type.label" class="uppercase"></span>
-                    </li>
-                  </template>
-                </ol>
-              </div>
-            </article>
-          </template>
-        </div>
-
-        <table class="text-sm w-full" x-show="layout === 'table'">
-          <thead>
-            <tr class="border-b border-b-gray-300 bg-gray-100">
-              <th></th>
-              <th class="py-2 px-4 text-left font-title uppercase">Program</th>
-              <th class="py-2 px-4 text-left font-title uppercase">Degree</th>
-              <th class="py-2 px-4 text-left font-title uppercase" :colspan="Object.keys(types).length">Type</th>
-              <th class="py-2 w-8"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <template x-for="program in filteredPrograms" :key="program.entry_id">
-              <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors">
-                <td class="bg-gray-100 w-8 hover:bg-gray-200 transition-colors focus-within:bg-gray-200">
-                  <button
-                    type="button"
-                    @click="open = program"
-                    title="View program details"
-                    class="h-full w-8 flex justify-center items-center"
-                  >
-                    <Icon name="expand" class="size-5" />
-                  </button>
-                </td>
-                <td class="py-2 px-4">
-                  <a
-                    :href="getProgramURL(program)"
-                    @click="open = program"
-                    x-text="program.program_name"
-                    class="text-primary-800 hover:underline cursor-pointer text-left"
-                  ></a>
-                </td>
-
-                <td class="py-2 px-4">
-                  <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
-                    <template x-for="degree in getProgramDegrees(program)">
-                      <span
-                        x-text="degree"
-                        class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
-                      ></span>
-                    </template>
-                  </span>
-                </td>
-
-                <template x-for="[key, type] in Object.entries(types)">
-                  <td class="py-2 px-4 w-8">
-                    <span
-                      x-show="hasType(program, key)"
-                      x-text="type.key"
-                      class="w-5 h-5 text-white rounded-full flex items-center justify-center text-xs"
-                      :style="`background-color: ${type.color}`"
-                    ></span>
-                  </td>
-                </template>
-
-                <td class="w-8">
-                  <button
-                    type="button"
-                    @click="toggleBookmark(program)"
-                    class="size-8 flex items-center justify-center transition-colors"
-                    :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
-                    :class="isBookmarked(program) ? 'text-primary-800' : 'text-gray-400 hover:text-primary-800'"
-                  >
-                    <Icon name="bookmark" class="size-5" :class="isBookmarked(program) ? 'hidden' : 'block'" />
-                    <Icon name="bookmark-slash" class="size-5" :class="isBookmarked(program) ? 'block' : 'hidden'" />
-                  </button>
-                </td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </div>
-    </template>
-
-    <template x-teleport="body">
-      <div
-        x-show="Boolean(open)"
-        style="display: none"
-        x-on:keydown.escape.prevent.stop="open = null"
-        role="dialog"
-        aria-modal="true"
-        x-id="['modal-title']"
-        :aria-labelledby="$id('modal-title')"
-        class="dialog"
-      >
-        <div
-          x-show="Boolean(open)"
-          @click="open = null"
-          x-transition.opacity.duration.300
-          class="fixed inset-0 bg-primary-800/80 z-50"
-        >
-        </div>
-
-        <div
-          x-show="Boolean(open)"
-          x-transition.opacity.duration.300
-          x-trap.noscroll.inert="open"
-          class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
-        >
-          <div class="flex justify-end p-4">
-            <button type="button" @click="open = null" aria-label="Close dialog">
-              <Icon name="close" class="size-10" />
-            </button>
-          </div>
-
-          <img
-            :src="open?.thumbnail_small"
-            :alt="open?.thumbnail_small_alt"
-            class="w-full bg-gray-200 mb-4"
-          />
-
-          <div class="p-4">
-            <h4 class="mb-2">
-              <span
-                class="text-primary-800 font-title text-3xl font-bold mr-2"
-                x-text="open?.program_name"></span>
-              <span class="inline-flex gap-2 items-center">
-                <template x-for="degree in getProgramDegrees(open)">
-                  <span
-                    x-text="degree"
-                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
-                  >
-                  </span>
-                </template>
-              </span>
-            </h4>
-
-            <p x-text="open?.department_name" class="mb-2"></p>
-
-            <ul class="flex gap-2 items-center mb-8">
-              <template x-for="[key, type] in Object.entries(types)">
-                <li
-                  x-show="hasType(open, key)"
-                  x-text="type.label"
-                  class="text-white text-xs px-2 py-1 rounded-full"
-                  :style="`background-color: ${type.color}`"
-                >
-                </li>
-              </template>
-            </ul>
-
-            <p x-text="open?.program_peek" class="mb-4"></p>
-
-            <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
-
-            <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
-              <h5 class="text-primary-800 mb-4 font-title">
-                <span class="block text-xl leading-none">Programs related to</span>
-                <span x-text="open?.program_name" class="text-2xl font-bold leading-none"></span>
-              </h5>
-
-              <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <template x-for="related in getRelatedPrograms(open)">
-                  <li
-                    class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden"
-                  >
-                    <img
-                      :src="related.thumbnail_small"
-                      :alt="related.thumbnail_small_alt"
-                      class="w-full h-32 object-cover"
-                    />
-                    <span class="p-2">
-                      <span x-text="related.program_name" class="block mb-2"></span>
-
-                      <span class="flex gap-2">
-                        <template x-for="[key, type] in Object.entries(types)">
-                          <span
-                            x-text="type.key"
-                            class="w-5 h-5 text-white rounded-full flex text-xs items-center justify-center mb-4"
-                            :style="`background-color: ${type.color}`"
-                            x-show="hasType(related, key)"
-                          >
-                          </span>
-                        </template>
-                      </span>
-                    </span>
-                    <a
-                      :href="getProgramURL(related)"
-                      class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
-                      >Read more</a
-                    >
-                  </li>
-                </template>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-  </main>
+    <main id="content" class="max-w-6xl mx-auto px-4 py-12">
+      <Categories />
+      <Interests />
+    </main>
+  </div>
   <!-- <h2 class="h3">Majors, Minors and Programs</h2>
 
   <div

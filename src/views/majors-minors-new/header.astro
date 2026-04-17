@@ -16,8 +16,22 @@
     </p>
 
     <nav class="flex gap-2 bg-white p-2 rounded-full w-max mx-auto mt-12">
-      <button type="button" class="text-white px-4 py-2 rounded-full bg-primary-800 min-w-24 hover:bg-primary-700">A-Z</button>
-      <button type="button" class="text-primary-800 px-4 py-2 rounded-full min-w-24 hover:bg-gray-100">Browse by Interest</button>
+      <button
+        type="button"
+        @click="setView('az')"
+        :class="view === 'az' ? 'text-white bg-primary-800 hover:bg-primary-700' : 'text-primary-800 hover:bg-gray-100'"
+        class="px-4 py-2 rounded-full min-w-24 transition-colors"
+      >
+        A-Z
+      </button>
+      <button
+        type="button"
+        @click="setView('interest')"
+        :class="view === 'interest' ? 'text-white bg-primary-800 hover:bg-primary-700' : 'text-primary-800 hover:bg-gray-100'"
+        class="px-4 py-2 rounded-full min-w-24 transition-colors"
+      >
+        Browse by Interest
+      </button>
     </nav>
   </div>
 </header>
