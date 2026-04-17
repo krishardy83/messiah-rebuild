@@ -28,6 +28,12 @@ import Header from "../views/majors-minors-new/header.astro";
       interestGroup: 'all',
     },
 
+    search: {
+      value: '',
+      open: false,
+      keywords: [],
+    },
+
     types: {
       major: {
         key: 'M',
@@ -95,6 +101,7 @@ import Header from "../views/majors-minors-new/header.astro";
             return item.hide_on_program_listing !== 'yes';
           });
           this.syncBookmarksWithPrograms();
+          this.setKeywords();
           this.loading = false;
         })
         .catch((error) => {
@@ -108,6 +115,14 @@ import Header from "../views/majors-minors-new/header.astro";
       this.filters.query = '';
       this.filters.interestGroup = 'all';
       this.bookmarks.active = false;
+      this.search.value = '';
+      this.search.open = false;
+    },
+
+    resetSearch() {
+      this.filters.query = '';
+      this.search.value = '';
+      this.search.open = false;
     },
 
     loadBookmarks() {
@@ -233,6 +248,46 @@ import Header from "../views/majors-minors-new/header.astro";
       return matches;
     },
 
+    setKeywords() {
+      const keywords = new Set();
+
+      this.programs.forEach((program) => {
+        if (!program.keywords) {
+          return;
+        }
+
+        program.keywords.split(',').forEach((keyword) => {
+          keywords.add(keyword.trim().toLowerCase());
+        });
+      });
+
+      this.search.keywords = Array.from(keywords);
+    },
+
+    get filteredKeywords() {
+      const search = this.search.value.trim().toLowerCase();
+
+      return this.search.keywords.map((keyword) => {
+        const lowerKeyword = keyword.toLowerCase();
+        let score = 0;
+
+        if (lowerKeyword === search) {
+          score += 100;
+        } else if (lowerKeyword.startsWith(search)) {
+          score += 50;
+        } else if (lowerKeyword.includes(` ${search}`)) {
+          score += 30;
+        } else if (lowerKeyword.includes(search)) {
+          score += 10;
+        }
+
+        return { keyword, score };
+      })
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.keyword);
+    },
+
     get hasFilters() {
       return this.filters.type !== '' || this.filters.query !== '' || this.filters.interestGroup !== 'all';
     },
@@ -240,10 +295,103 @@ import Header from "../views/majors-minors-new/header.astro";
     get bookmarksCount() {
       return this.bookmarks.programIds.length;
     },
+
+    handleChange(event) {
+      this.search.value = event.target.value;
+      this.search.open = event.target.value.length > 1;
+    },
+
+    handleKeyDown(event) {
+      const available = Array.from(this.$refs.panel.querySelectorAll(`button:not([style*='display:none']):not([style*='display: none'])`));
+      const index = available.findIndex((a) => a === document.activeElement);
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+
+        if (index <= 0) {
+          available[available.length - 1]?.focus();
+        } else {
+          available[index - 1]?.focus();
+        }
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+
+        if (index === -1 || index === available.length - 1) {
+          available[0]?.focus();
+        } else {
+          available[index + 1]?.focus();
+        }
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        this.scrollToContent();
+
+        this.search.open = false;
+      } else if (document.activeElement !== this.$refs.input) {
+        this.$refs.input.focus();
+      }
+    },
+
+    handleKeywordClick(keyword) {
+      this.scrollToContent();
+
+      this.filters.query = keyword;
+      this.search.value = keyword;
+      this.search.open = false;
+    },
+
+    scrollToContent() {
+      this.$refs.content?.scrollIntoView({ behavior: 'smooth' });
+    },
   }">
-    <form class="relative mb-8">
+    <form
+      class="relative mb-8"
+      @keydown.escape.prevent.stop="close"
+      @keydown="handleKeyDown"
+      @focusin.window="!$refs.search.contains($event.target) && close()"
+      @click.outside="close"
+      x-ref="search"
+    >
       <Icon name="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-primary-800" />
-      <input type="text" placeholder="Search the program list" class="w-full border border-gray-300 pr-4 pl-12 h-12" aria-label="Search the program list" x-model.debounce.200ms="filters.query" />
+      <input
+        x-ref="input"
+        type="text"
+        id="keywords"
+        @input.debounce="handleChange"
+        x-model.debounce.200ms="filters.query"
+        autocomplete="off"
+        placeholder="Search the program list"
+        aria-label="Search the program list"
+        class="w-full border border-gray-300 pr-12 pl-12 h-12"
+      />
+      <button
+        type="button"
+        title="Clear input"
+        x-show="filters.query.length > 0"
+        @click="resetSearch"
+        class="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 cursor-pointer"
+      >
+        <Icon name="close" class="size-5" />
+      </button>
+
+      <div
+        x-show="search.open"
+        class="absolute right-0 z-10 mt-2 max-h-80 w-full overflow-y-auto overscroll-contain border border-gray-300 bg-white py-2 shadow-sm outline-none"
+        x-ref="panel"
+      >
+        <template x-for="keyword in filteredKeywords" :key="keyword">
+          <button
+            type="button"
+            x-text="keyword"
+            @click="handleKeywordClick(keyword)"
+            class="flex w-full cursor-pointer items-center py-2 px-4 transition-colors hover:bg-primary-100 focus-visible:bg-primary-100 focus-visible:outline-none"
+          >
+          </button>
+        </template>
+
+        <template x-if="filteredKeywords.length === 0">
+          <p class="py-2 px-4">No suggestions found.</p>
+        </template>
+      </div>
     </form>
 
     <div class="grid grid-cols-3 gap-4 mb-8">
@@ -354,7 +502,7 @@ import Header from "../views/majors-minors-new/header.astro";
     </template>
 
     <template x-if="!loading && !error && filteredPrograms.length > 0">
-      <div>
+      <div x-ref="content" class="scroll-m-28">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="layout === 'cards'">
           <template x-for="program in filteredPrograms" :key="program.entry_id">
             <article :href="getProgramURL(program)" class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
