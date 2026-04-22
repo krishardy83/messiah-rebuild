@@ -15,6 +15,7 @@ import Categories from "../views/majors-minors-new/categories.astro";
     error: null,
     view: 'az',
     layout: 'cards',
+    layoutStorageKey: 'ug-program-layout',
     open: null,
   
     interestAreas: [
@@ -177,6 +178,7 @@ import Categories from "../views/majors-minors-new/categories.astro";
 
     init() {
       this.view = this.getViewFromQuery();
+      this.loadLayoutPreference();
       this.loadBookmarks();
       this.loadLayoutTooltipPreference();
 
@@ -203,6 +205,31 @@ import Categories from "../views/majors-minors-new/categories.astro";
       } catch {
         this.layoutTooltip.showOnLoad = true;
       }
+    },
+
+    loadLayoutPreference() {
+      try {
+        const savedLayout = localStorage.getItem(this.layoutStorageKey);
+
+        if (savedLayout === 'cards' || savedLayout === 'table') {
+          this.layout = savedLayout;
+        }
+      } catch {
+        this.layout = 'cards';
+      }
+    },
+
+    saveLayoutPreference() {
+      try {
+        localStorage.setItem(this.layoutStorageKey, this.layout);
+      } catch {
+        // Ignore localStorage errors and keep the UI functional.
+      }
+    },
+
+    setLayout(nextLayout) {
+      this.layout = nextLayout === 'table' ? 'table' : 'cards';
+      this.saveLayoutPreference();
     },
 
     markLayoutTooltipSeen() {

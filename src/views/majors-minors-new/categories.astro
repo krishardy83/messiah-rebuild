@@ -87,7 +87,7 @@ import Icon from "../../components/icon.astro";
       </button>
       <button
         type="button"
-        @click="layout = 'cards'; handleLayoutTooltipInteraction($el)"
+        @click="setLayout('cards'); handleLayoutTooltipInteraction($el)"
         @mouseenter="handleLayoutTooltipInteraction($el)"
         @focus="handleLayoutTooltipInteraction($el)"
         x-init="
@@ -108,7 +108,7 @@ import Icon from "../../components/icon.astro";
       </button>
       <button
         type="button"
-        @click="layout = 'table'"
+        @click="setLayout('table'); markLayoutTooltipSeen()"
         class="btn"
         title="Table layout"
         :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"

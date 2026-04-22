@@ -16,6 +16,7 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
     error: null,
     view: 'az',
     layout: 'cards',
+    layoutStorageKey: 'ug-program-layout',
     open: null,
   
     interestAreas: [
@@ -172,6 +173,7 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
 
     init() {
       this.view = this.getViewFromQuery();
+      this.loadLayoutPreference();
       this.loadBookmarks();
 
       fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
@@ -188,6 +190,31 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
           this.error = `Could not fetch program data (${error.message})`;
           this.loading = false;
         });
+    },
+
+    loadLayoutPreference() {
+      try {
+        const savedLayout = localStorage.getItem(this.layoutStorageKey);
+
+        if (savedLayout === 'cards' || savedLayout === 'table') {
+          this.layout = savedLayout;
+        }
+      } catch {
+        this.layout = 'cards';
+      }
+    },
+
+    saveLayoutPreference() {
+      try {
+        localStorage.setItem(this.layoutStorageKey, this.layout);
+      } catch {
+        // Ignore localStorage errors and keep the UI functional.
+      }
+    },
+
+    setLayout(nextLayout) {
+      this.layout = nextLayout === 'table' ? 'table' : 'cards';
+      this.saveLayoutPreference();
     },
 
     getViewFromQuery() {

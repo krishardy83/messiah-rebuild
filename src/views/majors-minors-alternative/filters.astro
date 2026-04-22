@@ -74,7 +74,7 @@ import Icon from "../../components/icon.astro";
       </button>
       <button
         type="button"
-        @click="layout = 'cards'"
+        @click="setLayout('cards');"
         class="btn"
         title="Card layout"
         :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
@@ -83,7 +83,7 @@ import Icon from "../../components/icon.astro";
       </button>
       <button
         type="button"
-        @click="layout = 'table'"
+        @click="setLayout('table');"
         class="btn"
         title="Table layout"
         :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"
