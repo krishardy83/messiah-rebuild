@@ -432,7 +432,12 @@ import Categories from "../views/majors-minors-new/categories.astro";
       } else if (event.key === 'Enter') {
         event.preventDefault();
 
-        this.handleKeywordClick(available[index].textContent);
+        if (available[index]) {
+          this.handleKeywordClick(available[index].textContent);
+        } else {
+         this.scrollToContent();
+         this.close();
+        }
       } else if (document.activeElement !== this.$refs.input) {
         this.$refs.input.focus();
       }
