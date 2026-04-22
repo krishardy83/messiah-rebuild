@@ -3,7 +3,7 @@ import Icon from "../../components/icon.astro";
 ---
 
 <form
-  class="py-12 bg-gray-100 border-b border-gray-300"
+  class="py-8 bg-gray-100 border-b border-gray-300 sticky top-20 z-10"
   @keydown.escape.prevent.stop="close"
   @keydown="handleKeyDown"
   @focusin.window="!$refs.search.contains($event.target) && close()"
