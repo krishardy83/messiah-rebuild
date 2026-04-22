@@ -30,7 +30,7 @@ const accordionId = id || createId();
 
 <div
   data-analytics="accordion"
-  class={cn("border border-gray-300 mb-4", { "not-prose": !allowProse }, className)}
+  class={cn("border border-gray-300 mb-4 bg-gray-100", { "not-prose": !allowProse }, className)}
   {...props}
   x-data={`{
     show: location.search.slice(1) === '${accordionId}',
@@ -97,7 +97,7 @@ const accordionId = id || createId();
     aria-labelledby={`button-${accordionId}`}
     :style="show && { height: $el.scrollHeight + 'px' }"
     class={cn(
-      "overflow-hidden transition-all ease-out duration-500 border-t border-gray-300 rich-text",
+      "overflow-hidden transition-all ease-out duration-500 border-t border-gray-300 rich-text bg-white",
       {
         "text-white": transparent,
       }
