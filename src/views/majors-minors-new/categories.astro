@@ -87,10 +87,22 @@ import Icon from "../../components/icon.astro";
       </button>
       <button
         type="button"
-        @click="layout = 'cards'"
+        @click="layout = 'cards'; handleLayoutTooltipInteraction($el)"
+        @mouseenter="handleLayoutTooltipInteraction($el)"
+        @focus="handleLayoutTooltipInteraction($el)"
+        x-init="
+          if (view === 'az' && layoutTooltip.showOnLoad) {
+            $nextTick(() => {
+              requestAnimationFrame(() => {
+                $el._tippy?.show();
+              });
+            });
+          }
+        "
         class="btn"
         title="Card layout"
         :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
+        x-tooltip="layoutTooltip.message"
       >
         <Icon name="grid" class="size-5" />
       </button>

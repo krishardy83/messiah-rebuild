@@ -111,6 +111,12 @@ import Categories from "../views/majors-minors-new/categories.astro";
       open: false,
       keywords: [],
     },
+    
+    layoutTooltip: {
+      storageKey: 'ug-layout-tooltip-seen',
+      showOnLoad: false,
+      message: 'Choose your preferred layout for the program list',
+    },
 
     types: {
       major: {
@@ -172,6 +178,7 @@ import Categories from "../views/majors-minors-new/categories.astro";
     init() {
       this.view = this.getViewFromQuery();
       this.loadBookmarks();
+      this.loadLayoutTooltipPreference();
 
       fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
         .then((response) => response.json())
@@ -187,6 +194,34 @@ import Categories from "../views/majors-minors-new/categories.astro";
           this.error = `Could not fetch program data (${error.message})`;
           this.loading = false;
         });
+    },
+
+    loadLayoutTooltipPreference() {
+      try {
+        const seen = localStorage.getItem(this.layoutTooltip.storageKey) === 'true';
+        this.layoutTooltip.showOnLoad = !seen;
+      } catch {
+        this.layoutTooltip.showOnLoad = true;
+      }
+    },
+
+    markLayoutTooltipSeen() {
+      this.layoutTooltip.showOnLoad = false;
+
+      try {
+        localStorage.setItem(this.layoutTooltip.storageKey, 'true');
+      } catch {
+        // Ignore localStorage errors and keep the UI functional.
+      }
+    },
+
+    handleLayoutTooltipInteraction(element) {
+      if (!this.layoutTooltip.showOnLoad) {
+        return;
+      }
+
+      this.markLayoutTooltipSeen();
+      element?._tippy?.hide();
     },
 
     getViewFromQuery() {
