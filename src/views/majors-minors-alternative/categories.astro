@@ -46,8 +46,14 @@ import Icon from "../../components/icon.astro";
   </template>
 
   <template x-if="filters.query && filteredPrograms.direct.length > 0">
-    <h4 class="mt-4 h3">
+    <h4 class="h3 text-center">
       Programs for "<span x-text="filters.query"></span>"
+    </h4>
+  </template>
+
+  <template x-if="bookmarks.active && filters.query === ''">
+    <h4 class="h3 text-center">
+      You have <span x-text="bookmarksCount"></span> saved programs
     </h4>
   </template>
 
@@ -106,7 +112,7 @@ import Icon from "../../components/icon.astro";
         </template>
 
         <template x-if="filters.query && filteredPrograms.related.length > 0">
-          <h4 class="md:col-span-2 lg:col-span-3 mt-4 h3 !-mb-4">
+          <h4 class="md:col-span-2 lg:col-span-3 mt-4 h3 !-mb-4 text-center">
             Programs related to "<span x-text="filters.query"></span>"
           </h4>
         </template>
@@ -236,7 +242,7 @@ import Icon from "../../components/icon.astro";
             class="border-b border-b-gray-200"
             x-show="filters.query && filteredPrograms.related.length > 0"
           >
-            <td colspan="13" class="pt-8 pb-4">
+            <td colspan="13" class="pt-8 pb-4 text-center">
               <span class="h3">Programs related to "<span x-text="filters.query"></span>"</span>
             </td>
           </tr>
@@ -302,6 +308,10 @@ import Icon from "../../components/icon.astro";
       </table>
     </div>
   </template>
+
+  <div class="flex justify-center mt-8" x-show="bookmarks.active">
+    <button type="button" @click="bookmarks.active = false" class="btn btn-quaternary">Show all programs</button>
+  </div>
 
   <template x-teleport="body">
     <div
