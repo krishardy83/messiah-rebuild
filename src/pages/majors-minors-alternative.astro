@@ -354,6 +354,33 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
         .filter(Boolean);
     },
 
+    get bookmarkedRelatedPrograms() {
+      if (!this.bookmarks.active || this.bookmarks.programIds.length === 0) {
+        return [];
+      }
+
+      const bookmarkedProgramIds = new Set(this.bookmarks.programIds.map((id) => String(id)));
+      const uniqueRelatedPrograms = new Map();
+
+      this.programs.forEach((program) => {
+        if (!bookmarkedProgramIds.has(String(program.entry_id))) {
+          return;
+        }
+
+        this.getRelatedPrograms(program).forEach((relatedProgram) => {
+          const relatedProgramId = String(relatedProgram.entry_id);
+
+          if (!bookmarkedProgramIds.has(relatedProgramId)) {
+            uniqueRelatedPrograms.set(relatedProgramId, relatedProgram);
+          }
+        });
+      });
+
+      return Array.from(uniqueRelatedPrograms.values()).sort((a, b) =>
+        (a.program_name || '').localeCompare(b.program_name || ''),
+      );
+    },
+
     get filteredPrograms() {
       const query = this.filters.query.trim().toLowerCase();
       const { type, interestGroup } = this.filters;
