@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
+import Icon from "./icon.astro";
 
 interface Props extends HTMLAttributes<"section"> {
   title: string;
@@ -10,13 +11,66 @@ interface Props extends HTMLAttributes<"section"> {
 const { title, description, class: className, ...props } = Astro.props;
 ---
 
-<section class={cn("wrapper pt-12 md:pt-24 relative", className)} {...props}>
+<section
+  x-data="{
+    bookmarked: false,
+    id: '75a5c7e90a0000a91b6e96dc59fa7041',
+
+    init() {
+      this.bookmarked = this.getBookmarks().includes(this.id);
+    },
+
+    getBookmarks() {
+      try {
+        const bookmarkIds = JSON.parse(localStorage.getItem('ug-program-bookmarks'));
+
+        if (Array.isArray(bookmarkIds)) {
+          return bookmarkIds;
+        }
+      } catch {
+        return [];
+      }
+    },
+
+    toggleBookmark() {
+      this.bookmarked = !this.bookmarked;
+
+      let bookmarks = this.getBookmarks();
+
+      if (this.bookmarked) {
+        bookmarks.push(this.id);
+      } else {
+        bookmarks = bookmarks.filter((id) => id !== this.id);
+      }
+
+      localStorage.setItem('ug-program-bookmarks', JSON.stringify(bookmarks));
+    }
+  }"
+  class={cn("wrapper pt-12 md:pt-24 relative", className)}
+  {...props}
+>
   <h2 class="mb-4 font-title text-3xl lg:text-4xl text-primary-800 md:w-2/3">
     {title}
   </h2>
   <p class="font-title leading-tight text-xl md:text-2xl md:w-1/2 lg:w-2/3 text-tertiary-500">
     {description}
   </p>
+
+  <div class="flex gap-2 items-center" x-cloak>
+    <button type="button" class="btn btn-quaternary mt-4" x-show="!bookmarked" @click="toggleBookmark">
+      <Icon name="bookmark" class="size-5" />
+      Save this program
+    </button>
+  
+    <button type="button" class="btn btn-quaternary mt-4" x-show="bookmarked" title="Remove from bookmarks" @click="toggleBookmark">
+      <Icon name="bookmark-slash" class="size-5" />
+    </button>
+  
+    <a href="/majors-minors-alternative?show=bookmarks" target="_blank" rel="noopener noreferrer" type="button" class="btn btn-quaternary mt-4" x-show="bookmarked">
+      View saved programs
+      <Icon name="chevron-right" class="size-5" />
+    </a>
+  </div>
 
   <slot />
 </section>

@@ -175,6 +175,7 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
       this.view = this.getViewFromQuery();
       this.loadLayoutPreference();
       this.loadBookmarks();
+      this.loadBookmarksFromQuery();
 
       fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
         .then((response) => response.json())
@@ -190,6 +191,15 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
           this.error = `Could not fetch program data (${error.message})`;
           this.loading = false;
         });
+    },
+
+    loadBookmarksFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const show = params.get('show');
+
+      if (show === 'bookmarks') {
+        this.bookmarks.active = true;
+      }
     },
 
     loadLayoutPreference() {
