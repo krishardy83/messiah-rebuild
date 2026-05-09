@@ -46,8 +46,9 @@ import WithoutHero from "../layouts/without-hero.astro";
       loading: true,
       error: null,
       filters: {
+        fixedProgramType: 'pre_health',
         type: '',
-        id: ['theatreanddance'],
+        id: [],
       },
       open: null,
 
@@ -163,7 +164,13 @@ import WithoutHero from "../layouts/without-hero.astro";
         fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
           .then((response) => response.json())
           .then((data) => {
-            this.programs = data.items;
+            this.programs = data.items.filter((program) => {
+              if (this.filters.fixedProgramType) {
+                return this.hasType(program, this.filters.fixedProgramType);
+              }
+
+              return true;
+            });
             this.loading = false;
           })
           .catch((error) => {
@@ -217,7 +224,13 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       hasDepartmentId(program) {
-        return program.department_id.split('|').some((id) => this.filters.id.includes(id));
+        return program.department_id.split('|').some((id) => {
+          if (this.filters.id.length === 0) {
+            return true;
+          }
+
+          return this.filters.id.includes(id);
+        });
       },
 
       get filteredPrograms() {
@@ -235,7 +248,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       }
     }"
   >
-    <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
+    <div class="flex gap-x-8 gap-y-2 mb-8 flex-wrap" x-show="filteredTypes.length > 0">
       <template x-for="[key, type] in filteredTypes">
         <label
           class="text-xs flex items-center gap-2 cursor-pointer group has-[:focus-within]:outline"
