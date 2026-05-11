@@ -229,6 +229,20 @@ import Icon from "../../components/icon.astro";
         </template>
       </div>
 
+      <ul class="flex gap-x-8 gap-y-2 mb-8 flex-wrap">
+        <template x-for="[key, type] in Object.entries(types)">
+          <li class="text-xs flex items-center gap-2">
+            <span
+              x-text="type.key"
+              class="w-5 h-5 text-white rounded-full flex items-center justify-center"
+              :style="`background-color: ${type.color}`"></span>
+            <span
+              x-text="type.label"
+              class="uppercase"></span>
+          </li>
+        </template>
+      </ul>
+
       <table class="text-sm w-full" x-show="layout === 'table'">
         <thead>
           <tr class="border-b border-b-gray-300 bg-gray-100">
