@@ -14,7 +14,7 @@ const { title, description, class: className, ...props } = Astro.props;
 <section
   x-data="{
     bookmarked: false,
-    id: '75a5c7e90a0000a91b6e96dc59fa7041',
+    id: document.querySelector('meta[name=id]').content,
 
     init() {
       this.bookmarked = this.getBookmarks().includes(this.id);
