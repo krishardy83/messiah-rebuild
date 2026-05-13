@@ -51,12 +51,6 @@ import Icon from "../../components/icon.astro";
     </h4>
   </template>
 
-  <template x-if="bookmarks.active && filters.query === ''">
-    <h4 class="h3 text-center">
-      You have <span x-text="bookmarksCount"></span> saved programs
-    </h4>
-  </template>
-
   <template x-if="!loading && !error && hasFilteredPrograms">
     <div x-ref="content" class="scroll-m-28">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-show="layout === 'cards'">
@@ -99,66 +93,6 @@ import Icon from "../../components/icon.astro";
                 </template>
               </ol>
               
-              <ol class="flex gap-x-4 gap-y-2 flex-wrap mt-auto">
-                <template x-for="[key, type] in Object.entries(types)">
-                  <li x-show="hasType(program, key)" class="flex items-center gap-2 text-xs">
-                    <span x-text="type.key" class="text-white size-5 flex items-center justify-center rounded-full" :style="`background-color: ${type.color}`"></span>
-                    <span x-text="type.label" class="uppercase"></span>
-                  </li>
-                </template>
-              </ol>
-            </div>
-          </article>
-        </template>
-
-        <template x-if="bookmarks.active && filters.query === '' && bookmarkedRelatedPrograms.length > 0">
-          <h4 class="md:col-span-2 lg:col-span-3 mt-4 h3 !-mb-4 text-center max-w-xl mx-auto">
-            Based on your saved programs, we think you might be interested in the following programs:
-          </h4>
-        </template>
-
-        <template
-          x-for="program in bookmarks.active && filters.query === '' ? bookmarkedRelatedPrograms : []"
-          :key="`bookmark-related-${program.entry_id}`"
-        >
-          <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
-            <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
-
-            <button
-              type="button"
-              @click="toggleBookmark(program)"
-              class="absolute top-4 right-4 size-10 flex items-center justify-center"
-              :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
-              :class="isBookmarked(program) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 hover:bg-gray-100'"
-            >
-              <Icon name="bookmark" class="size-6" :class="isBookmarked(program) ? 'hidden' : 'block'" />
-              <Icon name="bookmark-slash" class="size-6" :class="isBookmarked(program) ? 'block' : 'hidden'" />
-            </button>
-
-            <button
-              type="button"
-              @click="open = program"
-              title="View program details"
-              class="absolute top-4 right-16 size-10 flex items-center justify-center bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100 transition-colors"
-            >
-              <Icon name="expand" class="size-6" />
-            </button>
-
-            <div class="p-4 flex-1 flex flex-col">
-            <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
-              <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
-            </h3>
-
-              <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
-                <template x-for="degree in getProgramDegrees(program)">
-                  <li
-                    x-text="degree"
-                    class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
-                  >
-                  </li>
-                </template>
-              </ol>
-
               <ol class="flex gap-x-4 gap-y-2 flex-wrap mt-auto">
                 <template x-for="[key, type] in Object.entries(types)">
                   <li x-show="hasType(program, key)" class="flex items-center gap-2 text-xs">
@@ -319,80 +253,6 @@ import Icon from "../../components/icon.astro";
 
           <tr
             class="border-b border-b-gray-200"
-            x-show="bookmarks.active && filters.query === '' && bookmarkedRelatedPrograms.length > 0"
-          >
-            <td colspan="13" class="pt-8 pb-4 text-center">
-              <span class="h3 max-w-xl mx-auto block">
-                Based on your saved programs, we think you might be interested in the following programs:
-              </span>
-            </td>
-          </tr>
-
-          <template
-            x-for="program in bookmarks.active && filters.query === '' ? bookmarkedRelatedPrograms : []"
-            :key="`table-bookmark-related-${program.entry_id}`"
-          >
-            <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors">
-              <td class="bg-gray-100 w-8 hover:bg-gray-200 transition-colors focus-within:bg-gray-200">
-                <button
-                  type="button"
-                  @click="open = program"
-                  title="View program details"
-                  class="h-full w-8 flex justify-center items-center"
-                >
-                  <Icon name="expand" class="size-5" />
-                </button>
-              </td>
-              <td class="py-2 px-4">
-                <a
-                  :href="getProgramURL(program)"
-                  x-text="program.program_name"
-                  class="text-primary-800 hover:underline cursor-pointer text-left"
-                ></a>
-              </td>
-
-              <td class="py-2 px-4">
-                <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
-                  <template x-for="degree in getProgramDegrees(program)">
-                    <span
-                      x-text="degree"
-                      class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
-                    ></span>
-                  </template>
-                </span>
-              </td>
-
-              <template x-for="[key, type] in Object.entries(types)">
-                <td class="py-2 px-4 w-8">
-                  <button
-                    x-data
-                    type="button"
-                    @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
-                    x-show="hasType(program, key)"
-                    x-text="type.key"
-                    class="w-5 h-5 text-white rounded-full flex items-center justify-center text-xs"
-                    :style="`background-color: ${type.color}`"
-                  ></button>
-                </td>
-              </template>
-
-              <td class="w-8">
-                <button
-                  type="button"
-                  @click="toggleBookmark(program)"
-                  class="size-8 flex items-center justify-center transition-colors"
-                  :title="isBookmarked(program) ? 'Remove from bookmarks' : 'Add to bookmarks'"
-                  :class="isBookmarked(program) ? 'text-primary-800' : 'text-gray-400 hover:text-primary-800'"
-                >
-                  <Icon name="bookmark" class="size-5" :class="isBookmarked(program) ? 'hidden' : 'block'" />
-                  <Icon name="bookmark-slash" class="size-5" :class="isBookmarked(program) ? 'block' : 'hidden'" />
-                </button>
-              </td>
-            </tr>
-          </template>
-
-          <tr
-            class="border-b border-b-gray-200"
             x-show="filters.query && filteredPrograms.related.length > 0"
           >
             <td colspan="13" class="pt-8 pb-4 text-center">
@@ -463,10 +323,6 @@ import Icon from "../../components/icon.astro";
       </table>
     </div>
   </template>
-
-  <div class="flex justify-center mt-8" x-show="bookmarks.active">
-    <button type="button" @click="bookmarks.active = false" class="btn btn-quaternary">Show all programs</button>
-  </div>
 
   <template x-teleport="body">
     <div

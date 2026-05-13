@@ -4,6 +4,7 @@ import Header from "../views/majors-minors-alternative/header.astro";
 import Interests from "../views/majors-minors-alternative/interests.astro";
 import Categories from "../views/majors-minors-alternative/categories.astro";
 import Filters from "../views/majors-minors-alternative/filters.astro";
+import SavedProgramsDrawer from "../views/majors-minors-alternative/saved-programs-drawer.astro";
 ---
 
 <BaseLayout
@@ -18,6 +19,7 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
     layout: 'cards',
     layoutStorageKey: 'ug-program-layout',
     open: null,
+    savedProgramsDrawerOpen: false,
   
     interestAreas: [
       {
@@ -203,7 +205,7 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
       const show = params.get('show');
 
       if (show === 'bookmarks') {
-        this.bookmarks.active = true;
+        this.savedProgramsDrawerOpen = true;
       }
     },
 
@@ -314,7 +316,19 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
     },
 
     toggleBookmarkedView() {
-      this.bookmarks.active = !this.bookmarks.active;
+      this.savedProgramsDrawerOpen = !this.savedProgramsDrawerOpen;
+    },
+
+    get bookmarkedPrograms() {
+      if (this.bookmarks.programIds.length === 0) {
+        return [];
+      }
+
+      const bookmarkedProgramIds = new Set(this.bookmarks.programIds.map((id) => String(id)));
+
+      return this.programs
+        .filter((program) => bookmarkedProgramIds.has(String(program.entry_id)))
+        .sort((a, b) => (a.program_name || '').localeCompare(b.program_name || ''));
     },
 
     getProgramURL(program) {
@@ -370,7 +384,7 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
     },
 
     get bookmarkedRelatedPrograms() {
-      if (!this.bookmarks.active || this.bookmarks.programIds.length === 0) {
+      if (this.bookmarks.programIds.length === 0) {
         return [];
       }
 
@@ -537,5 +551,6 @@ import Filters from "../views/majors-minors-alternative/filters.astro";
       <Categories />
       <Interests />
     </main>
+    <SavedProgramsDrawer />
   </div>
 </BaseLayout>
