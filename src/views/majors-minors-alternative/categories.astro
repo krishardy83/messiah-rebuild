@@ -92,15 +92,18 @@ import Icon from "../../components/icon.astro";
                   </li>
                 </template>
               </ol>
-              
-              <ol class="flex gap-x-4 gap-y-2 flex-wrap mt-auto">
+
+              <ul class="flex gap-2 flex-wrap mt-auto">
                 <template x-for="[key, type] in Object.entries(types)">
-                  <li x-show="hasType(program, key)" class="flex items-center gap-2 text-xs">
-                    <span x-text="type.key" class="text-white size-5 flex items-center justify-center rounded-full" :style="`background-color: ${type.color}`"></span>
-                    <span x-text="type.label" class="uppercase"></span>
+                  <li
+                    x-show="hasType(program, key)"
+                    x-text="type.label"
+                    class="text-white text-xs px-2 py-1 rounded-full"
+                    :style="`background-color: ${type.color}`"
+                  >
                   </li>
                 </template>
-              </ol>
+              </ul>
             </div>
           </article>
         </template>
@@ -150,14 +153,17 @@ import Icon from "../../components/icon.astro";
                 </template>
               </ol>
               
-              <ol class="flex gap-x-4 gap-y-2 flex-wrap mt-auto">
+              <ul class="flex gap-2 flex-wrap mt-auto">
                 <template x-for="[key, type] in Object.entries(types)">
-                  <li x-show="hasType(program, key)" class="flex items-center gap-2 text-xs">
-                    <span x-text="type.key" class="text-white size-5 flex items-center justify-center rounded-full" :style="`background-color: ${type.color}`"></span>
-                    <span x-text="type.label" class="uppercase"></span>
+                  <li
+                    x-show="hasType(program, key)"
+                    x-text="type.label"
+                    class="text-white text-xs px-2 py-1 rounded-full"
+                    :style="`background-color: ${type.color}`"
+                  >
                   </li>
                 </template>
-              </ol>
+              </ul>
             </div>
           </article>
         </template>
@@ -362,22 +368,21 @@ import Icon from "../../components/icon.astro";
         />
 
         <div class="p-4">
-          <h4 class="mb-2">
+          <h4 class="h3 flex items-center gap-2">
             <span
-              class="text-primary-800 font-title text-3xl font-bold mr-2"
               x-text="open?.program_name"></span>
             <span class="inline-flex gap-2 items-center">
               <template x-for="degree in getProgramDegrees(open)">
                 <span
                   x-text="degree"
-                  class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+                  class="px-1 bg-gray-200 rounded-md text-base uppercase border border-gray-300"
                 >
                 </span>
               </template>
             </span>
           </h4>
 
-          <p x-text="open?.department_name" class="mb-2"></p>
+          <p x-text="open?.department_name" class="mb-2 -mt-4"></p>
 
           <ul class="flex gap-2 items-center mb-8">
             <template x-for="[key, type] in Object.entries(types)">
@@ -396,9 +401,8 @@ import Icon from "../../components/icon.astro";
           <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
 
           <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
-            <h5 class="text-primary-800 mb-4 h3">
-              <span class="block text-xl leading-none">Programs related to</span>
-              <span x-text="open?.program_name" class="text-2xl font-bold leading-none"></span>
+            <h5 class="text-primary-800 mb-6 h3">
+              Programs related to "<span x-text="open?.program_name"></span>"
             </h5>
 
             <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
