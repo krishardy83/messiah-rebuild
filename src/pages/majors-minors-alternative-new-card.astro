@@ -1,0 +1,556 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import Header from "../views/majors-minors-alternative-new-card/header.astro";
+import Interests from "../views/majors-minors-alternative-new-card/interests.astro";
+import Categories from "../views/majors-minors-alternative-new-card/categories.astro";
+import Filters from "../views/majors-minors-alternative-new-card/filters.astro";
+import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/saved-programs-drawer.astro";
+---
+
+<BaseLayout
+  title="Undergraduate Programs"
+  description="Undergraduate Programs"
+>
+  <div x-data="{
+    programs: [],
+    loading: true,
+    error: null,
+    view: 'az',
+    layout: 'cards',
+    layoutStorageKey: 'ug-program-layout',
+    open: null,
+    savedProgramsDrawerOpen: false,
+  
+    interestAreas: [
+      {
+        title: 'Art and Design',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/art-and-performing-art/index',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/musicaltheatre_hero.jpg',
+      },
+      {
+        title: 'Business, Leadership and Innovation',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/business/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/mobile/business_administration_b.s.jpg',
+      },
+      {
+        title: 'Communication and Media',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/communication-and-media/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/communications_hero.jpg',
+      },
+      {
+        title: 'Education and Teaching',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/education-teaching/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/early_childhood_ed_hero.jpg',
+      },
+      {
+        title: 'Engineering and Innovation',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/engineering/',
+        image: 'https://www.messiah.edu/undergraduate/interest-area/engineering/_images/engineering-3.webp',
+      },
+      {
+        title: 'Finance, Analytics and Mathematics',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/finance-analytics-mathematics/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/finance_hero1.jpg',
+      },
+      {
+        title: 'Government and Law',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/politics-history-and-public-service/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/politics_hero.jpg',
+      },
+      {
+        title: 'Health, Science and Human Services',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/health-science-human-services/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/nutritionanddietetics_hero_1.jpg',
+      },
+      {
+        title: 'History, Politics and Culture',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/history-politics-culture/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/aareligion.jpg',
+      },
+      {
+        title: 'Human Behavior and Society',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/human-behavior-society-community-care/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/children_and_youth_services_hero.jpg',
+      },
+      {
+        title: 'Language',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/language/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/chinesestudies_1.jpg',
+      },
+      {
+        title: 'Faith, Ministry and Christian Leadership',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/ministry/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/cross_cultural_ministries_hero.jpg',
+      },
+      {
+        title: 'Music and Theatre',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/music-theatre-performing-arts/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/music_4.jpg',
+      },
+      {
+        title: 'Science, Health and the Natural World',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/science-health-the-natural-world/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/nutritionanddietetics_hero_1.jpg',
+      },
+      {
+        title: 'Sustainability and Environment',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/sustainability-environment-community/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/sustainability_studies_major.jpg',
+      },
+      {
+        title: 'Technology, Computing and Data',
+        url: 'https://www.messiah.edu/undergraduate/interest-area/technology-computing-data/',
+        image: 'https://www.messiah.edu/undergraduate/_images/hero/desktop/cybersecurity_hero.jpg',
+      },
+    ],
+    
+    bookmarks: {
+      active: false,
+      programIds: [],
+    },
+    
+    filters: {
+      query: '',
+      type: '',
+      interestGroup: 'all',
+    },
+
+    search: {
+      value: '',
+      open: false,
+      keywords: [],
+    },
+
+    types: {
+      major: {
+        key: 'M',
+        label:'Major',
+        color: '#273d5e',
+        description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+      },
+      minor: {
+        key: 'm',
+        label: 'Minor',
+        color: '#4d87a9',
+        description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+      },
+      concentration: {
+        key: 'C',
+        label: 'Concentration',
+        color: '#ab4e42',
+        description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+      },
+      pre_health: {
+        key: 'P',
+        label: 'Pre-Health Advising',
+        color: '#7477b8',
+        description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+      },
+      'partner_program': {
+        key: '3+',
+        label: '3+ Partner Programs',
+        color: '#84ab8b',
+        description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+      },
+      teaching_certification: {
+        key: 'T',
+        label: 'Teaching Certificate',
+        color: '#e37b65',
+        description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+      },
+      accelerated: {
+        key: 'A',
+        label: 'Accelerated',
+        color: '#DCAC42',
+        description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+      },
+      early_assurance: {
+        key: 'E',
+        label: 'Early Assurance',
+        color: '#afafaf',
+        description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+      },
+      undergrad_certificate: {
+        key: 'UC',
+        label: 'Undergrad Certificate',
+        color: '#0a0a0ab3',
+        description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+      },
+    },
+
+    init() {
+      this.view = this.getViewFromQuery();
+      this.loadLayoutPreference();
+      this.loadBookmarks();
+      this.loadBookmarksFromQuery();
+
+      fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+        .then((response) => response.json())
+        .then((data) => {
+          this.programs = data.items.filter((item) => {
+            return item.hide_on_program_listing !== 'yes';
+          });
+          this.syncBookmarksWithPrograms();
+          this.setKeywords();
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch program data (${error.message})`;
+          this.loading = false;
+        });
+    },
+
+    loadBookmarksFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const show = params.get('show');
+
+      if (show === 'bookmarks') {
+        this.savedProgramsDrawerOpen = true;
+      }
+    },
+
+    loadLayoutPreference() {
+      try {
+        const savedLayout = localStorage.getItem(this.layoutStorageKey);
+
+        if (savedLayout === 'cards' || savedLayout === 'table') {
+          this.layout = savedLayout;
+        }
+      } catch {
+        this.layout = 'cards';
+      }
+    },
+
+    saveLayoutPreference() {
+      try {
+        localStorage.setItem(this.layoutStorageKey, this.layout);
+      } catch {
+        // Ignore localStorage errors and keep the UI functional.
+      }
+    },
+
+    setLayout(nextLayout) {
+      this.layout = nextLayout === 'table' ? 'table' : 'cards';
+      this.saveLayoutPreference();
+    },
+
+    getViewFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const selectedView = params.get('view');
+
+      return selectedView === 'interest' ? 'interest' : 'az';
+    },
+
+    setView(nextView) {
+      this.view = nextView === 'interest' ? 'interest' : 'az';
+      this.open = null;
+      this.search.open = false;
+      this.updateViewQueryParam();
+    },
+
+    updateViewQueryParam() {
+      const url = new URL(window.location.href);
+
+      if (this.view === 'interest') {
+        url.searchParams.set('view', 'interest');
+      } else {
+        url.searchParams.delete('view');
+      }
+
+      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+    },
+
+    reset() {
+      this.filters.type = '';
+      this.filters.query = '';
+      this.filters.interestGroup = 'all';
+      this.bookmarks.active = false;
+      this.search.value = '';
+      this.search.open = false;
+    },
+
+    resetSearch() {
+      this.filters.query = '';
+      this.search.value = '';
+      this.search.open = false;
+    },
+
+    loadBookmarks() {
+      try {
+        const parsedBookmarkIds = JSON.parse(localStorage.getItem('ug-program-bookmarks'));
+
+        if (Array.isArray(parsedBookmarkIds)) {
+          this.bookmarks.programIds = parsedBookmarkIds;
+        }
+      } catch {
+        this.error = 'Could not load bookmarks.';
+      }
+    },
+
+    saveBookmarks() {
+      localStorage.setItem('ug-program-bookmarks', JSON.stringify(this.bookmarks.programIds));
+    },
+
+    syncBookmarksWithPrograms() {
+      const availableIds = new Set(this.programs.map((program) => String(program.entry_id)));
+      const filteredBookmarks = this.bookmarks.programIds.filter((id) => availableIds.has(id));
+
+      if (filteredBookmarks.length !== this.bookmarks.programIds.length) {
+        this.bookmarks.programIds = filteredBookmarks;
+        this.saveBookmarks();
+      }
+    },
+
+    isBookmarked(program) {
+      return this.bookmarks.programIds.includes(String(program.entry_id));
+    },
+
+    toggleBookmark(program) {
+      if (this.bookmarks.programIds.includes(program.entry_id)) {
+        this.bookmarks.programIds = this.bookmarks.programIds.filter((id) => id !== program.entry_id);
+      } else {
+        this.bookmarks.programIds = [...this.bookmarks.programIds, program.entry_id];
+      }
+
+      this.saveBookmarks();
+    },
+
+    toggleBookmarkedView() {
+      this.savedProgramsDrawerOpen = !this.savedProgramsDrawerOpen;
+    },
+
+    get bookmarkedPrograms() {
+      if (this.bookmarks.programIds.length === 0) {
+        return [];
+      }
+
+      const bookmarkedProgramIds = new Set(this.bookmarks.programIds.map((id) => String(id)));
+
+      return this.programs
+        .filter((program) => bookmarkedProgramIds.has(String(program.entry_id)))
+        .sort((a, b) => (a.program_name || '').localeCompare(b.program_name || ''));
+    },
+
+    getProgramURL(program) {
+      if (!program) {
+        return '#';
+      }
+
+      const url = new URL(location.origin);
+
+      url.pathname = program.program_url;
+
+      return url.toString();
+    },
+
+    getProgramDegrees(program) {
+      if (!program) {
+        return [];
+      }
+
+      if (program.degree !== 'none' && program.degree !== '') {
+        return program.degree.split('|');
+      }
+
+      return [];
+    },
+
+    hasType(program, type) {
+      if (program === null) {
+        return false;
+      }
+
+      if (type === '') {
+        return true;
+      }
+
+      return program[type] === 'true';
+    },
+
+    getRelatedPrograms(program) {
+      if (!program) {
+        return [];
+      }
+
+      const related = program.related_programs.split('|');
+
+      if (related.length === 0) {
+        return [];
+      }
+
+      return related
+        .map((id) => this.programs.find((p) => p.entry_id === id))
+        .filter(Boolean);
+    },
+
+    get bookmarkedRelatedPrograms() {
+      if (this.bookmarks.programIds.length === 0) {
+        return [];
+      }
+
+      const bookmarkedProgramIds = new Set(this.bookmarks.programIds.map((id) => String(id)));
+      const uniqueRelatedPrograms = new Map();
+
+      this.programs.forEach((program) => {
+        if (!bookmarkedProgramIds.has(String(program.entry_id))) {
+          return;
+        }
+
+        this.getRelatedPrograms(program).forEach((relatedProgram) => {
+          const relatedProgramId = String(relatedProgram.entry_id);
+
+          if (!bookmarkedProgramIds.has(relatedProgramId)) {
+            uniqueRelatedPrograms.set(relatedProgramId, relatedProgram);
+          }
+        });
+      });
+
+      return Array.from(uniqueRelatedPrograms.values()).sort((a, b) =>
+        (a.program_name || '').localeCompare(b.program_name || ''),
+      );
+    },
+
+    get filteredPrograms() {
+      const query = this.filters.query.trim().toLowerCase();
+      const { type, interestGroup } = this.filters;
+      const matches = { direct: [], related: [] };
+
+      this.programs.forEach((program) => {
+        const isTypeMatch = this.hasType(program, type);
+        const isNameMatch = (program.program_name || '').toLowerCase().includes(query);
+        const isKeywordMatch = (program.keywords || '')
+          .split(',')
+          .some((keyword) => keyword.toLowerCase().includes(query));
+        const isInterestGroupMatch = interestGroup === 'all' ? true : program.interest_group_name.split('|').includes(interestGroup);
+        const isBookmarkMatch = this.bookmarks.active ? this.isBookmarked(program) : true;
+
+        if (isTypeMatch && isNameMatch && isInterestGroupMatch && isBookmarkMatch) {
+          matches.direct.push(program);
+        }
+
+        if (isTypeMatch && isKeywordMatch && isInterestGroupMatch && isBookmarkMatch && !isNameMatch) {
+          matches.related.push(program);
+        }
+      });
+
+      return matches;
+    },
+
+    get hasFilteredPrograms() {
+      return this.filteredPrograms.direct.length > 0 || this.filteredPrograms.related.length > 0;
+    },
+
+    setKeywords() {
+      const keywords = new Set();
+
+      this.programs.forEach((program) => {
+        if (!program.keywords) {
+          return;
+        }
+
+        program.keywords.split(',').forEach((keyword) => {
+          keywords.add(keyword.trim().toLowerCase());
+        });
+      });
+
+      this.search.keywords = Array.from(keywords);
+    },
+
+    get filteredKeywords() {
+      const search = this.search.value.trim().toLowerCase();
+
+      return this.search.keywords.map((keyword) => {
+        const lowerKeyword = keyword.toLowerCase();
+        let score = 0;
+
+        if (lowerKeyword === search) {
+          score += 100;
+        } else if (lowerKeyword.startsWith(search)) {
+          score += 50;
+        } else if (lowerKeyword.includes(` ${search}`)) {
+          score += 30;
+        } else if (lowerKeyword.includes(search)) {
+          score += 10;
+        }
+
+        return { keyword, score };
+      })
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.keyword);
+    },
+
+    get hasFilters() {
+      return this.filters.type !== '' || this.filters.query !== '' || this.filters.interestGroup !== 'all';
+    },
+
+    get bookmarksCount() {
+      return this.bookmarks.programIds.length;
+    },
+
+    handleChange(event) {
+      this.search.value = event.target.value;
+      this.search.open = event.target.value.length > 1;
+    },
+
+    handleKeyDown(event) {
+      const available = Array.from(this.$refs.panel.querySelectorAll(`button:not([style*='display:none']):not([style*='display: none'])`));
+      const index = available.findIndex((a) => a === document.activeElement);
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+
+        if (index <= 0) {
+          available[available.length - 1]?.focus();
+        } else {
+          available[index - 1]?.focus();
+        }
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+
+        if (index === -1 || index === available.length - 1) {
+          available[0]?.focus();
+        } else {
+          available[index + 1]?.focus();
+        }
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+
+        if (available[index]) {
+          this.handleKeywordClick(available[index].textContent);
+        } else {
+          this.scrollToContent();
+          this.close();
+        }
+      } else if (document.activeElement !== this.$refs.input) {
+        this.$refs.input.focus();
+      }
+    },
+
+    handleKeywordClick(keyword) {
+      this.scrollToContent();
+
+      this.filters.query = keyword;
+      this.search.value = keyword;
+      this.close();
+    },
+
+    close() {
+      this.search.open = false;
+    },
+
+    scrollToContent() {
+      this.$refs.content?.scrollIntoView({ behavior: 'smooth' });
+    },
+  }">
+    <Header />
+
+    <Filters />
+
+    <main id="content" class="max-w-6xl mx-auto px-4 py-12">
+      <Categories />
+      <Interests />
+    </main>
+    <SavedProgramsDrawer />
+  </div>
+</BaseLayout>

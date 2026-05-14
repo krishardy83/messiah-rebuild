@@ -1,0 +1,30 @@
+<section x-show="view === 'interest'">
+  <h2 class="h3 text-center">View academic programs grouped by interest and career areas</h2>
+
+  <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <template x-for="interest in interestAreas" :key="interest.url">
+      <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors">
+        <img
+          :src="interest.image"
+          :alt="interest.title"
+          class="w-full aspect-[16/7] object-cover bg-gray-100"
+          loading="lazy"
+          decoding="async"
+          width="352"
+          height="196"
+        />
+
+        <div class="p-4">
+          <p class="text-sm text-gray-500 mb-2">I'm interested in</p>
+          <h3 class="text-primary-800 font-title text-2xl leading-none">
+            <a
+              :href="interest.url"
+              class="text-left hover:underline cursor-pointer"
+              x-text="interest.title"
+            ></a>
+          </h3>
+        </div>
+      </article>
+    </template>
+  </div>
+</section>
