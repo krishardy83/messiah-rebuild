@@ -27,6 +27,8 @@ const { title, description, class: className, ...props } = Astro.props;
         if (Array.isArray(bookmarkIds)) {
           return bookmarkIds;
         }
+        
+        return [];
       } catch {
         return [];
       }
