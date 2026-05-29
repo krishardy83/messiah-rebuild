@@ -1,0 +1,325 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<div x-data="{
+    open: false,
+    loading: true,
+    error: null,
+    programs: [],
+
+    types: {
+      major: {
+        key: 'M',
+        label:'Major',
+        color: '#273d5e',
+        description: 'Prescribed courses and requirements which lead to an undergraduate degree in that area of study.',
+      },
+      minor: {
+        key: 'm',
+        label: 'Minor',
+        color: '#4d87a9',
+        description: 'A minimum of 18 prescribed credits in a particular area of study, designed to develop deeper understanding in that discipline.',
+      },
+      concentration: {
+        key: 'C',
+        label: 'Concentration',
+        color: '#ab4e42',
+        description: 'Prescribed courses in a subdiscipline of a major or closely related discipline consisting of at least 12 and up to 36 credits.',
+      },
+      pre_health: {
+        key: 'P',
+        label: 'Pre-Health Advising',
+        color: '#7477b8',
+        description: 'Integrate with your major and have their own advisor to help you gain entrance to medical or law school.',
+      },
+      'partner_program': {
+        key: '3+',
+        label: '3+ Partner Programs',
+        color: '#84ab8b',
+        description: 'Accelerate your advanced degree by completing your B.S. or B.A. from Messiah College streamlined with additional years of study at a partner institution.',
+      },
+      teaching_certification: {
+        key: 'T',
+        label: 'Teaching Certificate',
+        color: '#e37b65',
+        description: 'Enables you to receive PA Level 1 teacher certification in numerous content areas.',
+      },
+      accelerated: {
+        key: 'A',
+        label: 'Accelerated',
+        color: '#DCAC42',
+        description: 'Enables you to earn a degree, or more than one degree, in an abbreviated amount of time.',
+      },
+      early_assurance: {
+        key: 'E',
+        label: 'Early Assurance',
+        color: '#afafaf',
+        description: 'A way for a student to guarantee a spot in graduate school early on in his or her undergraduate career.',
+      },
+      undergrad_certificate: {
+        key: 'UC',
+        label: 'Undergrad Certificate',
+        color: '#0a0a0ab3',
+        description: 'Prescribed courses in a subdiscipline totaling 12-15 credits.',
+      },
+    },
+
+    init() {
+      fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
+        .then((response) => response.json())
+        .then((data) => {
+          this.programs = data.items.filter((item) => {
+            return item.hide_on_program_listing !== 'yes';
+          });
+
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.error = `Could not fetch program data (${error.message})`;
+          this.loading = false;
+        });
+    },
+
+    get bookmarks() {
+      return this.programs
+        .filter((program) => this.$store.bookmarks.has(program.entry_id))
+        .sort((a, b) => (a.program_name || '').localeCompare(b.program_name || ''));
+    },
+
+    getProgramDegrees(program) {
+      if (!program) {
+        return [];
+      }
+
+      if (program.degree !== 'none' && program.degree !== '') {
+        return program.degree.split('|');
+      }
+
+      return [];
+    },
+
+    getProgramURL(program) {
+      if (!program) {
+        return '#';
+      }
+
+      const url = new URL(location.origin);
+
+      url.pathname = program.program_url;
+
+      return url.toString();
+    },
+
+    hasType(program, type) {
+      if (program === null) {
+        return false;
+      }
+
+      if (type === '') {
+        return true;
+      }
+
+      return program[type] === 'true';
+    },
+
+    get relatedPrograms() {
+      if (this.bookmarks.length === 0) {
+        return [];
+      }
+
+      const bookmarkedProgramIds = new Set(this.bookmarks.map((bookmark) => bookmark.entry_id));
+      const uniqueRelatedPrograms = new Map();
+
+      this.bookmarks.forEach((bookmark) => {
+        if (!bookmarkedProgramIds.has(bookmark.entry_id)) {
+          return;
+        }
+
+        const related = bookmark.related_programs.split('|');
+        
+        if (related.length === 0) {
+          return;
+        }
+          
+        related
+          .map((id) => this.programs.find((p) => p.entry_id === id))
+          .filter(Boolean)
+          .forEach((relatedProgram) => {
+            if (!bookmarkedProgramIds.has(relatedProgram.entry_id)) {
+              uniqueRelatedPrograms.set(relatedProgram.entry_id, relatedProgram);
+            }
+        });
+      });
+
+      return Array.from(uniqueRelatedPrograms.values()).sort((a, b) =>
+        (a.program_name || '').localeCompare(b.program_name || ''),
+      );
+    },
+  }"
+  @opensavedprograms.window="open = true"
+>
+  <template x-teleport="body">
+    <div
+      x-show="open"
+      style="display: none"
+      x-on:keydown.escape.prevent.stop="open = false"
+      role="dialog"
+      aria-modal="true"
+      x-id="['saved-programs-title']"
+      :aria-labelledby="$id('saved-programs-title')"
+      class="dialog"
+    >
+      <div
+        x-show="open"
+        @click="open = false"
+        x-transition.opacity.duration.300
+        class="fixed inset-0 bg-primary-800/80 z-50"
+      >
+      </div>
+
+      <div
+        x-show="open"
+        x-transition.opacity.duration.300
+        x-trap.noscroll.inert="open"
+        class="fixed top-0 right-0 bottom-0 w-full sm:max-w-3xl bg-white z-50 overflow-y-auto"
+      >
+        <!-- Close button -->
+        <div class="flex justify-end p-4">
+          <button type="button" @click="open = false" aria-label="Close saved programs drawer">
+            <Icon name="close" class="size-10" />
+          </button>
+        </div> <!-- End close button -->
+
+        <div class="px-4 pb-8">
+          <!-- Loading state -->
+          <template x-if="loading">
+            <p role="alert" class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">Loading your saved programs list, please wait...</p>
+          </template> <!-- End loading state -->
+
+          <!-- Error state -->
+          <template x-if="error">
+            <p role="alert" class="bg-red-100 border border-red-200 text-red-800 px-4 py-2" x-text="error"></p>
+          </template> <!-- End error state -->
+
+          <!-- Empty state -->
+          <template x-if="bookmarks.length === 0">
+            <p class="bg-tertiary-100 border border-tertiary-200 text-tertiary-800 px-4 py-2">
+              You have not bookmarked any programs yet. Use the bookmark button on a program card to save it here.
+            </p>
+          </template> <!-- End empty state -->
+
+          <!-- Content -->
+          <template x-if="bookmarks.length > 0">
+            <div>
+              <!-- Title -->
+              <h4 :id="$id('saved-programs-title')" class="h3 mb-6">
+                You have <span x-text="bookmarks.length"></span> saved programs
+              </h4> <!-- End title -->
+
+              <!-- Bookmarked programs grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <template x-for="bookmark in bookmarks" :key="`saved-${bookmark.entry_id}`">
+                  <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+                    <img :src="bookmark.thumbnail_small" :alt="bookmark.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
+      
+                    <div class="p-4 flex-1 flex flex-col">
+                      <h5 class="text-primary-800 font-title text-2xl leading-none mb-2">
+                        <a :href="getProgramURL(bookmark)" class="text-left hover:underline cursor-pointer" x-text="bookmark.program_name"></a>
+                      </h5>
+        
+                      <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(bookmark).length > 0">
+                        <template x-for="degree in getProgramDegrees(bookmark)">
+                          <li
+                            x-text="degree"
+                            class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
+                          >
+                          </li>
+                        </template>
+                      </ol>
+
+                      <ul class="flex gap-2 flex-wrap mt-auto">
+                        <template x-for="[key, type] in Object.entries(types)">
+                          <li
+                            x-show="hasType(bookmark, key)"
+                            x-text="type.label"
+                            class="text-white text-xs px-2 py-1 rounded-full"
+                            :style="`background-color: ${type.color}`"
+                          ></li>
+                        </template>
+                      </ul>
+                    </div>
+
+                    <footer class="flex gap-2 bg-gray-100 px-4 py-3 justify-end border-t border-gray-300">
+                      <button
+                        type="button"
+                        @click="$store.bookmarks.remove(bookmark.entry_id)"
+                        title="Remove from bookmarks"
+                      >
+                        <Icon name="bookmark-slash" class="size-6" />
+                      </button>
+                    </footer>
+                  </article>
+                </template>
+              </div> <!-- End bookmarked programs grid -->
+
+              <!-- Related programs title -->
+              <template x-if="relatedPrograms.length > 0">
+                <h4 class="mt-16 mb-6 h3">
+                  Based on your saved programs, we think you might be interested in the following programs:
+                </h4>
+              </template> <!-- End related programs title -->
+
+              <!-- Related programs grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <template x-for="program in relatedPrograms" :key="program.entry_id">
+                  <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+                    <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
+      
+                    <div class="p-4 flex-1 flex flex-col">
+                      <h5 class="text-primary-800 font-title text-2xl leading-none mb-2">
+                        <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
+                      </h5>
+        
+                      <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
+                        <template x-for="degree in getProgramDegrees(program)">
+                          <li
+                            x-text="degree"
+                            class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
+                          >
+                          </li>
+                        </template>
+                      </ol>
+
+                      <ul class="flex gap-2 flex-wrap mt-auto">
+                        <template x-for="[key, type] in Object.entries(types)">
+                          <li
+                            x-show="hasType(program, key)"
+                            x-text="type.label"
+                            class="text-white text-xs px-2 py-1 rounded-full"
+                            :style="`background-color: ${type.color}`"
+                          ></li>
+                        </template>
+                      </ul>
+                    </div>
+
+                    <footer class="flex gap-2 bg-gray-100 px-4 py-3 justify-end border-t border-gray-300">
+                      <button
+                        type="button"
+                        @click="$store.bookmarks.add(program.entry_id)"
+                        title="Add to bookmarks"
+                      >
+                        <Icon name="bookmark" class="size-6" />
+                      </button>
+                    </footer>
+                  </article>
+                </template>
+              </div> <!-- End related programs grid -->
+
+            </div>
+          </template> <!-- End content -->
+        </div>
+      </div>
+    </div>
+  </template>
+</div>

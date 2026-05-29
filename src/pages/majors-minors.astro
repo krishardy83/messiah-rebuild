@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "../layouts/base.astro";
-import Header from "../views/majors-minors-alternative-new-card/header.astro";
-import Interests from "../views/majors-minors-alternative-new-card/interests.astro";
-import Categories from "../views/majors-minors-alternative-new-card/categories.astro";
-import Filters from "../views/majors-minors-alternative-new-card/filters.astro";
-import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/saved-programs-drawer.astro";
+import Header from "../views/majors-minors/header.astro";
+import Interests from "../views/majors-minors/interests.astro";
+import Categories from "../views/majors-minors/categories.astro";
+import Filters from "../views/majors-minors/filters.astro";
+import SavedProgramsDrawer from "../views/majors-minors/saved-programs-drawer.astro";
 ---
 
 <BaseLayout
@@ -19,7 +19,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
     layout: 'cards',
     layoutStorageKey: 'ug-program-layout',
     open: null,
-    savedProgramsDrawerOpen: false,
   
     interestAreas: [
       {
@@ -106,7 +105,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
     
     bookmarks: {
       active: false,
-      programIds: [],
     },
     
     filters: {
@@ -181,8 +179,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
     init() {
       this.view = this.getViewFromQuery();
       this.loadLayoutPreference();
-      this.loadBookmarks();
-      this.loadBookmarksFromQuery();
 
       fetch('https://cascade-prod.messiah.edu/_program_data/ug-json.json')
         .then((response) => response.json())
@@ -190,7 +186,7 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
           this.programs = data.items.filter((item) => {
             return item.hide_on_program_listing !== 'yes';
           });
-          this.syncBookmarksWithPrograms();
+          this.$store.bookmarks.keepOnly(this.programs.map((program) => program.entry_id));
           this.setKeywords();
           this.loading = false;
         })
@@ -198,15 +194,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
           this.error = `Could not fetch program data (${error.message})`;
           this.loading = false;
         });
-    },
-
-    loadBookmarksFromQuery() {
-      const params = new URLSearchParams(window.location.search);
-      const show = params.get('show');
-
-      if (show === 'bookmarks') {
-        this.savedProgramsDrawerOpen = true;
-      }
     },
 
     loadLayoutPreference() {
@@ -275,62 +262,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
       this.search.open = false;
     },
 
-    loadBookmarks() {
-      try {
-        const parsedBookmarkIds = JSON.parse(localStorage.getItem('ug-program-bookmarks'));
-
-        if (Array.isArray(parsedBookmarkIds)) {
-          this.bookmarks.programIds = parsedBookmarkIds;
-        }
-      } catch {
-        this.error = 'Could not load bookmarks.';
-      }
-    },
-
-    saveBookmarks() {
-      localStorage.setItem('ug-program-bookmarks', JSON.stringify(this.bookmarks.programIds));
-    },
-
-    syncBookmarksWithPrograms() {
-      const availableIds = new Set(this.programs.map((program) => String(program.entry_id)));
-      const filteredBookmarks = this.bookmarks.programIds.filter((id) => availableIds.has(id));
-
-      if (filteredBookmarks.length !== this.bookmarks.programIds.length) {
-        this.bookmarks.programIds = filteredBookmarks;
-        this.saveBookmarks();
-      }
-    },
-
-    isBookmarked(program) {
-      return this.bookmarks.programIds.includes(String(program.entry_id));
-    },
-
-    toggleBookmark(program) {
-      if (this.bookmarks.programIds.includes(program.entry_id)) {
-        this.bookmarks.programIds = this.bookmarks.programIds.filter((id) => id !== program.entry_id);
-      } else {
-        this.bookmarks.programIds = [...this.bookmarks.programIds, program.entry_id];
-      }
-
-      this.saveBookmarks();
-    },
-
-    toggleBookmarkedView() {
-      this.savedProgramsDrawerOpen = !this.savedProgramsDrawerOpen;
-    },
-
-    get bookmarkedPrograms() {
-      if (this.bookmarks.programIds.length === 0) {
-        return [];
-      }
-
-      const bookmarkedProgramIds = new Set(this.bookmarks.programIds.map((id) => String(id)));
-
-      return this.programs
-        .filter((program) => bookmarkedProgramIds.has(String(program.entry_id)))
-        .sort((a, b) => (a.program_name || '').localeCompare(b.program_name || ''));
-    },
-
     getProgramURL(program) {
       if (!program) {
         return '#';
@@ -383,33 +314,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
         .filter(Boolean);
     },
 
-    get bookmarkedRelatedPrograms() {
-      if (this.bookmarks.programIds.length === 0) {
-        return [];
-      }
-
-      const bookmarkedProgramIds = new Set(this.bookmarks.programIds.map((id) => String(id)));
-      const uniqueRelatedPrograms = new Map();
-
-      this.programs.forEach((program) => {
-        if (!bookmarkedProgramIds.has(String(program.entry_id))) {
-          return;
-        }
-
-        this.getRelatedPrograms(program).forEach((relatedProgram) => {
-          const relatedProgramId = String(relatedProgram.entry_id);
-
-          if (!bookmarkedProgramIds.has(relatedProgramId)) {
-            uniqueRelatedPrograms.set(relatedProgramId, relatedProgram);
-          }
-        });
-      });
-
-      return Array.from(uniqueRelatedPrograms.values()).sort((a, b) =>
-        (a.program_name || '').localeCompare(b.program_name || ''),
-      );
-    },
-
     get filteredPrograms() {
       const query = this.filters.query.trim().toLowerCase();
       const { type, interestGroup } = this.filters;
@@ -422,7 +326,7 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
           .split(',')
           .some((keyword) => keyword.toLowerCase().includes(query));
         const isInterestGroupMatch = interestGroup === 'all' ? true : program.interest_group_name.split('|').includes(interestGroup);
-        const isBookmarkMatch = this.bookmarks.active ? this.isBookmarked(program) : true;
+        const isBookmarkMatch = this.bookmarks.active ? this.$store.bookmarks.has(program.entry_id) : true;
 
         if (isTypeMatch && isNameMatch && isInterestGroupMatch && isBookmarkMatch) {
           matches.direct.push(program);
@@ -482,10 +386,6 @@ import SavedProgramsDrawer from "../views/majors-minors-alternative-new-card/sav
 
     get hasFilters() {
       return this.filters.type !== '' || this.filters.query !== '' || this.filters.interestGroup !== 'all';
-    },
-
-    get bookmarksCount() {
-      return this.bookmarks.programIds.length;
     },
 
     handleChange(event) {

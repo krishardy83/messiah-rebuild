@@ -46,6 +46,75 @@ const { title, description, transparent = true } = Astro.props;
 
     <script is:inline>
       document.addEventListener("alpine:init", () => {
+        // Shared source of truth for bookmarked program ids, persisted to
+        // localStorage and reactive across every component on the page.
+        Alpine.store("bookmarks", {
+          storageKey: "ug-program-bookmarks",
+          ids: [],
+
+          init() {
+            try {
+              const stored = JSON.parse(localStorage.getItem(this.storageKey));
+
+              if (Array.isArray(stored)) {
+                this.ids = stored.map((id) => String(id));
+              }
+            } catch {
+              this.ids = [];
+            }
+          },
+
+          has(id) {
+            return this.ids.includes(String(id));
+          },
+
+          add(id) {
+            const key = String(id);
+
+            if (!this.ids.includes(key)) {
+              this.ids = [...this.ids, key];
+              this.persist();
+            }
+          },
+
+          remove(id) {
+            this.ids = this.ids.filter((existing) => existing !== String(id));
+            this.persist();
+          },
+
+          toggle(id) {
+            if (this.has(id)) {
+              this.remove(id);
+            } else {
+              this.add(id);
+            }
+          },
+
+          // Drops persisted ids that no longer exist in the given list so the
+          // store does not accumulate references to removed programs.
+          keepOnly(validIds) {
+            const valid = new Set(validIds.map((id) => String(id)));
+            const next = this.ids.filter((id) => valid.has(id));
+
+            if (next.length !== this.ids.length) {
+              this.ids = next;
+              this.persist();
+            }
+          },
+
+          get count() {
+            return this.ids.length;
+          },
+
+          persist() {
+            try {
+              localStorage.setItem(this.storageKey, JSON.stringify(this.ids));
+            } catch {
+              // Ignore write failures so the UI keeps working.
+            }
+          },
+        });
+
         Alpine.magic("tooltip", (el) => (message) => {
           let instance = tippy(el, { content: message, trigger: "manual", allowHTML: true });
 

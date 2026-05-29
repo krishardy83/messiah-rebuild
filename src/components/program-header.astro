@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from "astro/types";
 import { cn } from "../lib/utils";
 import Icon from "./icon.astro";
+import SavedProgramsDrawer from "../views/majors-minors/saved-programs-drawer.astro";
 
 interface Props extends HTMLAttributes<"section"> {
   title: string;
@@ -12,42 +13,7 @@ const { title, description, class: className, ...props } = Astro.props;
 ---
 
 <section
-  x-data="{
-    bookmarked: false,
-    id: document.querySelector('meta[name=id]').content,
-
-    init() {
-      this.bookmarked = this.getBookmarks().includes(this.id);
-    },
-
-    getBookmarks() {
-      try {
-        const bookmarkIds = JSON.parse(localStorage.getItem('ug-program-bookmarks'));
-
-        if (Array.isArray(bookmarkIds)) {
-          return bookmarkIds;
-        }
-        
-        return [];
-      } catch {
-        return [];
-      }
-    },
-
-    toggleBookmark() {
-      this.bookmarked = !this.bookmarked;
-
-      let bookmarks = this.getBookmarks();
-
-      if (this.bookmarked) {
-        bookmarks.push(this.id);
-      } else {
-        bookmarks = bookmarks.filter((id) => id !== this.id);
-      }
-
-      localStorage.setItem('ug-program-bookmarks', JSON.stringify(bookmarks));
-    }
-  }"
+  x-data="{ id: document.querySelector('meta[name=id]').content }"
   class={cn("wrapper pt-12 md:pt-24 relative", className)}
   {...props}
 >
@@ -59,20 +25,22 @@ const { title, description, class: className, ...props } = Astro.props;
   </p>
 
   <div class="flex gap-2 items-center" x-cloak>
-    <button type="button" class="btn btn-quaternary mt-4" x-show="!bookmarked" @click="toggleBookmark">
+    <button type="button" class="btn btn-quaternary mt-4" x-show="!$store.bookmarks.has(id)" @click="$store.bookmarks.add(id)">
       <Icon name="bookmark" class="size-5" />
       Save this program
     </button>
   
-    <button type="button" class="btn btn-quaternary mt-4" x-show="bookmarked" title="Remove from bookmarks" @click="toggleBookmark">
+    <button type="button" class="btn btn-quaternary mt-4" x-show="$store.bookmarks.has(id)" title="Remove from bookmarks" @click="$store.bookmarks.remove(id)">
       <Icon name="bookmark-slash" class="size-5" />
     </button>
   
-    <a href="/majors-minors-alternative?show=bookmarks" target="_blank" rel="noopener noreferrer" type="button" class="btn btn-quaternary mt-4" x-show="bookmarked">
+    <button type="button" class="btn btn-quaternary mt-4" x-show="$store.bookmarks.has(id)" @click="$dispatch('opensavedprograms')">
       View saved programs
       <Icon name="chevron-right" class="size-5" />
-    </a>
+    </button>
   </div>
+
+  <SavedProgramsDrawer />
 
   <slot />
 </section>
