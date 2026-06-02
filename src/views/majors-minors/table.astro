@@ -1,0 +1,247 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<!-- Program table mobile view -->
+<ol class="text-sm sm:hidden border border-gray-200">
+  <template x-for="program in filteredPrograms.direct" :key="program.entry_id">
+    <li class="flex border-b border-b-gray-200 last:border-b-0">
+      <button
+        type="button"
+        @click="open = program"
+        title="View program details"
+        class="w-8 bg-gray-100 flex justify-center items-center"
+      >
+        <Icon name="expand" class="size-5" />
+      </button>
+
+      <div class="p-2">
+        <div class="mb-2">
+          <a
+            :href="getProgramURL(program)"
+            x-text="program.program_name"
+            class="text-primary-800 hover:underline mr-2"
+          ></a>
+
+          <template x-for="degree in getProgramDegrees(program)">
+            <span
+              x-text="degree"
+              class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 mr-1"
+            ></span>
+          </template>
+        </div>
+
+        <div class="flex gap-2">
+          <template x-for="[key, type] in Object.entries(types)">
+            <button
+              x-data
+              type="button"
+              @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+              x-show="hasType(program, key)"
+              x-text="type.label"
+              class="text-white text-xs px-2 py-1 rounded-full"
+              :style="`background-color: ${type.color}`"
+            ></button>
+          </template>
+        </div>
+      </div>
+    </li>
+  </template>
+</ol> <!-- End program table mobile view -->
+
+<!-- Related programs mobile title -->
+<template x-if="filters.query && filteredPrograms.related.length > 0">
+  <h4 class="h3 text-center mt-8 sm:hidden">
+    Programs related to "<span x-text="filters.query"></span>"
+  </h4>
+</template> <!-- End related programs mobile title -->
+
+<!-- Related programs mobile list -->
+<ol class="text-sm sm:hidden border border-gray-200">
+  <template x-for="program in filteredPrograms.related" :key="program.entry_id">
+    <li class="flex border-b border-b-gray-200 last:border-b-0">
+      <button
+        type="button"
+        @click="open = program"
+        title="View program details"
+        class="w-8 bg-gray-100 flex justify-center items-center"
+      >
+        <Icon name="expand" class="size-5" />
+      </button>
+
+      <div class="p-2">
+        <div class="mb-2">
+          <a
+            :href="getProgramURL(program)"
+            x-text="program.program_name"
+            class="text-primary-800 hover:underline mr-2"
+          ></a>
+
+          <template x-for="degree in getProgramDegrees(program)">
+            <span
+              x-text="degree"
+              class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 mr-1"
+            ></span>
+          </template>
+        </div>
+
+        <div class="flex gap-2">
+          <template x-for="[key, type] in Object.entries(types)">
+            <button
+              x-data
+              type="button"
+              @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+              x-show="hasType(program, key)"
+              x-text="type.label"
+              class="text-white text-xs px-2 py-1 rounded-full"
+              :style="`background-color: ${type.color}`"
+            ></button>
+          </template>
+        </div>
+      </div>
+    </li>
+  </template>
+</ol> <!-- End related programs mobile list -->
+
+<!-- Program table desktop view -->
+<table class="text-sm w-full hidden sm:table" x-show="layout === 'table'">
+  <thead>
+    <tr class="border-b border-b-gray-300 bg-gray-100">
+      <th></th>
+      <th class="py-2 px-4 text-left font-title uppercase">Program</th>
+      <th class="py-2 px-4 text-left font-title uppercase">Degree</th>
+      <th class="py-2 px-4 text-left font-title uppercase" :colspan="Object.keys(types).length">Type</th>
+      <th class="py-2 w-8"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <template x-for="program in filteredPrograms.direct" :key="program.entry_id">
+      <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors">
+        <td class="bg-gray-100 w-8 hover:bg-gray-200 transition-colors focus-within:bg-gray-200">
+          <button
+            type="button"
+            @click="open = program"
+            title="View program details"
+            class="h-full w-8 flex justify-center items-center"
+          >
+            <Icon name="expand" class="size-5" />
+          </button>
+        </td>
+        <td class="p-2">
+          <a
+            :href="getProgramURL(program)"
+            x-text="program.program_name"
+            class="text-primary-800 hover:underline mr-2"
+          ></a>
+        </td>
+
+        <td class="p-2">
+          <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+            <template x-for="degree in getProgramDegrees(program)">
+              <span
+                x-text="degree"
+                class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+              ></span>
+            </template>
+          </span>
+        </td>
+
+        <template x-for="[key, type] in Object.entries(types)">
+          <td class="w-8">
+            <button
+              x-data
+              type="button"
+              @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+              x-show="hasType(program, key)"
+              x-text="type.key"
+              class="w-5 h-5 text-white rounded-full flex items-center justify-center text-xs"
+              :style="`background-color: ${type.color}`"
+            ></button>
+          </td>
+        </template>
+
+        <td class="w-8">
+          <button
+            type="button"
+            @click="$store.bookmarks.toggle(program.entry_id)"
+            class="size-8 flex items-center justify-center transition-colors"
+            :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+            :class="$store.bookmarks.has(program.entry_id) ? 'text-primary-800' : 'text-gray-400 hover:text-primary-800'"
+          >
+            <Icon name="bookmark" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
+            <Icon name="bookmark-slash" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
+          </button>
+        </td>
+      </tr>
+    </template>
+
+    <tr
+      class="border-b border-b-gray-200"
+      x-show="filters.query && filteredPrograms.related.length > 0"
+    >
+      <td colspan="13" class="pt-8 pb-4 text-center">
+        <span class="h3">Programs related to "<span x-text="filters.query"></span>"</span>
+      </td>
+    </tr>
+
+    <template x-for="program in filteredPrograms.related" :key="`table-related-${program.entry_id}`">
+      <tr class="border-b border-b-gray-200 hover:bg-gray-100 transition-colors">
+        <td class="bg-gray-100 w-8 hover:bg-gray-200 transition-colors focus-within:bg-gray-200">
+          <button
+            type="button"
+            @click="open = program"
+            title="View program details"
+            class="h-full w-8 flex justify-center items-center"
+          >
+            <Icon name="expand" class="size-5" />
+          </button>
+        </td>
+        <td class="p-2">
+          <a
+            :href="getProgramURL(program)"
+            x-text="program.program_name"
+            class="text-primary-800 hover:underline mr-2"
+          ></a>
+        </td>
+
+        <td class="p-2">
+          <span class="inline-flex gap-2" x-show="getProgramDegrees(program).length > 0">
+            <template x-for="degree in getProgramDegrees(program)">
+              <span
+                x-text="degree"
+                class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300"
+              ></span>
+            </template>
+          </span>
+        </td>
+
+        <template x-for="[key, type] in Object.entries(types)">
+          <td class="w-8">
+            <button
+              x-data
+              type="button"
+              @click="$tooltip(`<b class='block mb-2 font-title uppercase text-lg'>${type.label}</b>${type.description}`)"
+              x-show="hasType(program, key)"
+              x-text="type.key"
+              class="w-5 h-5 text-white rounded-full flex items-center justify-center text-xs"
+              :style="`background-color: ${type.color}`"
+            ></button>
+          </td>
+        </template>
+
+        <td class="w-8">
+          <button
+            type="button"
+            @click="$store.bookmarks.toggle(program.entry_id)"
+            class="size-8 flex items-center justify-center transition-colors"
+            :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+            :class="$store.bookmarks.has(program.entry_id) ? 'text-primary-800' : 'text-gray-400 hover:text-primary-800'"
+          >
+            <Icon name="bookmark" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
+            <Icon name="bookmark-slash" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
+          </button>
+        </td>
+      </tr>
+    </template>
+  </tbody>
+</table> <!-- End program table desktop view -->

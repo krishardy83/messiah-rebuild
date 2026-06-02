@@ -1,0 +1,123 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<template x-teleport="body">
+  <div
+    x-show="Boolean(open)"
+    style="display: none"
+    x-on:keydown.escape.prevent.stop="open = null"
+    role="dialog"
+    aria-modal="true"
+    x-id="['modal-title']"
+    :aria-labelledby="$id('modal-title')"
+    class="dialog"
+  >
+    <div
+      x-show="Boolean(open)"
+      @click="open = null"
+      x-transition.opacity.duration.300
+      class="fixed inset-0 bg-primary-800/80 z-50"
+    >
+    </div>
+
+    <div
+      x-show="Boolean(open)"
+      x-transition.opacity.duration.300
+      x-trap.noscroll.inert="open"
+      class="fixed top-0 right-0 bottom-0 md:w-[660px] bg-white z-50 overflow-y-auto"
+    >
+      <div class="flex justify-end p-4">
+        <button type="button" @click="open = null" aria-label="Close dialog">
+          <Icon name="close" class="size-10" />
+        </button>
+      </div>
+
+      <img
+        :src="open?.thumbnail_small"
+        :alt="open?.thumbnail_small_alt"
+        class="w-full bg-gray-200 mb-4"
+      />
+
+      <div class="p-4">
+        <h4 class="h3 flex items-center gap-2">
+          <span
+            x-text="open?.program_name"></span>
+          <span class="inline-flex gap-2 items-center">
+            <template x-for="degree in getProgramDegrees(open)">
+              <span
+                x-text="degree"
+                class="px-1 bg-gray-200 rounded-md text-base uppercase border border-gray-300"
+              >
+              </span>
+            </template>
+          </span>
+        </h4>
+
+        <p x-text="open?.department_name" class="mb-2 -mt-4"></p>
+
+        <ul class="flex gap-2 items-center mb-8">
+          <template x-for="[key, type] in Object.entries(types)">
+            <li
+              x-show="hasType(open, key)"
+              x-text="type.label"
+              class="text-white text-xs px-2 py-1 rounded-full"
+              :style="`background-color: ${type.color}`"
+            >
+            </li>
+          </template>
+        </ul>
+
+        <p x-text="open?.program_peek" class="mb-4"></p>
+
+        <div class="flex gap-2">
+          <a :href="getProgramURL(open)" class="btn btn-tertiary">Visit program page</a>
+          <button type="button" class="btn btn-quaternary" @click="$store.bookmarks.toggle(open?.entry_id)">
+            <Icon name="bookmark" class="size-5" />
+            <span x-text="!$store.bookmarks.has(open?.entry_id) ? 'Save this program' : 'Remove from bookmarks'"></span>
+          </button>
+        </div>
+
+        <div class="mt-8" x-show="getRelatedPrograms(open).length > 0">
+          <h5 class="text-primary-800 mb-6 h3">
+            Programs related to "<span x-text="open?.program_name"></span>"
+          </h5>
+
+          <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <template x-for="related in getRelatedPrograms(open)">
+              <li
+                class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden"
+              >
+                <img
+                  :src="related.thumbnail_small"
+                  :alt="related.thumbnail_small_alt"
+                  class="w-full h-32 object-cover"
+                />
+                <span class="p-2">
+                  <span x-text="related.program_name" class="block mb-2"></span>
+
+                  <span class="flex gap-2">
+                    <template x-for="[key, type] in Object.entries(types)">
+                      <span
+                        x-text="type.key"
+                        class="w-5 h-5 text-white rounded-full flex text-xs items-center justify-center mb-4"
+                        :style="`background-color: ${type.color}`"
+                        x-show="hasType(related, key)"
+                      >
+                      </span>
+                    </template>
+                  </span>
+                </span>
+                <a
+                  :href="getProgramURL(related)"
+                  class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
+                  >Read more</a
+                >
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

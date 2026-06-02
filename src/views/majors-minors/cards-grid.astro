@@ -1,0 +1,120 @@
+---
+import Icon from "../../components/icon.astro";
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8" x-show="layout === 'cards'">
+  <template x-for="program in filteredPrograms.direct" :key="program.entry_id">
+    <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+      <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
+
+      <div class="p-4 flex-1 flex flex-col">
+        <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
+          <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
+        </h3>
+
+        <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
+          <template x-for="degree in getProgramDegrees(program)">
+            <li
+              x-text="degree"
+              class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
+            >
+            </li>
+          </template>
+        </ol>
+
+        <ul class="flex gap-2 flex-wrap mt-auto">
+          <template x-for="[key, type] in Object.entries(types)">
+            <li
+              x-show="hasType(program, key)"
+              x-text="type.label"
+              class="text-white text-xs px-2 py-1 rounded-full"
+              :style="`background-color: ${type.color}`"
+            >
+            </li>
+          </template>
+      </ul>
+    </div>
+
+    <footer class="flex gap-2 bg-gray-100 px-4 py-3 justify-end border-t border-gray-300">
+      <button
+        type="button"
+        @click="$store.bookmarks.toggle(program.entry_id)"
+        :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+        :class="$store.bookmarks.has(program.entry_id) ? 'text-primary-800' : 'text-gray-600'"
+      >
+        <Icon name="bookmark" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
+        <Icon name="bookmark-slash" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
+      </button>
+
+      <button
+        type="button"
+        @click="open = program"
+        title="View program details"
+        class="text-gray-600"
+      >
+        <Icon name="expand" class="size-5" />
+      </button>
+    </footer>
+  </article>
+</template>
+
+  <template x-if="filters.query && filteredPrograms.related.length > 0">
+    <h4 class="sm:col-span-2 md:col-span-3 mt-4 h3 !-mb-4 text-center">
+      Programs related to "<span x-text="filters.query"></span>"
+    </h4>
+  </template>
+
+  <template x-for="program in filteredPrograms.related" :key="`related-${program.entry_id}`">
+    <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+      <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
+
+      <button
+        type="button"
+        @click="$store.bookmarks.toggle(program.entry_id)"
+        class="absolute top-4 right-4 size-10 flex items-center justify-center"
+        :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+        :class="$store.bookmarks.has(program.entry_id) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 hover:bg-gray-100'"
+      >
+        <Icon name="bookmark" class="size-6" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
+        <Icon name="bookmark-slash" class="size-6" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
+      </button>
+
+      <button
+        type="button"
+        @click="open = program"
+        title="View program details"
+        class="absolute top-4 right-16 size-10 flex items-center justify-center bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100 transition-colors"
+      >
+        <Icon name="expand" class="size-6" />
+      </button>
+
+      <div class="p-4 flex-1 flex flex-col">
+      <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
+        <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
+      </h3>
+
+        <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
+          <template x-for="degree in getProgramDegrees(program)">
+            <li
+              x-text="degree"
+              class="px-1 bg-gray-200 rounded-md uppercase border border-gray-300 text-sm list-item"
+            >
+            </li>
+          </template>
+        </ol>
+        
+        <ul class="flex gap-2 flex-wrap mt-auto">
+          <template x-for="[key, type] in Object.entries(types)">
+            <li
+              x-show="hasType(program, key)"
+              x-text="type.label"
+              class="text-white text-xs px-2 py-1 rounded-full"
+              :style="`background-color: ${type.color}`"
+            >
+            </li>
+          </template>
+        </ul>
+      </div>
+    </article>
+  </template>
+</div>
