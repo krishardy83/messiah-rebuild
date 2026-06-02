@@ -150,6 +150,15 @@ const { title, description, transparent = true } = Astro.props;
         });
       });
     </script>
+
+    <script
+      is:inline
+      src="https://unpkg.com/intro.js/intro.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/intro.js/introjs.css"
+    />
+
     <!-- Fancyapps -->
     <script
       is:inline
@@ -235,6 +244,8 @@ const { title, description, transparent = true } = Astro.props;
           `;
         },
       });
+
+      introJs.tour().setOption('dontShowAgain', true).start();
     </script>
   </body>
 </html>

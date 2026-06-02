@@ -73,28 +73,35 @@ import Icon from "../../components/icon.astro";
         <Icon name="close" class="size-5" />
         Reset filters
       </button>
+
+      <!-- Layout toggle buttons -->
+      <div class="flex gap-1" data-title="Choose your view" data-title="Switch between list and card view to find a format that works best for you." data-intro="Switch between list and card view to find a format that works best for you.">
+        <button
+          type="button"
+          @click="setLayout('cards');"
+          class="btn p-2 md:px-4 min-h-10"
+          title="Card layout"
+          :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
+        >
+          <Icon name="grid" class="size-5" />
+        </button>
+        <button
+          type="button"
+          @click="setLayout('table');"
+          class="btn p-2 md:px-4 min-h-10"
+          title="Table layout"
+          :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"
+        >
+          <Icon name="list" class="size-5" />
+        </button>
+      </div> <!-- End layout toggle buttons -->
+
       <button
-        type="button"
-        @click="setLayout('cards');"
-        class="btn p-2 md:px-4 min-h-10"
-        title="Card layout"
-        :class="layout === 'cards' ? 'btn-tertiary' : 'btn-white'"
-      >
-        <Icon name="grid" class="size-5" />
-      </button>
-      <button
-        type="button"
-        @click="setLayout('table');"
-        class="btn p-2 md:px-4 min-h-10"
-        title="Table layout"
-        :class="layout === 'table' ? 'btn-tertiary' : 'btn-white'"
-      >
-        <Icon name="list" class="size-5" />
-      </button>
-      <button
+        data-title="Save programs"
+        data-intro="Click the save icon on any program to add it to your saved list. Select the saved programs icon below anytime to quickly revisit your favorites."
         type="button"
         @click="$dispatch('opensavedprograms')"
-        class="btn relative p-2 md:px-4 min-h-10 btn-white hover:bg-gray-100"
+        class="btn relative h-full p-2 md:px-4 min-h-10 btn-white hover:bg-gray-100"
         :title="`Show ${$store.bookmarks.count} bookmarked ${$store.bookmarks.count === 1 ? 'program' : 'programs'}`"
       >
         <Icon name="bookmark" class="size-6" />
