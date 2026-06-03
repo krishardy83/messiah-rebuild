@@ -245,7 +245,14 @@ const { title, description, transparent = true } = Astro.props;
         },
       });
 
-      introJs.tour().setOption('dontShowAgain', true).start();
+      const tour = introJs.tour();
+
+      setTimeout(() => {
+        tour
+          .setOptions({ dontShowAgain: true })
+          .onExit(() => tour.setDontShowAgain(true))
+          .start();
+      }, 500);
     </script>
   </body>
 </html>
