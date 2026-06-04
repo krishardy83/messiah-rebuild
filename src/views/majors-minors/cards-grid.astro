@@ -4,7 +4,7 @@ import Icon from "../../components/icon.astro";
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8" x-show="layout === 'cards'">
   <template x-for="program in filteredPrograms.direct" :key="program.entry_id">
-    <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+    <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative" data-analytics="card">
       <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
 
       <div class="p-4 flex-1 flex flex-col">
@@ -41,6 +41,7 @@ import Icon from "../../components/icon.astro";
         @click="$store.bookmarks.toggle(program.entry_id)"
         :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
         :class="$store.bookmarks.has(program.entry_id) ? 'text-primary-800' : 'text-gray-600'"
+        data-analytics="save"
       >
         <Icon name="bookmark" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
         <Icon name="bookmark-slash" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
@@ -51,6 +52,7 @@ import Icon from "../../components/icon.astro";
         @click="open = program"
         title="View program details"
         class="text-gray-600"
+        data-analytics="expand"
       >
         <Icon name="expand" class="size-5" />
       </button>
@@ -65,7 +67,7 @@ import Icon from "../../components/icon.astro";
   </template>
 
   <template x-for="program in filteredPrograms.related" :key="`related-${program.entry_id}`">
-    <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative">
+    <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative" data-analytics="card">
       <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
 
       <button
@@ -74,6 +76,7 @@ import Icon from "../../components/icon.astro";
         class="absolute top-4 right-4 size-10 flex items-center justify-center"
         :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
         :class="$store.bookmarks.has(program.entry_id) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 hover:bg-gray-100'"
+        data-analytics="save"
       >
         <Icon name="bookmark" class="size-6" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
         <Icon name="bookmark-slash" class="size-6" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
@@ -84,6 +87,7 @@ import Icon from "../../components/icon.astro";
         @click="open = program"
         title="View program details"
         class="absolute top-4 right-16 size-10 flex items-center justify-center bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100 transition-colors"
+        data-analytics="expand"
       >
         <Icon name="expand" class="size-6" />
       </button>
