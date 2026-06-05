@@ -9,7 +9,7 @@ import Icon from "../../components/icon.astro";
 
       <div class="p-4 flex-1 flex flex-col">
         <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
-          <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
+          <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer after:absolute after:inset-0 after:bottom-12" x-text="program.program_name"></a>
         </h3>
 
         <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
@@ -70,32 +70,10 @@ import Icon from "../../components/icon.astro";
     <article class="flex flex-col border border-gray-300 hover:bg-gray-100 transition-colors relative" data-analytics="card">
       <img :src="program.thumbnail_small" :alt="program.thumbnail_small_alt" class="w-full aspect-[16/7] object-cover bg-gray-100" loading="lazy" decoding="async" width="352" height="196" />
 
-      <button
-        type="button"
-        @click="$store.bookmarks.toggle(program.entry_id)"
-        class="absolute top-4 right-4 size-10 flex items-center justify-center"
-        :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
-        :class="$store.bookmarks.has(program.entry_id) ? 'bg-primary-800 text-white border-primary-800' : 'bg-white text-primary-800 hover:bg-gray-100'"
-        data-analytics="save"
-      >
-        <Icon name="bookmark" class="size-6" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
-        <Icon name="bookmark-slash" class="size-6" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
-      </button>
-
-      <button
-        type="button"
-        @click="open = program"
-        title="View program details"
-        class="absolute top-4 right-16 size-10 flex items-center justify-center bg-white text-primary-800 hover:bg-gray-100 focus-visible:bg-gray-100 transition-colors"
-        data-analytics="expand"
-      >
-        <Icon name="expand" class="size-6" />
-      </button>
-
       <div class="p-4 flex-1 flex flex-col">
-      <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
-        <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
-      </h3>
+        <h3 class="text-primary-800 font-title text-2xl leading-none mb-2">
+          <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer after:absolute after:inset-0 after:bottom-12" x-text="program.program_name"></a>
+        </h3>
 
         <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
           <template x-for="degree in getProgramDegrees(program)">
@@ -106,7 +84,7 @@ import Icon from "../../components/icon.astro";
             </li>
           </template>
         </ol>
-        
+
         <ul class="flex gap-2 flex-wrap mt-auto">
           <template x-for="[key, type] in Object.entries(types)">
             <li
@@ -117,8 +95,29 @@ import Icon from "../../components/icon.astro";
             >
             </li>
           </template>
-        </ul>
-      </div>
-    </article>
+      </ul>
+    </div>
+
+    <footer class="flex gap-2 bg-gray-100 px-4 py-3 justify-end border-t border-gray-300">
+      <button
+        type="button"
+        @click="$store.bookmarks.toggle(program.entry_id)"
+        :title="$store.bookmarks.has(program.entry_id) ? 'Remove from bookmarks' : 'Add to bookmarks'"
+        :class="$store.bookmarks.has(program.entry_id) ? 'text-primary-800' : 'text-gray-600'"
+      >
+        <Icon name="bookmark" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'hidden' : 'block'" />
+        <Icon name="bookmark-slash" class="size-5" :class="$store.bookmarks.has(program.entry_id) ? 'block' : 'hidden'" />
+      </button>
+
+      <button
+        type="button"
+        @click="open = program"
+        title="View program details"
+        class="text-gray-600"
+      >
+        <Icon name="expand" class="size-5" />
+      </button>
+    </footer>
+  </article>
   </template>
 </div>

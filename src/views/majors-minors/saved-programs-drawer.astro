@@ -278,7 +278,7 @@ import Icon from "../../components/icon.astro";
       
                     <div class="p-4 flex-1 flex flex-col">
                       <h5 class="text-primary-800 font-title text-2xl leading-none mb-2">
-                        <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer" x-text="program.program_name"></a>
+                        <a :href="getProgramURL(program)" class="text-left hover:underline cursor-pointer after:absolute after:inset-0 after:bottom-12" x-text="program.program_name"></a>
                       </h5>
         
                       <ol class="inline-flex gap-2 mb-6" x-show="getProgramDegrees(program).length > 0">
