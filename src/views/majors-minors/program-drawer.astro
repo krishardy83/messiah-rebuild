@@ -86,7 +86,7 @@ import Icon from "../../components/icon.astro";
           <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <template x-for="related in getRelatedPrograms(open)">
               <li
-                class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden"
+                class="relative flex flex-col rounded-md border border-gray-300 overflow-hidden hover:bg-gray-100 transition-colors"
               >
                 <img
                   :src="related.thumbnail_small"
@@ -110,7 +110,7 @@ import Icon from "../../components/icon.astro";
                 </span>
                 <a
                   :href="getProgramURL(related)"
-                  class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold hover:underline after:absolute after:inset-0"
+                  class="mt-auto text-white bg-primary-800 py-2 px-4 uppercase font-title font-bold after:absolute after:inset-0"
                   >Read more</a
                 >
               </li>
