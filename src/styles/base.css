@@ -196,3 +196,27 @@
     @apply bg-gradient-to-tr from-tertiary-500 to-tertiary-600;
   }
 }
+
+.introjs-tooltip-header {
+  @apply px-4 pt-4;
+}
+
+.introjs-tooltip-title {
+  @apply h4;
+}
+
+.introjs-tooltiptext {
+  @apply text-sm font-sans px-4 py-2;
+}
+
+.introjs-dontShowAgain {
+  @apply font-sans px-4;
+}
+
+.introjs-disabled {
+  @apply opacity-50 pointer-events-none;
+}
+
+.introjs-tooltipbuttons {
+  @apply p-4;
+}

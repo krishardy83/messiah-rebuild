@@ -249,7 +249,11 @@ const { title, description, transparent = true } = Astro.props;
 
       setTimeout(() => {
         tour
-          .setOptions({ dontShowAgain: true })
+          .setOptions({
+            dontShowAgain: true,
+            buttonClass: 'btn btn-tertiary',
+            tooltipClass: 'bg-white rounded-none',
+          })
           .onExit(() => tour.setDontShowAgain(true))
           .start();
       }, 500);
