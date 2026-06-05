@@ -13,7 +13,6 @@ const { title, description, class: className, ...props } = Astro.props;
 ---
 
 <section
-  x-data="{ id: document.querySelector('meta[name=id]').content }"
   class={cn("wrapper pt-12 md:pt-24 relative", className)}
   {...props}
 >
@@ -24,7 +23,7 @@ const { title, description, class: className, ...props } = Astro.props;
     {description}
   </p>
 
-  <div class="flex gap-2 items-center" x-cloak>
+  <div class="flex gap-2 items-center" x-cloak x-data="{ id: document.querySelector('meta[name=id]').content }">
     <button type="button" class="btn btn-quaternary mt-4" x-show="!$store.bookmarks.has(id)" @click="$store.bookmarks.add(id)">
       <Icon name="bookmark" class="size-5" />
       Save this program
