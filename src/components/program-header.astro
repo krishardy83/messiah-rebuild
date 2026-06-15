@@ -23,7 +23,21 @@ const { title, description, class: className, ...props } = Astro.props;
     {description}
   </p>
 
-  <div class="flex gap-2 items-center" x-cloak x-data="{ id: document.querySelector('meta[name=id]').content }">
+  <div
+    class="flex gap-2 items-center"
+    x-data="{
+      get id() {
+        const parent = this.$el.closest('[data-page-id]');
+
+        if (parent) {
+          return parent.dataset.pageId;
+        }
+
+        return document.querySelector('meta[name=id]').content;
+      }
+    }"
+    x-cloak
+  >
     <button type="button" class="btn btn-quaternary mt-4" x-show="!$store.bookmarks.has(id)" @click="$store.bookmarks.add(id)">
       <Icon name="bookmark" class="size-5" />
       Save this program
