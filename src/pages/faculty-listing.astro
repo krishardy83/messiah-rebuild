@@ -72,9 +72,7 @@ import WithoutHero from "../layouts/without-hero.astro";
       },
 
       getLastName(name) {
-        const parts = name.trim().split(' ');
-
-        return parts[parts.length - 1];
+      return name.split(',')[0].trim();
       },
 
       isMatchingType(faculty) {
