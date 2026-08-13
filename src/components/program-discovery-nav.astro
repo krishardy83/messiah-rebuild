@@ -1,0 +1,74 @@
+---
+type ActiveView = "az" | "interest" | "quiz";
+
+interface Props {
+  active: ActiveView;
+}
+
+const { active } = Astro.props;
+
+const views = [
+  {
+    id: "az",
+    href: "/majors-minors-2b/",
+    eyebrow: "Search every program",
+    label: "A–Z listing",
+  },
+  {
+    id: "interest",
+    href: "/majors-minors-2c/",
+    eyebrow: "Start with a subject",
+    label: "Browse by interest",
+  },
+  {
+    id: "quiz",
+    href: "/majors-minors-quiz/",
+    eyebrow: "Get a guided match",
+    label: "Take the quiz",
+  },
+] as const;
+---
+
+<nav
+  class="relative z-20 -mt-10 px-5 sm:-mt-12 sm:px-8"
+  aria-label="Ways to explore undergraduate programs"
+>
+  <div
+    class="mx-auto grid max-w-5xl grid-cols-3 overflow-hidden border border-slate-200 bg-white shadow-xl shadow-primary-950/10"
+  >
+    {
+      views.map((view, index) => {
+        const isActive = active === view.id;
+        return (
+          <a
+            href={view.href}
+            aria-current={isActive ? "page" : undefined}
+            class:list={[
+              "group relative flex min-h-20 flex-col items-center justify-center px-2 py-4 text-center no-underline transition sm:min-h-24 sm:px-5",
+              index > 0 && "border-l border-slate-200",
+              isActive
+                ? "bg-primary-900 text-white"
+                : "bg-white text-primary-950 hover:bg-tertiary-100",
+            ]}
+          >
+            {isActive && (
+              <span class="absolute inset-x-0 top-0 h-1 bg-[#f2bd55]" aria-hidden="true" />
+            )}
+            <span
+              class:list={[
+                "hidden text-[9px] font-extrabold uppercase tracking-[.13em] sm:block",
+                isActive ? "text-[#f2bd55]" : "text-slate-500 group-hover:text-primary-700",
+              ]}
+            >
+              {view.eyebrow}
+            </span>
+            <span class="font-title text-sm font-bold leading-tight sm:mt-1 sm:text-lg lg:text-xl">
+              {view.label}
+            </span>
+            {isActive && <span class="sr-only"> (current page)</span>}
+          </a>
+        );
+      })
+    }
+  </div>
+</nav>

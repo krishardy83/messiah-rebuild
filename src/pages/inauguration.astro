@@ -1,0 +1,715 @@
+---
+import BaseLayout from "../layouts/base.astro";
+
+const visitorLinks = [
+  ["Lodging", "https://campustravel.com/university/messiah-university/"],
+  ["Local dining and activities", "https://www.messiah.edu/area/index"],
+  ["Interactive Campus Map", "https://tour.messiah.edu/campus-map/visitor"],
+  ["Parking Map", "https://www.messiah.edu/safety/_files/campus_parking_map.pdf"],
+];
+
+const featureCards = [
+  {
+    label: "Photos",
+    image: "/images/inauguration-picnic.jpg",
+    alt: "Jon and a student smiling at the Messiah University picnic",
+    href: "",
+  },
+  {
+    label: "Videos",
+    image: "/images/inauguration-pancake-night.jpg",
+    alt: "Jon serving pancakes with staff on pancake night",
+    href: "https://www.youtube.com/watch?v=KOBSSc7X1kE",
+  },
+  {
+    label: "Coverage",
+    image: "/images/inauguration-commencement.jpg",
+    alt: "Jon presenting a diploma at commencement",
+    href: "https://www.messiah.edu/news/2026/03/jon-stuckey-named-as-the-ninth-president-of-messiah-university.html",
+  },
+];
+---
+
+<BaseLayout
+  title="Celebrating the Inauguration of Jon C. Stuckey"
+  description="Celebrate the inauguration of Jon C. Stuckey, Ph.D., as Messiah University's ninth president."
+>
+  <header
+    class="inauguration-hero relative isolate -mt-32 min-h-[550px] bg-cover bg-center bg-no-repeat"
+    style="background-image: url('/images/inauguration-hero.jpg')"
+  >
+    <div
+      class="absolute inset-0 -z-10"
+      style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.08) 62%), linear-gradient(90deg, rgba(39, 61, 94, 0.72) 0%, rgba(39, 61, 94, 0.5) 58%, rgba(39, 61, 94, 0.38) 100%);"
+    >
+    </div>
+    <div
+      class="inauguration-hero-content mx-auto flex min-h-[550px] max-w-[2100px] items-end px-4 pb-10 sm:pt-32 md:items-center md:pb-4 lg:px-12"
+    >
+      <div class="relative z-10 md:w-1/2">
+        <h1
+          class="font-title text-4xl font-bold uppercase leading-tight text-white md:text-5xl lg:text-6xl"
+        >
+          Celebrating the Inauguration of
+        </h1>
+        <hr class="mb-4 mt-3 w-1/2 border-0 border-b-4 border-tertiary-300 md:border-b-8" />
+        <p
+          class="font-title text-xl font-bold uppercase leading-none text-white md:text-2xl lg:text-3xl xl:text-4xl"
+        >
+          Jon C. Stuckey, Ph.D.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <ul class="fixed right-0 top-64 z-10 hidden bg-primary-800 py-1 uppercase text-white lg:block">
+    <li>
+      <a
+        class="block px-4 py-1 text-sm hover:underline"
+        href="https://www.messiah.edu/applytoday?stky-btn">Apply</a
+      >
+    </li>
+    <li>
+      <a
+        class="block px-4 py-1 text-sm hover:underline"
+        href="https://www.messiah.edu/visit?stky-btn">Visit</a
+      >
+    </li>
+    <li>
+      <a
+        class="block px-4 py-1 text-sm hover:underline"
+        href="https://www.messiah.edu/office-of-development/index.html?stky-btn">Give</a
+      >
+    </li>
+  </ul>
+
+  <main id="content">
+    <section class="bg-gray-100 py-16" aria-labelledby="around-campus-heading">
+      <div
+        class="mx-auto max-w-7xl px-5 sm:px-8"
+        x-data="aroundCampusCarousel()"
+        x-init="start()"
+        @mouseenter="stop()"
+        @mouseleave="start()"
+        @focusin="stop()"
+        @focusout="start()"
+        @keydown.left.prevent="previous()"
+        @keydown.right.prevent="next()"
+      >
+        <div class="mb-7 flex items-end justify-between gap-6">
+          <h2
+            id="around-campus-heading"
+            class="font-title text-4xl font-bold text-primary-800 md:text-5xl"
+          >
+            Around campus
+          </h2>
+          <p class="hidden font-bold text-primary-800 sm:block" aria-hidden="true">
+            <span x-text="current + 1"></span> / <span x-text="images.length"></span>
+          </p>
+        </div>
+
+        <div
+          class="around-campus-frame relative overflow-hidden bg-primary-900"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Around campus photos"
+        >
+          <template x-for="(image, index) in images" :key="image.src">
+            <img
+              x-show="current === index"
+              x-transition.opacity.duration.300ms
+              :src="image.src"
+              :alt="image.alt"
+              class="absolute inset-0 h-full w-full object-contain"
+              style="width: 100%; height: 100%; object-fit: contain; object-position: center;"
+              :aria-hidden="current !== index"
+            />
+          </template>
+
+          <button
+            type="button"
+            class="absolute left-3 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center bg-white text-primary-800 shadow-lg transition hover:bg-[#6fa7c9] hover:text-white focus:outline-none focus:ring-4 focus:ring-white/70"
+            @click="previous()"
+            aria-label="Show previous photo"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              class="size-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m15 18-6-6 6-6"></path>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="absolute right-3 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center bg-white text-primary-800 shadow-lg transition hover:bg-[#6fa7c9] hover:text-white focus:outline-none focus:ring-4 focus:ring-white/70"
+            @click="next()"
+            aria-label="Show next photo"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              class="size-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mt-5 flex justify-center gap-3" aria-label="Choose a carousel photo">
+          <template x-for="(image, index) in images" :key="'dot-' + image.src">
+            <button
+              type="button"
+              class="size-3 rounded-full border-2 border-primary-800 transition"
+              :class="current === index ? 'bg-primary-800' : 'bg-transparent'"
+              @click="goTo(index)"
+              :aria-label="`Show photo ${index + 1}`"
+              :aria-current="current === index ? 'true' : 'false'"></button>
+          </template>
+        </div>
+        <p
+          class="sr-only"
+          aria-live="polite"
+          x-text="`Photo ${current + 1} of ${images.length}: ${images[current].alt}`"
+        >
+        </p>
+      </div>
+    </section>
+
+    <section class="py-24">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <img
+          src="/images/inauguration-theme.jpg"
+          alt=""
+          width="400"
+          height="240"
+          class="mx-auto h-auto w-full"
+          style="max-width: 400px;"
+        />
+        <p class="mx-auto mt-8 max-w-5xl text-center text-lg leading-relaxed text-slate-700">
+          The inauguration of Jon C. Stuckey, Ph.D., as Messiah University's ninth president marks
+          the beginning of a new chapter in the University's history. Centered on the theme, “Living
+          the Lord's Calling: Act Justly. Love Mercy. Walk Humbly.” (Micah 6:8), this celebration
+          reflects President Stuckey's commitment to faithful, Christ-centered leadership and
+          Messiah's enduring mission to educate students toward maturity of intellect, character and
+          Christian faith. As we gather to commemorate this significant milestone, we give thanks
+          for God's faithfulness throughout Messiah's history and look forward with hope to the
+          future He is unfolding.
+        </p>
+        <p class="mt-7 text-center">
+          <a
+            class="inline-flex min-h-12 items-center justify-center bg-[#6fa7c9] px-6 py-3 font-bold text-white transition hover:bg-primary-800"
+            href="https://www.messiah.edu/inauguration/jon-c-stuckey-ph.d"
+          >
+            Read President Stuckey's bio
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="bg-primary-800 bg-cover bg-center bg-no-repeat py-24 text-white"
+      style="background-image: url('/images/inauguration-marble-blue.png')"
+    >
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="mx-auto max-w-5xl text-center">
+          <h2 class="font-title text-4xl font-bold md:text-5xl">Inauguration Events</h2>
+          <p class="mt-5 text-lg leading-relaxed">
+            The inauguration celebration will include the formal installation of President Jon C.
+            Stuckey as Messiah University's ninth president, along with other special events for
+            delegates, invited guests and the campus community.
+          </p>
+          <a
+            class="mt-7 inline-flex min-h-12 items-center justify-center bg-white px-6 py-3 font-bold text-primary-800 transition hover:bg-[#6fa7c9] hover:text-white"
+            href="https://www.messiah.edu/inauguration/jon-c-stuckey-ph.d"
+          >
+            View the livestream
+          </a>
+        </div>
+
+        <section
+          x-data="eventCarousel()"
+          class="mx-auto mt-12 w-full max-w-7xl"
+          aria-label="Upcoming inauguration events"
+          @resize.window.debounce.150ms="setItemsPerPage()"
+          @keydown.left.window="previous()"
+          @keydown.right.window="next()"
+        >
+          <div class="mb-6 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <p class="hidden text-sm text-white md:block" aria-live="polite">
+                Showing <span x-text="firstVisibleNumber"></span>–<span x-text="lastVisibleNumber"
+                ></span>
+                of <span x-text="events.length"></span>
+              </p>
+              <div class="flex shrink-0 gap-3" aria-label="Event carousel controls">
+                <button
+                  type="button"
+                  class="flex size-11 items-center justify-center rounded-full border border-white text-white transition hover:bg-white hover:text-primary-800 disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="View previous events"
+                  :disabled="!canGoBack"
+                  @click="previous()"
+                >
+                  <svg
+                    class="size-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg
+                  >
+                </button>
+                <button
+                  type="button"
+                  class="flex size-11 items-center justify-center rounded-full border border-white text-white transition hover:bg-white hover:text-primary-800 disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="View next events"
+                  :disabled="!canGoForward"
+                  @click="next()"
+                >
+                  <svg
+                    class="size-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full overflow-hidden" role="region" aria-live="polite">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <template x-for="event in visibleEvents" :key="event.id">
+                <article class="relative flex min-w-0 items-start gap-6 bg-white p-6 pb-5">
+                  <div
+                    class="mt-1 flex size-16 shrink-0 flex-col items-center justify-center bg-primary-800 text-white"
+                    aria-hidden="true"
+                  >
+                    <span class="text-lg font-bold uppercase" x-text="getMonth(event.date)"></span>
+                    <span class="-mt-1 text-3xl font-bold" x-text="getDay(event.date)"></span>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="mb-2 font-title text-2xl font-bold uppercase text-primary-800">
+                      <template x-if="event.href">
+                        <a
+                          :href="event.href"
+                          class="underline decoration-2 underline-offset-4 transition hover:text-[#6fa7c9]"
+                          x-text="event.title"></a>
+                      </template>
+                      <template x-if="!event.href">
+                        <span x-text="event.title"></span>
+                      </template>
+                    </h3>
+                    <ul class="space-y-2 text-sm text-primary-800">
+                      <li class="flex items-start gap-2">
+                        <svg
+                          class="mt-0.5 size-5 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          ><path
+                            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path></svg
+                        >
+                        <span
+                          ><span x-text="formatDate(event.date)"></span><span x-show="event.start"
+                            >, <span x-text="event.start"></span></span
+                          ><span x-show="event.end"> – <span x-text="event.end"></span></span></span
+                        >
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg
+                          class="mt-0.5 size-5 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          ><path
+                            d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path><path
+                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path></svg
+                        >
+                        <span x-text="event.location"></span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <svg
+                          class="mt-0.5 size-5 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          ><path
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"></path></svg
+                        >
+                        <span x-text="event.cost"></span>
+                      </li>
+                    </ul>
+                  </div>
+                </article>
+              </template>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="bg-gray-100 py-12">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <h2 class="text-center font-title text-4xl font-bold text-primary-800 md:text-5xl">
+          Visitor and Delegate Information
+        </h2>
+        <p class="mx-auto mt-5 max-w-4xl text-center text-lg leading-relaxed">
+          We are pleased to welcome delegates, guests and friends to Messiah University. Whether
+          you're traveling from nearby or across the country, we've gathered helpful information to
+          assist as you plan your visit to central Pennsylvania.
+        </p>
+        <div class="mt-8 grid gap-5 md:grid-cols-2">
+          {
+            visitorLinks.map(([label, href]) => (
+              <a
+                class="flex min-h-14 items-center justify-center bg-primary-800 px-6 py-3 text-center font-bold uppercase text-white transition hover:bg-[#6fa7c9]"
+                href={href}
+              >
+                {label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gray-100 px-5 py-4 text-center italic sm:px-8">
+      <p>
+        Questions? Please email Karin Bisbee, Executive Coordinator, Office of the President, at
+        <a class="font-bold text-primary-700 underline" href="mailto:KBisbee@messiah.edu"
+          >KBisbee@messiah.edu</a
+        >.
+      </p>
+    </section>
+
+    <section
+      class="bg-cover bg-center bg-no-repeat pb-12 pt-24"
+      style="background-image: url('/images/inauguration-marble-light.png')"
+    >
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <p class="text-center font-title text-3xl text-primary-800">Living the Lord's Calling:</p>
+        <h2 class="mt-1 text-center font-title text-4xl font-bold text-primary-800 md:text-5xl">
+          Learn More About President Stuckey
+        </h2>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {
+            featureCards.map((card) => (
+              <a class="group relative block aspect-[4/3] overflow-hidden" href={card.href}>
+                <img
+                  src={card.image}
+                  alt={card.alt}
+                  class="h-full w-full object-cover transition group-hover:scale-105 group-hover:opacity-75"
+                />
+                <span class="absolute left-0 top-0 bg-primary-800/80 px-4 py-2 font-title font-bold uppercase leading-none text-white">
+                  {card.label}
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-gradient pb-36 pt-24 text-white">
+      <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2">
+        <div>
+          <h2 class="font-title text-4xl font-bold md:text-5xl">History of Messiah's Presidents</h2>
+          <p class="mt-6 text-lg leading-relaxed">
+            Messiah University has enjoyed the courageous leadership of eight visionary past
+            presidents throughout its 100+ year history. Each leader has been passionate about
+            Messiah's role in Christian higher education and worked tirelessly to recruit students,
+            raise funds, expand the physical plant, develop academic and co-curricular programs, and
+            promote church and community relations. Their challenges were different but their goals
+            were the same: to create an environment where students' lives were transformed by an
+            exceptional Christ-centered educational experience.
+          </p>
+          <a
+            class="mt-7 inline-flex min-h-12 items-center border border-white px-6 py-3 font-bold uppercase transition hover:bg-white hover:text-primary-800"
+            href="https://www.messiah.edu/office-of-the-president/past-presidents/index.html"
+            >See Past Presidents</a
+          >
+        </div>
+        <img
+          src="/images/inauguration-old-main.jpeg"
+          alt="An archival photo of Old Main from Messiah Bible College"
+          class="h-auto w-full object-contain"
+        />
+      </div>
+    </section>
+
+    <section
+      class="bg-cover bg-center bg-no-repeat py-48"
+      style="background-image: url('/images/inauguration-committee-bg.webp')"
+    >
+      <div class="mx-auto max-w-5xl px-5 text-center sm:px-8">
+        <h2 class="font-title text-4xl font-bold text-primary-800 md:text-5xl">
+          Our Appreciation to the Inauguration Committee
+        </h2>
+        <p class="mt-6 text-lg leading-relaxed">
+          The inauguration celebration would not be possible without the planning and hard work of
+          the Inauguration Committee—a collaborative and dedicated group of students,
+          administrators, educators, staff and volunteers. Thank you for making the inauguration of
+          President Stuckey such a memorable milestone for the Messiah community!
+        </p>
+
+        <h3 class="mt-10 font-title text-3xl font-bold text-primary-800">Co-chairs</h3>
+        <div class="mt-4 space-y-1">
+          <p>
+            <a class="text-primary-700 underline" href="mailto:kbisbee@messiah.edu">Karin Bisbee</a
+            >, executive coordinator, Office of the President
+          </p>
+          <p>
+            <a class="text-primary-700 underline" href="mailto:acoffey@messiah.edu">Amanda Coffey</a
+            >, chief of staff/executive VP
+          </p>
+          <p>
+            <a class="text-primary-700 underline" href="mailto:cgross@messiah.edu">Carla Gross</a>,
+            vice president of communications and external relation
+          </p>
+        </div>
+
+        <div x-data="{ expanded: true }">
+          <h3 class="mt-10 font-title text-3xl font-bold text-primary-800">Committee members</h3>
+          <div x-show="expanded" x-collapse class="mt-4 leading-relaxed">
+            <strong>Abby Book</strong>, director of alumni and parent relations<br />
+            <strong>Jody Brandt</strong>, director of conference and event services<br />
+            <strong>Ling Dinse</strong>, chair, Messiah University Community of Educators<br />
+            <strong>Sherri Hoffman</strong>, executive coordinator, communications and external
+            relations<br />
+            <strong>Kaleb Curtis</strong>, president, Student Government Association<br />
+            <strong>Abby Love</strong>, conference and event coordinator<br />
+            <strong>Kallie Petersen</strong>, administrative assistant, Office of the President<br
+            />
+            <strong>Danielle Ran</strong>, executive director of communications<br />
+            <strong>Yonette Schneider</strong>, executive coordinator, advancement events<br />
+            <strong>Kenji Kanazawa</strong>, catering manager<br />
+            <strong>Lauren Sulzbach-Oliveira</strong>, dance executive, Student Activities Board<br
+            />
+            <strong>Shari Stuckey</strong> (honorary member)<br />
+            <strong>Cathy Musser</strong> (honorary member)
+          </div>
+          <button
+            type="button"
+            class="mt-7 inline-flex min-h-12 items-center bg-primary-800 px-6 py-3 font-bold uppercase text-white transition hover:bg-primary-700"
+            @click="expanded = !expanded"
+            :aria-expanded="expanded"
+            x-text="expanded ? 'Hide Inaugural Subcommittees' : 'View All Inaugural Subcommittees'"
+          ></button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    function aroundCampusCarousel() {
+      return {
+        current: 0,
+        timer: null,
+        images: [
+          {
+            src: "/images/around-campus-classroom-portrait.jpg",
+            alt: "A professor speaking with students in a classroom",
+          },
+          {
+            src: "/images/around-campus-student-discussion.jpg",
+            alt: "Students participating in a classroom discussion",
+          },
+          {
+            src: "/images/around-campus-chalkboard.jpg",
+            alt: "A professor teaching mathematics at a chalkboard",
+          },
+          {
+            src: "/images/programs/mathematics-overview.jpg",
+            alt: "A professor working individually with a student",
+          },
+          {
+            src: "/images/programs/mathematics-hero-classroom.jpg",
+            alt: "A professor and students working together at a chalkboard",
+          },
+          {
+            src: "/images/inauguration-commencement.jpg",
+            alt: "Messiah University graduates celebrating at commencement",
+          },
+          {
+            src: "/images/around-campus-yellow-breeches.jpg",
+            alt: "Students floating on the Yellow Breeches Creek",
+          },
+        ],
+        start() {
+          this.stop();
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          this.timer = window.setInterval(() => this.next(), 6000);
+        },
+        stop() {
+          if (this.timer) window.clearInterval(this.timer);
+          this.timer = null;
+        },
+        next() {
+          this.current = (this.current + 1) % this.images.length;
+        },
+        previous() {
+          this.current = (this.current - 1 + this.images.length) % this.images.length;
+        },
+        goTo(index) {
+          this.current = index;
+        },
+      };
+    }
+
+    function eventCarousel() {
+      return {
+        currentIndex: 0,
+        itemsPerPage: 2,
+        events: [
+          {
+            id: 2,
+            date: "2026-10-10",
+            title: "Students’ Inaugural Ball",
+            start: "TBD",
+            end: "",
+            location: "Location TBD",
+            cost: "For undergraduate students only; tickets required + Sponsored by SAB",
+          },
+          {
+            id: 3,
+            date: "2026-10-13",
+            title: "Inauguration Chapel",
+            start: "9:30 a.m.",
+            end: "",
+            location: "Brubaker Auditorium",
+            cost: "For students only",
+            href: "https://www.messiah.edu/campus-ministries/pages/event-module/2026-2027-academic-year/morning-chapel-with-dr-emily-bingham1",
+          },
+          {
+            id: 4,
+            date: "2026-10-15",
+            title: "Presidential Inauguration Ceremony",
+            start: "10:00am",
+            end: "11:30am",
+            location: "Location TBD",
+            cost: "By invitation only; livestream link available",
+          },
+          {
+            id: 5,
+            date: "2026-10-15",
+            title: "Inauguration Luncheon for Delegates and Guests",
+            start: "12:00pm",
+            end: "2:00pm",
+            location: "Brubaker Auditorium",
+            cost: "Ticketed event; by invitation only",
+          },
+          {
+            id: 6,
+            date: "2026-10-15",
+            title: "Inaugural Keynote Lecture: Dr. Curt Thompson",
+            start: "7:00pm",
+            end: "",
+            location: "Parmer Hall",
+            cost: "Open to the public; no tickets required / Chapel credit will be given for Messiah students",
+            href: "https://www.google.com/",
+          },
+        ],
+        init() {
+          this.setItemsPerPage();
+        },
+        get visibleEvents() {
+          return this.events.slice(
+            this.displayStartIndex,
+            this.displayStartIndex + this.itemsPerPage,
+          );
+        },
+        get displayStartIndex() {
+          const remainder = this.events.length % this.itemsPerPage;
+          const finalPageStart = this.events.length - (remainder || this.itemsPerPage);
+
+          if (remainder && this.currentIndex >= this.events.length - this.itemsPerPage) {
+            return finalPageStart;
+          }
+
+          return this.currentIndex;
+        },
+        get canGoBack() {
+          return this.currentIndex > 0;
+        },
+        get canGoForward() {
+          return this.currentIndex + this.itemsPerPage < this.events.length;
+        },
+        get firstVisibleNumber() {
+          return this.displayStartIndex + 1;
+        },
+        get lastVisibleNumber() {
+          return Math.min(this.displayStartIndex + this.itemsPerPage, this.events.length);
+        },
+        setItemsPerPage() {
+          const previous = this.itemsPerPage;
+          this.itemsPerPage = window.innerWidth < 768 ? 1 : 2;
+          if (previous !== this.itemsPerPage)
+            this.currentIndex = Math.min(this.currentIndex, Math.max(0, this.events.length - 1));
+        },
+        next() {
+          if (this.canGoForward)
+            this.currentIndex = Math.min(
+              this.displayStartIndex + this.itemsPerPage,
+              this.events.length - 1,
+            );
+        },
+        previous() {
+          if (this.canGoBack)
+            this.currentIndex = Math.max(0, this.displayStartIndex - this.itemsPerPage);
+        },
+        parseDate(date) {
+          return new Date(date + "T12:00:00");
+        },
+        getMonth(date) {
+          return new Intl.DateTimeFormat("en-US", { month: "short" }).format(this.parseDate(date));
+        },
+        getDay(date) {
+          return new Intl.DateTimeFormat("en-US", { day: "2-digit" }).format(this.parseDate(date));
+        },
+        formatDate(date) {
+          return new Intl.DateTimeFormat("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }).format(this.parseDate(date));
+        },
+      };
+    }
+  </script>
+
+  <style>
+    .around-campus-frame {
+      height: clamp(360px, 55vw, 700px);
+    }
+
+    @media (min-width: 768px) {
+      .inauguration-hero,
+      .inauguration-hero-content {
+        min-height: 775px;
+      }
+    }
+  </style>
+</BaseLayout>

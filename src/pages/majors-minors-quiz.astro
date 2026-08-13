@@ -1,0 +1,807 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import Icon from "../components/icon.astro";
+import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
+import { programQuizAreas } from "../data/program-quiz";
+
+const quizGroups = [
+  {
+    slug: "creative",
+    title: "I like creating and sharing ideas",
+    description: "Art, design, media, music and theatre",
+    areas: [
+      {
+        slug: "art-design",
+        title: "I like creating visual experiences",
+        description: "Fine art, graphic design, digital media and art history",
+      },
+      {
+        slug: "communication-media",
+        title: "I like telling stories and connecting with audiences",
+        description: "Journalism, communication, film, writing and media",
+      },
+      {
+        slug: "music-theatre",
+        title: "I like performing and creating for the stage",
+        description: "Music, theatre, dance, composition and performance",
+      },
+    ],
+  },
+  {
+    slug: "business-technology",
+    title: "I like business, numbers and technology",
+    description: "Leadership, finance, analytics, computing and data",
+    areas: [
+      {
+        slug: "business",
+        title: "I like leading, planning and bringing ideas to life",
+        description: "Business, entrepreneurship, marketing and management",
+      },
+      {
+        slug: "finance-math",
+        title: "I like working with numbers and finding patterns",
+        description: "Finance, math, economics and analytics",
+      },
+      {
+        slug: "technology-data",
+        title: "I like building things with computers and technology",
+        description: "Computer science, coding, cybersecurity and data",
+      },
+    ],
+  },
+  {
+    slug: "problem-solving",
+    title: "I like solving problems and exploring how the world works",
+    description: "Science, engineering and the environment",
+    areas: [
+      {
+        slug: "science-natural-world",
+        title: "I like investigating how life and the natural world work",
+        description: "Biology, chemistry, physics and health science",
+      },
+      {
+        slug: "engineering",
+        title: "I like designing solutions and building what comes next",
+        description: "Engineering, robotics, infrastructure and biomedical technology",
+      },
+      {
+        slug: "sustainability",
+        title: "I like protecting the environment and strengthening communities",
+        description:
+          "Sustainability, environmental science, conservation and community development",
+      },
+    ],
+  },
+  {
+    slug: "helping",
+    title: "I like helping people learn and thrive",
+    description: "Education, health and helping professions",
+    areas: [
+      {
+        slug: "education-teaching",
+        title: "I like helping people learn and discover their potential",
+        description: "Teaching, special education, languages and arts education",
+      },
+      {
+        slug: "health-human-services",
+        title: "I like caring for people and improving well-being",
+        description: "Healthcare, wellness, psychology, nutrition and helping professions",
+      },
+    ],
+  },
+  {
+    slug: "people-society",
+    title: "I like understanding people and society",
+    description: "Behavior, government, law, history and culture",
+    areas: [
+      {
+        slug: "human-behavior",
+        title: "I like understanding behavior and supporting people",
+        description: "Psychology, sociology, social work and counseling",
+      },
+      {
+        slug: "government-law",
+        title: "I like shaping policy, pursuing justice and serving the public",
+        description: "Government, law, politics and international affairs",
+      },
+      {
+        slug: "history-culture",
+        title: "I like exploring the past, ideas and cultures",
+        description: "History, politics, religion and culture",
+      },
+    ],
+  },
+  {
+    slug: "faith-culture",
+    title: "I like exploring faith, languages and cultures",
+    description: "Ministry, Christian leadership, language and global engagement",
+    areas: [
+      {
+        slug: "faith-ministry",
+        title: "I like exploring faith and leading through service",
+        description: "Ministry, theology, Christian leadership and worship",
+      },
+      {
+        slug: "language",
+        title: "I like connecting across languages and cultures",
+        description: "Languages, literature, global studies and communication",
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Academic Program Match Quiz"
+  description="Answer three quick questions to discover Messiah University undergraduate majors, minors and academic programs that fit your interests."
+>
+  <div x-data="programMatchQuiz()" x-init="init()" class="bg-white text-slate-800">
+    <main id="content">
+      <section
+        class="relative isolate -mt-32 min-h-[650px] overflow-hidden bg-primary-950 text-white lg:min-h-[720px] xl:min-h-[760px]"
+      >
+        <img
+          src="/images/program-explorer-graduate-hero.png"
+          alt=""
+          class="absolute inset-0 -z-30 h-full w-full object-cover object-top"
+          aria-hidden="true"
+        />
+        <div
+          class="absolute inset-0 -z-20"
+          style="background: linear-gradient(90deg, rgba(13, 35, 61, 0.98) 0%, rgba(13, 35, 61, 0.9) 38%, rgba(13, 35, 61, 0.5) 70%, rgba(13, 35, 61, 0.12) 100%);"
+        >
+        </div>
+        <div
+          class="mx-auto flex min-h-[650px] max-w-7xl items-end px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
+        >
+          <div class="max-w-4xl">
+            <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-[#f2bd55]">
+              Three questions. A clearer direction.
+            </p>
+            <h1
+              class="font-title text-5xl font-bold leading-[.92] tracking-[-.035em] sm:text-6xl lg:text-7xl xl:text-8xl"
+            >
+              Find your program match.
+            </h1>
+            <p class="mt-7 max-w-2xl font-title text-xl leading-relaxed text-white/90">
+              Tell us what sparks your curiosity. We’ll connect you with academic paths built around
+              what you want to explore, create and change.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <ProgramDiscoveryNav active="quiz" />
+
+      <section
+        id="quiz"
+        class="scroll-mt-16 bg-white pb-20 pt-10 lg:pb-28 lg:pt-14"
+        aria-labelledby="quiz-heading"
+      >
+        <div class="mx-auto max-w-7xl px-5 sm:px-8">
+          <div>
+            <div class="mb-8 lg:mb-10" aria-label="Quiz progress">
+              <div class="h-1.5 overflow-hidden bg-slate-200" aria-hidden="true">
+                <div
+                  class="h-full bg-[#d29a27] transition-all duration-500"
+                  :style="`width: ${selectedPath ? 100 : area ? 75 : selectedGroup ? 42 : 12}%`"
+                >
+                </div>
+              </div>
+            </div>
+
+            <div class="min-w-0">
+              <div x-show="!selectedGroup" x-transition.opacity>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#9c6508]">
+                  Question one of three
+                </p>
+                <h2
+                  id="quiz-heading"
+                  class="mt-3 max-w-4xl font-title text-4xl font-bold leading-[1.02] tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
+                >
+                  What sounds most like you?
+                </h2>
+                <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
+                  Start with the statement that feels closest to you. There’s no wrong answer—and
+                  you can always explore another direction.
+                </p>
+
+                <div class="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                  <template x-for="(choice, index) in groups" :key="choice.slug">
+                    <button
+                      type="button"
+                      @click="selectGroup(choice.slug)"
+                      class="group flex min-h-44 items-start gap-4 border border-slate-200 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+                    >
+                      <span
+                        class="grid size-9 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
+                        x-text="String(index + 1).padStart(2, '0')"></span>
+                      <span class="flex min-h-32 flex-1 flex-col justify-between">
+                        <span
+                          class="font-title text-xl font-bold leading-tight text-primary-950"
+                          x-text="choice.title"></span>
+                        <span
+                          class="mt-3 block text-sm leading-relaxed text-slate-600"
+                          x-text="choice.description"></span>
+                        <span
+                          class="mt-auto pt-4 text-xs font-extrabold uppercase tracking-wider text-[#a3690b]"
+                          >Choose <span aria-hidden="true">→</span></span
+                        >
+                      </span>
+                    </button>
+                  </template>
+                </div>
+              </div>
+
+              <div x-show="selectedGroup && !area" x-cloak x-transition.opacity>
+                <button
+                  type="button"
+                  @click="changeGroup()"
+                  class="mb-7 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary-700"
+                >
+                  <span aria-hidden="true">←</span> Back
+                </button>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#9c6508]">
+                  Question two of three
+                </p>
+                <h2
+                  class="mt-3 max-w-4xl font-title text-4xl font-bold leading-[1.02] tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
+                >
+                  What are you most curious about?
+                </h2>
+                <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
+                  Choose the academic area you’d most like to explore right now.
+                </p>
+
+                <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  <template x-for="(choice, index) in visibleAreas" :key="choice.slug">
+                    <button
+                      type="button"
+                      @click="selectArea(choice.slug)"
+                      class="group flex min-h-44 items-start gap-4 border border-slate-200 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+                    >
+                      <span
+                        class="grid size-9 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
+                        x-text="String(index + 1).padStart(2, '0')"></span>
+                      <span class="flex min-h-32 flex-1 flex-col justify-between">
+                        <span
+                          class="font-title text-xl font-bold leading-tight text-primary-950"
+                          x-text="choice.title"></span>
+                        <span
+                          class="mt-3 block text-sm italic leading-relaxed text-slate-600"
+                          x-text="choice.description"></span>
+                        <span
+                          class="mt-auto pt-4 text-xs font-extrabold uppercase tracking-wider text-[#a3690b]"
+                          >Choose <span aria-hidden="true">→</span></span
+                        >
+                      </span>
+                    </button>
+                  </template>
+                </div>
+              </div>
+
+              <div x-show="area && !selectedPath" x-cloak x-transition.opacity>
+                <button
+                  type="button"
+                  @click="changeArea()"
+                  class="mb-7 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary-700"
+                >
+                  <span aria-hidden="true">←</span> Back
+                </button>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#9c6508]">
+                  Question three of three
+                </p>
+                <h2
+                  class="mt-3 max-w-4xl font-title text-4xl font-bold leading-[1.02] tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
+                >
+                  Which possibility sounds most like you?
+                </h2>
+                <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
+                  Within <strong x-text="area?.title"></strong>, choose the kind of work or learning
+                  that you’d be most excited to try.
+                </p>
+                <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  <template x-for="(path, index) in area?.paths || []" :key="path.prompt">
+                    <button
+                      type="button"
+                      @click="selectPath(index)"
+                      class="group flex min-h-40 items-start gap-4 border border-slate-200 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+                    >
+                      <span
+                        class="grid size-9 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
+                        x-text="String(index + 1).padStart(2, '0')"></span>
+                      <span class="flex min-h-28 flex-1 flex-col justify-between">
+                        <span
+                          class="font-title text-xl font-bold leading-tight text-primary-950"
+                          x-text="path.prompt"></span>
+                        <span
+                          class="mt-5 text-xs font-extrabold uppercase tracking-wider text-[#a3690b]"
+                          >See my matches <span aria-hidden="true">→</span></span
+                        >
+                      </span>
+                    </button>
+                  </template>
+                </div>
+              </div>
+
+              <div x-show="selectedPath" x-cloak x-transition.opacity aria-live="polite">
+                <button
+                  type="button"
+                  @click="changePath()"
+                  class="mb-7 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary-700"
+                >
+                  <span aria-hidden="true">←</span> Change your answer
+                </button>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#9c6508]">
+                  Your matches
+                </p>
+                <h2
+                  class="mt-3 font-title text-4xl font-bold leading-none text-primary-950 sm:text-5xl lg:text-6xl"
+                >
+                  Programs worth exploring.
+                </h2>
+                <p class="mt-5 max-w-4xl text-lg leading-relaxed text-slate-600">
+                  Based on your interest in <strong x-text="selectedPath?.prompt.toLowerCase()"
+                  ></strong>, these programs are a strong place to start. Save any that stand out.
+                </p>
+
+                <div
+                  class="mt-8 flex flex-wrap items-center justify-between gap-4 border-y border-slate-200 py-5"
+                >
+                  <p class="font-title text-xl font-bold text-primary-900">
+                    <span
+                      x-show="!loading"
+                      x-text="`${results.length} ${results.length === 1 ? 'match' : 'matches'}`"
+                    ></span>
+                    <span x-show="loading">Finding your matches…</span>
+                  </p>
+                  <div class="flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      @click="resetQuiz()"
+                      class="text-xs font-extrabold uppercase tracking-wider text-primary-700 underline decoration-slate-300 underline-offset-4"
+                    >
+                      Start over
+                    </button>
+                    <a
+                      href="/majors-minors-2b/"
+                      class="border border-primary-900 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-primary-900 no-underline hover:bg-primary-900 hover:text-white"
+                      >Browse A–Z</a
+                    >
+                  </div>
+                </div>
+
+                <div
+                  x-show="loading"
+                  class="grid gap-6 pt-8 md:grid-cols-2 xl:grid-cols-3"
+                  aria-label="Loading programs"
+                >
+                  <template x-for="item in 3">
+                    <div class="animate-pulse border border-slate-200">
+                      <div class="h-40 bg-slate-200"></div><div class="space-y-4 p-6">
+                        <div class="h-3 w-24 bg-slate-200"></div><div
+                          class="h-8 w-4/5 bg-slate-200"
+                        >
+                        </div><div class="h-16 bg-slate-100"></div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+
+                <div
+                  x-show="error"
+                  x-cloak
+                  class="mt-8 border-l-4 border-red-600 bg-red-50 p-6 text-red-900"
+                >
+                  <h3 class="font-title text-2xl font-bold">
+                    We couldn’t load the program details.
+                  </h3>
+                  <p class="mt-2">Please try again, or use the complete A–Z program listing.</p>
+                  <button type="button" @click="loadPrograms()" class="mt-4 font-bold underline"
+                    >Try again</button
+                  >
+                </div>
+
+                <div
+                  x-show="!loading && !error"
+                  x-cloak
+                  class="grid gap-6 pt-8 md:grid-cols-2 xl:grid-cols-3"
+                >
+                  <template x-for="program in results" :key="program.entry_id">
+                    <article
+                      class="group flex min-w-0 flex-col border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+                    >
+                      <div class="relative h-40 overflow-hidden bg-slate-200">
+                        <img
+                          :src="program.thumbnail_small"
+                          :alt="program.thumbnail_small_alt || ''"
+                          class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <button
+                          type="button"
+                          @click="$store.bookmarks.toggle(program.entry_id)"
+                          :aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name} from saved programs` : `Save ${program.program_name}`"
+                          class="absolute right-3 top-3 grid size-10 place-items-center rounded-full shadow-md transition"
+                          :class="$store.bookmarks.has(program.entry_id) ? 'bg-[#f2bd55] text-primary-950' : 'bg-white/95 text-primary-900'"
+                        >
+                          <Icon
+                            name="bookmark"
+                            class="size-5"
+                            :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
+                          />
+                        </button>
+                      </div>
+                      <div class="flex flex-1 flex-col p-6">
+                        <div
+                          class="mb-3 flex flex-wrap items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
+                        >
+                          <template
+                            x-for="programType in programTypes(program)"
+                            :key="programType.key"
+                          >
+                            <span x-text="programType.label"></span>
+                          </template>
+                        </div>
+                        <h3
+                          class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold leading-tight text-primary-950"
+                        >
+                          <a
+                            :href="programUrl(program)"
+                            class="hover:underline hover:decoration-[#f2bd55] hover:decoration-4"
+                            x-text="program.program_name"></a>
+                          <template x-for="degree in degrees(program)" :key="degree">
+                            <span
+                              class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
+                              x-text="degree"></span>
+                          </template>
+                        </h3>
+                        <div class="mb-5 mt-4 flex flex-wrap gap-1.5">
+                          <template x-for="tag in interestTags(program).slice(0, 3)" :key="tag">
+                            <span
+                              class="bg-slate-100 px-2 py-1 text-[10px] text-primary-700"
+                              x-text="tag"></span>
+                          </template>
+                        </div>
+                        <div
+                          class="mt-auto grid grid-cols-2 border-t border-slate-200 pt-4 text-[10px] font-extrabold uppercase tracking-[.08em] text-primary-900"
+                        >
+                          <button
+                            type="button"
+                            @click="showDetails(program)"
+                            class="flex items-center justify-between border-r border-slate-200 pr-3 text-left hover:text-[#9c6508]"
+                            >Quick view <span class="text-lg text-[#bd7d0d]">＋</span></button
+                          >
+                          <a
+                            :href="programUrl(program)"
+                            class="flex items-center justify-between pl-3 hover:text-[#9c6508]"
+                            >Full program <span class="text-lg text-[#bd7d0d]">→</span></a
+                          >
+                        </div>
+                      </div>
+                    </article>
+                  </template>
+                </div>
+
+                <div
+                  x-show="!loading && !error && results.length === 0"
+                  x-cloak
+                  class="mt-8 border border-slate-200 p-8 text-center"
+                >
+                  <h3 class="font-title text-3xl font-bold text-primary-950">
+                    This path is being updated.
+                  </h3>
+                  <p class="mt-2 text-slate-600">
+                    Explore the full listing while we refresh these matches.
+                  </p>
+                  <a
+                    href="/majors-minors-2b/"
+                    class="mt-5 inline-flex bg-[#f2bd55] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950 no-underline"
+                    >View all programs</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-12 bg-slate-100 py-14 lg:mt-20" aria-labelledby="more-ways-heading">
+        <div
+          class="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center"
+        >
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
+              Keep exploring
+            </p>
+            <h2
+              id="more-ways-heading"
+              class="mt-2 font-title text-3xl font-bold text-primary-950 sm:text-4xl"
+            >
+              There’s more than one way to find your fit.
+            </h2>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="/majors-minors-2c/"
+              class="inline-flex min-h-12 items-center border border-primary-900 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-900 no-underline hover:bg-primary-900 hover:text-white"
+              >Browse all interests</a
+            >
+            <a
+              href="/majors-minors-2b/"
+              class="inline-flex min-h-12 items-center bg-primary-900 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white no-underline hover:bg-primary-800"
+              >See the A–Z listing</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="next-steps"
+        class="bg-gradient-to-r from-[#11698c] to-[#0b7367] py-16 text-white"
+        aria-labelledby="next-steps-title"
+      >
+        <div class="mx-auto max-w-7xl px-5 sm:px-8">
+          <p class="text-xs font-bold uppercase tracking-[.18em] text-white">Your next step</p>
+          <h2 id="next-steps-title" class="mt-3 font-title text-4xl leading-tight md:text-5xl">
+            See where a Messiah education could take you.
+          </h2>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a
+              class="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#e5ae3a] px-5 py-3 font-bold text-primary-900 transition hover:-translate-y-0.5 hover:bg-[#d59e2b]"
+              href="/visit">Plan a visit</a
+            >
+            <a
+              class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
+              href="https://www.messiah.edu/applytoday">Apply to Messiah</a
+            >
+            <a
+              class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
+              href="https://www.messiah.edu/undergraduate-admissions/request-more-information/request-information"
+              >Request information</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <template x-if="openProgram">
+      <div class="fixed inset-0 z-[100]" @keydown.escape.window="closeDetails()">
+        <button
+          type="button"
+          class="absolute inset-0 bg-primary-950/75"
+          @click="closeDetails()"
+          aria-label="Close program details"></button>
+        <section
+          class="absolute inset-y-0 right-0 w-full max-w-2xl overflow-y-auto bg-white shadow-2xl"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="`${openProgram?.program_name} quick view`"
+        >
+          <div class="relative h-52 overflow-hidden bg-slate-200 sm:h-64">
+            <img
+              :src="openProgram?.thumbnail_small"
+              :alt="openProgram?.thumbnail_small_alt || ''"
+              class="h-full w-full object-cover"
+            />
+            <button
+              type="button"
+              @click="closeDetails()"
+              class="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white text-2xl text-primary-950 shadow"
+              aria-label="Close program details">×</button
+            >
+          </div>
+          <div class="p-6 sm:p-10">
+            <div
+              class="flex flex-wrap gap-2 text-[10px] font-extrabold uppercase tracking-wider text-primary-700"
+            >
+              <template x-for="programType in programTypes(openProgram)" :key="programType.key"
+                ><span x-text="programType.label"></span></template
+              >
+            </div>
+            <h2
+              class="mt-3 flex flex-wrap items-center gap-3 font-title text-4xl font-bold leading-tight text-primary-950 sm:text-5xl"
+            >
+              <span x-text="openProgram?.program_name"></span>
+              <template x-for="degree in degrees(openProgram)" :key="degree"
+                ><span
+                  class="bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase tracking-wider text-white"
+                  x-text="degree"></span></template
+              >
+            </h2>
+            <p
+              class="mt-6 text-lg leading-relaxed text-slate-600"
+              x-text="openProgram?.program_peek"
+            >
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a
+                :href="programUrl(openProgram)"
+                class="inline-flex min-h-12 items-center gap-3 bg-[#f2bd55] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950 no-underline"
+                >Explore full program <span class="text-lg">→</span></a
+              >
+              <button
+                type="button"
+                @click="$store.bookmarks.toggle(openProgram.entry_id)"
+                class="inline-flex min-h-12 items-center gap-3 border border-slate-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                ><Icon name="bookmark" class="size-5" /><span
+                  x-text="$store.bookmarks.has(openProgram?.entry_id) ? 'Program saved' : 'Save program'"
+                ></span></button
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+    </template>
+  </div>
+
+  <script is:inline define:vars={{ quizAreas: programQuizAreas, quizGroups }}>
+    window.programMatchQuiz = function () {
+      return {
+        endpoint: "https://cascade-prod.messiah.edu/_program_data/ug-json.json",
+        areas: quizAreas,
+        groups: quizGroups,
+        selectedGroup: "",
+        selectedArea: "",
+        pathIndex: null,
+        programs: [],
+        loading: true,
+        error: "",
+        openProgram: null,
+        types: [
+          { key: "major", label: "Major" },
+          { key: "minor", label: "Minor" },
+          { key: "concentration", label: "Concentration" },
+          { key: "pre_health", label: "Pre-health advising" },
+          { key: "teaching_certification", label: "Teaching certification" },
+          { key: "accelerated", label: "Accelerated" },
+          { key: "partner_program", label: "3+ partner program" },
+          { key: "early_assurance", label: "Early assurance" },
+          { key: "undergrad_certificate", label: "Undergraduate certificate" },
+        ],
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const group = params.get("group") || "";
+          const area = params.get("area") || "";
+          const path = Number(params.get("path"));
+          if (this.areas.some((item) => item.slug === area)) {
+            const parentGroup = this.groups.find((item) =>
+              item.areas.some((choice) => choice.slug === area),
+            );
+            this.selectedGroup = parentGroup?.slug || "";
+            this.selectedArea = area;
+            if (Number.isInteger(path) && path >= 0 && path < this.area.paths.length)
+              this.pathIndex = path;
+          } else if (this.groups.some((item) => item.slug === group)) {
+            this.selectedGroup = group;
+          }
+          this.loadPrograms();
+        },
+        async loadPrograms() {
+          this.loading = true;
+          this.error = "";
+          try {
+            const response = await fetch(this.endpoint);
+            if (!response.ok) throw new Error(`The server returned ${response.status}.`);
+            const data = await response.json();
+            this.programs = (data.items || []).filter(
+              (program) => program.hide_on_program_listing !== "yes",
+            );
+            this.$store.bookmarks.keepOnly(this.programs.map((program) => program.entry_id));
+          } catch (error) {
+            this.error = error instanceof Error ? error.message : "Please try again in a moment.";
+          } finally {
+            this.loading = false;
+          }
+        },
+        get area() {
+          return this.areas.find((item) => item.slug === this.selectedArea) || null;
+        },
+        get groupChoice() {
+          return this.groups.find((item) => item.slug === this.selectedGroup) || null;
+        },
+        get visibleAreas() {
+          if (!this.groupChoice) return [];
+          return this.groupChoice.areas
+            .map((choice) => {
+              const area = this.areas.find((item) => item.slug === choice.slug);
+              return area ? { ...area, ...choice } : null;
+            })
+            .filter(Boolean);
+        },
+        get selectedPath() {
+          return this.area && this.pathIndex !== null
+            ? this.area.paths[this.pathIndex] || null
+            : null;
+        },
+        get results() {
+          if (!this.selectedPath) return [];
+          return this.selectedPath.ids
+            .map((id) => this.programs.find((program) => String(program.entry_id) === id))
+            .filter(Boolean);
+        },
+        selectGroup(slug) {
+          this.selectedGroup = slug;
+          this.selectedArea = "";
+          this.pathIndex = null;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        selectArea(slug) {
+          if (!this.visibleAreas.some((area) => area.slug === slug)) return;
+          this.selectedArea = slug;
+          this.pathIndex = null;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        selectPath(index) {
+          this.pathIndex = index;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        changeArea() {
+          this.selectedArea = "";
+          this.pathIndex = null;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        changeGroup() {
+          this.selectedGroup = "";
+          this.selectedArea = "";
+          this.pathIndex = null;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        changePath() {
+          this.pathIndex = null;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        resetQuiz() {
+          this.changeGroup();
+        },
+        syncUrl() {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("group");
+          url.searchParams.delete("area");
+          url.searchParams.delete("path");
+          if (this.selectedGroup) url.searchParams.set("group", this.selectedGroup);
+          if (this.selectedArea) url.searchParams.set("area", this.selectedArea);
+          if (this.pathIndex !== null) url.searchParams.set("path", String(this.pathIndex));
+          window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+        },
+        scrollToQuiz() {
+          this.$nextTick(() =>
+            document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth", block: "start" }),
+          );
+        },
+        showDetails(program) {
+          this.openProgram = program;
+          document.documentElement.style.overflow = "hidden";
+        },
+        closeDetails() {
+          this.openProgram = null;
+          document.documentElement.style.overflow = "";
+        },
+        programUrl(program) {
+          const path = String(program?.program_url || program?.url_slug || "").replace(/^\/+/, "");
+          return path ? `/${path}` : "#";
+        },
+        degrees(program) {
+          if (!program?.degree || program.degree === "none") return [];
+          return program.degree.split("|").filter(Boolean);
+        },
+        programTypes(program) {
+          return program ? this.types.filter((item) => program[item.key] === "true") : [];
+        },
+        interestTags(program) {
+          return (program?.interest_group_name || "")
+            .split("|")
+            .map((tag) => tag.trim())
+            .filter(Boolean);
+        },
+      };
+    };
+  </script>
+</BaseLayout>

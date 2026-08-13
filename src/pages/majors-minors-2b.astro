@@ -1,0 +1,831 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import Icon from "../components/icon.astro";
+import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
+---
+
+<BaseLayout
+  title="Majors, Minors and Programs"
+  description="Find a Messiah University undergraduate major, minor, concentration or accelerated program that fits your interests and goals."
+>
+  <div x-data="programExplorer()" x-init="init()" class="bg-white text-slate-800">
+    <main id="content">
+      <section
+        class="relative isolate -mt-32 min-h-[650px] overflow-hidden bg-primary-950 text-white lg:min-h-[720px] xl:min-h-[760px]"
+      >
+        <img
+          src="https://www.messiah.edu/undergraduate/interest-area/science-health-the-natural-world/_images/science.webp"
+          alt=""
+          class="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+          aria-hidden="true"
+        />
+        <div
+          class="absolute inset-0 -z-20"
+          style="background: linear-gradient(90deg, rgba(13, 35, 61, 0.98) 0%, rgba(13, 35, 61, 0.9) 36%, rgba(13, 35, 61, 0.48) 68%, rgba(13, 35, 61, 0.08) 100%);"
+        >
+        </div>
+        <div
+          class="mx-auto flex min-h-[650px] max-w-7xl items-end px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
+        >
+          <div>
+            <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-[#f2bd55]">
+              Majors, minors, and programs
+            </p>
+            <h1
+              class="font-title text-5xl font-bold leading-[.92] tracking-[-.035em] sm:text-6xl lg:text-7xl xl:text-8xl"
+            >
+              Undergraduate Programs
+            </h1>
+            <p class="mt-7 max-w-xl font-title text-xl leading-relaxed text-white/85">
+              Explore 160+ ways to turn what you care about into a meaningful career—and a life of
+              purpose.
+            </p>
+
+            <form
+              @submit.prevent="goToFinder()"
+              class="mt-7 flex max-w-2xl items-stretch bg-white text-slate-900 shadow-2xl shadow-black/25"
+            >
+              <Icon name="search" class="ml-5 mt-5 size-6 shrink-0 text-primary-700" />
+              <label class="sr-only" for="hero-program-search"
+                >Search programs, interests, or careers</label
+              >
+              <input
+                id="hero-program-search"
+                x-model.debounce.200ms="query"
+                @input="shownCount = pageSize; syncUrl()"
+                type="search"
+                autocomplete="off"
+                placeholder="Try “physical therapy” or “design”"
+                class="min-w-0 flex-1 border-0 px-4 py-5 text-base outline-none placeholder:text-slate-500 focus:ring-0"
+              />
+              <button
+                type="submit"
+                class="grid w-16 shrink-0 place-items-center bg-[#f2bd55] text-2xl text-primary-950 transition hover:bg-[#ffd06c]"
+                aria-label="View search results">→</button
+              >
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <ProgramDiscoveryNav active="az" />
+
+      <section id="program-finder" class="scroll-mt-20 bg-white py-20 lg:py-28" aria-live="polite">
+        <div class="mx-auto max-w-7xl px-5 sm:px-8">
+          <div class="mb-12">
+            <div>
+              <p class="mb-3 text-xs font-extrabold uppercase tracking-[.2em] text-primary-700">
+                Program finder
+              </p>
+              <h2
+                class="font-title text-4xl font-bold leading-none tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
+              >
+                Build your shortlist.
+              </h2>
+              <p class="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+                Search the complete undergraduate catalog. Save the programs that stand out, then
+                come back when you’re ready to compare.
+              </p>
+            </div>
+          </div>
+
+          <form
+            @submit.prevent
+            class="border border-slate-200 bg-white shadow-xl shadow-primary-900/5"
+          >
+            <div class="grid lg:grid-cols-[1.6fr_.8fr]">
+              <label
+                class="relative flex min-h-20 items-center border-b border-slate-200 lg:border-b-0 lg:border-r"
+              >
+                <span class="sr-only">Search programs</span>
+                <Icon name="search" class="ml-6 size-6 shrink-0 text-primary-700" />
+                <input
+                  x-model.debounce.200ms="query"
+                  @input="shownCount = pageSize; syncUrl()"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="Search a program, interest, or career"
+                  class="min-w-0 flex-1 border-0 px-4 py-6 text-base outline-none focus:ring-0 sm:text-lg"
+                />
+                <button
+                  x-show="query"
+                  x-cloak
+                  type="button"
+                  @click="query = ''; shownCount = pageSize; syncUrl()"
+                  class="mr-5 grid size-9 place-items-center rounded-full bg-slate-100 text-slate-500"
+                  aria-label="Clear search"><Icon name="close" class="size-4" /></button
+                >
+              </label>
+              <label class="px-6 py-3">
+                <span
+                  class="block text-[10px] font-extrabold uppercase tracking-[.12em] text-slate-500"
+                  >Interest area</span
+                >
+                <select
+                  x-model="interest"
+                  @change="shownCount = pageSize; syncUrl()"
+                  class="select mt-1 w-full border-0 bg-transparent px-0 py-2 font-bold text-primary-900 outline-none focus:ring-0"
+                >
+                  <option value="">All interest areas</option>
+                  <template x-for="option in availableInterests" :key="option">
+                    <option :value="option" x-text="option"></option>
+                  </template>
+                </select>
+              </label>
+            </div>
+
+            <div
+              class="flex gap-2 overflow-x-auto border-t border-slate-200 bg-[#f7f8f6] px-5 py-4"
+            >
+              <button
+                type="button"
+                @click="setType('')"
+                :class="type === '' ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-700'"
+                class="shrink-0 rounded-full border px-4 py-2 text-xs transition"
+                >All programs</button
+              >
+              <template x-for="option in types" :key="option.key">
+                <button
+                  type="button"
+                  @click="setType(option.key)"
+                  :class="type === option.key ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-700'"
+                  class="shrink-0 rounded-full border px-4 py-2 text-xs transition"
+                  x-text="option.filterLabel || option.label"></button>
+              </template>
+            </div>
+          </form>
+
+          <div
+            class="flex min-h-24 flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <p class="text-sm text-slate-500" x-show="!loading && !error">
+              <strong class="font-title text-2xl text-primary-900" x-text="filteredPrograms.length"
+              ></strong>
+              <span x-text="filteredPrograms.length === 1 ? ' program' : ' programs'"></span>
+              <span x-show="hasFilters"> match your filters</span>
+              <button
+                x-show="hasFilters"
+                type="button"
+                @click="resetFilters()"
+                class="ml-3 font-bold text-primary-700 underline">Reset</button
+              >
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                @click="savedOnly = !savedOnly; shownCount = pageSize"
+                :aria-pressed="savedOnly"
+                :class="savedOnly ? 'text-[#a84336]' : 'text-primary-900'"
+                class="inline-flex items-center gap-2 text-sm font-bold"
+              >
+                <span aria-hidden="true">♡</span> Saved
+                <span
+                  class="grid min-w-6 place-items-center rounded-full bg-primary-900 px-1.5 py-1 text-[10px] text-white"
+                  x-text="$store.bookmarks.count"></span>
+              </button>
+              <label class="text-[10px] font-bold uppercase tracking-[.1em] text-slate-500">
+                Sort
+                <select
+                  x-model="sort"
+                  class="ml-1 border-0 bg-transparent font-bold normal-case tracking-normal text-primary-900 focus:ring-0"
+                >
+                  <option value="az">A–Z</option>
+                  <option value="major-first">Majors first</option>
+                </select>
+              </label>
+              <div class="inline-flex border border-slate-200 bg-white" aria-label="Results layout">
+                <button
+                  type="button"
+                  @click="setLayout('cards')"
+                  :class="layout === 'cards' ? 'bg-primary-900 text-white' : 'text-slate-500'"
+                  class="grid size-9 place-items-center"
+                  aria-label="Card view"><Icon name="grid" class="size-4" /></button
+                >
+                <button
+                  type="button"
+                  @click="setLayout('list')"
+                  :class="layout === 'list' ? 'bg-primary-900 text-white' : 'text-slate-500'"
+                  class="grid size-9 place-items-center"
+                  aria-label="List view"><Icon name="list" class="size-4" /></button
+                >
+              </div>
+            </div>
+          </div>
+
+          <div
+            x-show="loading"
+            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+            aria-label="Loading programs"
+          >
+            {
+              [1, 2, 3, 4, 5, 6].map(() => (
+                <div class="animate-pulse border border-slate-200 bg-white">
+                  <div class="h-40 bg-slate-200" />
+                  <div class="space-y-4 p-6">
+                    <>
+                      <div class="h-7 w-2/3 bg-slate-200" />
+                      <div class="h-4 w-full bg-slate-100" />
+                      <div class="h-4 w-4/5 bg-slate-100" />
+                    </>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <div
+            x-show="error"
+            x-cloak
+            role="alert"
+            class="border-l-4 border-red-600 bg-white p-6 shadow-sm"
+          >
+            <h3 class="font-title text-2xl font-bold text-primary-900">
+              We couldn’t load the program list.
+            </h3>
+            <p class="mt-2 text-slate-600" x-text="error"></p>
+            <button
+              type="button"
+              @click="loadPrograms()"
+              class="mt-4 font-bold text-primary-800 underline">Try again</button
+            >
+          </div>
+
+          <div
+            x-show="!loading && !error && filteredPrograms.length === 0"
+            x-cloak
+            class="border border-slate-200 bg-white px-6 py-20 text-center"
+          >
+            <Icon name="search" class="mx-auto size-10 text-primary-700" />
+            <h3 class="mt-4 font-title text-3xl font-bold text-primary-900">
+              No exact matches—yet.
+            </h3>
+            <p class="mx-auto mt-2 max-w-xl text-slate-600">
+              Try a broader term like “health,” “business,” or “helping people,” or clear a filter.
+            </p>
+            <button
+              type="button"
+              @click="resetFilters()"
+              class="mt-5 bg-[#f2bd55] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950"
+              >See all programs</button
+            >
+          </div>
+
+          <div
+            x-show="!loading && !error && filteredPrograms.length > 0 && layout === 'cards'"
+            x-cloak
+            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
+            <template x-for="program in visiblePrograms" :key="program.entry_id">
+              <article
+                class="group flex min-w-0 flex-col border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div class="relative h-40 overflow-hidden bg-slate-200">
+                  <img
+                    :src="program.thumbnail_small"
+                    :alt="program.thumbnail_small_alt || ''"
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <button
+                    type="button"
+                    @click="$store.bookmarks.toggle(program.entry_id)"
+                    :aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name} from saved programs` : `Save ${program.program_name}`"
+                    class="absolute right-3 top-3 grid size-10 place-items-center rounded-full shadow-md transition"
+                    :class="$store.bookmarks.has(program.entry_id) ? 'bg-[#f2bd55] text-primary-950' : 'bg-white/95 text-primary-900'"
+                  >
+                    <Icon
+                      name="bookmark"
+                      class="size-5"
+                      :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
+                    />
+                  </button>
+                </div>
+                <div class="flex flex-1 flex-col p-6">
+                  <div
+                    class="mb-3 flex flex-wrap items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
+                  >
+                    <template x-for="programType in programTypes(program)" :key="programType.key"
+                      ><span x-text="programType.label"></span></template
+                    >
+                  </div>
+                  <h3
+                    class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold leading-tight text-primary-950"
+                  >
+                    <a
+                      :href="programUrl(program)"
+                      class="hover:underline hover:decoration-[#f2bd55] hover:decoration-4"
+                      x-text="program.program_name"></a>
+                    <template x-for="degree in degrees(program)" :key="degree">
+                      <span
+                        class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
+                        x-text="degree"></span>
+                    </template>
+                  </h3>
+                  <div class="mb-5 mt-4 flex flex-wrap gap-1.5">
+                    <template x-for="tag in interestTags(program).slice(0, 3)" :key="tag"
+                      ><button
+                        type="button"
+                        @click="chooseInterest(tag)"
+                        class="bg-slate-100 px-2 py-1 text-[10px] text-primary-700"
+                        x-text="tag"></button></template
+                    >
+                  </div>
+                  <div
+                    class="mt-auto grid grid-cols-2 border-t border-slate-200 pt-4 text-[10px] font-extrabold uppercase tracking-[.08em] text-primary-900"
+                  >
+                    <button
+                      type="button"
+                      @click="showDetails(program)"
+                      class="flex items-center justify-between border-r border-slate-200 pr-3 text-left hover:text-[#9c6508]"
+                      >Quick view <span class="text-lg text-[#bd7d0d]">＋</span></button
+                    >
+                    <a
+                      :href="programUrl(program)"
+                      class="flex items-center justify-between pl-3 hover:text-[#9c6508]"
+                      >Full program <span class="text-lg text-[#bd7d0d]">→</span></a
+                    >
+                  </div>
+                </div>
+              </article>
+            </template>
+          </div>
+
+          <div
+            x-show="!loading && !error && filteredPrograms.length > 0 && layout === 'list'"
+            x-cloak
+            class="grid gap-3"
+          >
+            <template x-for="program in visiblePrograms" :key="`list-${program.entry_id}`">
+              <article class="group grid border border-slate-200 bg-white sm:grid-cols-[220px_1fr]">
+                <div class="h-40 overflow-hidden bg-slate-200 sm:h-full sm:min-h-56">
+                  <img
+                    :src="program.thumbnail_small"
+                    :alt="program.thumbnail_small_alt || ''"
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="flex flex-col p-6">
+                  <div
+                    class="flex flex-wrap gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
+                  >
+                    <template x-for="programType in programTypes(program)" :key="programType.key"
+                      ><span x-text="programType.label"></span></template
+                    >
+                  </div>
+                  <h3
+                    class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold text-primary-950"
+                  >
+                    <a :href="programUrl(program)" x-text="program.program_name"></a>
+                    <template x-for="degree in degrees(program)" :key="degree">
+                      <span
+                        class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
+                        x-text="degree"></span>
+                    </template>
+                  </h3>
+                  <p
+                    class="mt-3 line-clamp-2 max-w-3xl text-sm leading-relaxed text-slate-600"
+                    x-text="program.program_peek"
+                  >
+                  </p>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-4 pt-5">
+                    <button
+                      type="button"
+                      @click="showDetails(program)"
+                      class="text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                      >Quick view ＋</button
+                    ><button
+                      type="button"
+                      @click="$store.bookmarks.toggle(program.entry_id)"
+                      class="inline-flex items-center gap-2 text-sm font-bold text-primary-900"
+                      ><Icon name="bookmark" class="size-5" /> Save</button
+                    >
+                  </div>
+                </div>
+              </article>
+            </template>
+          </div>
+
+          <div
+            x-show="filteredPrograms.length > visiblePrograms.length"
+            x-cloak
+            class="mt-12 text-center"
+          >
+            <button
+              type="button"
+              @click="shownCount += pageSize"
+              class="min-w-64 border border-primary-900 px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-primary-900 transition hover:bg-primary-900 hover:text-white"
+              >Show more programs <span class="ml-2">↓</span></button
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="next-steps"
+        class="scroll-mt-20 bg-gradient-to-r from-[#11698c] to-[#0b7367] py-16 text-white"
+        aria-labelledby="next-steps-title"
+      >
+        <div class="mx-auto max-w-7xl px-5 sm:px-8">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[.18em] text-white">Your next step</p>
+            <h2 id="next-steps-title" class="mt-3 font-title text-4xl leading-tight md:text-5xl">
+              See where a Messiah education could take you.
+            </h2>
+            <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
+              <a
+                class="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#e5ae3a] px-5 py-3 font-bold text-primary-900 transition hover:-translate-y-0.5 hover:bg-[#d59e2b]"
+                href="/visit">Plan a visit</a
+              >
+              <a
+                class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
+                href="https://www.messiah.edu/applytoday">Apply to Messiah</a
+              >
+              <a
+                class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
+                href="https://www.messiah.edu/ug-tuition-and-aid/">Tuition</a
+              >
+              <a
+                class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
+                href="https://www.messiah.edu/ug-fin-aid/">Scholarships</a
+              >
+            </div>
+          </div>
+
+          <form
+            data-analytics="request-information"
+            method="GET"
+            action="https://www.messiah.edu/undergraduate-admissions/request-more-information/request-information"
+            class="mt-10 grid gap-6 border-t border-white/30 pt-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-end lg:gap-8"
+          >
+            <div class="self-center">
+              <p class="text-xs font-bold uppercase tracking-[.18em] text-tertiary-200">
+                Tell us about yourself
+              </p>
+              <h3 class="mt-2 font-title text-2xl font-bold uppercase text-white">
+                Request information
+              </h3>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.2fr_auto]">
+              <div>
+                <label for="listing-rfi-first-name" class="sr-only">First name</label>
+                <input
+                  id="listing-rfi-first-name"
+                  type="text"
+                  name="firstname"
+                  autocomplete="given-name"
+                  placeholder="First name"
+                  required
+                  class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
+                />
+              </div>
+              <div>
+                <label for="listing-rfi-last-name" class="sr-only">Last name</label>
+                <input
+                  id="listing-rfi-last-name"
+                  type="text"
+                  name="lastname"
+                  autocomplete="family-name"
+                  placeholder="Last name"
+                  required
+                  class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
+                />
+              </div>
+              <div class="sm:col-span-2 lg:col-span-1">
+                <label for="listing-rfi-email" class="sr-only">Email</label>
+                <input
+                  id="listing-rfi-email"
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  placeholder="Email"
+                  required
+                  class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
+                />
+              </div>
+              <button
+                type="submit"
+                class="inline-flex min-h-14 w-full items-center justify-center border border-white/80 px-6 py-3 font-title font-bold uppercase tracking-wider text-white transition hover:bg-white hover:text-primary-800 focus-visible:bg-white focus-visible:text-primary-800 sm:col-span-2 lg:col-span-1 lg:w-auto"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <template x-teleport="body">
+      <div
+        x-show="openProgram"
+        x-cloak
+        @keydown.escape.window="closeDetails()"
+        class="fixed inset-0 z-[80] flex justify-end bg-primary-950/75 backdrop-blur-sm"
+        role="presentation"
+      >
+        <button
+          type="button"
+          @click="closeDetails()"
+          class="absolute inset-0 cursor-default"
+          aria-label="Close program details"></button>
+        <section
+          x-show="openProgram"
+          x-trap.noscroll.inert="openProgram"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quick-view-title"
+          class="relative h-full w-full overflow-y-auto bg-[#fbfaf7] shadow-2xl sm:max-w-3xl"
+        >
+          <button
+            type="button"
+            @click="closeDetails()"
+            class="fixed right-4 top-4 z-10 grid size-12 place-items-center border-2 border-primary-900 bg-white text-primary-900 shadow-lg hover:bg-[#f2bd55]"
+            aria-label="Close program details"><Icon name="close" class="size-7" /></button
+          >
+          <div class="relative h-64 bg-primary-900">
+            <img
+              :src="openProgram?.thumbnail_small"
+              :alt="openProgram?.thumbnail_small_alt || ''"
+              class="h-full w-full object-cover"
+            /><span class="absolute inset-0 bg-gradient-to-r from-primary-950/70 to-transparent"
+            ></span><span
+              class="absolute bottom-6 left-7 text-xs font-extrabold uppercase tracking-[.16em] text-white"
+              x-text="openProgram?.department_name"></span>
+          </div>
+          <div class="p-7 sm:p-10">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p
+                  class="mb-2 text-[10px] font-extrabold uppercase tracking-[.12em] text-primary-700"
+                >
+                  Undergraduate program
+                </p><h2
+                  id="quick-view-title"
+                  class="font-title text-4xl font-bold leading-none text-primary-950 sm:text-5xl"
+                  x-text="openProgram?.program_name"
+                >
+                </h2>
+              </div><div class="flex flex-wrap gap-2">
+                <template x-for="degree in degrees(openProgram)" :key="degree"
+                  ><span
+                    class="border border-slate-300 bg-white px-3 py-2 font-title text-sm font-bold text-primary-900"
+                    x-text="degree"></span></template
+                >
+              </div>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <template x-for="programType in programTypes(openProgram)" :key="programType.key"
+                ><span
+                  class="rounded-full bg-primary-900 px-3 py-2 text-xs font-bold text-white"
+                  x-text="programType.label"></span></template
+              >
+            </div>
+            <p
+              class="mt-7 font-title text-lg leading-relaxed text-slate-700"
+              x-text="openProgram?.program_peek || 'Explore this program’s curriculum, learning opportunities and career preparation.'"
+            >
+            </p>
+            <div
+              x-show="careerItems(openProgram).length"
+              class="mt-8 border-l-4 border-[#f2bd55] bg-[#f5f1e8] p-6"
+            >
+              <h3 class="font-title text-xl font-bold text-primary-900">
+                Where this program can lead
+              </h3><div class="mt-3 flex flex-wrap gap-2">
+                <template x-for="career in careerItems(openProgram).slice(0, 8)" :key="career"
+                  ><span class="bg-white px-2.5 py-2 text-xs text-primary-700" x-text="career"
+                  ></span></template
+                >
+              </div>
+            </div>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a
+                :href="programUrl(openProgram)"
+                class="inline-flex min-h-12 items-center gap-3 bg-[#f2bd55] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950 no-underline"
+                >Explore full program <span class="text-lg">→</span></a
+              ><button
+                type="button"
+                @click="$store.bookmarks.toggle(openProgram.entry_id)"
+                class="inline-flex min-h-12 items-center gap-3 border border-slate-300 bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                ><Icon name="bookmark" class="size-5" /><span
+                  x-text="$store.bookmarks.has(openProgram?.entry_id) ? 'Program saved' : 'Save program'"
+                ></span></button
+              >
+            </div>
+            <div x-show="relatedPrograms.length" class="mt-12 border-t border-slate-200 pt-8">
+              <p
+                class="mb-2 text-[10px] font-extrabold uppercase tracking-[.14em] text-primary-700"
+              >
+                Keep exploring
+              </p><h3 class="font-title text-3xl font-bold text-primary-900">
+                Related programs
+              </h3><div class="mt-5 grid gap-3 sm:grid-cols-3">
+                <template x-for="related in relatedPrograms" :key="related.entry_id"
+                  ><button
+                    type="button"
+                    @click="showDetails(related)"
+                    class="border border-slate-200 bg-white p-4 text-left"
+                    ><span
+                      class="text-[9px] font-bold uppercase text-slate-500"
+                      x-text="related.department_name"></span><span
+                      class="mt-1 block font-title text-lg font-bold leading-tight text-primary-900"
+                      x-text="related.program_name"></span><span
+                      class="mt-4 block text-[10px] font-extrabold uppercase text-primary-700"
+                      >Quick view →</span
+                    ></button
+                  ></template
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </template>
+  </div>
+
+  <script is:inline>
+    function programExplorer() {
+      return {
+        endpoint: "https://cascade-prod.messiah.edu/_program_data/ug-json.json",
+        programs: [],
+        loading: true,
+        error: "",
+        query: "",
+        type: "",
+        interest: "",
+        savedOnly: false,
+        layout: "cards",
+        sort: "az",
+        shownCount: 24,
+        pageSize: 24,
+        openProgram: null,
+        types: [
+          { key: "major", label: "Major", filterLabel: "Majors" },
+          { key: "minor", label: "Minor", filterLabel: "Minors" },
+          { key: "concentration", label: "Concentration", filterLabel: "Concentrations" },
+          { key: "pre_health", label: "Pre-health advising", filterLabel: "Pre-health" },
+          { key: "teaching_certification", label: "Teaching certification" },
+          { key: "accelerated", label: "Accelerated" },
+          {
+            key: "partner_program",
+            label: "3+ partner program",
+            filterLabel: "3+ partner programs",
+          },
+          { key: "early_assurance", label: "Early assurance" },
+          {
+            key: "undergrad_certificate",
+            label: "Undergraduate certificate",
+            filterLabel: "Certificates",
+          },
+        ],
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          this.query = params.get("search") || "";
+          this.type = params.get("type") || "";
+          this.interest = params.get("interest") || "";
+          try {
+            const saved = localStorage.getItem("ug-program-layout-2b");
+            if (["cards", "list"].includes(saved)) this.layout = saved;
+          } catch {}
+          this.loadPrograms();
+        },
+        async loadPrograms() {
+          this.loading = true;
+          this.error = "";
+          try {
+            const response = await fetch(this.endpoint);
+            if (!response.ok) throw new Error(`The server returned ${response.status}.`);
+            const data = await response.json();
+            this.programs = (data.items || [])
+              .filter((p) => p.hide_on_program_listing !== "yes")
+              .sort((a, b) => (a.program_name || "").localeCompare(b.program_name || ""));
+            this.$store.bookmarks.keepOnly(this.programs.map((p) => p.entry_id));
+          } catch (error) {
+            this.error = error instanceof Error ? error.message : "Please try again in a moment.";
+          } finally {
+            this.loading = false;
+          }
+        },
+        get availableInterests() {
+          return [...new Set(this.programs.flatMap((p) => this.interestTags(p)))]
+            .filter(Boolean)
+            .sort();
+        },
+        get filteredPrograms() {
+          const terms = this.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+          const matches = this.programs.filter((program) => {
+            const haystack = [
+              program.program_name,
+              program.department_name,
+              program.keywords,
+              program.program_peek,
+              program.interest_group_name,
+              program.job_title,
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+            return (
+              terms.every((term) => haystack.includes(term)) &&
+              (!this.type || program[this.type] === "true") &&
+              (!this.interest || this.interestTags(program).includes(this.interest)) &&
+              (!this.savedOnly || this.$store.bookmarks.has(program.entry_id))
+            );
+          });
+          return matches.sort((a, b) =>
+            this.sort === "major-first"
+              ? Number(b.major === "true") - Number(a.major === "true") ||
+                a.program_name.localeCompare(b.program_name)
+              : a.program_name.localeCompare(b.program_name),
+          );
+        },
+        get visiblePrograms() {
+          return this.filteredPrograms.slice(0, this.shownCount);
+        },
+        get hasFilters() {
+          return Boolean(this.query || this.type || this.interest || this.savedOnly);
+        },
+        get relatedPrograms() {
+          if (!this.openProgram?.related_programs) return [];
+          return this.openProgram.related_programs
+            .split("|")
+            .map((id) => this.programs.find((p) => p.entry_id === id))
+            .filter(Boolean)
+            .slice(0, 3);
+        },
+        setType(value) {
+          this.type = value;
+          this.shownCount = this.pageSize;
+          this.syncUrl();
+        },
+        setLayout(value) {
+          this.layout = value === "list" ? "list" : "cards";
+          try {
+            localStorage.setItem("ug-program-layout-2b", this.layout);
+          } catch {}
+        },
+        chooseInterest(value) {
+          this.interest = value;
+          this.shownCount = this.pageSize;
+          this.syncUrl();
+          this.$nextTick(() =>
+            document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" }),
+          );
+        },
+        goToFinder() {
+          this.syncUrl();
+          document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" });
+        },
+        resetFilters() {
+          this.query = "";
+          this.type = "";
+          this.interest = "";
+          this.savedOnly = false;
+          this.shownCount = this.pageSize;
+          this.syncUrl();
+        },
+        syncUrl() {
+          const url = new URL(window.location.href);
+          ["search", "type", "interest"].forEach((key) => url.searchParams.delete(key));
+          if (this.query) url.searchParams.set("search", this.query);
+          if (this.type) url.searchParams.set("type", this.type);
+          if (this.interest) url.searchParams.set("interest", this.interest);
+          window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+        },
+        showDetails(program) {
+          this.openProgram = program;
+        },
+        closeDetails() {
+          this.openProgram = null;
+        },
+        programUrl(program) {
+          const path = String(program?.program_url || program?.url_slug || "").replace(/^\/+/, "");
+          return path ? `/${path}` : "#";
+        },
+        degrees(program) {
+          if (!program?.degree || program.degree === "none") return [];
+          return program.degree.split("|").filter(Boolean);
+        },
+        programTypes(program) {
+          if (!program) return [];
+          return this.types.filter((item) => program[item.key] === "true");
+        },
+        interestTags(program) {
+          return (program?.interest_group_name || "")
+            .split("|")
+            .map((tag) => tag.trim())
+            .filter(Boolean);
+        },
+        careerItems(program) {
+          return (program?.job_title || "")
+            .split(/,|\r?\n/)
+            .map((item) => item.trim())
+            .filter(Boolean);
+        },
+      };
+    }
+  </script>
+</BaseLayout>
