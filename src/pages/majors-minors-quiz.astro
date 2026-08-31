@@ -7,6 +7,7 @@ import { programQuizAreas } from "../data/program-quiz";
 const quizGroups = [
   {
     slug: "creative",
+    icon: "pencil",
     title: "I like creating and sharing ideas",
     description: "Art, design, media, music and theatre",
     areas: [
@@ -29,6 +30,7 @@ const quizGroups = [
   },
   {
     slug: "business-technology",
+    icon: "computer",
     title: "I like business, numbers and technology",
     description: "Leadership, finance, analytics, computing and data",
     areas: [
@@ -51,6 +53,7 @@ const quizGroups = [
   },
   {
     slug: "problem-solving",
+    icon: "switch",
     title: "I like solving problems and exploring how the world works",
     description: "Science, engineering and the environment",
     areas: [
@@ -74,6 +77,7 @@ const quizGroups = [
   },
   {
     slug: "helping",
+    icon: "users",
     title: "I like helping people learn and thrive",
     description: "Education, health and helping professions",
     areas: [
@@ -91,6 +95,7 @@ const quizGroups = [
   },
   {
     slug: "people-society",
+    icon: "scale",
     title: "I like understanding people and society",
     description: "Behavior, government, law, history and culture",
     areas: [
@@ -113,6 +118,7 @@ const quizGroups = [
   },
   {
     slug: "faith-culture",
+    icon: "globe",
     title: "I like exploring faith, languages and cultures",
     description: "Ministry, Christian leadership, language and global engagement",
     areas: [
@@ -152,7 +158,7 @@ const quizGroups = [
         >
         </div>
         <div
-          class="mx-auto flex min-h-[650px] max-w-7xl items-end px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
+          class="mx-auto flex min-h-[650px] max-w-7xl items-center px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
         >
           <div class="max-w-4xl">
             <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-[#f2bd55]">
@@ -163,7 +169,7 @@ const quizGroups = [
             >
               Find your program match.
             </h1>
-            <p class="mt-7 max-w-2xl font-title text-xl leading-relaxed text-white/90">
+            <p class="mt-7 max-w-2xl font-title text-2xl leading-relaxed text-white/90 lg:text-3xl">
               Tell us what sparks your curiosity. We’ll connect you with academic paths built around
               what you want to explore, create and change.
             </p>
@@ -207,15 +213,35 @@ const quizGroups = [
                 </p>
 
                 <div class="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                  <template x-for="(choice, index) in groups" :key="choice.slug">
+                  <template x-for="choice in groups" :key="choice.slug">
                     <button
                       type="button"
                       @click="selectGroup(choice.slug)"
-                      class="group flex min-h-44 items-start gap-4 border border-slate-200 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+                      class="group flex min-h-44 items-start gap-4 border border-slate-400 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
                     >
                       <span
-                        class="grid size-9 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
-                        x-text="String(index + 1).padStart(2, '0')"></span>
+                        class="grid size-9 shrink-0 place-items-center bg-slate-100 text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
+                        aria-hidden="true"
+                      >
+                        <template x-if="choice.icon === 'pencil'">
+                          <Icon name="pencil" class="size-5" />
+                        </template>
+                        <template x-if="choice.icon === 'computer'">
+                          <Icon name="computer" class="size-5" />
+                        </template>
+                        <template x-if="choice.icon === 'switch'">
+                          <Icon name="switch" class="size-5" />
+                        </template>
+                        <template x-if="choice.icon === 'users'">
+                          <Icon name="users" class="size-5" />
+                        </template>
+                        <template x-if="choice.icon === 'scale'">
+                          <Icon name="scale" class="size-5" />
+                        </template>
+                        <template x-if="choice.icon === 'globe'">
+                          <Icon name="globe" class="size-5" />
+                        </template>
+                      </span>
                       <span class="flex min-h-32 flex-1 flex-col justify-between">
                         <span
                           class="font-title text-xl font-bold leading-tight text-primary-950"
@@ -258,7 +284,7 @@ const quizGroups = [
                     <button
                       type="button"
                       @click="selectArea(choice.slug)"
-                      class="group flex min-h-44 items-start gap-4 border border-slate-200 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+                      class="group flex min-h-44 items-start gap-4 border border-slate-400 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
                     >
                       <span
                         class="grid size-9 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
@@ -305,7 +331,7 @@ const quizGroups = [
                     <button
                       type="button"
                       @click="selectPath(index)"
-                      class="group flex min-h-40 items-start gap-4 border border-slate-200 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
+                      class="group flex min-h-40 items-start gap-4 border border-slate-400 bg-white p-5 text-left transition duration-200 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-700"
                     >
                       <span
                         class="grid size-9 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-[#f2bd55] group-hover:text-primary-950"
@@ -377,7 +403,7 @@ const quizGroups = [
                   aria-label="Loading programs"
                 >
                   <template x-for="item in 3">
-                    <div class="animate-pulse border border-slate-200">
+                    <div class="animate-pulse border border-slate-400">
                       <div class="h-40 bg-slate-200"></div><div class="space-y-4 p-6">
                         <div class="h-3 w-24 bg-slate-200"></div><div
                           class="h-8 w-4/5 bg-slate-200"
@@ -409,7 +435,7 @@ const quizGroups = [
                 >
                   <template x-for="program in results" :key="program.entry_id">
                     <article
-                      class="group flex min-w-0 flex-col border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+                      class="group flex min-w-0 flex-col border border-slate-400 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
                     >
                       <div class="relative h-40 overflow-hidden bg-slate-200">
                         <img

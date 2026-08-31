@@ -28,6 +28,56 @@ const featureCards = [
     href: "https://www.messiah.edu/news/2026/03/jon-stuckey-named-as-the-ninth-president-of-messiah-university.html",
   },
 ];
+
+const inaugurationEvents = [
+  {
+    date: "Oct 10, 2026",
+    month: "Oct",
+    day: "10",
+    title: "Students’ Inaugural Ball",
+    time: "TBD",
+    location: "Location TBD",
+    cost: "For undergraduate students only; tickets required + Sponsored by SAB",
+  },
+  {
+    date: "Oct 13, 2026",
+    month: "Oct",
+    day: "13",
+    title: "Inauguration Chapel",
+    time: "9:30 a.m.",
+    location: "Brubaker Auditorium",
+    cost: "For students only",
+    href: "https://www.messiah.edu/campus-ministries/pages/event-module/2026-2027-academic-year/morning-chapel-with-dr-emily-bingham1",
+  },
+  {
+    date: "Oct 15, 2026",
+    month: "Oct",
+    day: "15",
+    title: "Presidential Inauguration Ceremony",
+    time: "10:00am – 11:30am",
+    location: "Location TBD",
+    cost: "By invitation only; livestream link available",
+  },
+  {
+    date: "Oct 15, 2026",
+    month: "Oct",
+    day: "15",
+    title: "Inauguration Luncheon for Delegates and Guests",
+    time: "12:00pm – 2:00pm",
+    location: "Brubaker Auditorium",
+    cost: "Ticketed event; by invitation only",
+  },
+  {
+    date: "Oct 15, 2026",
+    month: "Oct",
+    day: "15",
+    title: "Inaugural Keynote Lecture: Dr. Curt Thompson",
+    time: "7:00pm",
+    location: "Parmer Hall",
+    cost: "Open to the public; no tickets required / Chapel credit will be given for Messiah students",
+    href: "https://www.google.com/",
+  },
+];
 ---
 
 <BaseLayout
@@ -233,141 +283,109 @@ const featureCards = [
           </a>
         </div>
 
-        <section
-          x-data="eventCarousel()"
-          class="mx-auto mt-12 w-full max-w-7xl"
+        <div
+          class="mx-auto mt-12 grid w-full max-w-7xl grid-cols-1 gap-8 lg:grid-cols-2"
           aria-label="Upcoming inauguration events"
-          @resize.window.debounce.150ms="setItemsPerPage()"
-          @keydown.left.window="previous()"
-          @keydown.right.window="next()"
+          role="list"
         >
-          <div class="mb-6 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-              <p class="hidden text-sm text-white md:block" aria-live="polite">
-                Showing <span x-text="firstVisibleNumber"></span>–<span x-text="lastVisibleNumber"
-                ></span>
-                of <span x-text="events.length"></span>
-              </p>
-              <div class="flex shrink-0 gap-3" aria-label="Event carousel controls">
-                <button
-                  type="button"
-                  class="flex size-11 items-center justify-center rounded-full border border-white text-white transition hover:bg-white hover:text-primary-800 disabled:cursor-not-allowed disabled:opacity-40"
-                  aria-label="View previous events"
-                  :disabled="!canGoBack"
-                  @click="previous()"
+          {
+            inaugurationEvents.map((event, index) => (
+              <article
+                class:list={[
+                  "relative flex min-w-0 flex-col items-start gap-4 bg-white p-6 pb-5 sm:flex-row sm:gap-6",
+                  {
+                    "lg:col-span-2 lg:mx-auto lg:w-[calc(50%-1rem)]":
+                      index === inaugurationEvents.length - 1 &&
+                      inaugurationEvents.length % 2 !== 0,
+                  },
+                ]}
+                role="listitem"
+              >
+                <div
+                  class="mt-1 flex size-16 shrink-0 flex-col items-center justify-center bg-primary-800 text-white"
+                  aria-hidden="true"
                 >
-                  <svg
-                    class="size-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg
-                  >
-                </button>
-                <button
-                  type="button"
-                  class="flex size-11 items-center justify-center rounded-full border border-white text-white transition hover:bg-white hover:text-primary-800 disabled:cursor-not-allowed disabled:opacity-40"
-                  aria-label="View next events"
-                  :disabled="!canGoForward"
-                  @click="next()"
-                >
-                  <svg
-                    class="size-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg
-                  >
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full overflow-hidden" role="region" aria-live="polite">
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <template x-for="event in visibleEvents" :key="event.id">
-                <article class="relative flex min-w-0 items-start gap-6 bg-white p-6 pb-5">
-                  <div
-                    class="mt-1 flex size-16 shrink-0 flex-col items-center justify-center bg-primary-800 text-white"
-                    aria-hidden="true"
-                  >
-                    <span class="text-lg font-bold uppercase" x-text="getMonth(event.date)"></span>
-                    <span class="-mt-1 text-3xl font-bold" x-text="getDay(event.date)"></span>
-                  </div>
-                  <div class="min-w-0">
-                    <h3 class="mb-2 font-title text-2xl font-bold uppercase text-primary-800">
-                      <template x-if="event.href">
-                        <a
-                          :href="event.href"
-                          class="underline decoration-2 underline-offset-4 transition hover:text-[#6fa7c9]"
-                          x-text="event.title"></a>
-                      </template>
-                      <template x-if="!event.href">
-                        <span x-text="event.title"></span>
-                      </template>
-                    </h3>
-                    <ul class="space-y-2 text-sm text-primary-800">
-                      <li class="flex items-start gap-2">
-                        <svg
-                          class="mt-0.5 size-5 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                          ><path
-                            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"></path></svg
-                        >
-                        <span
-                          ><span x-text="formatDate(event.date)"></span><span x-show="event.start"
-                            >, <span x-text="event.start"></span></span
-                          ><span x-show="event.end"> – <span x-text="event.end"></span></span></span
-                        >
-                      </li>
-                      <li class="flex items-start gap-2">
-                        <svg
-                          class="mt-0.5 size-5 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                          ><path
-                            d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"></path><path
-                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"></path></svg
-                        >
-                        <span x-text="event.location"></span>
-                      </li>
-                      <li class="flex items-start gap-2">
-                        <svg
-                          class="mt-0.5 size-5 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                          ><path
-                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"></path></svg
-                        >
-                        <span x-text="event.cost"></span>
-                      </li>
-                    </ul>
-                  </div>
-                </article>
-              </template>
-            </div>
-          </div>
-        </section>
+                  <span class="text-lg font-bold uppercase">{event.month}</span>
+                  <span class="-mt-1 text-3xl font-bold">{event.day}</span>
+                </div>
+                <div class="min-w-0">
+                  <h3 class="mb-2 font-title text-2xl font-bold uppercase text-primary-800">
+                    {event.href ? (
+                      <a
+                        href={event.href}
+                        class="underline decoration-2 underline-offset-4 transition hover:text-[#6fa7c9]"
+                      >
+                        {event.title}
+                      </a>
+                    ) : (
+                      event.title
+                    )}
+                  </h3>
+                  <ul class="space-y-2 text-sm text-primary-800">
+                    <li class="flex items-start gap-2">
+                      <svg
+                        class="mt-0.5 size-5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                      <span>
+                        {event.date}, {event.time}
+                      </span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <svg
+                        class="mt-0.5 size-5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                      <span>{event.location}</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <svg
+                        class="mt-0.5 size-5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                      <span>{event.cost}</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            ))
+          }
+        </div>
       </div>
     </section>
 
@@ -575,126 +593,6 @@ const featureCards = [
         },
         goTo(index) {
           this.current = index;
-        },
-      };
-    }
-
-    function eventCarousel() {
-      return {
-        currentIndex: 0,
-        itemsPerPage: 2,
-        events: [
-          {
-            id: 2,
-            date: "2026-10-10",
-            title: "Students’ Inaugural Ball",
-            start: "TBD",
-            end: "",
-            location: "Location TBD",
-            cost: "For undergraduate students only; tickets required + Sponsored by SAB",
-          },
-          {
-            id: 3,
-            date: "2026-10-13",
-            title: "Inauguration Chapel",
-            start: "9:30 a.m.",
-            end: "",
-            location: "Brubaker Auditorium",
-            cost: "For students only",
-            href: "https://www.messiah.edu/campus-ministries/pages/event-module/2026-2027-academic-year/morning-chapel-with-dr-emily-bingham1",
-          },
-          {
-            id: 4,
-            date: "2026-10-15",
-            title: "Presidential Inauguration Ceremony",
-            start: "10:00am",
-            end: "11:30am",
-            location: "Location TBD",
-            cost: "By invitation only; livestream link available",
-          },
-          {
-            id: 5,
-            date: "2026-10-15",
-            title: "Inauguration Luncheon for Delegates and Guests",
-            start: "12:00pm",
-            end: "2:00pm",
-            location: "Brubaker Auditorium",
-            cost: "Ticketed event; by invitation only",
-          },
-          {
-            id: 6,
-            date: "2026-10-15",
-            title: "Inaugural Keynote Lecture: Dr. Curt Thompson",
-            start: "7:00pm",
-            end: "",
-            location: "Parmer Hall",
-            cost: "Open to the public; no tickets required / Chapel credit will be given for Messiah students",
-            href: "https://www.google.com/",
-          },
-        ],
-        init() {
-          this.setItemsPerPage();
-        },
-        get visibleEvents() {
-          return this.events.slice(
-            this.displayStartIndex,
-            this.displayStartIndex + this.itemsPerPage,
-          );
-        },
-        get displayStartIndex() {
-          const remainder = this.events.length % this.itemsPerPage;
-          const finalPageStart = this.events.length - (remainder || this.itemsPerPage);
-
-          if (remainder && this.currentIndex >= this.events.length - this.itemsPerPage) {
-            return finalPageStart;
-          }
-
-          return this.currentIndex;
-        },
-        get canGoBack() {
-          return this.currentIndex > 0;
-        },
-        get canGoForward() {
-          return this.currentIndex + this.itemsPerPage < this.events.length;
-        },
-        get firstVisibleNumber() {
-          return this.displayStartIndex + 1;
-        },
-        get lastVisibleNumber() {
-          return Math.min(this.displayStartIndex + this.itemsPerPage, this.events.length);
-        },
-        setItemsPerPage() {
-          const previous = this.itemsPerPage;
-          this.itemsPerPage = window.innerWidth < 768 ? 1 : 2;
-          if (previous !== this.itemsPerPage)
-            this.currentIndex = Math.min(this.currentIndex, Math.max(0, this.events.length - 1));
-        },
-        next() {
-          if (this.canGoForward)
-            this.currentIndex = Math.min(
-              this.displayStartIndex + this.itemsPerPage,
-              this.events.length - 1,
-            );
-        },
-        previous() {
-          if (this.canGoBack)
-            this.currentIndex = Math.max(0, this.displayStartIndex - this.itemsPerPage);
-        },
-        parseDate(date) {
-          return new Date(date + "T12:00:00");
-        },
-        getMonth(date) {
-          return new Intl.DateTimeFormat("en-US", { month: "short" }).format(this.parseDate(date));
-        },
-        getDay(date) {
-          return new Intl.DateTimeFormat("en-US", { day: "2-digit" }).format(this.parseDate(date));
-        },
-        formatDate(date) {
-          return new Intl.DateTimeFormat("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }).format(this.parseDate(date));
         },
       };
     }

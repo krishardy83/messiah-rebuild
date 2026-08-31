@@ -25,7 +25,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
         >
         </div>
         <div
-          class="mx-auto flex min-h-[650px] max-w-7xl items-end px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
+          class="mx-auto flex min-h-[650px] max-w-7xl items-center px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
         >
           <div>
             <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-[#f2bd55]">
@@ -36,7 +36,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             >
               Undergraduate Programs
             </h1>
-            <p class="mt-7 max-w-xl font-title text-xl leading-relaxed text-white/85">
+            <p class="mt-7 max-w-xl font-title text-2xl leading-relaxed text-white/85 lg:text-3xl">
               Explore 160+ ways to turn what you care about into a meaningful career—and a life of
               purpose.
             </p>
@@ -91,11 +91,11 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
 
           <form
             @submit.prevent
-            class="border border-slate-200 bg-white shadow-xl shadow-primary-900/5"
+            class="border border-slate-400 bg-white shadow-xl shadow-primary-900/5"
           >
             <div class="grid lg:grid-cols-[1.6fr_.8fr]">
               <label
-                class="relative flex min-h-20 items-center border-b border-slate-200 lg:border-b-0 lg:border-r"
+                class="relative flex min-h-20 items-center border-b border-slate-400 lg:border-b-0 lg:border-r"
               >
                 <span class="sr-only">Search programs</span>
                 <Icon name="search" class="ml-6 size-6 shrink-0 text-primary-700" />
@@ -135,12 +135,12 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             </div>
 
             <div
-              class="flex gap-2 overflow-x-auto border-t border-slate-200 bg-[#f7f8f6] px-5 py-4"
+              class="flex gap-2 overflow-x-auto border-t border-slate-400 bg-[#f7f8f6] px-5 py-4"
             >
               <button
                 type="button"
                 @click="setType('')"
-                :class="type === '' ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-700'"
+                :class="type === '' ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-400 bg-white text-slate-600 hover:border-primary-700'"
                 class="shrink-0 rounded-full border px-4 py-2 text-xs transition"
                 >All programs</button
               >
@@ -148,7 +148,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                 <button
                   type="button"
                   @click="setType(option.key)"
-                  :class="type === option.key ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-700'"
+                  :class="type === option.key ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-400 bg-white text-slate-600 hover:border-primary-700'"
                   class="shrink-0 rounded-full border px-4 py-2 text-xs transition"
                   x-text="option.filterLabel || option.label"></button>
               </template>
@@ -278,7 +278,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           >
             <template x-for="program in visiblePrograms" :key="program.entry_id">
               <article
-                class="group flex min-w-0 flex-col border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+                class="group flex min-w-0 flex-col border border-slate-400 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div class="relative h-40 overflow-hidden bg-slate-200">
                   <img
@@ -358,7 +358,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             class="grid gap-3"
           >
             <template x-for="program in visiblePrograms" :key="`list-${program.entry_id}`">
-              <article class="group grid border border-slate-200 bg-white sm:grid-cols-[220px_1fr]">
+              <article class="group grid border border-slate-300 bg-white sm:grid-cols-[220px_1fr]">
                 <div class="h-40 overflow-hidden bg-slate-200 sm:h-full sm:min-h-56">
                   <img
                     :src="program.thumbnail_small"

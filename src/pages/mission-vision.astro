@@ -1,0 +1,286 @@
+---
+import ContinueExploring from "../components/continue-exploring.astro";
+import PageTabNavigation from "../components/page-tab-navigation.astro";
+import SingleColumn from "../layouts/single-column.astro";
+
+const traditions = [
+  {
+    name: "Anabaptist",
+    eyebrow: "Following the way of Jesus",
+    description:
+      "A commitment to peace, reconciliation, community and radical discipleship—living out faith through love of neighbor and service to others.",
+    href: "https://www.messiah.edu/sider-institute/the-three-traditions-that-shape-our-mission-and-why/anabaptism",
+  },
+  {
+    name: "Pietist",
+    eyebrow: "A faith of the heart",
+    description:
+      "An emphasis on a personal, heartfelt faith nurtured through prayer, Scripture, Christian community and a life that demonstrates its convictions.",
+    href: "https://www.messiah.edu/sider-institute/the-three-traditions-that-shape-our-mission-and-why/pietism",
+  },
+  {
+    name: "Wesleyan",
+    eyebrow: "Holiness in every part of life",
+    description:
+      "A call to love God and neighbor, pursue personal and social holiness, and trust the Holy Spirit to shape lives of faithful action.",
+    href: "https://www.messiah.edu/sider-institute/the-three-traditions-that-shape-our-mission-and-why/wesleyanism",
+  },
+];
+
+const missionThemes = [
+  {
+    name: "Service",
+    icon: "/icons/globe.svg",
+    description:
+      "We open our hearts to those in need and put learning to work for justice and the common good—on campus, in our communities and around the world.",
+  },
+  {
+    name: "Leadership",
+    icon: "/icons/leadership-alt.svg",
+    description:
+      "We learn to lead with professional skill and with the compassion, respect and love modeled by Jesus.",
+  },
+  {
+    name: "Reconciliation",
+    icon: "/icons/messages-question.svg",
+    description:
+      "We build bridges of understanding and peace, bringing people together across differences and reflecting God’s reconciling love.",
+  },
+];
+---
+
+<SingleColumn
+  title="Mission and Identity"
+  image="/images/about-hero.jpg"
+  mobileImage="/images/mobile-about-page.webp"
+  subtitle="Christ Preeminent"
+  description="Explore the mission, Christian identity and theological traditions that shape Messiah University."
+  analyticsKey="mission-vision"
+>
+  <PageTabNavigation
+    tabs={[
+      { title: "Our identity", hash: "#identity" },
+      { title: "Our mission", hash: "#mission" },
+      { title: "Our roots", hash: "#roots" },
+      { title: "Mission in action", hash: "#mission-in-action" },
+    ]}
+  />
+
+  <section id="identity" class="scroll-m-24 bg-white py-20 md:py-24">
+    <div class="wrapper grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <p class="mb-3 font-bold uppercase tracking-[0.18em] text-tertiary-500">Our identity</p>
+        <h2 class="h2 text-primary-800">Rooted in faith. Open to discovery.</h2>
+        <div class="my-7 h-1 w-24 bg-tertiary-400" aria-hidden="true"></div>
+        <p class="paragraph mb-5 text-xl font-bold text-primary-800">
+          Messiah University is a Christian university of the liberal and applied arts and sciences.
+        </p>
+        <p class="paragraph">
+          We are committed to an embracing evangelical spirit rooted in the Anabaptist, Pietist and
+          Wesleyan traditions of the Christian Church. These roots give our community a distinctive
+          way of learning and living—one that welcomes thoughtful inquiry, deepens Christian faith
+          and inspires action.
+        </p>
+      </div>
+
+      <figure class="relative mx-auto w-full max-w-2xl pb-7 pr-7">
+        <div class="absolute bottom-0 right-0 h-[88%] w-[88%] bg-tertiary-400" aria-hidden="true">
+        </div>
+        <img
+          src="/images/students.jpg"
+          alt="Messiah University students talking together on campus"
+          class="relative aspect-[4/3] w-full object-cover"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section
+    id="mission"
+    class="relative isolate scroll-m-24 overflow-hidden bg-primary-900 bg-[url(/images/campus-from-above2.png)] bg-cover bg-center py-20 text-white md:py-28"
+  >
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-br from-primary-950/40 via-primary-900/20 to-transparent"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="wrapper text-center">
+      <p class="mb-5 font-bold uppercase tracking-[0.18em] text-tertiary-300">Our mission</p>
+      <h2
+        class="mx-auto max-w-6xl font-title text-3xl font-bold leading-tight sm:text-4xl md:text-5xl lg:text-6xl"
+      >
+        To educate men and women toward maturity of <span class="text-tertiary-300">intellect</span
+        >,
+        <span class="text-tertiary-300">character</span> and
+        <span class="text-tertiary-300">Christian faith</span>
+      </h2>
+      <div class="mx-auto my-8 h-1 w-24 bg-white" aria-hidden="true"></div>
+      <p class="mx-auto max-w-4xl text-xl leading-relaxed md:text-2xl">
+        in preparation for lives of service, leadership and reconciliation in church and society.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-gray-100 py-20 md:py-24">
+    <div class="wrapper">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="mb-3 font-bold uppercase tracking-[0.18em] text-tertiary-500">
+          Whole-person education
+        </p>
+        <h2 class="h2 text-primary-800">Mind, character and faith belong together</h2>
+        <p class="paragraph mt-6">
+          Messiah’s mission is intentionally holistic. Academic excellence is joined with the
+          formation of character and a growing Christian faith so that what students learn shapes
+          who they become—and how they serve the world.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <article class="border-t-8 border-tertiary-400 bg-white p-8 shadow-sm">
+          <p class="font-title text-6xl font-bold text-tertiary-400" aria-hidden="true">01</p>
+          <h3 class="mt-4 font-title text-3xl font-bold text-primary-800">Intellect</h3>
+          <p class="paragraph mt-3">
+            Pursue truth with curiosity, rigor and humility across the liberal and applied arts and
+            sciences.
+          </p>
+        </article>
+        <article class="border-t-8 border-tertiary-400 bg-white p-8 shadow-sm">
+          <p class="font-title text-6xl font-bold text-tertiary-400" aria-hidden="true">02</p>
+          <h3 class="mt-4 font-title text-3xl font-bold text-primary-800">Character</h3>
+          <p class="paragraph mt-3">
+            Grow in wisdom, integrity and compassion through learning practiced in community.
+          </p>
+        </article>
+        <article class="border-t-8 border-tertiary-400 bg-white p-8 shadow-sm">
+          <p class="font-title text-6xl font-bold text-tertiary-400" aria-hidden="true">03</p>
+          <h3 class="mt-4 font-title text-3xl font-bold text-primary-800">Christian faith</h3>
+          <p class="paragraph mt-3">
+            Explore and deepen a faith that informs every dimension of learning, vocation and life.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="roots" class="scroll-m-24 bg-[url(/patterns/pattern-bg.png)] py-20 md:py-24">
+    <div class="wrapper">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="mb-3 font-bold uppercase tracking-[0.18em] text-tertiary-500">Our roots</p>
+        <h2 class="h2 text-primary-800">Three traditions. One embracing Christian spirit.</h2>
+        <p class="paragraph mt-6">
+          Messiah was founded by the Brethren in Christ Church. Its Anabaptist, Pietist and Wesleyan
+          heritage continues to shape the University’s educational mission and the character of our
+          community today.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-7 lg:grid-cols-3">
+        {
+          traditions.map((tradition, index) => (
+            <article class="group flex flex-col bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div class="flex items-center gap-5 bg-primary-800 px-7 py-6 text-white">
+                <span class="font-title text-5xl font-bold text-tertiary-300" aria-hidden="true">
+                  0{index + 1}
+                </span>
+                <h3 class="font-title text-3xl font-bold">{tradition.name}</h3>
+              </div>
+              <div class="flex flex-1 flex-col p-7">
+                <p class="mb-3 font-bold uppercase tracking-wide text-tertiary-600">
+                  {tradition.eyebrow}
+                </p>
+                <p class="paragraph mb-7">{tradition.description}</p>
+                <a href={tradition.href} class="btn-primary mt-auto self-start">
+                  Explore the tradition
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="mission-in-action" class="scroll-m-24 bg-white py-20 md:py-24">
+    <div class="wrapper">
+      <div class="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <figure class="relative order-2 lg:order-1">
+          <img
+            src="/images/around-campus-student-discussion.jpg"
+            alt="Messiah University students learning together in a classroom"
+            class="aspect-[4/3] w-full object-cover"
+          />
+          <figcaption
+            class="bg-primary-800 p-6 font-title text-xl font-bold text-white sm:absolute sm:-bottom-8 sm:right-0 sm:w-4/5 md:text-2xl"
+          >
+            Faith becomes visible in the way we learn, lead and live together.
+          </figcaption>
+        </figure>
+
+        <div class="order-1 lg:order-2">
+          <p class="mb-3 font-bold uppercase tracking-[0.18em] text-tertiary-500">
+            Motivated by a common mission
+          </p>
+          <h2 class="h2 text-primary-800">Education directed toward a life of purpose</h2>
+          <p class="paragraph mt-6">
+            Messiah’s commitment to developing intellect, character and Christian faith reflects a
+            vision present since the University’s founding: shared faith is integrated into every
+            aspect of the educational experience.
+          </p>
+          <p class="paragraph mt-4">
+            The result is more than preparation for a career. It is preparation to answer God’s
+            call, contribute to the common good and pursue a life marked by service, leadership and
+            reconciliation.
+          </p>
+        </div>
+      </div>
+
+      <ul class="mt-20 grid gap-8 md:grid-cols-3">
+        {
+          missionThemes.map((theme) => (
+            <li class="text-center">
+              <div class="mx-auto flex size-24 items-center justify-center rounded-full bg-gray-100">
+                <img src={theme.icon} alt="" class="size-14" />
+              </div>
+              <h3 class="mt-6 font-title text-3xl font-bold text-primary-800">{theme.name}</h3>
+              <p class="paragraph mt-3">{theme.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-primary-800 py-16 text-center text-white md:py-20">
+    <div class="wrapper">
+      <p class="font-title text-2xl font-bold uppercase tracking-[0.18em] text-tertiary-300">
+        Christ Preeminent
+      </p>
+      <p class="mx-auto mt-5 max-w-4xl font-title text-3xl font-bold leading-tight md:text-4xl">
+        A shared mission that shapes how we learn, how we live and how we serve.
+      </p>
+    </div>
+  </section>
+
+  <ContinueExploring
+    title="Continue Exploring"
+    class="wrapper"
+    links={[
+      {
+        label: "Statements of faith",
+        href: "https://www.messiah.edu/gn-about/faith-and-values/statements-of-faith",
+      },
+      {
+        label: "Foundational values",
+        href: "https://www.messiah.edu/gn-about/faith-and-values/foundational-values",
+      },
+      {
+        label: "Religious heritage",
+        href: "https://www.messiah.edu/gn-about/our-history/religious-heritage",
+      },
+      {
+        label: "The Sider Institute",
+        href: "https://www.messiah.edu/sider-institute/",
+      },
+    ]}
+  />
+</SingleColumn>
