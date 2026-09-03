@@ -58,6 +58,20 @@ import Industries from "../views/career-outcomes/industries.astro";
         return this.selected.departmentName === 'all';
       },
 
+      selectEntry(entry) {
+        this.selected = entry;
+
+        requestAnimationFrame(() => {
+          const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'auto'
+            : 'smooth';
+
+          document
+            .getElementById('career-outcomes-results')
+            ?.scrollIntoView({ behavior, block: 'start' });
+        });
+      },
+
       getWorkplaces() {
         if (!this.selected) {
           return [];
@@ -124,25 +138,35 @@ import Industries from "../views/career-outcomes/industries.astro";
       },
 
       getDepartmentGraduatesNames() {
-        if (!this.selected) {
+        if (!this.selected || this.isAggregateSelected()) {
           return 'Messiah graduates';
         }
 
         return `${this.selected.departmentName} graduates`;
+      },
+
+      getEmploymentRateDescription() {
+        const graduateGroup = this.isAggregateSelected()
+          ? 'Messiah graduates'
+          : `Department of ${this.selected?.departmentName} graduates`;
+
+        return `of ${graduateGroup} are employed or enrolled in professional school within 6–9 months of graduation.`;
       }
     }"
   >
     <Filter />
 
-    <EmploymentRate />
+    <div id="career-outcomes-results" class="scroll-mt-24">
+      <EmploymentRate />
 
-    <EmploymentPlaces />
+      <EmploymentPlaces />
 
-    <AlumniSuccess />
+      <AlumniSuccess />
 
-    <Industries />
+      <Industries />
 
-    <SchoolInformation />
+      <SchoolInformation />
+    </div>
 
     <Drawer />
   </div>

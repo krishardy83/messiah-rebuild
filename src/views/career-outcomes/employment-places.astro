@@ -4,17 +4,14 @@ import Icon from "../../components/icon.astro";
 
 <section class="bg-tertiary-400 text-white">
   <div class="max-w-6xl mx-auto px-4 py-16 relative">
-    <p x-show="!isAggregateSelected()" class="h3 text-center">
-      Department of <span x-text="selected?.departmentName"></span>
-    </p>
     <h2 class="h2 text-center">Where our graduates work</h2>
     <p class="paragraph text-center mb-16" x-show="!isAggregateSelected()">
-      Here is a sample of what some of our 2024 <span x-text="selected?.departmentName"></span> grads
-      are doing and where they work.
+      Here is a sample of what some of our <span x-text="selected?.year"></span>
+      <span x-text="selected?.departmentName"></span> grads are doing and where they work.
     </p>
     <p class="paragraph text-center mb-16" x-show="isAggregateSelected()">
-      Among the various industries employing Messiah graduates, below is a sample of places our 2024
-      graduates are working.
+      Among the various industries employing Messiah graduates, below is a sample of places our
+      <span x-text="selected?.year"></span> graduates are working.
     </p>
 
     <div

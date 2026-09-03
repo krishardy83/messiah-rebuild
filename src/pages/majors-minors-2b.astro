@@ -37,8 +37,17 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               Undergraduate Programs
             </h1>
             <p class="mt-7 max-w-xl font-title text-2xl leading-relaxed text-white/85 lg:text-3xl">
-              Explore 160+ ways to turn what you care about into a meaningful career—and a life of
-              purpose.
+              Explore <a
+                href="#program-finder"
+                @click.prevent="goToType('major')"
+                class="font-bold underline decoration-[#f2bd55] decoration-2 underline-offset-4 hover:text-white"
+                >80+ majors</a
+              >, plus <a
+                href="#program-finder"
+                @click.prevent="goToType('accelerated')"
+                class="font-bold underline decoration-[#f2bd55] decoration-2 underline-offset-4 hover:text-white"
+                >accelerated and seamless pathway programs</a
+              > designed to help you reach your goals.
             </p>
 
             <form
@@ -174,26 +183,22 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             <div class="flex flex-wrap items-center gap-4">
               <button
                 type="button"
-                @click="savedOnly = !savedOnly; shownCount = pageSize"
+                @click="toggleSavedOnly()"
                 :aria-pressed="savedOnly"
                 :class="savedOnly ? 'text-[#a84336]' : 'text-primary-900'"
                 class="inline-flex items-center gap-2 text-sm font-bold"
               >
-                <span aria-hidden="true">♡</span> Saved
+                <Icon
+                  name="bookmark"
+                  class="size-5"
+                  :class="savedOnly ? 'fill-current' : ''"
+                  aria-hidden="true"
+                />
+                Saved
                 <span
                   class="grid min-w-6 place-items-center rounded-full bg-primary-900 px-1.5 py-1 text-[10px] text-white"
                   x-text="$store.bookmarks.count"></span>
               </button>
-              <label class="text-[10px] font-bold uppercase tracking-[.1em] text-slate-500">
-                Sort
-                <select
-                  x-model="sort"
-                  class="ml-1 border-0 bg-transparent font-bold normal-case tracking-normal text-primary-900 focus:ring-0"
-                >
-                  <option value="az">A–Z</option>
-                  <option value="major-first">Majors first</option>
-                </select>
-              </label>
               <div class="inline-flex border border-slate-200 bg-white" aria-label="Results layout">
                 <button
                   type="button"
@@ -277,78 +282,95 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
           >
             <template x-for="program in visiblePrograms" :key="program.entry_id">
-              <article
-                class="group flex min-w-0 flex-col border border-slate-400 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div class="relative h-40 overflow-hidden bg-slate-200">
-                  <img
-                    :src="program.thumbnail_small"
-                    :alt="program.thumbnail_small_alt || ''"
-                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <button
-                    type="button"
-                    @click="$store.bookmarks.toggle(program.entry_id)"
-                    :aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name} from saved programs` : `Save ${program.program_name}`"
-                    class="absolute right-3 top-3 grid size-10 place-items-center rounded-full shadow-md transition"
-                    :class="$store.bookmarks.has(program.entry_id) ? 'bg-[#f2bd55] text-primary-950' : 'bg-white/95 text-primary-900'"
-                  >
-                    <Icon
-                      name="bookmark"
-                      class="size-5"
-                      :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
-                    />
-                  </button>
-                </div>
-                <div class="flex flex-1 flex-col p-6">
-                  <div
-                    class="mb-3 flex flex-wrap items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
-                  >
-                    <template x-for="programType in programTypes(program)" :key="programType.key"
-                      ><span x-text="programType.label"></span></template
-                    >
-                  </div>
+              <div class="contents">
+                <template x-if="program._searchGroupStart">
                   <h3
-                    class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold leading-tight text-primary-950"
+                    class="col-span-full font-title text-3xl font-bold text-primary-950"
+                    :class="program._searchGroupStart === 'related' ? 'mt-8' : ''"
                   >
-                    <a
-                      :href="programUrl(program)"
-                      class="hover:underline hover:decoration-[#f2bd55] hover:decoration-4"
-                      x-text="program.program_name"></a>
-                    <template x-for="degree in degrees(program)" :key="degree">
-                      <span
-                        class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
-                        x-text="degree"></span>
-                    </template>
+                    <span
+                      x-text="program._searchGroupStart === 'direct' ? 'Programs directly related to' : 'Program related to'"
+                    ></span>
+                    “<span x-text="query.trim()"></span>”
                   </h3>
-                  <div class="mb-5 mt-4 flex flex-wrap gap-1.5">
-                    <template x-for="tag in interestTags(program).slice(0, 3)" :key="tag"
-                      ><button
-                        type="button"
-                        @click="chooseInterest(tag)"
-                        class="bg-slate-100 px-2 py-1 text-[10px] text-primary-700"
-                        x-text="tag"></button></template
-                    >
-                  </div>
-                  <div
-                    class="mt-auto grid grid-cols-2 border-t border-slate-200 pt-4 text-[10px] font-extrabold uppercase tracking-[.08em] text-primary-900"
-                  >
+                </template>
+                <article
+                  class="group flex min-w-0 flex-col border border-slate-400 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div class="relative h-40 overflow-hidden bg-slate-200">
+                    <img
+                      :src="program.thumbnail_small"
+                      :alt="program.thumbnail_small_alt || ''"
+                      class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <button
                       type="button"
-                      @click="showDetails(program)"
-                      class="flex items-center justify-between border-r border-slate-200 pr-3 text-left hover:text-[#9c6508]"
-                      >Quick view <span class="text-lg text-[#bd7d0d]">＋</span></button
+                      @click="$store.bookmarks.toggle(program.entry_id)"
+                      :aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name} from saved programs` : `Save ${program.program_name}`"
+                      class="absolute right-3 top-3 grid size-10 place-items-center rounded-full shadow-md transition"
+                      :class="$store.bookmarks.has(program.entry_id) ? 'bg-[#f2bd55] text-primary-950' : 'bg-white/95 text-primary-900'"
                     >
-                    <a
-                      :href="programUrl(program)"
-                      class="flex items-center justify-between pl-3 hover:text-[#9c6508]"
-                      >Full program <span class="text-lg text-[#bd7d0d]">→</span></a
-                    >
+                      <Icon
+                        name="bookmark"
+                        class="size-5"
+                        :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
+                      />
+                    </button>
                   </div>
-                </div>
-              </article>
+                  <div class="flex flex-1 flex-col p-6">
+                    <div
+                      class="mb-3 flex flex-wrap items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
+                    >
+                      <template x-for="programType in programTypes(program)" :key="programType.key"
+                        ><span x-text="programType.label"></span></template
+                      >
+                    </div>
+                    <h3
+                      class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold leading-tight text-primary-950"
+                    >
+                      <a
+                        :href="programUrl(program)"
+                        class="hover:underline hover:decoration-[#f2bd55] hover:decoration-4"
+                        x-text="program.program_name"></a>
+                      <template x-for="degree in degrees(program)" :key="degree">
+                        <span
+                          class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
+                          x-text="degree"></span>
+                      </template>
+                    </h3>
+                    <div class="mb-5 mt-4 flex flex-wrap gap-1.5">
+                      <template x-for="tag in interestTags(program).slice(0, 3)" :key="tag"
+                        ><button
+                          type="button"
+                          @click="chooseInterest(tag)"
+                          class="bg-slate-100 px-2 py-1 text-[10px] text-primary-700"
+                          x-text="tag"></button></template
+                      >
+                    </div>
+                    <div
+                      class="mt-auto grid grid-cols-2 border-t border-slate-200 pt-4 text-[10px] font-extrabold uppercase tracking-[.08em] text-primary-900"
+                    >
+                      <button
+                        type="button"
+                        @click="showDetails(program)"
+                        class="flex items-center justify-between border-r border-slate-200 pr-3 text-left hover:text-[#9c6508]"
+                        >QUICK VIEW <Icon
+                          name="expand"
+                          class="size-5 text-[#bd7d0d]"
+                          aria-hidden="true"
+                        /></button
+                      >
+                      <a
+                        :href="programUrl(program)"
+                        class="flex items-center justify-between pl-3 hover:text-[#9c6508]"
+                        >Full program <span class="text-lg text-[#bd7d0d]">→</span></a
+                      >
+                    </div>
+                  </div>
+                </article>
+              </div>
             </template>
           </div>
 
@@ -358,66 +380,129 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             class="grid gap-3"
           >
             <template x-for="program in visiblePrograms" :key="`list-${program.entry_id}`">
-              <article class="group grid border border-slate-300 bg-white sm:grid-cols-[220px_1fr]">
-                <div class="h-40 overflow-hidden bg-slate-200 sm:h-full sm:min-h-56">
-                  <img
-                    :src="program.thumbnail_small"
-                    :alt="program.thumbnail_small_alt || ''"
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="flex flex-col p-6">
-                  <div
-                    class="flex flex-wrap gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
-                  >
-                    <template x-for="programType in programTypes(program)" :key="programType.key"
-                      ><span x-text="programType.label"></span></template
-                    >
-                  </div>
+              <div class="contents">
+                <template x-if="program._searchGroupStart">
                   <h3
-                    class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold text-primary-950"
+                    class="font-title text-3xl font-bold text-primary-950"
+                    :class="program._searchGroupStart === 'related' ? 'mt-8' : ''"
                   >
-                    <a :href="programUrl(program)" x-text="program.program_name"></a>
-                    <template x-for="degree in degrees(program)" :key="degree">
-                      <span
-                        class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
-                        x-text="degree"></span>
-                    </template>
+                    <span
+                      x-text="program._searchGroupStart === 'direct' ? 'Programs directly related to' : 'Program related to'"
+                    ></span>
+                    “<span x-text="query.trim()"></span>”
                   </h3>
-                  <p
-                    class="mt-3 line-clamp-2 max-w-3xl text-sm leading-relaxed text-slate-600"
-                    x-text="program.program_peek"
+                </template>
+                <article class="group border border-slate-300 bg-white">
+                  <div
+                    class="grid gap-4 p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-6 lg:px-6"
                   >
-                  </p>
-                  <div class="mt-auto flex flex-wrap items-center justify-between gap-4 pt-5">
-                    <button
-                      type="button"
-                      @click="showDetails(program)"
-                      class="text-xs font-extrabold uppercase tracking-wider text-primary-900"
-                      >Quick view ＋</button
-                    ><button
-                      type="button"
-                      @click="$store.bookmarks.toggle(program.entry_id)"
-                      class="inline-flex items-center gap-2 text-sm font-bold text-primary-900"
-                      ><Icon name="bookmark" class="size-5" /> Save</button
+                    <div>
+                      <div
+                        class="flex flex-wrap gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
+                      >
+                        <template
+                          x-for="programType in programTypes(program)"
+                          :key="programType.key"><span x-text="programType.label"></span></template
+                        >
+                      </div>
+                      <h3
+                        class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold text-primary-950"
+                      >
+                        <a :href="programUrl(program)" x-text="program.program_name"></a>
+                        <template x-for="degree in degrees(program)" :key="degree">
+                          <span
+                            class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
+                            x-text="degree"></span>
+                        </template>
+                      </h3>
+                    </div>
+                    <div
+                      class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-200 pt-4 lg:flex-nowrap lg:justify-end lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0"
                     >
+                      <button
+                        type="button"
+                        @click="showDetails(program)"
+                        class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                        >QUICK VIEW <Icon
+                          name="expand"
+                          class="size-5 text-[#bd7d0d]"
+                          aria-hidden="true"
+                        /></button
+                      ><button
+                        type="button"
+                        @click="$store.bookmarks.toggle(program.entry_id)"
+                        class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                      >
+                        <span
+                          x-text="$store.bookmarks.has(program.entry_id) ? 'SAVED' : 'SAVE PROGRAM'"
+                        ></span>
+                        <Icon
+                          name="bookmark"
+                          class="size-5"
+                          :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
+                          aria-hidden="true"
+                        /></button
+                      >
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </div>
             </template>
           </div>
 
           <div
+            x-ref="loadMoreSentinel"
             x-show="filteredPrograms.length > visiblePrograms.length"
             x-cloak
-            class="mt-12 text-center"
+            class="mt-10 flex min-h-16 items-center justify-center text-center"
+            aria-live="polite"
           >
-            <button
-              type="button"
-              @click="shownCount += pageSize"
-              class="min-w-64 border border-primary-900 px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-primary-900 transition hover:bg-primary-900 hover:text-white"
-              >Show more programs <span class="ml-2">↓</span></button
+            <template x-if="autoLoadSupported">
+              <span
+                class="inline-flex items-center gap-3 text-xs font-extrabold uppercase tracking-wider text-primary-900"
+              >
+                <span class="size-2 animate-pulse rounded-full bg-[#bd7d0d]" aria-hidden="true"
+                ></span>
+                Loading more programs…
+              </span>
+            </template>
+            <template x-if="!autoLoadSupported">
+              <button
+                type="button"
+                @click="shownCount += pageSize"
+                class="min-w-64 border border-primary-900 px-6 py-4 text-xs font-extrabold uppercase tracking-wider text-primary-900 transition hover:bg-primary-900 hover:text-white"
+                >Load more programs <span class="ml-2">↓</span></button
+              >
+            </template>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-slate-100 py-14" aria-labelledby="more-ways-heading">
+        <div
+          class="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center"
+        >
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
+              Keep exploring
+            </p>
+            <h2
+              id="more-ways-heading"
+              class="mt-2 font-title text-3xl font-bold text-primary-950 sm:text-4xl"
+            >
+              There’s more than one way to find academic programs
+            </h2>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="/majors-minors-2c/"
+              class="inline-flex min-h-12 items-center border border-primary-900 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-900 no-underline hover:bg-primary-900 hover:text-white"
+              >Browse all interests</a
+            >
+            <a
+              href="/majors-minors-quiz/"
+              class="inline-flex min-h-12 items-center bg-primary-900 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white no-underline hover:bg-primary-800"
+              >Take the quiz</a
             >
           </div>
         </div>
@@ -634,7 +719,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                       class="mt-1 block font-title text-lg font-bold leading-tight text-primary-900"
                       x-text="related.program_name"></span><span
                       class="mt-4 block text-[10px] font-extrabold uppercase text-primary-700"
-                      >Quick view →</span
+                      >QUICK VIEW →</span
                     ></button
                   ></template
                 >
@@ -658,9 +743,10 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
         interest: "",
         savedOnly: false,
         layout: "cards",
-        sort: "az",
         shownCount: 24,
         pageSize: 24,
+        autoLoadSupported: "IntersectionObserver" in window,
+        loadMoreObserver: null,
         openProgram: null,
         types: [
           { key: "major", label: "Major", filterLabel: "Majors" },
@@ -707,7 +793,28 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             this.error = error instanceof Error ? error.message : "Please try again in a moment.";
           } finally {
             this.loading = false;
+            this.$nextTick(() => this.setupInfiniteScroll());
           }
+        },
+        setupInfiniteScroll() {
+          this.loadMoreObserver?.disconnect();
+          if (!this.autoLoadSupported || !this.$refs.loadMoreSentinel) return;
+
+          this.loadMoreObserver = new IntersectionObserver(
+            ([entry]) => {
+              if (
+                entry?.isIntersecting &&
+                this.filteredPrograms.length > this.visiblePrograms.length
+              ) {
+                this.shownCount += this.pageSize;
+              }
+            },
+            { rootMargin: "400px 0px" },
+          );
+          this.loadMoreObserver.observe(this.$refs.loadMoreSentinel);
+        },
+        destroy() {
+          this.loadMoreObserver?.disconnect();
         },
         get availableInterests() {
           return [...new Set(this.programs.flatMap((p) => this.interestTags(p)))]
@@ -717,14 +824,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
         get filteredPrograms() {
           const terms = this.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
           const matches = this.programs.filter((program) => {
-            const haystack = [
-              program.program_name,
-              program.department_name,
-              program.keywords,
-              program.program_peek,
-              program.interest_group_name,
-              program.job_title,
-            ]
+            const haystack = [program.program_name, program.keywords]
               .filter(Boolean)
               .join(" ")
               .toLowerCase();
@@ -735,15 +835,36 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               (!this.savedOnly || this.$store.bookmarks.has(program.entry_id))
             );
           });
-          return matches.sort((a, b) =>
-            this.sort === "major-first"
-              ? Number(b.major === "true") - Number(a.major === "true") ||
-                a.program_name.localeCompare(b.program_name)
-              : a.program_name.localeCompare(b.program_name),
+          return matches.sort((a, b) => a.program_name.localeCompare(b.program_name));
+        },
+        get directSearchPrograms() {
+          const query = this.query.trim().toLowerCase();
+          if (!query) return this.filteredPrograms;
+          return this.filteredPrograms.filter((program) =>
+            (program.program_name || "").toLowerCase().includes(query),
           );
         },
+        get keywordSearchPrograms() {
+          if (!this.query.trim()) return [];
+          const directIds = new Set(this.directSearchPrograms.map((program) => program.entry_id));
+          return this.filteredPrograms.filter((program) => !directIds.has(program.entry_id));
+        },
         get visiblePrograms() {
-          return this.filteredPrograms.slice(0, this.shownCount);
+          if (!this.query.trim()) return this.filteredPrograms.slice(0, this.shownCount);
+
+          const direct = this.directSearchPrograms
+            .slice(0, this.shownCount)
+            .map((program, index) => ({
+              ...program,
+              _searchGroupStart: index === 0 ? "direct" : "",
+            }));
+          const remaining = Math.max(0, this.shownCount - direct.length);
+          const related = this.keywordSearchPrograms.slice(0, remaining).map((program, index) => ({
+            ...program,
+            _searchGroupStart: index === 0 ? "related" : "",
+          }));
+
+          return [...direct, ...related];
         },
         get hasFilters() {
           return Boolean(this.query || this.type || this.interest || this.savedOnly);
@@ -760,6 +881,12 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           this.type = value;
           this.shownCount = this.pageSize;
           this.syncUrl();
+        },
+        goToType(value) {
+          this.setType(value);
+          this.$nextTick(() =>
+            document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" }),
+          );
         },
         setLayout(value) {
           this.layout = value === "list" ? "list" : "cards";
@@ -778,6 +905,14 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
         goToFinder() {
           this.syncUrl();
           document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" });
+        },
+        toggleSavedOnly() {
+          this.savedOnly = !this.savedOnly;
+          this.query = "";
+          this.type = "";
+          this.interest = "";
+          this.shownCount = this.pageSize;
+          this.syncUrl();
         },
         resetFilters() {
           this.query = "";

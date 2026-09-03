@@ -39,7 +39,7 @@ import Icon from "../../components/icon.astro";
               type="button"
               class="cursor-pointer hover:opacity-100 flex items-center gap-4 text-left"
               :class="isSelected(entry) ? 'opacity-100' : 'opacity-75'"
-              @click="selected = entry"
+              @click="selectEntry(entry)"
             >
               <img :src="entry.iconImage" alt="" class="size-6" />
               <span x-text="entry.entryTitle"></span>
