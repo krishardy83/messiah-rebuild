@@ -24,10 +24,11 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           style="background: linear-gradient(90deg, rgba(13, 35, 61, 0.98) 0%, rgba(13, 35, 61, 0.9) 36%, rgba(13, 35, 61, 0.48) 68%, rgba(13, 35, 61, 0.08) 100%);"
         >
         </div>
+        <div class="hero-publication-dots" aria-hidden="true"></div>
         <div
-          class="mx-auto flex min-h-[650px] max-w-7xl items-center px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:pb-28 xl:min-h-[760px]"
+          class="relative z-10 mx-auto flex min-h-[650px] max-w-7xl items-center px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:py-36 xl:min-h-[760px]"
         >
-          <div>
+          <div class="lg:mt-8">
             <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-[#f2bd55]">
               Majors, minors, and programs
             </p>
@@ -730,6 +731,39 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
       </div>
     </template>
   </div>
+
+  <style>
+    .hero-publication-dots {
+      pointer-events: none;
+      position: absolute;
+      z-index: 0;
+      top: 5.5rem;
+      left: -4rem;
+      width: min(52vw, 46rem);
+      height: 31rem;
+      opacity: 0.38;
+      transform: rotate(4deg);
+      background-image: radial-gradient(
+        circle,
+        rgb(242 189 85 / 0.72) 0 1.6px,
+        transparent 1.9px
+      );
+      background-position: center;
+      background-size: 18px 18px;
+      -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
+    }
+
+    @media (max-width: 47.999rem) {
+      .hero-publication-dots {
+        top: 8rem;
+        left: -7rem;
+        width: 24rem;
+        height: 26rem;
+        opacity: 0.3;
+      }
+    }
+  </style>
 
   <script is:inline>
     function programExplorer() {
