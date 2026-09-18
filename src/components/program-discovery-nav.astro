@@ -3,9 +3,11 @@ type ActiveView = "az" | "interest" | "quiz";
 
 interface Props {
   active: ActiveView;
+  variant?: "cards" | "editorial";
 }
 
-const { active } = Astro.props;
+const { active, variant = "cards" } = Astro.props;
+const isEditorial = variant === "editorial";
 
 const views = [
   {
@@ -30,11 +32,19 @@ const views = [
 ---
 
 <nav
-  class="relative z-20 -mt-10 px-5 sm:-mt-12 sm:px-8"
+  class:list={[
+    "relative z-20 px-5 sm:px-8",
+    isEditorial ? "-mt-7 sm:-mt-8" : "-mt-10 sm:-mt-12",
+  ]}
   aria-label="Ways to explore undergraduate programs"
 >
   <div
-    class="mx-auto grid max-w-5xl grid-cols-3 overflow-hidden border border-slate-400 bg-white shadow-xl shadow-primary-950/10"
+    class:list={[
+      "mx-auto grid grid-cols-3 overflow-hidden bg-white",
+      isEditorial
+        ? "max-w-4xl border-b border-slate-300 shadow-lg shadow-primary-950/10"
+        : "max-w-5xl border border-slate-400 shadow-xl shadow-primary-950/10",
+    ]}
   >
     {
       views.map((view, index) => {
@@ -44,20 +54,34 @@ const views = [
             href={view.href}
             aria-current={isActive ? "page" : undefined}
             class:list={[
-              "group relative flex min-h-20 flex-col items-center justify-center px-2 py-4 text-center no-underline transition sm:min-h-24 sm:px-5",
-              index > 0 && "border-l border-slate-400",
-              isActive
-                ? "bg-primary-900 text-white"
-                : "bg-white text-primary-950 hover:bg-tertiary-100",
+              "group relative flex flex-col items-center justify-center px-2 text-center no-underline transition sm:px-5",
+              isEditorial ? "min-h-16 py-3 sm:min-h-20" : "min-h-20 py-4 sm:min-h-24",
+              index > 0 &&
+                (isEditorial ? "border-l border-slate-300" : "border-l border-slate-400"),
+              isEditorial
+                ? isActive
+                  ? "bg-white text-primary-950"
+                  : "bg-white text-primary-950 hover:bg-tertiary-100"
+                : isActive
+                  ? "bg-primary-900 text-white"
+                  : "bg-white text-primary-950 hover:bg-tertiary-100",
             ]}
           >
             {isActive && (
-              <span class="absolute inset-x-0 top-0 h-1 bg-[#f2bd55]" aria-hidden="true" />
+              <span
+                class:list={[
+                  "absolute inset-x-0 bg-[#f2bd55]",
+                  isEditorial ? "bottom-0 h-1.5" : "top-0 h-1",
+                ]}
+                aria-hidden="true"
+              />
             )}
             <span
               class:list={[
                 "hidden text-[9px] font-extrabold uppercase tracking-[.13em] sm:block",
-                isActive ? "text-[#f2bd55]" : "text-slate-500 group-hover:text-primary-700",
+                isActive && !isEditorial
+                  ? "text-[#f2bd55]"
+                  : "text-slate-500 group-hover:text-primary-700",
               ]}
             >
               {view.eyebrow}

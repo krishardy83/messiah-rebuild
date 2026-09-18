@@ -51,34 +51,11 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               > designed to help you reach your goals.
             </p>
 
-            <form
-              @submit.prevent="goToFinder()"
-              class="mt-7 flex max-w-2xl items-stretch bg-white text-slate-900 shadow-2xl shadow-black/25"
-            >
-              <Icon name="search" class="ml-5 mt-5 size-6 shrink-0 text-primary-700" />
-              <label class="sr-only" for="hero-program-search"
-                >Search programs, interests, or careers</label
-              >
-              <input
-                id="hero-program-search"
-                x-model.debounce.200ms="query"
-                @input="shownCount = pageSize; syncUrl()"
-                type="search"
-                autocomplete="off"
-                placeholder="Try “physical therapy” or “design”"
-                class="min-w-0 flex-1 border-0 px-4 py-5 text-base outline-none placeholder:text-slate-500 focus:ring-0"
-              />
-              <button
-                type="submit"
-                class="grid w-16 shrink-0 place-items-center bg-[#f2bd55] text-2xl text-primary-950 transition hover:bg-[#ffd06c]"
-                aria-label="View search results">→</button
-              >
-            </form>
           </div>
         </div>
       </section>
 
-      <ProgramDiscoveryNav active="az" />
+      <ProgramDiscoveryNav active="az" variant="editorial" />
 
       <section id="program-finder" class="scroll-mt-20 bg-white py-20 lg:py-28" aria-live="polite">
         <div class="mx-auto max-w-7xl px-5 sm:px-8">
