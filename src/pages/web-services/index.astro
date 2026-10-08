@@ -2,12 +2,14 @@
 import Sidebar from "../../components/sidebar.astro";
 import WithHero from "../../layouts/with-hero.astro";
 import Card from "../../components/card.astro";
+import Drawer from "../../components/drawer.astro";
+import Accordion from "../../components/accordion.astro";
 
 const sidebarLinks = [
   {
     title: "Web Services",
     children: [
-      { href: "/", name: "FAQ's" },
+      { href: "#web-services-faqs", name: "FAQs" },
       { href: "/", name: "Project planning" },
       { href: "/", name: "Services provided" },
       { href: "/", name: "Support & training" },
@@ -86,11 +88,56 @@ const sidebarLinks = [
 
     <ul class="not-prose flex gap-4">
       <li>
-        <a href="/" class="btn-tertiary">FAQ's</a>
+        <a
+          href="#web-services-faqs"
+          class="btn-tertiary"
+          aria-haspopup="dialog"
+          aria-controls="web-services-faqs">FAQs</a
+        >
       </li>
       <li>
         <a href="/" class="btn-tertiary">Jadu tutorials</a>
       </li>
     </ul>
   </div>
+
+  <Drawer id="web-services-faqs" title="Web Services FAQs">
+    <p class="mb-6">
+      Find answers to common questions about Web Services below. This is placeholder content;
+      replace it with helpful information for your campus community.
+    </p>
+
+    <Accordion
+      id="web-services-faq-request"
+      title="How do I request help with my website?"
+      allowProse
+    >
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae neque eu justo
+        facilisis consequat. Replace this text with instructions for requesting website support.
+      </p>
+    </Accordion>
+
+    <Accordion
+      id="web-services-faq-access"
+      title="How do I get access to edit my website?"
+      allowProse
+    >
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis sapien sed nibh
+        tincidunt volutpat. Replace this text with information about editor access and training.
+      </p>
+    </Accordion>
+
+    <Accordion
+      id="web-services-faq-training"
+      title="Where can I find training resources?"
+      allowProse
+    >
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at ligula vitae ipsum
+        commodo malesuada. Replace this text with links to tutorials and upcoming training sessions.
+      </p>
+    </Accordion>
+  </Drawer>
 </WithHero>
