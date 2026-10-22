@@ -1,0 +1,1069 @@
+---
+import BaseLayout from "../../layouts/base.astro";
+import Icon from "../../components/icon.astro";
+import ProgramList, { Program } from "../../components/program-list.astro";
+import Youtube from "../../components/youtube.astro";
+
+const coursePlan = [
+  {
+    year: "Year 1",
+    title: "Foundations",
+    courses: [
+      "BUSA 102 · Opportunities in Business",
+      "ACCT 141 · Financial Accounting",
+      "BUSA 120 · Principles of Management",
+      "ECON 120 · Principles of Macroeconomics",
+    ],
+  },
+  {
+    year: "Year 2",
+    title: "Core skills",
+    courses: [
+      "ACCT 242 · Managerial Accounting",
+      "ECON 220 · Principles of Microeconomics",
+      "CIS 190 · Strategic Use of IT",
+      "STAT 281 · Applied Statistics",
+    ],
+  },
+  {
+    year: "Year 3",
+    title: "Application",
+    courses: [
+      "ACCT 301 · Intermediate Accounting I",
+      "ACCT 302 · Intermediate Accounting II",
+      "ACCT 343 · Cost Accounting",
+      "ACCT 347 · Federal Income Taxes",
+    ],
+  },
+  {
+    year: "Year 4",
+    title: "Launch",
+    courses: [
+      "ACCT 440 · Advanced Accounting",
+      "ACCT 442 · Auditing",
+      "BUSA 501 · Business Strategy",
+      "BUSA 505 · Business Analytics",
+    ],
+  },
+];
+
+const careers = [
+  "Staff accountant",
+  "Audit staff",
+  "Senior accountant",
+  "Audit assistant",
+  "Fraud examiner",
+  "Certified public accountant",
+  "Tax preparer",
+  "Billing support",
+  "Accounts receivable associate",
+  "Credit analyst",
+];
+const employers = [
+  "McKonley & Asbusy",
+  "Ernst & Young",
+  "Deloitte",
+  "Reinsel Kuntz Lesher",
+  "LLP",
+  "Mitchell Emert & Hill",
+  "Petway Mills & Pearson",
+  "Arther F. Bell",
+  "Jr. & Associates",
+  "ParenteBeard",
+  "Gannett Fleming",
+];
+
+const distinctives = [
+  [
+    "CPA preparation",
+    "Learn in a program that regularly ranks among Pennsylvania’s strongest for sections passed on the CPA exam.",
+  ],
+  [
+    "Experienced faculty",
+    "Learn from professors with at least 10 years of public and private accounting experience.",
+  ],
+  [
+    "Mentoring that lasts",
+    "Connect with an upper-class student and later with an accounting graduate working in the field.",
+  ],
+  [
+    "Faith and ethics",
+    "Build the judgment to make principled decisions and serve organizations with integrity.",
+  ],
+  [
+    "Communication skills",
+    "Practice explaining complex financial information clearly to teams, clients and leaders.",
+  ],
+  [
+    "Professional quality",
+    "Study in a program with specialized ACBSP accreditation and a commitment to continuous improvement.",
+  ],
+];
+
+const relatedPrograms = [
+  {
+    title: "Finance",
+    image: "/images/programs/related-finance.png",
+    alt: "Professor and class looking at the stock market",
+    href: "https://www.messiah.edu/undergraduate/finance-major",
+  },
+  {
+    title: "Actuarial Science",
+    image: "/images/programs/related-actuarial-science.jpg",
+    alt: "Student writing mathematical equations on a glass board",
+    href: "https://www.messiah.edu/undergraduate/actuarial-science-major",
+  },
+  {
+    title: "Mathematics",
+    image: "/images/programs/related-mathematics.jpg",
+    alt: "Student and professor working on a math problem on a whiteboard",
+    href: "https://www.messiah.edu/undergraduate/mathematics-major",
+  },
+  {
+    title: "Statistics",
+    image: "/images/programs/related-statistics.png",
+    alt: "Students looking at a presentation",
+    href: "https://www.messiah.edu/undergraduate/statistics-minor",
+  },
+];
+---
+
+<BaseLayout
+  title="Accounting Major — Tabbed Program Page"
+  description="Explore Messiah University's accounting major through a modern, full-width tabbed program page."
+>
+  <main id="content" class="bg-white text-slate-900">
+    <section
+      class="relative isolate -mt-32 min-h-[650px] overflow-hidden bg-primary-950 text-white"
+    >
+      <img
+        src="/images/programs/accounting-major-new-hero.jpg"
+        alt=""
+        class="absolute inset-0 -z-20 h-full w-full object-cover"
+        aria-hidden="true"
+      />
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-primary-900/90 to-primary-900/10"
+      >
+      </div>
+      <div class="publication-dots publication-dots-hero" aria-hidden="true"></div>
+      <div
+        class="relative z-10 mx-auto flex min-h-[650px] max-w-7xl items-end px-5 pb-16 pt-40 sm:px-8 lg:items-center lg:pb-10 lg:pt-36"
+      >
+        <div class="max-w-4xl">
+          <h1
+            class="flex flex-wrap items-center gap-4 font-title text-5xl font-bold leading-[.92] tracking-[-.035em] sm:text-6xl lg:text-7xl xl:text-8xl"
+          >
+            Accounting
+            <span
+              class="bg-[#f2bd55] px-3 py-2 font-sans text-xl font-extrabold leading-none tracking-normal text-primary-950 sm:text-2xl"
+              >B.S.</span
+            >
+          </h1>
+          <ProgramList
+            programs={[Program.Major, Program.Minor]}
+            showText
+            class="mt-7 text-lg sm:text-xl"
+          />
+          <p class="mt-7 max-w-2xl font-title text-2xl leading-relaxed text-white/90 lg:text-3xl">
+            Turn financial insight into sound decisions, meaningful service and a career built on
+            integrity.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#next-steps"
+              class="inline-flex min-h-12 items-center justify-center bg-[#f2bd55] px-6 py-3 font-bold text-primary-950 no-underline transition hover:-translate-y-0.5 hover:bg-[#ffd06c]"
+              >Next steps <span class="ml-2" aria-hidden="true">↓</span></a
+            >
+            <button
+              type="button"
+              x-data="{ saved: false }"
+              x-init="saved = localStorage.getItem('saved-accounting') === 'true'"
+              @click="saved = !saved; localStorage.setItem('saved-accounting', String(saved))"
+              :aria-pressed="saved"
+              :class="saved ? 'bg-white text-primary-900' : 'bg-transparent text-white hover:bg-white/10'"
+              class="inline-flex min-h-12 items-center justify-center gap-2 border border-white/70 px-6 py-3 font-bold transition hover:-translate-y-0.5"
+            >
+              <Icon name="bookmark" class="size-5" aria-hidden="true" />
+              <span x-text="saved ? 'Program saved' : 'Save program'">Save program</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="overview-intro"
+      class="mx-auto grid max-w-7xl scroll-mt-20 items-center gap-12 px-5 py-24 sm:px-8 lg:grid-cols-2 lg:gap-16"
+    >
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[.18em] text-primary-800">
+          Purpose meets preparation
+        </p>
+        <h2
+          class="mt-3 font-title text-4xl leading-[1.05] tracking-tight text-primary-800 md:text-5xl"
+        >
+          Learn accounting. Practice good judgment. Serve with integrity.
+        </h2>
+        <div class="mt-7 max-w-3xl space-y-5 text-lg leading-relaxed text-slate-600">
+          <p>
+            Messiah accounting graduates are in demand at public accounting firms, national
+            corporations and small businesses. More than 70% of graduates may accept a job offer
+            early in their senior year.
+          </p>
+          <p>
+            You’ll learn to create, audit and inspect financial records while building the
+            communication and collaboration skills employers expect.
+          </p>
+        </div>
+      </div>
+
+      <Youtube
+        videoId="JEpsLgJpkWA"
+        preview="https://img.youtube.com/vi/JEpsLgJpkWA/hqdefault.jpg"
+        class="w-full overflow-hidden shadow-xl"
+      />
+    </section>
+
+    <section
+      aria-labelledby="highlights-title"
+      class="relative isolate overflow-hidden bg-white py-14 text-slate-900 md:py-16"
+      data-count-up-section
+    >
+      <div class="publication-dots publication-dots-highlights" aria-hidden="true"></div>
+      <div class="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
+        <p
+          id="highlights-title"
+          class="text-xs font-bold uppercase tracking-[.18em] text-primary-800"
+        >
+          Accounting at a glance
+        </p>
+        <div class="mt-6 grid border-y border-slate-300 md:grid-cols-3">
+          <article
+            class="flex items-center gap-5 border-b border-slate-300 py-7 md:border-b-0 md:border-r md:pr-8"
+          >
+            <strong
+              class="w-28 shrink-0 text-right font-title text-5xl tabular-nums text-[#bd7d0d]"
+              aria-label="100 percent"
+            >
+              <span data-count-up="100" data-count-suffix="%" aria-hidden="true">100%</span>
+            </strong>
+            <p class="m-0 text-sm leading-snug text-slate-700">
+              of first-year students receive financial aid
+            </p>
+          </article>
+          <article
+            class="flex items-center gap-5 border-b border-slate-300 py-7 md:border-b-0 md:border-r md:px-8"
+          >
+            <strong
+              class="w-28 shrink-0 text-right font-title text-5xl tabular-nums text-[#bd7d0d]"
+              aria-label="98 percent"
+            >
+              <span data-count-up="98" data-count-suffix="%" aria-hidden="true">98%</span>
+            </strong>
+            <p class="m-0 text-sm leading-snug text-slate-700">
+              of the Class of 2025 were employed or in graduate school within 6–9 months
+            </p>
+          </article>
+          <article class="flex items-center gap-5 py-7 md:pl-8">
+            <strong
+              class="w-28 shrink-0 text-right font-title text-5xl tabular-nums text-[#bd7d0d]"
+              aria-label="12 to 1"
+            >
+              <span data-count-up="12" data-count-suffix=":1" aria-hidden="true">12:1</span>
+            </strong>
+            <p class="m-0 text-sm leading-snug text-slate-700">student-to-faculty ratio</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="program-content"
+      x-data="programTabs()"
+      x-init="init()"
+      class="scroll-mt-24"
+      aria-labelledby="program-content-heading"
+    >
+      <h2 id="program-content-heading" class="sr-only">Accounting program information</h2>
+
+      <div class="sticky top-0 z-20 border-b border-slate-300 bg-white/95 shadow-sm backdrop-blur">
+        <div class="mx-auto max-w-7xl overflow-x-auto px-5 pt-4 sm:px-8">
+          <div
+            role="tablist"
+            aria-label="Accounting program sections"
+            class="program-tab-list"
+            @keydown.right.prevent="$focus.wrap().next()"
+            @keydown.left.prevent="$focus.wrap().prev()"
+            @keydown.home.prevent="$focus.first()"
+            @keydown.end.prevent="$focus.last()"
+          >
+            <button
+              @click="select('overview')"
+              :aria-selected="isActive('overview')"
+              :tabindex="isActive('overview') ? 0 : -1"
+              id="tab-overview"
+              aria-controls="panel-overview"
+              type="button"
+              role="tab"
+              class="relative -mb-px min-h-16 border border-slate-300 bg-slate-100 px-5 py-8 text-center font-title text-lg font-bold text-slate-700 transition after:absolute after:inset-x-0 after:top-0 after:h-1 after:origin-left after:scale-x-0 after:bg-[#f2bd55] after:transition-transform hover:bg-white hover:text-primary-900 aria-selected:border-primary-800 aria-selected:border-b-white aria-selected:bg-white aria-selected:text-primary-900 aria-selected:after:scale-x-100 sm:text-xl"
+              >Overview</button
+            >
+            <button
+              @click="select('courses')"
+              :aria-selected="isActive('courses')"
+              :tabindex="isActive('courses') ? 0 : -1"
+              id="tab-courses"
+              aria-controls="panel-courses"
+              type="button"
+              role="tab"
+              class="relative -mb-px min-h-16 border border-slate-300 bg-slate-100 px-5 py-8 text-center font-title text-lg font-bold text-slate-700 transition after:absolute after:inset-x-0 after:top-0 after:h-1 after:origin-left after:scale-x-0 after:bg-[#f2bd55] after:transition-transform hover:bg-white hover:text-primary-900 aria-selected:border-primary-800 aria-selected:border-b-white aria-selected:bg-white aria-selected:text-primary-900 aria-selected:after:scale-x-100 sm:text-xl"
+              >Courses & Curriculum</button
+            >
+            <button
+              @click="select('outcomes')"
+              :aria-selected="isActive('outcomes')"
+              :tabindex="isActive('outcomes') ? 0 : -1"
+              id="tab-outcomes"
+              aria-controls="panel-outcomes"
+              type="button"
+              role="tab"
+              class="relative -mb-px min-h-16 border border-slate-300 bg-slate-100 px-5 py-8 text-center font-title text-lg font-bold text-slate-700 transition after:absolute after:inset-x-0 after:top-0 after:h-1 after:origin-left after:scale-x-0 after:bg-[#f2bd55] after:transition-transform hover:bg-white hover:text-primary-900 aria-selected:border-primary-800 aria-selected:border-b-white aria-selected:bg-white aria-selected:text-primary-900 aria-selected:after:scale-x-100 sm:text-xl"
+              >Alumni Outcomes</button
+            >
+            <button
+              @click="select('career-preparation')"
+              :aria-selected="isActive('career-preparation')"
+              :tabindex="isActive('career-preparation') ? 0 : -1"
+              id="tab-career-preparation"
+              aria-controls="panel-career-preparation"
+              type="button"
+              role="tab"
+              class="relative -mb-px min-h-16 border border-slate-300 bg-slate-100 px-5 py-8 text-center font-title text-lg font-bold text-slate-700 transition after:absolute after:inset-x-0 after:top-0 after:h-1 after:origin-left after:scale-x-0 after:bg-[#f2bd55] after:transition-transform hover:bg-white hover:text-primary-900 aria-selected:border-primary-800 aria-selected:border-b-white aria-selected:bg-white aria-selected:text-primary-900 aria-selected:after:scale-x-100 sm:text-xl"
+              >Career Preparation</button
+            >
+            <button
+              @click="select('why-messiah')"
+              :aria-selected="isActive('why-messiah')"
+              :tabindex="isActive('why-messiah') ? 0 : -1"
+              id="tab-why-messiah"
+              aria-controls="panel-why-messiah"
+              type="button"
+              role="tab"
+              class="relative -mb-px min-h-16 border border-slate-300 bg-slate-100 px-5 py-8 text-center font-title text-lg font-bold text-slate-700 transition after:absolute after:inset-x-0 after:top-0 after:h-1 after:origin-left after:scale-x-0 after:bg-[#f2bd55] after:transition-transform hover:bg-white hover:text-primary-900 aria-selected:border-primary-800 aria-selected:border-b-white aria-selected:bg-white aria-selected:text-primary-900 aria-selected:after:scale-x-100 sm:text-xl"
+              >Why Messiah?</button
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#f7f8f6]">
+        <div class="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 lg:py-20">
+          <div
+            id="panel-overview"
+            role="tabpanel"
+            aria-labelledby="tab-overview"
+            x-show="isActive('overview')"
+            x-transition.opacity
+          >
+            <div class="max-w-3xl">
+              <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
+                Program overview
+              </p>
+              <h3
+                class="mt-3 font-title text-4xl font-bold leading-[1.05] text-primary-950 md:text-5xl"
+              >
+                An accounting education built for where you’re going.
+              </h3>
+              <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                Explore the professional preparation, hands-on learning and personal connections
+                that distinguish Messiah’s accounting program.
+              </p>
+            </div>
+            <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {
+                distinctives.map(([title, description], index) => (
+                  <article class="border border-slate-400 bg-white p-7">
+                    <span class="grid size-10 place-items-center bg-primary-900 font-title font-bold text-white">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h4 class="mt-5 font-title text-2xl font-bold text-primary-950">{title}</h4>
+                    <p class="mt-3 leading-relaxed text-slate-600">{description}</p>
+                  </article>
+                ))
+              }
+            </div>
+            <div class="mt-12 border-l-4 border-[#f2bd55] bg-primary-900 p-7 text-white sm:p-9">
+              <p class="text-xs font-extrabold uppercase tracking-wider text-[#f2bd55]">
+                Specialized accreditation
+              </p>
+              <h4 class="mt-3 font-title text-3xl font-bold">Accredited by ACBSP</h4>
+              <p class="mt-4 max-w-4xl leading-relaxed text-slate-200">
+                Messiah’s accounting program has specialized accreditation from the Accreditation
+                Council for Business Schools and Programs, reflecting its focus on teaching
+                excellence and continuous improvement.
+              </p>
+            </div>
+          </div>
+
+          <div
+            id="panel-courses"
+            role="tabpanel"
+            aria-labelledby="tab-courses"
+            x-show="isActive('courses')"
+            x-cloak
+            x-transition.opacity
+          >
+            <div>
+              <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
+                Courses & curriculum
+              </p>
+              <h3
+                class="mt-3 font-title text-4xl font-bold leading-[1.05] text-primary-950 md:text-5xl"
+              >
+                A path from foundations to professional practice.
+              </h3>
+              <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                In the Accounting program, you will take a selection of courses that successfully
+                prepare you for a career in a related field. Hands-on experiences and classroom
+                learning within the framework of Christian faith will give you the skills and
+                knowledge to achieve your goals. Our programs offer a wide variety of courses that
+                will not only help you excel in your future career, but challenge you to develop a
+                deeper understanding of your field of study.
+              </p>
+              <p class="mt-10 font-bold leading-relaxed text-slate-600">
+                Students entering our program take a wide range of courses. Here are some examples;
+                for the complete requirements, visit the course catalog links below.
+              </p>
+            </div>
+            <div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {
+                coursePlan.map((year) => (
+                  <article class="border border-slate-400 border-t-4 border-t-[#f2bd55] bg-white p-6">
+                    <h4 class="font-title text-2xl font-bold text-primary-950">
+                      {year.title}
+                    </h4>
+                    <ul class="mt-5 space-y-3 text-sm text-slate-600">
+                      {year.courses.map((course) => {
+                        const [code, title] = course.split(" · ");
+
+                        return (
+                          <li class="border-t border-slate-200 pt-3 first:border-0 first:pt-0">
+                            <strong class="block text-primary-800">{code}</strong>
+                            <span class="block text-slate-600">{title}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </article>
+                ))
+              }
+            </div>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a
+                href="https://messiah.smartcatalogiq.com/2026-2027/undergraduate-catalog/school-of-arts-culture-and-society/department-of-business/accounting-b-s"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-12 items-center bg-primary-900 px-6 py-3 font-bold text-white no-underline hover:bg-primary-800"
+                >View full B.S. requirements <span class="ml-3" aria-hidden="true">→</span></a
+              >
+              <a
+                href="https://messiah.smartcatalogiq.com/en/2026-2027/undergraduate-catalog/school-of-arts-culture-and-society/department-of-business/accounting-minor-for-all-other-majors"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-12 items-center border border-primary-900 px-6 py-3 font-bold text-primary-900 no-underline hover:bg-white"
+                >View minor requirements <span class="ml-3" aria-hidden="true">→</span></a
+              >
+              <a
+                href="https://messiah.smartcatalogiq.com/en/2026-2027/undergraduate-catalog/school-of-arts-culture-and-society/department-of-business/accounting-minor-for-finance-majors"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-12 items-center border border-primary-900 px-6 py-3 font-bold text-primary-900 no-underline hover:bg-white"
+                >View minor requirements for finance majors <span class="ml-3" aria-hidden="true"
+                  >→</span
+                ></a
+              >
+            </div>
+            <div class="mt-12 border-l-4 border-[#f2bd55] bg-primary-900 p-7 text-white sm:p-9">
+              <p class="text-xs font-extrabold uppercase tracking-wider text-[#f2bd55]">
+                Building specialized expertise
+              </p>
+              <h4 class="mt-3 font-title text-3xl font-bold text-white">
+                A broad business foundation with focused study
+              </h4>
+              <p class="mt-4 max-w-6xl text-lg leading-relaxed text-slate-200">
+                Messiah’s business program combines a broad business foundation with focused study
+                in your chosen discipline. You’ll explore areas such as investments, operations,
+                ethics, entrepreneurship and advertising while building specialized expertise in
+                accounting. Internships provide valuable real-world experience, and the strategic
+                management capstone brings business disciplines together through case analysis and
+                high-level decision-making.
+              </p>
+            </div>
+          </div>
+
+          <div
+            id="panel-outcomes"
+            role="tabpanel"
+            aria-labelledby="tab-outcomes"
+            x-show="isActive('outcomes')"
+            x-cloak
+            x-transition.opacity
+            data-count-up-section
+          >
+            <div class="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+              <div>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
+                  Alumni outcomes
+                </p>
+                <h3
+                  class="mt-3 font-title text-4xl font-bold leading-[1.05] text-primary-950 md:text-5xl"
+                >
+                  Graduate ready to make an impact.
+                </h3>
+                <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                  The Big Four and respected regional firms recruit Messiah graduates for their
+                  technical ability, integrity and communication skills.
+                </p>
+                <a
+                  href="https://www.messiah.edu/dept-business/our-alumni/index.html"
+                  class="mt-6 inline-flex min-h-12 items-center bg-primary-900 px-6 py-3 font-bold text-white no-underline transition hover:-translate-y-0.5 hover:bg-primary-800"
+                >
+                  Meet our alumni <span class="ml-3" aria-hidden="true">→</span>
+                </a>
+                <strong
+                  class="mt-9 block font-title text-8xl tabular-nums text-[#bd7d0d] md:text-9xl"
+                  aria-label="98 percent"
+                >
+                  <span data-count-up="98" data-count-suffix="%" aria-hidden="true">98%</span>
+                </strong>
+                <span class="block max-w-sm font-bold text-primary-950"
+                  >employed or in graduate school within 6–9 months</span
+                >
+                <small class="mt-2 block text-slate-500">Class of 2025 respondents</small>
+              </div>
+              <div class="grid self-start gap-5 sm:grid-cols-2">
+                <article class="border border-slate-400 bg-white p-7">
+                  <h4 class="font-title text-2xl font-bold text-primary-950">
+                    What graduates do
+                  </h4><ul class="mt-5 space-y-3 text-slate-600">
+                    {
+                      careers.map((item) => (
+                        <li class="flex gap-3">
+                          <span class="text-[#bd7d0d]" aria-hidden="true">
+                            ✓
+                          </span>
+                          {item}
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </article>
+                <article class="border border-slate-400 bg-white p-7">
+                  <h4 class="font-title text-2xl font-bold text-primary-950">
+                    Where graduates work
+                  </h4><ul class="mt-5 space-y-3 text-slate-600">
+                    {
+                      employers.map((item) => (
+                        <li class="flex gap-3">
+                          <span class="text-[#bd7d0d]" aria-hidden="true">
+                            ✓
+                          </span>
+                          {item}
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="panel-career-preparation"
+            role="tabpanel"
+            aria-labelledby="tab-career-preparation"
+            x-show="isActive('career-preparation')"
+            x-cloak
+            x-transition.opacity
+          >
+            <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              <div>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
+                  Career preparation
+                </p>
+                <h3
+                  class="mt-3 font-title text-4xl font-bold leading-[1.05] text-primary-950 md:text-5xl"
+                >
+                  Put learning into practice.
+                </h3>
+                <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                  Learning in the classroom is important but actually applying that knowledge in a hands-on way can make all the difference. At Messiah University, the Experiential Learning Initiative (ELI) allows Messiah to take this hands-on learning to a new level by giving students the opportunity to apply what they have learned to various real world contexts--such as an internship/practica, service learning, off-campus program, holding a student leadership position, or participating in undergraduate research.
+                </p>
+                <h4 class="mt-8 font-bold text-primary-950">Typical accounting internships</h4>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {
+                    [
+                      "Accounting firms",
+                      "Corporate offices",
+                      "Tax preparation",
+                      "Nonprofits",
+                      "Auditing companies",
+                      "Government offices",
+                    ].map((item) => (
+                      <span class="border border-slate-300 bg-white px-3 py-2 text-sm">{item}</span>
+                    ))
+                  }
+                </div>
+              </div>
+              <div>
+                <Youtube
+                  videoId="fv4YiHbEasQ"
+                  preview="/images/programs/accounting-into-the-city-video-cover.png"
+                  alt="Messiah students visiting the Lincoln Memorial during Into the City"
+                  litebox
+                  class="w-full overflow-hidden shadow-xl"
+                />
+                <p class="mt-5 font-sans text-base font-bold leading-snug text-primary-950">
+                  Listen to students share their experiences with Into the City, a multi-day career
+                  immersion and networking program.
+                </p>
+              </div>
+            </div>
+            <div class="mt-14 grid gap-5 md:grid-cols-3">
+              <article class="border border-slate-400 bg-white p-7">
+                <p class="text-xs font-bold uppercase tracking-wider text-primary-700">
+                  Service in action
+                </p><h4 class="mt-3 font-title text-2xl font-bold text-primary-950">
+                  Community tax preparation
+                </h4><p class="mt-3 text-slate-600">
+                  Gain client experience while providing free tax assistance to neighbors through
+                  VITA.
+                </p>
+              </article>
+              <article class="border border-slate-400 bg-white p-7">
+                <p class="text-xs font-bold uppercase tracking-wider text-primary-700">
+                  Communication
+                </p><h4 class="mt-3 font-title text-2xl font-bold text-primary-950">
+                  Explain what the numbers mean
+                </h4><p class="mt-3 text-slate-600">
+                  Practice presenting accurate, useful insights to peers, clients and executives.
+                </p>
+              </article>
+              <article class="border border-slate-400 bg-white p-7">
+                <p class="text-xs font-bold uppercase tracking-wider text-primary-700">
+                  Program support
+                </p><h4 class="mt-3 font-title text-2xl font-bold text-primary-950">
+                  Accounting scholarships
+                </h4><p class="mt-3 text-slate-600">
+                  Explore more than 10 scholarship opportunities supported by the program’s alumni
+                  network.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <div
+            id="panel-why-messiah"
+            role="tabpanel"
+            aria-labelledby="tab-why-messiah"
+            x-show="isActive('why-messiah')"
+            x-cloak
+            x-transition.opacity
+          >
+            <div class="max-w-6xl space-y-12">
+              <section>
+                <h3 class="font-title text-4xl font-bold text-primary-950 md:text-5xl">
+                  Accounting-specific scholarships
+                </h3>
+                <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                  Because of the accounting program's strong alumni support network, we are thrilled
+                  to offer over 10 different scholarship opportunities to incoming and current
+                  accounting major students.
+                </p>
+              </section>
+
+              <section>
+                <h3 class="font-title text-4xl font-bold text-primary-950 md:text-5xl">
+                  Soft skill integration
+                </h3>
+                <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                  The Association of International Certified Professional Accountants (AICPA) says,
+                  “Accountants are taking an increasingly visible role within their organizations,
+                  working on cross-departmental projects ranging from strategic planning to
+                  information technology initiatives. In addition, they are presenting data to a
+                  number of diverse audiences. As a result, employers look for accounting
+                  professionals who not only possess financial expertise but also strong
+                  communication skills.”
+                </p>
+                <p class="mt-6 text-lg leading-relaxed text-slate-600">
+                  This major offers a distinctive experiential program that incorporates the
+                  teaching of communication into the upper-level accounting course sequence.
+                  Evaluated for accuracy, clarity and succinctness in both written and oral forms of
+                  communication, you will learn soft skills necessary for working with peers and
+                  communicating solutions to executives.
+                </p>
+                <a
+                  class="mt-8 inline-flex min-h-14 items-center bg-[#68a5c8] px-6 py-3 font-bold uppercase tracking-wide text-white no-underline transition hover:-translate-y-0.5 hover:bg-primary-700"
+                  href="https://www.picpa.org/future-cpas/cpa-exam-licensing/work-experience-requirements"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  The 150 Hour Accounting Education Requirement
+                </a>
+              </section>
+
+              <section>
+                <h3 class="font-title text-4xl font-bold text-primary-950 md:text-5xl">
+                  Program accreditation
+                </h3>
+                <p class="mt-5 text-lg leading-relaxed text-slate-600">
+                  Messiah's accounting program has specialized accreditation by the
+                  <a
+                    href="https://www.acbsp.org/"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    class="font-bold text-primary-950 underline decoration-2 underline-offset-4 hover:text-primary-700"
+                    >Accreditation Council for Business Schools and Programs</a
+                  > (ACBSP).
+                </p>
+                <p class="mt-6 text-lg leading-relaxed text-slate-600">
+                  ACBSP is the premier accrediting body for colleges and universities that emphasize
+                  teaching excellence; 900 institutions around the world are accredited by ACBSP.
+                  This accreditation signifies the department’s commitment to a focus on mission
+                  and on continuous quality improvement. For students, parents, prospective
+                  employers and graduate schools, accreditation demonstrates that Messiah has met
+                  rigorous standards in curriculum, strategic planning, leadership, stakeholder
+                  focus and measurement of student learning.
+                </p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative isolate overflow-hidden border-y border-slate-200 bg-[#eef4f7] py-16">
+      <div class="publication-dots publication-dots-department" aria-hidden="true"></div>
+      <div class="relative z-10 mx-auto max-w-7xl px-5 sm:px-8">
+        <p class="text-xs font-bold uppercase tracking-[.18em] text-primary-800">
+          Department resources
+        </p>
+        <h2 class="mt-3 font-title text-3xl font-bold text-primary-800 md:text-4xl">
+          Explore the Department of Business
+        </h2>
+        <div class="mt-8 grid gap-3 md:grid-cols-3">
+          <a
+            href="https://www.messiah.edu/dept-business/"
+            class="group flex min-h-24 items-center justify-between gap-6 border border-slate-300 border-t-4 border-t-tertiary-400 bg-white p-6 text-primary-800 transition hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-md"
+          >
+            <span class="font-title text-xl font-bold">Department of Business</span>
+            <span
+              class="text-xl text-tertiary-600 transition-transform group-hover:translate-x-1"
+              aria-hidden="true">→</span
+            >
+          </a>
+          <a
+            href="https://www.messiah.edu/dept-business/our-faculty/"
+            class="group flex min-h-24 items-center justify-between gap-6 border border-slate-300 border-t-4 border-t-tertiary-400 bg-white p-6 text-primary-800 transition hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-md"
+          >
+            <span class="font-title text-xl font-bold">Meet the Faculty</span>
+            <span
+              class="text-xl text-tertiary-600 transition-transform group-hover:translate-x-1"
+              aria-hidden="true">→</span
+            >
+          </a>
+          <a
+            href="https://www.messiah.edu/dept-business/our-facilities/"
+            class="group flex min-h-24 items-center justify-between gap-6 border border-slate-300 border-t-4 border-t-tertiary-400 bg-white p-6 text-primary-800 transition hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-md"
+          >
+            <span class="font-title text-xl font-bold">View Our Facilities</span>
+            <span
+              class="text-xl text-tertiary-600 transition-transform group-hover:translate-x-1"
+              aria-hidden="true">→</span
+            >
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl border-t border-slate-200 px-5 py-20 sm:px-8">
+      <p class="text-xs font-bold uppercase tracking-[.18em] text-primary-800">Keep exploring</p>
+      <h2
+        class="mt-3 font-title text-4xl leading-[1.05] tracking-tight text-primary-800 md:text-5xl"
+      >
+        Related programs
+      </h2>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          relatedPrograms.map((program) => (
+            <a
+              href={program.href}
+              class="group overflow-hidden border border-slate-300 bg-white font-bold text-primary-800 transition hover:border-tertiary-400 hover:shadow-lg"
+            >
+              <img
+                src={program.image}
+                alt={program.alt}
+                loading="lazy"
+                class="aspect-[13/12] w-full object-cover transition duration-300 group-hover:scale-[1.03] group-hover:opacity-90"
+              />
+              <span class="flex items-center justify-between gap-4 p-5">
+                <span>{program.title}</span>
+                <span aria-hidden="true">→</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      id="next-steps"
+      class="scroll-mt-20 bg-gradient-to-r from-[#11698c] to-[#0b7367] py-16 text-white"
+      aria-labelledby="next-steps-title"
+    >
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[.18em] text-white">Your next step</p>
+            <h2 id="next-steps-title" class="mt-3 font-title text-4xl leading-tight md:text-5xl">
+              Explore accounting at Messiah.
+            </h2>
+          </div>
+          <div class="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
+            <a
+              class="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#e5ae3a] px-5 py-3 font-bold text-primary-900 transition hover:-translate-y-0.5 hover:bg-[#d59e2b]"
+              href="/visit">Plan a visit</a
+            >
+            <a
+              class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
+              href="https://www.messiah.edu/applytoday">Apply to Messiah</a
+            >
+          </div>
+        </div>
+
+        <form
+          data-analytics="request-information"
+          method="GET"
+          action="https://www.messiah.edu/undergraduate-admissions/request-more-information/request-information"
+          class="mt-10 grid gap-6 border-t border-white/30 pt-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-end lg:gap-8"
+        >
+          <div class="self-center">
+            <p class="text-xs font-bold uppercase tracking-[.18em] text-tertiary-200">
+              Tell us about yourself
+            </p>
+            <h3 class="mt-2 font-title text-2xl font-bold uppercase text-white">
+              Request information
+            </h3>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.2fr_auto]">
+            <div>
+              <label for="accounting-rfi-first-name" class="sr-only">First name</label>
+              <input
+                id="accounting-rfi-first-name"
+                type="text"
+                name="firstname"
+                autocomplete="given-name"
+                placeholder="First name"
+                required
+                class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
+              />
+            </div>
+            <div>
+              <label for="accounting-rfi-last-name" class="sr-only">Last name</label>
+              <input
+                id="accounting-rfi-last-name"
+                type="text"
+                name="lastname"
+                autocomplete="family-name"
+                placeholder="Last name"
+                required
+                class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
+              />
+            </div>
+            <div class="sm:col-span-2 lg:col-span-1">
+              <label for="accounting-rfi-email" class="sr-only">Email</label>
+              <input
+                id="accounting-rfi-email"
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="Email"
+                required
+                class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
+              />
+            </div>
+            <button
+              type="submit"
+              class="inline-flex min-h-14 w-full items-center justify-center border border-white/80 px-6 py-3 font-title font-bold uppercase tracking-wider text-white transition hover:bg-white hover:text-primary-800 focus-visible:bg-white focus-visible:text-primary-800 sm:col-span-2 lg:col-span-1 lg:w-auto"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .publication-dots {
+      pointer-events: none;
+      position: absolute;
+      z-index: 0;
+      background-image: radial-gradient(
+        circle,
+        rgb(242 189 85 / 0.72) 0 1.6px,
+        transparent 1.9px
+      );
+      background-position: center;
+      background-size: 18px 18px;
+    }
+
+    .publication-dots-hero {
+      top: 5.5rem;
+      left: -4rem;
+      width: min(52vw, 46rem);
+      height: 31rem;
+      opacity: 0.38;
+      transform: rotate(4deg);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
+    }
+
+    .publication-dots-highlights {
+      inset-block: -2rem;
+      right: -3rem;
+      width: min(48vw, 42rem);
+      opacity: 0.3;
+      transform: rotate(3deg);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 38%, black 78%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 38%, black 78%, transparent);
+    }
+
+    .publication-dots-department {
+      inset-block: -2rem;
+      left: -3rem;
+      width: min(46vw, 42rem);
+      opacity: 0.18;
+      transform: rotate(-3deg);
+      background-image: radial-gradient(
+        circle,
+        rgb(30 58 95 / 0.72) 0 1.6px,
+        transparent 1.9px
+      );
+      -webkit-mask-image: linear-gradient(to right, transparent, black 16%, black 62%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 16%, black 62%, transparent);
+    }
+
+    @media (max-width: 47.999rem) {
+      .publication-dots-hero {
+        top: 8rem;
+        left: -7rem;
+        width: 24rem;
+        height: 26rem;
+        opacity: 0.3;
+      }
+
+      .publication-dots-highlights {
+        right: -10rem;
+        width: 28rem;
+        opacity: 0.22;
+      }
+
+      .publication-dots-department {
+        left: -9rem;
+        width: 28rem;
+        opacity: 0.13;
+      }
+    }
+
+    .program-tab-list {
+      display: flex;
+      width: max-content;
+      min-width: 100%;
+      gap: 0.25rem;
+      flex-flow: row nowrap;
+    }
+
+    .program-tab-list > [role="tab"] {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 64rem) {
+      .program-tab-list {
+        width: 100%;
+      }
+
+      .program-tab-list > [role="tab"] {
+        min-width: 0;
+        flex: 1 1 20%;
+        white-space: normal;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    window.programTabs = function () {
+      const validTabs = ["overview", "courses", "outcomes", "career-preparation", "why-messiah"];
+
+      return {
+        active: "overview",
+        init() {
+          const hash = window.location.hash.slice(1);
+          if (validTabs.includes(hash)) this.active = hash;
+        },
+        isActive(id) {
+          return this.active === id;
+        },
+        select(id) {
+          this.active = id;
+          history.replaceState(null, "", `#${id}`);
+        },
+      };
+    };
+
+    (() => {
+      const sections = Array.from(document.querySelectorAll("[data-count-up-section]"));
+      if (!sections.length || !("IntersectionObserver" in window)) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      sections.forEach((section) => {
+        section.querySelectorAll("[data-count-up]").forEach((counter) => {
+          counter.textContent = `0${counter.dataset.countSuffix ?? ""}`;
+        });
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+
+            const counters = Array.from(entry.target.querySelectorAll("[data-count-up]"));
+            const duration = 1400;
+            requestAnimationFrame((startTime) => {
+              const update = (currentTime) => {
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+                counters.forEach((counter) => {
+                  const target = Number(counter.dataset.countUp);
+                  const suffix = counter.dataset.countSuffix ?? "";
+                  counter.textContent = `${Math.round(target * easedProgress)}${suffix}`;
+                });
+
+                if (progress < 1) requestAnimationFrame(update);
+              };
+
+              requestAnimationFrame(update);
+            });
+          });
+        },
+        { threshold: 0.35 },
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    })();
+  </script>
+</BaseLayout>

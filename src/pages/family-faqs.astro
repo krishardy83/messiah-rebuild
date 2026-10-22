@@ -1,0 +1,482 @@
+---
+import Drawer from "../components/drawer.astro";
+import Slider from "../components/slider.astro";
+import BaseLayout from "../layouts/base.astro";
+
+interface Faq {
+  id: string;
+  category: string;
+  question: string;
+  lead: string;
+  paragraphs: string[];
+  bullets?: string[];
+  closing?: string;
+  accent: string;
+  stats?: { value: string; label: string }[];
+  quote?: string;
+  quoteAttribution?: string;
+  recognitions?: string[];
+}
+
+const faqs: Faq[] = [
+  {
+    id: "academic-rigor",
+    category: "Learning & purpose",
+    question: "Can a Christian university be academically rigorous?",
+    lead: "Absolutely.",
+    paragraphs: [
+      "At Messiah, faith and intellectual curiosity work together. Students are encouraged to ask thoughtful questions, explore ideas deeply and engage the world with wisdom, discernment and confidence.",
+      "Messiah is nationally recognized for academic excellence across the sciences, health professions, business, education, engineering, the arts and humanities. Small classes and close faculty mentoring create an environment where students are challenged, supported and prepared to thrive. Faculty members are accomplished scholars, mentors and committed Christians who invest personally in students’ growth.",
+    ],
+    stats: [
+      { value: "12:1", label: "Student-to-faculty ratio" },
+      { value: "20", label: "Average class size" },
+      { value: "80+", label: "Academic majors" },
+    ],
+    recognitions: [
+      "Messiah graduates include Rhodes, Fulbright, Carnegie, Truman and Boren distinguished scholars.",
+      "Named a Best Regional University in the North by U.S. News & World Report (2027 ranking).",
+      "Recognized by Colleges of Distinction for Christian education and career development (2026–2027).",
+    ],
+    accent: "bg-[#1682a6]",
+  },
+  {
+    id: "career-preparation",
+    category: "Career & calling",
+    question: "Will my student be prepared for a meaningful career?",
+    lead: "Yes—and for a meaningful life.",
+    paragraphs: [
+      "Messiah students graduate with practical experience, professional confidence and a clear sense of purpose. Internships, undergraduate research, clinical placements, service-learning and leadership opportunities allow students to apply their learning before graduation.",
+      "Experiential learning is part of Messiah’s graduation requirements. Employers consistently seek graduates who communicate well, think critically, solve problems and lead with integrity.",
+      "The publication reports that 98% of responding members of the undergraduate Class of 2025 were employed or enrolled in graduate or professional programs within six to nine months of graduation.",
+    ],
+    stats: [
+      {
+        value: "400",
+        label:
+          "Eager employers and some of the nation’s best graduate schools welcome Messiah graduates each year",
+      },
+    ],
+    accent: "bg-[#d5a643]",
+  },
+  {
+    id: "affordability",
+    category: "Value & affordability",
+    question: "Can we afford a private Christian university?",
+    lead: "Many families are surprised that the answer is yes.",
+    paragraphs: [
+      "Messiah recognizes that college is a significant investment. Financial aid counselors meet individually with families to have honest conversations about what is realistic and to develop plans using scholarships, grants and other financial aid.",
+      "The publication reports:",
+    ],
+    bullets: [
+      "100% of first-year students receive financial aid.",
+      "The average first-year student received $35,534 in financial aid during 2025–2026, excluding PLUS and other alternative loans.",
+    ],
+    closing:
+      "Messiah’s goal is to help students find the right fit while creating a financial plan their families can manage.",
+    stats: [
+      { value: "100%", label: "Of first-year students receive financial aid" },
+      {
+        value: "$35,534",
+        label: "Average first-year student financial aid in 2025–2026",
+      },
+    ],
+    quote:
+      "You aren’t just getting an education at Messiah, you are developing a professional Christian lifestyle that makes the investment well worth it.",
+    quoteAttribution: "Harley Freeny ’28, Cybersecurity",
+    accent: "bg-[#4ca7bd]",
+  },
+  {
+    id: "lasting-value",
+    category: "Lasting value",
+    question: "Is a Messiah education worth it?",
+    lead: "Messiah graduates say yes—because they are shaped in ways that last beyond graduation.",
+    paragraphs: [
+      "A Messiah education develops expertise in a chosen field while strengthening character, leadership, compassion and critical thinking. Students learn to navigate complexity, engage different perspectives and live out their faith with humility and conviction.",
+      "They also explore how their gifts and calling connect with the needs of the world. Students become part of a Christ-centered community that encourages spiritual growth, service and relationships that continue after college.",
+      "The publication describes the combination of academic excellence, career preparation and spiritual formation as the true value of a Messiah education.",
+    ],
+    stats: [
+      {
+        value: "98%",
+        label:
+          "Of undergraduate Class of 2025 survey respondents were employed or in graduate or professional programs within six to nine months after graduation",
+      },
+    ],
+    accent: "bg-[#1682a6]",
+  },
+  {
+    id: "community-belonging",
+    category: "Community & belonging",
+    question: "Will my student find community and belonging?",
+    lead: "Messiah is intentionally designed to feel personal.",
+    paragraphs: [
+      "Students enter a community where faculty know their names, friendships form naturally and involvement helps them find their place. Connections are developed through residence halls, student organizations, athletics, campus ministries, music ensembles and service opportunities.",
+      "Messiah seeks to recognize the value each student brings to campus and help students explore their talents, gifts and abilities while finding their people.",
+      "The publication also highlights:",
+    ],
+    bullets: [
+      "84% of undergraduate students live on campus.",
+      "More than 70 student clubs and organizations.",
+      "23 NCAA Division III athletic teams.",
+    ],
+    stats: [
+      { value: "84%", label: "Of undergraduate students live on campus" },
+      { value: "70+", label: "Student clubs and organizations" },
+      { value: "23", label: "NCAA Division III athletic teams" },
+    ],
+    accent: "bg-[#d5a643]",
+  },
+  {
+    id: "spiritual-growth",
+    category: "Faith & formation",
+    question: "Will my student grow spiritually here?",
+    lead: "Messiah wants students’ faith to deepen—not merely survive college.",
+    paragraphs: [
+      "Students worship together, serve locally and globally, and engage difficult questions alongside faculty and peers who respect both Scripture and honest inquiry. With more than 40 chapel options each semester, students take ownership of their spiritual growth and develop a faith that is genuinely their own.",
+      "Messiah describes itself as a partner in each student’s faith journey, challenging students to see God revealed through Scripture, follow Christ and prepare for the mission, vocation or service to which they are called.",
+    ],
+    accent: "bg-[#4ca7bd]",
+  },
+  {
+    id: "student-support",
+    category: "Personal & academic support",
+    question: "Will my student be supported personally and academically?",
+    lead: "Yes—and not just when they ask for help.",
+    paragraphs: [
+      "Faculty know students by name, advisors check in regularly and the university describes itself as small enough to notice and invested enough to care.",
+      "Resources include:",
+    ],
+    bullets: [
+      "Academic coaching and tutoring",
+      "Accessibility and disability services",
+      "Career and vocational counseling",
+      "Residence-life staff and peer mentors",
+      "Counseling and mental-health support",
+      "Health services and wellness resources",
+    ],
+    closing:
+      "The publication’s central promise is that students will not have to navigate college alone.",
+    quote:
+      "What makes Messiah so special is that students from all over the country and the world are committed to worshiping, loving and serving God. Our son matured and grew in his faith at Messiah and we are humbled by the servant-scholar he has become.",
+    quoteAttribution: "Parent of a Messiah business administration major",
+    accent: "bg-[#1682a6]",
+  },
+  {
+    id: "safety-care",
+    category: "Safety & care",
+    question: "Will my student be safe and cared for?",
+    lead: "Nothing matters more.",
+    paragraphs: [
+      "Messiah’s campus community is built around care, accountability and student well-being. Families frequently appreciate the balance of independence and support their students experience.",
+      "Campus safety staff are available around the clock. Residence halls are staffed by trained student leaders and professional staff, and students have access to comprehensive health and wellness resources.",
+      "The publication emphasizes that safety involves more than policies and protocols. Faculty, staff, coaches and mentors know students personally, care about who they are becoming and notice when they need encouragement or support.",
+    ],
+    accent: "bg-[#d5a643]",
+  },
+];
+
+const familyQuotes = [
+  {
+    quote:
+      "I’m thankful for the four years my son had at Messiah. He had amazing professors that challenged him, cared about him and made him laugh. He met great friends that will be friends for life.",
+    attribution: "Parent of a Messiah engineering major",
+  },
+  {
+    quote:
+      "You aren’t just getting an education at Messiah, you are developing a professional Christian lifestyle that makes the investment well worth it.",
+    attribution: "Harley Freeny ’28, Cybersecurity",
+  },
+  {
+    quote:
+      "What makes Messiah so special is that students from all over the country and the world are committed to worshiping, loving and serving God. Our son matured and grew in his faith at Messiah and we are humbled by the servant-scholar he has become.",
+    attribution: "Parent of a Messiah business administration major",
+  },
+];
+---
+
+<BaseLayout
+  title="Questions Every Family Asks"
+  description="Answers to the questions families ask most about academics, affordability, faith, belonging, support and student life at Messiah University."
+>
+  <main id="content" class="bg-white text-slate-800">
+    <header class="relative isolate -mt-32 overflow-hidden bg-primary-950 text-white">
+      <img
+        src="/images/family-faqs/graduation-family-hero.jpg"
+        alt=""
+        class="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+        aria-hidden="true"
+      />
+      <div
+        class="absolute inset-0 -z-20 bg-gradient-to-b from-black/60 to-transparent"
+        aria-hidden="true"
+      >
+      </div>
+      <div
+        class="absolute inset-0 -z-10 bg-gradient-to-r from-primary-700/60 to-transparent"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div
+        class="mx-auto flex h-[70vh] min-h-[550px] max-h-[800px] max-w-[2100px] items-end px-4 pb-4 sm:pt-32 md:items-center lg:px-12"
+      >
+        <div class="relative z-10 md:w-1/2">
+          <h1
+            class="font-title text-3xl font-bold uppercase text-white md:text-4xl lg:text-5xl xl:text-7xl"
+          >
+            Questions Every Family Asks
+          </h1>
+          <hr class="mb-4 mt-3 w-1/2 border-tertiary-300 border-b-4 md:border-b-8" />
+          <p
+            class="font-title font-bold uppercase leading-none text-white md:text-2xl lg:text-3xl xl:text-4xl"
+          >
+            And the answers that may surprise you
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <section class="py-16 lg:py-24" aria-labelledby="right-place-heading">
+      <div class="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-10 lg:gap-16">
+        <div class="lg:col-span-7">
+          <p
+            class="mb-3 text-sm font-extrabold uppercase tracking-[.2em] text-primary-700 md:text-base"
+          >
+            You’re looking for more than just the right college.
+          </p>
+          <h2
+            id="right-place-heading"
+            class="max-w-3xl font-title text-4xl font-bold leading-none tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
+          >
+            You want the right place for your student.
+          </h2>
+          <p class="mt-7 max-w-3xl text-lg leading-relaxed text-slate-700 md:text-xl">
+            For many families, the college search feels bigger than academics alone. You are helping
+            your child choose the people, values and experiences that will shape who they become.
+          </p>
+          <p class="mt-6 max-w-3xl text-lg font-bold leading-relaxed text-slate-900 md:text-xl">
+            At Messiah University, we believe college should prepare students not only for a
+            successful career, but also for a meaningful life grounded in faith, purpose and
+            service.
+          </p>
+        </div>
+
+        <figure class="bg-primary-800 p-8 text-white lg:col-span-3 lg:self-center lg:p-10">
+          <blockquote class="font-serif text-xl italic leading-snug lg:text-2xl">
+            “He had amazing professors who challenged him, cared about him and made him laugh.”
+          </blockquote>
+          <figcaption class="mt-7 text-sm font-bold leading-relaxed text-white lg:text-base">
+            — Parent of a Messiah engineering major
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="bg-gray-100 py-16 lg:py-24" aria-labelledby="family-questions-heading">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="mb-12">
+          <p class="mb-3 text-xs font-extrabold uppercase tracking-[.2em] text-primary-700">
+            What families want to know
+          </p>
+          <h2
+            id="family-questions-heading"
+            class="font-title text-4xl font-bold leading-none tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
+          >
+            Honest answers to important questions.
+          </h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {
+            faqs.map((faq, index) => (
+              <article class="group relative flex min-h-[350px] flex-col border border-slate-300 bg-white transition duration-200 hover:-translate-y-1 hover:border-primary-300 hover:shadow-xl focus-within:-translate-y-1 focus-within:shadow-xl">
+                <div class={`h-2.5 w-full ${faq.accent}`} aria-hidden="true" />
+                <a
+                  href={`#${faq.id}`}
+                  class="relative flex flex-1 flex-col p-6 no-underline outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[#d5a643] sm:p-7"
+                  aria-haspopup="dialog"
+                  aria-controls={faq.id}
+                >
+                  <span
+                    class="absolute right-5 top-5 font-title text-6xl font-bold leading-none text-slate-200"
+                    aria-hidden="true"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p class="relative z-10 mb-3 pr-16 text-xs font-extrabold uppercase tracking-[.15em] text-primary-900">
+                    {faq.category}
+                  </p>
+                  <h3 class="relative z-10 max-w-[90%] font-title text-3xl font-bold leading-[1.08] text-primary-950">
+                    {faq.question}
+                  </h3>
+                  <p class="mt-auto pt-6 text-sm font-extrabold uppercase tracking-wide text-[#1682a6]">
+                    Read the answer <span aria-hidden="true">→</span>
+                  </p>
+                </a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="bg-primary-800 bg-no-repeat py-24 text-white lg:bg-[image:url(/images/family-faqs/stained-glass-noback-1620x720.svg)] lg:bg-cover lg:bg-center"
+      aria-labelledby="promise-to-you-heading"
+    >
+      <div class="mx-auto max-w-6xl px-4">
+        <div class="lg:w-1/2 lg:translate-x-full">
+          <h2 id="promise-to-you-heading" class="h2">Our promise to you</h2>
+
+          <p class="paragraph mb-8">
+            At Messiah, your student’s life, faith, world and possibilities will open up in new and
+            exciting ways.
+          </p>
+
+          <p class="mb-8 text-2xl font-bold italic md:text-3xl">They’ll see anew.</p>
+
+          <blockquote class="paragraph italic">
+            “So if anyone is in Christ, there is a new creation; everything old has passed away;
+            see, everything has become new!”
+          </blockquote>
+          <p class="paragraph mt-2">2 Corinthians 5:17 (NRSV)</p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="bg-primary-50 py-16 text-center text-primary-950 lg:py-24"
+      aria-labelledby="family-quotes-heading"
+    >
+      <div class="mx-auto max-w-6xl px-4">
+        <p class="mb-3 text-xs font-extrabold uppercase tracking-[.2em] text-primary-700">
+          In their own words
+        </p>
+        <h2 id="family-quotes-heading" class="h2">What Messiah families are saying</h2>
+
+        <Slider class="mt-12 [&_.f-button_svg]:size-16 [&_.f-button]:text-primary-800">
+          {
+            familyQuotes.map((item) => (
+              <div class="f-carousel__slide w-full px-14 md:px-20">
+                <blockquote class="mx-auto max-w-4xl">
+                  <p class="font-serif text-xl italic leading-relaxed md:text-2xl lg:text-3xl">
+                    “{item.quote}”
+                  </p>
+                  <cite class="mt-6 block text-sm font-bold not-italic md:text-base">
+                    — {item.attribution}
+                  </cite>
+                </blockquote>
+              </div>
+            ))
+          }
+        </Slider>
+      </div>
+    </section>
+
+    {
+      faqs.map((faq) => (
+        <Drawer id={faq.id} title={faq.question} eyebrow="Question" panelClass="bg-gray-100">
+          <div slot="panel">
+            <p class="mb-2 text-xs font-extrabold uppercase tracking-[.18em] text-[#bd7d0d]">
+              Answer
+            </p>
+            <h3 class="h3 mb-5 text-primary-900">{faq.lead}</h3>
+          </div>
+
+          <div class="rich-text">
+            {faq.paragraphs.map((paragraph) => (
+              <p class="!mb-6">{paragraph}</p>
+            ))}
+            {faq.bullets && !faq.stats && (
+              <ul class="list-disc space-y-2 pl-6 marker:text-[#1682a6]">
+                {faq.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            )}
+            {faq.closing && <p class="!mt-6">{faq.closing}</p>}
+          </div>
+
+          {faq.stats && (
+            <dl
+              class={`mt-8 grid gap-3 ${faq.stats.length === 1 ? "grid-cols-1" : faq.stats.length === 2 ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3"}`}
+            >
+              {faq.stats.map((stat) => (
+                <div class="border-t-4 border-[#4ca7bd] bg-slate-100 p-4 text-center">
+                  <dt class="font-title text-3xl font-bold leading-none text-primary-900">
+                    {stat.value}
+                  </dt>
+                  <dd class="mt-2 text-xs font-bold leading-relaxed text-slate-700">
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {faq.recognitions && (
+            <div class="mt-8 border border-primary-200 bg-primary-50 p-5">
+              <p class="text-xs font-extrabold uppercase tracking-[.16em] text-primary-800">
+                Academic distinction
+              </p>
+              <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-700">
+                {faq.recognitions.map((recognition) => (
+                  <li class="flex gap-3">
+                    <span class="mt-1 text-[#1682a6]" aria-hidden="true">
+                      ◆
+                    </span>
+                    <span>{recognition}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {faq.quote && (
+            <figure class="mt-8 bg-primary-800 p-6 text-white">
+              <blockquote class="font-serif text-xl italic leading-relaxed">
+                “{faq.quote}”
+              </blockquote>
+              {faq.quoteAttribution && (
+                <figcaption class="mt-5 text-sm font-bold leading-relaxed">
+                  — {faq.quoteAttribution}
+                </figcaption>
+              )}
+            </figure>
+          )}
+        </Drawer>
+      ))
+    }
+
+    <section class="bg-white py-16 lg:py-24" aria-labelledby="visit-campus-heading">
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-2 lg:items-center lg:gap-16">
+        <div>
+          <h2
+            id="visit-campus-heading"
+            class="font-title text-4xl font-bold leading-tight text-primary-950 sm:text-5xl"
+          >
+            The best way to learn more about Messiah University is to experience it for yourself.
+          </h2>
+          <p class="mt-6 text-lg leading-relaxed text-slate-700 md:text-xl">
+            Stroll around campus. Chat with students and professors. Worship in chapel. Picture your
+            student here—learning, growing, leading and thriving. Because from the moment families
+            visit Messiah, something feels different.
+          </p>
+          <p class="mt-2 font-serif text-xl font-bold italic text-primary-950 md:text-2xl">
+            It feels like a place where your student could belong.
+          </p>
+          <a class="btn-tertiary mt-8" href="/visit">Plan your visit</a>
+        </div>
+
+        <img
+          src="/images/open-house-hero.jpg"
+          alt="A student tour guide speaking with prospective students and their families outside Hostetter Chapel"
+          class="aspect-[4/3] h-full w-full object-cover object-center"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
