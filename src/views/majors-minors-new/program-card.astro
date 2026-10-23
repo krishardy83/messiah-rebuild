@@ -1,0 +1,85 @@
+---
+import Icon from "../../components/icon.astro";
+interface Props {
+  filterInterests?: boolean;
+}
+const { filterInterests = false } = Astro.props;
+---
+
+<article class="discovery-card group">
+  <div class="relative aspect-video overflow-hidden bg-slate-200">
+    <img
+      :src="program.thumbnail_small"
+      :alt="program.thumbnail_small_alt || ''"
+      class="h-full w-full object-cover"
+      loading="lazy"
+      decoding="async"
+      width="640"
+      height="360"
+    />
+    <button
+      type="button"
+      @click="$store.bookmarks.toggle(program.entry_id)"
+      :aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name} from saved programs` : `Save ${program.program_name}`"
+      :aria-pressed="$store.bookmarks.has(program.entry_id)"
+      class="absolute right-3 top-3 grid size-11 place-items-center rounded-full text-primary-900 shadow-md transition-colors"
+      :class="$store.bookmarks.has(program.entry_id) ? 'bg-mango-300' : 'bg-white hover:bg-mango-100'"
+    >
+      <Icon
+        name="bookmark"
+        class="size-5"
+        :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
+        aria-hidden="true"
+      />
+    </button>
+  </div>
+  <div class="flex flex-1 flex-col p-6 pb-4">
+    <p
+      class="discovery-meta mb-2"
+      x-text="programTypes(program).map((type) => type.label).join(', ')"
+    >
+    </p>
+    <h3
+      class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold leading-tight text-primary-950"
+    >
+      <a
+        :href="programUrl(program)"
+        class="underline-offset-4 hover:underline hover:decoration-mango-300 hover:decoration-2"
+        x-text="program.program_name"></a>
+      <template x-for="degree in degrees(program)" :key="degree">
+        <span
+          class="bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-bold uppercase leading-none tracking-wide text-white"
+          x-text="degree"></span>
+      </template>
+    </h3>
+    <div class="mb-6 mt-4 flex flex-wrap gap-2">
+      <template x-for="tag in interestTags(program).slice(0, 3)" :key="tag">
+        {
+          filterInterests ? (
+            <button
+              type="button"
+              @click="chooseInterest(tag)"
+              class="discovery-tag hover:bg-primary-100"
+              x-text="tag"
+            />
+          ) : (
+            <span class="discovery-tag" x-text="tag" />
+          )
+        }
+      </template>
+    </div>
+    <div class="mt-auto grid grid-cols-2 border-t border-slate-200 pt-3">
+      <button
+        type="button"
+        @click="showDetails(program)"
+        :aria-label="`Quick view: ${program.program_name}`"
+        class="discovery-card-action border-r border-slate-200 pr-3"
+      >
+        Quick view <Icon name="expand" class="size-4 shrink-0" aria-hidden="true" />
+      </button>
+      <a :href="programUrl(program)" class="discovery-card-action pl-3">
+        Full program <Icon name="chevron-right" class="size-4 shrink-0" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</article>

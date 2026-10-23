@@ -52,6 +52,33 @@
     transition: stroke-dasharray 0.3s ease-out 0s;
     stroke-width: var(--stroke-width);
   }
+
+  .publication-dots {
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+    top: 5.5rem;
+    left: -4rem;
+    width: min(52vw, 46rem);
+    height: 31rem;
+    opacity: 0.38;
+    transform: rotate(4deg);
+    background-image: radial-gradient(circle, rgb(242 189 85 / 0.72) 0 1.6px, transparent 1.9px);
+    background-position: center;
+    background-size: 18px 18px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
+  }
+
+  @media (max-width: 48rem) {
+    .publication-dots {
+      top: 8rem;
+      left: -7rem;
+      width: 24rem;
+      height: 26rem;
+      opacity: 0.3;
+    }
+  }
 }
 
 @layer utilities {

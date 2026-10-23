@@ -1,0 +1,87 @@
+<section
+  id="next-steps"
+  class="bg-gradient-to-r from-[#11698c] to-[#0b7367] py-12 text-white"
+  aria-labelledby="next-steps-title"
+>
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div>
+      <p class="text-xs font-bold mb-2 uppercase tracking-widest text-white/85">Your next step</p>
+      <h2 id="next-steps-title" class="font-title text-4xl leading-tight md:text-5xl mb-8">
+        See where a Messiah education could take you.
+      </h2>
+
+      <nav class="flex flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+        <a
+          class="inline-flex items-center min-h-12 bg-mango-300 px-5 font-bold text-primary-900 transition hover:bg-mango-400"
+          href="/visit">Plan a visit</a
+        >
+        <a
+          class="inline-flex items-center min-h-12 border border-white/60 px-5 font-bold transition hover:bg-white hover:text-primary-800"
+          href="https://www.messiah.edu/applytoday">Apply to Messiah</a
+        >
+        <a
+          class="inline-flex items-center min-h-12 border border-white/60 px-5 font-bold transition hover:bg-white hover:text-primary-800"
+          href="https://www.messiah.edu/ug-tuition-and-aid/">Tuition</a
+        >
+        <a
+          class="inline-flex items-center min-h-12 border border-white/60 px-5 font-bold transition hover:bg-white hover:text-primary-800"
+          href="https://www.messiah.edu/ug-fin-aid/">Scholarships</a
+        >
+      </nav>
+    </div>
+
+    <form
+      data-analytics="request-information"
+      method="GET"
+      action="https://www.messiah.edu/undergraduate-admissions/request-more-information/request-information"
+      class="mt-8 border-t border-white/30 pt-8"
+    >
+      <h3 class="font-title text-4xl mb-4">Request information</h3>
+
+      <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto]">
+        <div>
+          <label for="interest-rfi-first-name" class="sr-only">First name</label>
+          <input
+            id="interest-rfi-first-name"
+            type="text"
+            name="firstname"
+            autocomplete="given-name"
+            placeholder="First name"
+            required
+            class="h-12 w-full border border-transparent bg-white px-5 sm:px-8 text-slate-900 placeholder:text-slate-500 focus:border-mango-300 focus:outline-none focus:ring-2 focus:ring-mango-300"
+          />
+        </div>
+        <div>
+          <label for="interest-rfi-last-name" class="sr-only">Last name</label>
+          <input
+            id="interest-rfi-last-name"
+            type="text"
+            name="lastname"
+            autocomplete="family-name"
+            placeholder="Last name"
+            required
+            class="h-12 w-full border border-transparent bg-white px-5 sm:px-8 text-slate-900 placeholder:text-slate-500 focus:border-mango-300 focus:outline-none focus:ring-2 focus:ring-mango-300"
+          />
+        </div>
+        <div class="sm:col-span-2 lg:col-span-1">
+          <label for="interest-rfi-email" class="sr-only">Email</label>
+          <input
+            id="interest-rfi-email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="Email"
+            required
+            class="h-12 w-full border border-transparent bg-white px-5 sm:px-8 text-slate-900 placeholder:text-slate-500 focus:border-mango-300 focus:outline-none focus:ring-2 focus:ring-mango-300"
+          />
+        </div>
+        <button
+          type="submit"
+          class="inline-flex items-center min-h-12 border border-white/60 px-5 font-bold transition hover:bg-white hover:text-primary-800"
+        >
+          Next
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

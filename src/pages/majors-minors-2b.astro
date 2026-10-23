@@ -1,88 +1,56 @@
 ---
+import "../styles/program-discovery.css";
 import BaseLayout from "../layouts/base.astro";
+import ProgramCard from "../views/majors-minors-new/program-card.astro";
 import Icon from "../components/icon.astro";
-import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
+import KeepExploring from "../views/majors-minors-new/keep-exploring.astro";
+import TabNavigation from "../views/majors-minors-new/tab-navigation.astro";
+import Footer from "../views/majors-minors-new/footer.astro";
+import Hero from "../views/majors-minors-new/hero.astro";
 ---
 
 <BaseLayout
   title="Majors, Minors and Programs"
   description="Find a Messiah University undergraduate major, minor, concentration or accelerated program that fits your interests and goals."
 >
-  <div x-data="programExplorer()" x-init="init()" class="bg-white text-slate-800">
+  <div class="program-discovery" x-data="programExplorer()">
+    <Hero
+      eyebrow="Majors, minors, and programs"
+      title="Undergraduate programs"
+      imageUrl="https://www.messiah.edu/undergraduate/interest-area/science-health-the-natural-world/_images/science.webp"
+    >
+      Explore <a
+        href="#program-finder"
+        @click.prevent="goToType('major')"
+        class="font-bold underline decoration-mango-300 decoration-2 underline-offset-4 hover:text-white"
+        >80+ majors</a
+      >, plus <a
+        href="#program-finder"
+        @click.prevent="goToType('accelerated')"
+        class="font-bold underline decoration-mango-300 decoration-2 underline-offset-4 hover:text-white"
+        >accelerated and seamless pathway programs</a
+      > designed to help you reach your goals.
+    </Hero>
+
     <main id="content">
-      <section
-        class="relative isolate -mt-32 min-h-[650px] overflow-hidden bg-primary-950 text-white lg:min-h-[720px] xl:min-h-[760px]"
-      >
-        <img
-          src="https://www.messiah.edu/undergraduate/interest-area/science-health-the-natural-world/_images/science.webp"
-          alt=""
-          class="absolute inset-0 -z-30 h-full w-full object-cover object-center"
-          aria-hidden="true"
-        />
-        <div
-          class="absolute inset-0 -z-20"
-          style="background: linear-gradient(90deg, rgba(13, 35, 61, 0.98) 0%, rgba(13, 35, 61, 0.9) 36%, rgba(13, 35, 61, 0.48) 68%, rgba(13, 35, 61, 0.08) 100%);"
-        >
-        </div>
-        <div class="hero-publication-dots" aria-hidden="true"></div>
-        <div
-          class="relative z-10 mx-auto flex min-h-[650px] max-w-7xl items-center px-5 pb-24 pt-44 sm:px-8 lg:min-h-[720px] lg:py-36 xl:min-h-[760px]"
-        >
-          <div class="lg:mt-8">
-            <p class="mb-5 text-xs font-extrabold uppercase tracking-[.2em] text-[#f2bd55]">
-              Majors, minors, and programs
-            </p>
-            <h1
-              class="font-title text-5xl font-bold leading-[.92] tracking-[-.035em] sm:text-6xl lg:text-7xl xl:text-8xl"
-            >
-              Undergraduate Programs
-            </h1>
-            <p class="mt-7 max-w-xl font-title text-2xl leading-relaxed text-white/85 lg:text-3xl">
-              Explore <a
-                href="#program-finder"
-                @click.prevent="goToType('major')"
-                class="font-bold underline decoration-[#f2bd55] decoration-2 underline-offset-4 hover:text-white"
-                >80+ majors</a
-              >, plus <a
-                href="#program-finder"
-                @click.prevent="goToType('accelerated')"
-                class="font-bold underline decoration-[#f2bd55] decoration-2 underline-offset-4 hover:text-white"
-                >accelerated and seamless pathway programs</a
-              > designed to help you reach your goals.
-            </p>
+      <TabNavigation active="az" />
 
-          </div>
-        </div>
-      </section>
-
-      <ProgramDiscoveryNav active="az" variant="editorial" />
-
-      <section id="program-finder" class="scroll-mt-20 bg-white py-20 lg:py-28" aria-live="polite">
-        <div class="mx-auto max-w-7xl px-5 sm:px-8">
-          <div class="mb-12">
+      <section id="program-finder" class="discovery-section" aria-live="polite">
+        <div class="discovery-container">
+          <div class="mb-10">
             <div>
-              <p class="mb-3 text-xs font-extrabold uppercase tracking-[.2em] text-primary-700">
-                Program finder
-              </p>
-              <h2
-                class="font-title text-4xl font-bold leading-none tracking-tight text-primary-950 sm:text-5xl lg:text-6xl"
-              >
-                Build your shortlist.
-              </h2>
-              <p class="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
+              <h2 class="discovery-heading">Build your shortlist.</h2>
+              <p class="discovery-intro">
                 Search the complete undergraduate catalog. Save the programs that stand out, then
                 come back when you’re ready to compare.
               </p>
             </div>
           </div>
 
-          <form
-            @submit.prevent
-            class="border border-slate-400 bg-white shadow-xl shadow-primary-900/5"
-          >
+          <form @submit.prevent class="border border-slate-300 bg-white">
             <div class="grid lg:grid-cols-[1.6fr_.8fr]">
               <label
-                class="relative flex min-h-20 items-center border-b border-slate-400 lg:border-b-0 lg:border-r"
+                class="relative flex min-h-20 items-center border-b border-slate-300 lg:border-b-0 lg:border-r"
               >
                 <span class="sr-only">Search programs</span>
                 <Icon name="search" class="ml-6 size-6 shrink-0 text-primary-700" />
@@ -99,13 +67,12 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                   x-cloak
                   type="button"
                   @click="query = ''; shownCount = pageSize; syncUrl()"
-                  class="mr-5 grid size-9 place-items-center rounded-full bg-slate-100 text-slate-500"
+                  class="mr-5 grid size-11 place-items-center rounded-full bg-slate-100 text-slate-500"
                   aria-label="Clear search"><Icon name="close" class="size-4" /></button
                 >
               </label>
               <label class="px-6 py-3">
-                <span
-                  class="block text-[10px] font-extrabold uppercase tracking-[.12em] text-slate-500"
+                <span class="block text-xs font-extrabold uppercase tracking-[.12em] text-slate-500"
                   >Interest area</span
                 >
                 <select
@@ -121,22 +88,22 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               </label>
             </div>
 
-            <div
-              class="flex gap-2 overflow-x-auto border-t border-slate-400 bg-[#f7f8f6] px-5 py-4"
-            >
+            <div class="flex flex-wrap gap-2 border-t border-slate-300 bg-slate-50 px-5 py-4">
               <button
                 type="button"
                 @click="setType('')"
-                :class="type === '' ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-400 bg-white text-slate-600 hover:border-primary-700'"
-                class="shrink-0 rounded-full border px-4 py-2 text-xs transition"
+                :aria-pressed="type === ''"
+                :class="type === '' ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-700'"
+                class="min-h-11 shrink-0 rounded-full border px-4 py-2 text-xs font-bold transition-colors"
                 >All programs</button
               >
               <template x-for="option in types" :key="option.key">
                 <button
                   type="button"
                   @click="setType(option.key)"
-                  :class="type === option.key ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-400 bg-white text-slate-600 hover:border-primary-700'"
-                  class="shrink-0 rounded-full border px-4 py-2 text-xs transition"
+                  :aria-pressed="type === option.key"
+                  :class="type === option.key ? 'border-primary-900 bg-primary-900 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-700'"
+                  class="min-h-11 shrink-0 rounded-full border px-4 py-2 text-xs font-bold transition-colors"
                   x-text="option.filterLabel || option.label"></button>
               </template>
             </div>
@@ -163,7 +130,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                 type="button"
                 @click="toggleSavedOnly()"
                 :aria-pressed="savedOnly"
-                :class="savedOnly ? 'text-[#a84336]' : 'text-primary-900'"
+                :class="savedOnly ? 'text-primary-700' : 'text-primary-900'"
                 class="inline-flex items-center gap-2 text-sm font-bold"
               >
                 <Icon
@@ -174,22 +141,24 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                 />
                 Saved
                 <span
-                  class="grid min-w-6 place-items-center rounded-full bg-primary-900 px-1.5 py-1 text-[10px] text-white"
+                  class="grid min-w-6 place-items-center rounded-full bg-primary-900 px-1.5 py-1 text-xs text-white"
                   x-text="$store.bookmarks.count"></span>
               </button>
               <div class="inline-flex border border-slate-200 bg-white" aria-label="Results layout">
                 <button
                   type="button"
                   @click="setLayout('cards')"
+                  :aria-pressed="layout === 'cards'"
                   :class="layout === 'cards' ? 'bg-primary-900 text-white' : 'text-slate-500'"
-                  class="grid size-9 place-items-center"
+                  class="grid size-11 place-items-center"
                   aria-label="Card view"><Icon name="grid" class="size-4" /></button
                 >
                 <button
                   type="button"
                   @click="setLayout('list')"
+                  :aria-pressed="layout === 'list'"
                   :class="layout === 'list' ? 'bg-primary-900 text-white' : 'text-slate-500'"
-                  class="grid size-9 place-items-center"
+                  class="grid size-11 place-items-center"
                   aria-label="List view"><Icon name="list" class="size-4" /></button
                 >
               </div>
@@ -198,7 +167,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
 
           <div
             x-show="loading"
-            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+            class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
             aria-label="Loading programs"
           >
             {
@@ -217,12 +186,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             }
           </div>
 
-          <div
-            x-show="error"
-            x-cloak
-            role="alert"
-            class="border-l-4 border-red-600 bg-white p-6 shadow-sm"
-          >
+          <div x-show="error" x-cloak role="alert" class="discovery-error">
             <h3 class="font-title text-2xl font-bold text-primary-900">
               We couldn’t load the program list.
             </h3>
@@ -249,7 +213,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             <button
               type="button"
               @click="resetFilters()"
-              class="mt-5 bg-[#f2bd55] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950"
+              class="mt-5 bg-mango-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950"
               >See all programs</button
             >
           </div>
@@ -257,7 +221,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           <div
             x-show="!loading && !error && filteredPrograms.length > 0 && layout === 'cards'"
             x-cloak
-            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+            class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             <template x-for="program in visiblePrograms" :key="program.entry_id">
               <div class="contents">
@@ -272,82 +236,8 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                     “<span x-text="query.trim()"></span>”
                   </h3>
                 </template>
-                <article
-                  class="group flex min-w-0 flex-col border border-slate-400 bg-white transition duration-200 hover:-translate-y-1 hover:shadow-xl"
-                >
-                  <div class="relative h-40 overflow-hidden bg-slate-200">
-                    <img
-                      :src="program.thumbnail_small"
-                      :alt="program.thumbnail_small_alt || ''"
-                      class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <button
-                      type="button"
-                      @click="$store.bookmarks.toggle(program.entry_id)"
-                      :aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name} from saved programs` : `Save ${program.program_name}`"
-                      class="absolute right-3 top-3 grid size-10 place-items-center rounded-full shadow-md transition"
-                      :class="$store.bookmarks.has(program.entry_id) ? 'bg-[#f2bd55] text-primary-950' : 'bg-white/95 text-primary-900'"
-                    >
-                      <Icon
-                        name="bookmark"
-                        class="size-5"
-                        :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
-                      />
-                    </button>
-                  </div>
-                  <div class="flex flex-1 flex-col p-6">
-                    <div
-                      class="mb-3 flex flex-wrap items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
-                    >
-                      <template x-for="programType in programTypes(program)" :key="programType.key"
-                        ><span x-text="programType.label"></span></template
-                      >
-                    </div>
-                    <h3
-                      class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold leading-tight text-primary-950"
-                    >
-                      <a
-                        :href="programUrl(program)"
-                        class="hover:underline hover:decoration-[#f2bd55] hover:decoration-4"
-                        x-text="program.program_name"></a>
-                      <template x-for="degree in degrees(program)" :key="degree">
-                        <span
-                          class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
-                          x-text="degree"></span>
-                      </template>
-                    </h3>
-                    <div class="mb-5 mt-4 flex flex-wrap gap-1.5">
-                      <template x-for="tag in interestTags(program).slice(0, 3)" :key="tag"
-                        ><button
-                          type="button"
-                          @click="chooseInterest(tag)"
-                          class="bg-slate-100 px-2 py-1 text-[10px] text-primary-700"
-                          x-text="tag"></button></template
-                      >
-                    </div>
-                    <div
-                      class="mt-auto grid grid-cols-2 border-t border-slate-200 pt-4 text-[10px] font-extrabold uppercase tracking-[.08em] text-primary-900"
-                    >
-                      <button
-                        type="button"
-                        @click="showDetails(program)"
-                        class="flex items-center justify-between border-r border-slate-200 pr-3 text-left hover:text-[#9c6508]"
-                        >QUICK VIEW <Icon
-                          name="expand"
-                          class="size-5 text-[#bd7d0d]"
-                          aria-hidden="true"
-                        /></button
-                      >
-                      <a
-                        :href="programUrl(program)"
-                        class="flex items-center justify-between pl-3 hover:text-[#9c6508]"
-                        >Full program <span class="text-lg text-[#bd7d0d]">→</span></a
-                      >
-                    </div>
-                  </div>
-                </article>
+
+                <ProgramCard filterInterests />
               </div>
             </template>
           </div>
@@ -376,15 +266,13 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                   >
                     <div>
                       <div
-                        class="flex flex-wrap gap-2 text-[9px] font-extrabold uppercase tracking-[.08em] text-primary-700"
+                        class="mb-2 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-widest text-slate-500"
+                        x-text="programTypes(program).map((program) => program.label).join(', ')"
                       >
-                        <template
-                          x-for="programType in programTypes(program)"
-                          :key="programType.key"><span x-text="programType.label"></span></template
-                        >
                       </div>
+
                       <h3
-                        class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold text-primary-950"
+                        class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold text-primary-950"
                       >
                         <a :href="programUrl(program)" x-text="program.program_name"></a>
                         <template x-for="degree in degrees(program)" :key="degree">
@@ -395,32 +283,31 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                       </h3>
                     </div>
                     <div
-                      class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-200 pt-4 lg:flex-nowrap lg:justify-end lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0"
+                      class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-200 pt-4 lg:flex-nowrap lg:justify-end lg:border-t-0 lg:pl-6 lg:pt-0"
                     >
                       <button
                         type="button"
                         @click="showDetails(program)"
                         class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-extrabold uppercase tracking-wider text-primary-900"
-                        >QUICK VIEW <Icon
-                          name="expand"
-                          class="size-5 text-[#bd7d0d]"
-                          aria-hidden="true"
-                        /></button
-                      ><button
+                      >
+                        Quick view
+                        <Icon name="expand" class="size-5 text-mango-300" />
+                      </button>
+                      <button
                         type="button"
                         @click="$store.bookmarks.toggle(program.entry_id)"
                         class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-extrabold uppercase tracking-wider text-primary-900"
                       >
                         <span
-                          x-text="$store.bookmarks.has(program.entry_id) ? 'SAVED' : 'SAVE PROGRAM'"
+                          x-text="$store.bookmarks.has(program.entry_id) ? 'Saved' : 'Save program'"
                         ></span>
                         <Icon
                           name="bookmark"
                           class="size-5"
-                          :class="$store.bookmarks.has(program.entry_id) ? 'fill-current' : ''"
+                          :class="$store.bookmarks.has(program.entry_id) ? 'fill-mango-300' : ''"
                           aria-hidden="true"
-                        /></button
-                      >
+                        />
+                      </button>
                     </div>
                   </div>
                 </article>
@@ -456,129 +343,9 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
         </div>
       </section>
 
-      <section class="bg-slate-100 py-14" aria-labelledby="more-ways-heading">
-        <div
-          class="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-5 sm:px-8 lg:flex-row lg:items-center"
-        >
-          <div>
-            <p class="text-xs font-extrabold uppercase tracking-[.18em] text-primary-700">
-              Keep exploring
-            </p>
-            <h2
-              id="more-ways-heading"
-              class="mt-2 font-title text-3xl font-bold text-primary-950 sm:text-4xl"
-            >
-              There’s more than one way to find academic programs
-            </h2>
-          </div>
-          <div class="flex flex-wrap gap-3">
-            <a
-              href="/majors-minors-2c/"
-              class="inline-flex min-h-12 items-center border border-primary-900 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-900 no-underline hover:bg-primary-900 hover:text-white"
-              >Browse all interests</a
-            >
-            <a
-              href="/majors-minors-quiz/"
-              class="inline-flex min-h-12 items-center bg-primary-900 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-white no-underline hover:bg-primary-800"
-              >Take the quiz</a
-            >
-          </div>
-        </div>
-      </section>
+      <KeepExploring active="az" />
 
-      <section
-        id="next-steps"
-        class="scroll-mt-20 bg-gradient-to-r from-[#11698c] to-[#0b7367] py-16 text-white"
-        aria-labelledby="next-steps-title"
-      >
-        <div class="mx-auto max-w-7xl px-5 sm:px-8">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[.18em] text-white">Your next step</p>
-            <h2 id="next-steps-title" class="mt-3 font-title text-4xl leading-tight md:text-5xl">
-              See where a Messiah education could take you.
-            </h2>
-            <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
-              <a
-                class="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#e5ae3a] px-5 py-3 font-bold text-primary-900 transition hover:-translate-y-0.5 hover:bg-[#d59e2b]"
-                href="/visit">Plan a visit</a
-              >
-              <a
-                class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
-                href="https://www.messiah.edu/applytoday">Apply to Messiah</a
-              >
-              <a
-                class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
-                href="https://www.messiah.edu/ug-tuition-and-aid/">Tuition</a
-              >
-              <a
-                class="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/80 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-primary-800"
-                href="https://www.messiah.edu/ug-fin-aid/">Scholarships</a
-              >
-            </div>
-          </div>
-
-          <form
-            data-analytics="request-information"
-            method="GET"
-            action="https://www.messiah.edu/undergraduate-admissions/request-more-information/request-information"
-            class="mt-10 grid gap-6 border-t border-white/30 pt-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-end lg:gap-8"
-          >
-            <div class="self-center">
-              <p class="text-xs font-bold uppercase tracking-[.18em] text-tertiary-200">
-                Tell us about yourself
-              </p>
-              <h3 class="mt-2 font-title text-2xl font-bold uppercase text-white">
-                Request information
-              </h3>
-            </div>
-
-            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.2fr_auto]">
-              <div>
-                <label for="listing-rfi-first-name" class="sr-only">First name</label>
-                <input
-                  id="listing-rfi-first-name"
-                  type="text"
-                  name="firstname"
-                  autocomplete="given-name"
-                  placeholder="First name"
-                  required
-                  class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
-                />
-              </div>
-              <div>
-                <label for="listing-rfi-last-name" class="sr-only">Last name</label>
-                <input
-                  id="listing-rfi-last-name"
-                  type="text"
-                  name="lastname"
-                  autocomplete="family-name"
-                  placeholder="Last name"
-                  required
-                  class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
-                />
-              </div>
-              <div class="sm:col-span-2 lg:col-span-1">
-                <label for="listing-rfi-email" class="sr-only">Email</label>
-                <input
-                  id="listing-rfi-email"
-                  type="email"
-                  name="email"
-                  autocomplete="email"
-                  placeholder="Email"
-                  required
-                  class="h-14 w-full border border-transparent bg-white px-4 text-slate-900 placeholder:text-slate-400 focus:border-[#e5ae3a] focus:outline-none focus:ring-2 focus:ring-[#e5ae3a]"
-                />
-              </div>
-              <button
-                type="submit"
-                class="inline-flex min-h-14 w-full items-center justify-center border border-white/80 px-6 py-3 font-title font-bold uppercase tracking-wider text-white transition hover:bg-white hover:text-primary-800 focus-visible:bg-white focus-visible:text-primary-800 sm:col-span-2 lg:col-span-1 lg:w-auto"
-              >
-                Next
-              </button>
-            </div>
-          </form>
-        </div>
-      </section>
+      <Footer />
     </main>
 
     <template x-teleport="body">
@@ -586,7 +353,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
         x-show="openProgram"
         x-cloak
         @keydown.escape.window="closeDetails()"
-        class="fixed inset-0 z-[80] flex justify-end bg-primary-950/75 backdrop-blur-sm"
+        class="program-discovery fixed inset-0 z-[100] flex justify-end bg-primary-950/75"
         role="presentation"
       >
         <button
@@ -600,12 +367,12 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           role="dialog"
           aria-modal="true"
           aria-labelledby="quick-view-title"
-          class="relative h-full w-full overflow-y-auto bg-[#fbfaf7] shadow-2xl sm:max-w-3xl"
+          class="relative h-full w-full max-w-2xl overflow-y-auto bg-white shadow-2xl"
         >
           <button
             type="button"
             @click="closeDetails()"
-            class="fixed right-4 top-4 z-10 grid size-12 place-items-center border-2 border-primary-900 bg-white text-primary-900 shadow-lg hover:bg-[#f2bd55]"
+            class="absolute right-4 top-4 z-10 grid size-11 place-items-center rounded-full bg-white text-primary-900 shadow-md hover:bg-mango-300"
             aria-label="Close program details"><Icon name="close" class="size-7" /></button
           >
           <div class="relative h-64 bg-primary-900">
@@ -618,12 +385,10 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               class="absolute bottom-6 left-7 text-xs font-extrabold uppercase tracking-[.16em] text-white"
               x-text="openProgram?.department_name"></span>
           </div>
-          <div class="p-7 sm:p-10">
+          <div class="p-6 sm:p-10">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p
-                  class="mb-2 text-[10px] font-extrabold uppercase tracking-[.12em] text-primary-700"
-                >
+                <p class="mb-2 text-xs font-extrabold uppercase tracking-[.12em] text-primary-700">
                   Undergraduate program
                 </p><h2
                   id="quick-view-title"
@@ -653,7 +418,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             </p>
             <div
               x-show="careerItems(openProgram).length"
-              class="mt-8 border-l-4 border-[#f2bd55] bg-[#f5f1e8] p-6"
+              class="mt-8 border border-mango-200 bg-mango-50 p-6"
             >
               <h3 class="font-title text-xl font-bold text-primary-900">
                 Where this program can lead
@@ -667,7 +432,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             <div class="mt-8 flex flex-wrap gap-3">
               <a
                 :href="programUrl(openProgram)"
-                class="inline-flex min-h-12 items-center gap-3 bg-[#f2bd55] px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950 no-underline"
+                class="inline-flex min-h-12 items-center gap-3 bg-mango-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950 no-underline"
                 >Explore full program <span class="text-lg">→</span></a
               ><button
                 type="button"
@@ -679,9 +444,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               >
             </div>
             <div x-show="relatedPrograms.length" class="mt-12 border-t border-slate-200 pt-8">
-              <p
-                class="mb-2 text-[10px] font-extrabold uppercase tracking-[.14em] text-primary-700"
-              >
+              <p class="mb-2 text-xs font-extrabold uppercase tracking-[.14em] text-primary-700">
                 Keep exploring
               </p><h3 class="font-title text-3xl font-bold text-primary-900">
                 Related programs
@@ -692,11 +455,11 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
                     @click="showDetails(related)"
                     class="border border-slate-200 bg-white p-4 text-left"
                     ><span
-                      class="text-[9px] font-bold uppercase text-slate-500"
+                      class="text-xs font-bold uppercase text-slate-500"
                       x-text="related.department_name"></span><span
                       class="mt-1 block font-title text-lg font-bold leading-tight text-primary-900"
                       x-text="related.program_name"></span><span
-                      class="mt-4 block text-[10px] font-extrabold uppercase text-primary-700"
+                      class="mt-4 block text-xs font-extrabold uppercase text-primary-700"
                       >QUICK VIEW →</span
                     ></button
                   ></template
@@ -709,43 +472,9 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
     </template>
   </div>
 
-  <style>
-    .hero-publication-dots {
-      pointer-events: none;
-      position: absolute;
-      z-index: 0;
-      top: 5.5rem;
-      left: -4rem;
-      width: min(52vw, 46rem);
-      height: 31rem;
-      opacity: 0.38;
-      transform: rotate(4deg);
-      background-image: radial-gradient(
-        circle,
-        rgb(242 189 85 / 0.72) 0 1.6px,
-        transparent 1.9px
-      );
-      background-position: center;
-      background-size: 18px 18px;
-      -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
-      mask-image: radial-gradient(ellipse at center, black 20%, transparent 72%);
-    }
-
-    @media (max-width: 47.999rem) {
-      .hero-publication-dots {
-        top: 8rem;
-        left: -7rem;
-        width: 24rem;
-        height: 26rem;
-        opacity: 0.3;
-      }
-    }
-  </style>
-
   <script is:inline>
     function programExplorer() {
       return {
-        endpoint: "https://cascade-prod.messiah.edu/_program_data/ug-json.json",
         programs: [],
         loading: true,
         error: "",
@@ -779,27 +508,43 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           },
         ],
         init() {
-          const params = new URLSearchParams(window.location.search);
+          let params = new URLSearchParams(location.search);
+
           this.query = params.get("search") || "";
           this.type = params.get("type") || "";
           this.interest = params.get("interest") || "";
+
           try {
-            const saved = localStorage.getItem("ug-program-layout-2b");
-            if (["cards", "list"].includes(saved)) this.layout = saved;
+            let saved = localStorage.getItem("ug-program-layout-2b");
+
+            if (["cards", "list"].includes(saved)) {
+              this.layout = saved;
+            }
           } catch {}
+
           this.loadPrograms();
         },
+
         async loadPrograms() {
           this.loading = true;
           this.error = "";
+
           try {
-            const response = await fetch(this.endpoint);
-            if (!response.ok) throw new Error(`The server returned ${response.status}.`);
-            const data = await response.json();
+            let response = await fetch(
+              "https://cascade-prod.messiah.edu/_program_data/ug-json.json",
+            );
+
+            if (!response.ok) {
+              throw new Error(`The server returned ${response.status}.`);
+            }
+
+            let data = await response.json();
+
             this.programs = (data.items || [])
-              .filter((p) => p.hide_on_program_listing !== "yes")
+              .filter((program) => program.hide_on_program_listing !== "yes")
               .sort((a, b) => (a.program_name || "").localeCompare(b.program_name || ""));
-            this.$store.bookmarks.keepOnly(this.programs.map((p) => p.entry_id));
+
+            this.$store.bookmarks.keepOnly(this.programs.map((program) => program.entry_id));
           } catch (error) {
             this.error = error instanceof Error ? error.message : "Please try again in a moment.";
           } finally {
@@ -807,9 +552,13 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             this.$nextTick(() => this.setupInfiniteScroll());
           }
         },
+
         setupInfiniteScroll() {
           this.loadMoreObserver?.disconnect();
-          if (!this.autoLoadSupported || !this.$refs.loadMoreSentinel) return;
+
+          if (!this.autoLoadSupported || !this.$refs.loadMoreSentinel) {
+            return;
+          }
 
           this.loadMoreObserver = new IntersectionObserver(
             ([entry]) => {
@@ -822,23 +571,26 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
             },
             { rootMargin: "400px 0px" },
           );
+
           this.loadMoreObserver.observe(this.$refs.loadMoreSentinel);
         },
+
         destroy() {
           this.loadMoreObserver?.disconnect();
         },
+
         get availableInterests() {
-          return [...new Set(this.programs.flatMap((p) => this.interestTags(p)))]
-            .filter(Boolean)
-            .sort();
+          return [...new Set(this.programs.flatMap(this.interestTags))].filter(Boolean).sort();
         },
+
         get filteredPrograms() {
-          const terms = this.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-          const matches = this.programs.filter((program) => {
-            const haystack = [program.program_name, program.keywords]
+          let terms = this.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+          let matches = this.programs.filter((program) => {
+            let haystack = [program.program_name, program.keywords]
               .filter(Boolean)
               .join(" ")
               .toLowerCase();
+
             return (
               terms.every((term) => haystack.includes(term)) &&
               (!this.type || program[this.type] === "true") &&
@@ -846,77 +598,115 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
               (!this.savedOnly || this.$store.bookmarks.has(program.entry_id))
             );
           });
+
           return matches.sort((a, b) => a.program_name.localeCompare(b.program_name));
         },
+
         get directSearchPrograms() {
-          const query = this.query.trim().toLowerCase();
-          if (!query) return this.filteredPrograms;
+          let query = this.query.trim().toLowerCase();
+
+          if (!query) {
+            return this.filteredPrograms;
+          }
+
           return this.filteredPrograms.filter((program) =>
             (program.program_name || "").toLowerCase().includes(query),
           );
         },
+
         get keywordSearchPrograms() {
-          if (!this.query.trim()) return [];
-          const directIds = new Set(this.directSearchPrograms.map((program) => program.entry_id));
+          if (!this.query.trim()) {
+            return [];
+          }
+
+          let directIds = new Set(this.directSearchPrograms.map((program) => program.entry_id));
+
           return this.filteredPrograms.filter((program) => !directIds.has(program.entry_id));
         },
-        get visiblePrograms() {
-          if (!this.query.trim()) return this.filteredPrograms.slice(0, this.shownCount);
 
-          const direct = this.directSearchPrograms
+        get visiblePrograms() {
+          if (!this.query.trim()) {
+            return this.filteredPrograms.slice(0, this.shownCount);
+          }
+
+          let direct = this.directSearchPrograms
             .slice(0, this.shownCount)
             .map((program, index) => ({
               ...program,
               _searchGroupStart: index === 0 ? "direct" : "",
             }));
-          const remaining = Math.max(0, this.shownCount - direct.length);
-          const related = this.keywordSearchPrograms.slice(0, remaining).map((program, index) => ({
+          let remaining = Math.max(0, this.shownCount - direct.length);
+          let related = this.keywordSearchPrograms.slice(0, remaining).map((program, index) => ({
             ...program,
             _searchGroupStart: index === 0 ? "related" : "",
           }));
 
           return [...direct, ...related];
         },
+
         get hasFilters() {
           return Boolean(this.query || this.type || this.interest || this.savedOnly);
         },
+
         get relatedPrograms() {
-          if (!this.openProgram?.related_programs) return [];
+          if (!this.openProgram?.related_programs) {
+            return [];
+          }
+
           return this.openProgram.related_programs
             .split("|")
-            .map((id) => this.programs.find((p) => p.entry_id === id))
+            .map((id) => this.programs.find((program) => program.entry_id === id))
             .filter(Boolean)
             .slice(0, 3);
         },
+
         setType(value) {
           this.type = value;
           this.shownCount = this.pageSize;
           this.syncUrl();
         },
+
         goToType(value) {
           this.setType(value);
           this.$nextTick(() =>
-            document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" }),
+            document.getElementById("program-finder")?.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                ? "instant"
+                : "smooth",
+            }),
           );
         },
+
         setLayout(value) {
           this.layout = value === "list" ? "list" : "cards";
+
           try {
             localStorage.setItem("ug-program-layout-2b", this.layout);
           } catch {}
         },
+
         chooseInterest(value) {
           this.interest = value;
           this.shownCount = this.pageSize;
           this.syncUrl();
           this.$nextTick(() =>
-            document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" }),
+            document.getElementById("program-finder")?.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                ? "instant"
+                : "smooth",
+            }),
           );
         },
+
         goToFinder() {
           this.syncUrl();
-          document.getElementById("program-finder")?.scrollIntoView({ behavior: "smooth" });
+          document.getElementById("program-finder")?.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "instant"
+              : "smooth",
+          });
         },
+
         toggleSavedOnly() {
           this.savedOnly = !this.savedOnly;
           this.query = "";
@@ -925,6 +715,7 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           this.shownCount = this.pageSize;
           this.syncUrl();
         },
+
         resetFilters() {
           this.query = "";
           this.type = "";
@@ -933,38 +724,55 @@ import ProgramDiscoveryNav from "../components/program-discovery-nav.astro";
           this.shownCount = this.pageSize;
           this.syncUrl();
         },
+
         syncUrl() {
-          const url = new URL(window.location.href);
+          let url = new URL(window.location.href);
+
           ["search", "type", "interest"].forEach((key) => url.searchParams.delete(key));
+
           if (this.query) url.searchParams.set("search", this.query);
           if (this.type) url.searchParams.set("type", this.type);
           if (this.interest) url.searchParams.set("interest", this.interest);
+
           window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
         },
         showDetails(program) {
           this.openProgram = program;
         },
+
         closeDetails() {
           this.openProgram = null;
         },
+
         programUrl(program) {
-          const path = String(program?.program_url || program?.url_slug || "").replace(/^\/+/, "");
+          let path = String(program?.program_url || program?.url_slug || "").replace(/^\/+/, "");
+
           return path ? `/${path}` : "#";
         },
+
         degrees(program) {
-          if (!program?.degree || program.degree === "none") return [];
+          if (!program?.degree || program.degree === "none") {
+            return [];
+          }
+
           return program.degree.split("|").filter(Boolean);
         },
+
         programTypes(program) {
-          if (!program) return [];
+          if (!program) {
+            return [];
+          }
+
           return this.types.filter((item) => program[item.key] === "true");
         },
+
         interestTags(program) {
           return (program?.interest_group_name || "")
             .split("|")
             .map((tag) => tag.trim())
             .filter(Boolean);
         },
+
         careerItems(program) {
           return (program?.job_title || "")
             .split(/,|\r?\n/)

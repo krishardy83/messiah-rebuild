@@ -6,6 +6,7 @@ import containerQueries from "@tailwindcss/container-queries";
 export default {
   content: ["./src/**/*.{astro,html,js,mdx,ts,tsx}"],
   safelist: [
+    "text-xxs",
     "text-lg",
     "text-xl",
     "text-2xl",
@@ -154,6 +155,19 @@ export default {
           800: "#254b67",
           900: "#244056",
           950: "#182a39",
+        },
+        mango: {
+          50: '#fef9ec',
+          100: '#fbecca',
+          200: '#f7d890',
+          300: '#f2bd55',
+          400: '#efa630',
+          500: '#e88518',
+          600: '#cd6312',
+          700: '#aa4513',
+          800: '#8b3615',
+          900: '#722d15',
+          950: '#411507',
         },
         button: {
           from: "#6697B8",
