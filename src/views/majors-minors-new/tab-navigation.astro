@@ -1,0 +1,68 @@
+---
+import { cn } from "../../lib/utils";
+
+interface Props {
+  active: "az" | "interest" | "quiz";
+}
+
+const { active } = Astro.props;
+
+const views = [
+  {
+    id: "az",
+    href: "/majors-minors-2b/",
+    eyebrow: "Search every program",
+    label: "A–Z listing",
+  },
+  {
+    id: "interest",
+    href: "/majors-minors-2c/",
+    eyebrow: "Start with a subject",
+    label: "Browse by interest",
+  },
+  {
+    id: "quiz",
+    href: "/majors-minors-quiz/",
+    eyebrow: "Get a guided match",
+    label: "Take the quiz",
+  },
+] as const;
+---
+
+<nav
+  class="relative z-10 mx-5 -mt-10 grid grid-cols-3 border border-slate-300 bg-white shadow-lg shadow-primary-950/10 sm:mx-auto sm:w-[calc(100%-4rem)] sm:max-w-4xl"
+  aria-label="Ways to explore undergraduate programs"
+>
+  {
+    views.map((view, index) => {
+      const isActive = active === view.id;
+
+      return (
+        <a
+          href={view.href}
+          aria-current={isActive ? "page" : undefined}
+          class={cn(
+            "group relative flex flex-col items-center justify-center px-2 text-center no-underline transition sm:px-5 min-h-20 sm:min-h-20 bg-white text-primary-950 hover:bg-tertiary-100",
+            {
+              "border-l border-slate-300": index > 0,
+              "after:h-1.5 after:absolute after:bg-mango-300 after:bottom-0 after:left-0 after:right-0":
+                isActive,
+            },
+          )}
+        >
+          <span
+            class={cn("hidden text-[10px] tracking-widest font-bold uppercase sm:block", {
+              "text-primary-700": isActive,
+              "text-slate-500 group-hover:text-primary-700": !isActive,
+            })}
+          >
+            {view.eyebrow}
+          </span>
+          <span class="font-title text-sm font-bold leading-tight sm:mt-1 sm:text-lg lg:text-xl">
+            {view.label}
+          </span>
+        </a>
+      );
+    })
+  }
+</nav>

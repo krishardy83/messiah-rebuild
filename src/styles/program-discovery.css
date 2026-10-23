@@ -1,0 +1,78 @@
+@tailwind components;
+
+/* Shared visual rules for the undergraduate discovery pages. */
+@layer components {
+  .discovery-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+  .discovery-section {
+    @apply scroll-mt-24 bg-white pb-16 pt-8 lg:pb-24 lg:pt-12;
+  }
+  .discovery-heading {
+    @apply max-w-4xl font-title text-4xl font-bold leading-tight tracking-tight text-primary-950 sm:text-5xl lg:text-6xl;
+    text-wrap: balance;
+  }
+  .discovery-intro {
+    @apply mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg;
+  }
+  .discovery-meta {
+    @apply text-xs font-bold uppercase tracking-wider text-primary-700;
+  }
+  .discovery-card {
+    @apply relative flex min-w-0 flex-col border border-slate-300 bg-white;
+    transition:
+      border-color 180ms ease-out,
+      box-shadow 180ms ease-out;
+  }
+  .discovery-card:hover,
+  .discovery-card:focus-within {
+    @apply border-primary-400;
+    box-shadow: 0 8px 20px -12px rgb(26 36 55 / 25%);
+  }
+  .discovery-tag {
+    @apply inline-flex min-h-8 items-center bg-slate-100 px-2.5 py-1 text-xs leading-relaxed text-primary-700;
+  }
+  .discovery-card-action {
+    @apply flex min-h-11 items-center justify-between gap-2 text-left text-xs font-bold uppercase tracking-wide text-primary-900 hover:text-mango-800;
+  }
+  .discovery-choice {
+    @apply discovery-card min-h-44 flex-row items-start gap-4 p-6 text-left;
+  }
+  .discovery-error {
+    @apply border border-red-200 bg-red-50 p-6 text-red-900;
+  }
+}
+
+.program-discovery :is(a, button, input, select):focus-visible {
+  outline: 2px solid #2e4b76;
+  outline-offset: 4px;
+}
+.program-discovery #next-steps :is(a, button, input):focus-visible {
+  outline-color: #f2bd55;
+}
+.program-discovery :is(button, a, input, select) {
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+}
+.program-discovery input {
+  caret-color: #2e4b76;
+}
+.program-discovery ::selection {
+  background: #f7d890;
+  color: #1a2437;
+}
+.program-discovery :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+.program-discovery [role="dialog"] {
+  scrollbar-color: #9fb8da #f4f6fb;
+}
+@media (prefers-reduced-motion: reduce) {
+  .program-discovery *,
+  .program-discovery *::before,
+  .program-discovery *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
