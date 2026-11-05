@@ -11,7 +11,7 @@ import Hero from "../views/majors-minors-new/hero.astro";
 
 <BaseLayout
   title="Academic Program Match Quiz"
-  description="Answer two quick questions to discover Messiah University undergraduate majors, minors and academic programs that fit your interests."
+  description="Answer three quick questions to discover Messiah University undergraduate majors, minors and academic programs that fit your interests."
 >
   <div class="program-discovery" x-data="programMatchQuiz()">
     <Hero
@@ -32,7 +32,7 @@ import Hero from "../views/majors-minors-new/hero.astro";
               <div class="h-1.5 overflow-hidden bg-slate-200" aria-hidden="true">
                 <div
                   class="h-full bg-mango-300 transition-all duration-500"
-                  :style="`width: ${area ? 100 : groupChoice ? 50 : 12}%`"
+                  :style="`width: ${subcategory ? 100 : area ? 67 : groupChoice ? 33 : 12}%`"
                 >
                 </div>
               </div>
@@ -53,7 +53,7 @@ import Hero from "../views/majors-minors-new/hero.astro";
               </div>
               <div x-show="!quizLoading && !quizError && !groupChoice" x-cloak x-transition.opacity>
                 <p class="text-xs font-extrabold uppercase tracking-[.18em] text-mango-800">
-                  Question one of two
+                  Question one of three
                 </p>
                 <h2 id="quiz-heading" class="discovery-heading mt-3">What sounds most like you?</h2>
                 <p class="discovery-intro">
@@ -106,7 +106,7 @@ import Hero from "../views/majors-minors-new/hero.astro";
                   <span aria-hidden="true">←</span> Back
                 </button>
                 <p class="text-xs font-extrabold uppercase tracking-[.18em] text-mango-800">
-                  Question two of two
+                  Question two of three
                 </p>
                 <h2 class="discovery-heading mt-3">What are you most curious about?</h2>
                 <p class="discovery-intro">
@@ -154,10 +154,82 @@ import Hero from "../views/majors-minors-new/hero.astro";
                 </div>
               </div>
 
-              <div x-show="area" x-cloak x-transition.opacity aria-live="polite">
+              <div x-show="area && !subcategory" x-cloak x-transition.opacity>
                 <button
                   type="button"
                   @click="changeArea()"
+                  class="mb-7 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary-700"
+                >
+                  <span aria-hidden="true">←</span> Back
+                </button>
+                <p class="text-xs font-extrabold uppercase tracking-[.18em] text-mango-800">
+                  Question three of three
+                </p>
+                <h2 class="discovery-heading mt-3">Which of these could you see yourself doing?</h2>
+                <p class="discovery-intro">Choose the direction you’d most like to explore.</p>
+
+                <p x-show="loading" role="status" class="mt-8 text-lg text-slate-600">
+                  Loading your options…
+                </p>
+                <div x-show="error" role="alert" class="discovery-error mt-8">
+                  <h3 class="font-title text-2xl font-bold">We couldn’t load your options.</h3>
+                  <p class="mt-2">
+                    Please try again, or browse the <a href="/majors-minors-2b/" class="underline"
+                      >complete A–Z program listing</a
+                    >.
+                  </p>
+                  <button type="button" @click="loadPrograms()" class="mt-4 font-bold underline"
+                    >Try again</button
+                  >
+                </div>
+                <div
+                  x-show="!loading && !error"
+                  class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+                >
+                  <template x-for="(choice, index) in visibleSubcategories" :key="choice.key">
+                    <button
+                      type="button"
+                      @click="selectSubcategory(choice.subcategory_id)"
+                      class="discovery-choice group"
+                    >
+                      <span
+                        class="grid size-11 shrink-0 place-items-center bg-slate-100 text-xs font-extrabold text-primary-700 transition group-hover:bg-mango-300 group-hover:text-primary-950"
+                        aria-hidden="true"
+                        x-text="String(index + 1).padStart(2, '0')"></span>
+                      <span class="flex min-h-32 flex-1 flex-col justify-between">
+                        <span
+                          class="font-title text-xl font-bold leading-tight text-primary-950"
+                          x-text="choice.subcategory_name"></span>
+                        <span
+                          class="mt-auto pt-4 text-xs font-extrabold uppercase tracking-wider text-mango-800"
+                          >See my matches <span aria-hidden="true">→</span></span
+                        >
+                      </span>
+                    </button>
+                  </template>
+                </div>
+                <div
+                  x-show="!loading && !error && visibleSubcategories.length === 0"
+                  class="mt-8 border border-slate-200 p-8 text-center"
+                >
+                  <h3 class="font-title text-3xl font-bold text-primary-950">
+                    This area is being updated.
+                  </h3>
+                  <p class="mt-2 text-slate-600">
+                    Choose another academic area or explore the full listing.
+                  </p>
+                  <a
+                    href="/majors-minors-2b/"
+                    class="mt-5 inline-flex bg-mango-300 px-6 py-3 text-xs font-extrabold uppercase tracking-wider text-primary-950"
+                    >View all programs</a
+                  >
+                </div>
+              </div>
+
+              <div x-show="subcategory" x-cloak x-transition.opacity aria-live="polite">
+                <button
+                  type="button"
+                  @click="changeSubcategory()"
                   class="mb-7 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-primary-700"
                 >
                   <span aria-hidden="true">←</span> Change your answer
@@ -167,8 +239,8 @@ import Hero from "../views/majors-minors-new/hero.astro";
                 </p>
                 <h2 class="discovery-heading mt-3">Programs worth exploring.</h2>
                 <p class="discovery-intro">
-                  Based on your answer, “<strong x-text="area?.label"></strong>, these programs are
-                  a strong place to start. Save any that stand out.
+                  Based on your answer, “<strong x-text="subcategory?.subcategory_name"></strong>,”
+                  these programs are a strong place to start. Save any that stand out.
                 </p>
 
                 <div
@@ -343,6 +415,7 @@ import Hero from "../views/majors-minors-new/hero.astro";
         quizError: "",
         selectedGroup: null,
         selectedArea: "",
+        selectedSubcategory: "",
         programs: [],
         loading: true,
         error: "",
@@ -394,9 +467,11 @@ import Hero from "../views/majors-minors-new/hero.astro";
             );
             this.selectedGroup = null;
             this.selectedArea = "";
+            this.selectedSubcategory = "";
             if (parentIndex !== -1) {
               this.selectedGroup = parentIndex;
               this.selectedArea = area;
+              this.selectedSubcategory = params.get("subcategory") || "";
             } else if (/^\d+$/.test(params.get("group") || "")) {
               const index = Number(params.get("group"));
               if (this.groups[index]) this.selectedGroup = index;
@@ -431,13 +506,42 @@ import Hero from "../views/majors-minors-new/hero.astro";
         get visibleAreas() {
           return this.groupChoice?.answers || [];
         },
-        get results() {
+        get visibleSubcategories() {
           if (!this.area) return [];
+          const unique = new Map();
+          for (const program of this.programs) {
+            if (!Array.isArray(program.academic_categories)) continue;
+            for (const category of program.academic_categories) {
+              if (
+                category?.category_id !== this.selectedArea ||
+                typeof category.subcategory_id !== "string" ||
+                !category.subcategory_id.trim() ||
+                typeof category.subcategory_name !== "string" ||
+                !category.subcategory_name.trim()
+              )
+                continue;
+              const key = JSON.stringify([category.category_id, category.subcategory_id]);
+              if (!unique.has(key)) unique.set(key, { ...category, key });
+            }
+          }
+          return [...unique.values()];
+        },
+        get subcategory() {
+          return (
+            this.visibleSubcategories.find(
+              (choice) => choice.subcategory_id === this.selectedSubcategory,
+            ) || null
+          );
+        },
+        get results() {
+          if (!this.subcategory) return [];
           return this.programs.filter(
             (program) =>
               Array.isArray(program.academic_categories) &&
               program.academic_categories.some(
-                (category) => category.category_id === this.selectedArea,
+                (category) =>
+                  category?.category_id === this.selectedArea &&
+                  category.subcategory_id === this.selectedSubcategory,
               ),
           );
         },
@@ -454,23 +558,43 @@ import Hero from "../views/majors-minors-new/hero.astro";
           if (!this.groups[index]) return;
           this.selectedGroup = index;
           this.selectedArea = "";
+          this.selectedSubcategory = "";
           this.syncUrl();
           this.scrollToQuiz();
         },
         selectArea(id) {
           if (!this.visibleAreas.some((area) => area.id === id)) return;
           this.selectedArea = id;
+          this.selectedSubcategory = "";
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        selectSubcategory(id) {
+          if (
+            this.loading ||
+            this.error ||
+            !this.visibleSubcategories.some((choice) => choice.subcategory_id === id)
+          )
+            return;
+          this.selectedSubcategory = id;
+          this.syncUrl();
+          this.scrollToQuiz();
+        },
+        changeSubcategory() {
+          this.selectedSubcategory = "";
           this.syncUrl();
           this.scrollToQuiz();
         },
         changeArea() {
           this.selectedArea = "";
+          this.selectedSubcategory = "";
           this.syncUrl();
           this.scrollToQuiz();
         },
         changeGroup() {
           this.selectedGroup = null;
           this.selectedArea = "";
+          this.selectedSubcategory = "";
           this.syncUrl();
           this.scrollToQuiz();
         },
@@ -482,21 +606,21 @@ import Hero from "../views/majors-minors-new/hero.astro";
           url.searchParams.delete("group");
           url.searchParams.delete("area");
           url.searchParams.delete("path");
+          url.searchParams.delete("subcategory");
           if (this.selectedGroup !== null)
             url.searchParams.set("group", String(this.selectedGroup));
           if (this.selectedArea) url.searchParams.set("area", this.selectedArea);
+          if (this.subcategory) url.searchParams.set("subcategory", this.selectedSubcategory);
           window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
         },
         scrollToQuiz() {
           this.$nextTick(() =>
-            document
-              .getElementById("quiz")
-              ?.scrollIntoView({
-                behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-                  ? "instant"
-                  : "smooth",
-                block: "start",
-              }),
+            document.getElementById("quiz")?.scrollIntoView({
+              behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                ? "instant"
+                : "smooth",
+              block: "start",
+            }),
           );
         },
         showDetails(program) {
