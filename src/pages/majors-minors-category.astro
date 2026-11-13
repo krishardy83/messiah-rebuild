@@ -1,0 +1,428 @@
+---
+import BaseLayout from "../layouts/base.astro";
+import Icon from "../components/icon.astro";
+import Youtube from "../components/youtube.astro";
+import ProgramDrawer from "../views/majors-minors-new/program-drawer.astro";
+
+const groups = [
+  {
+    id: "leading-organizations-managing-money-wisely",
+    icon: "https://www.messiah.edu/undergraduate/interest-area/business/_images/leader.svg",
+    label: "I’m interested in",
+    emphasis: "leading organizations",
+    suffix: "and managing money wisely",
+    programs: [
+      "Accounting",
+      "Finance",
+      "Financial planning",
+      "Financial Analysis concentration",
+      "Economics",
+      "Business Administration",
+      "Business Foundations",
+    ],
+  },
+  {
+    id: "launching-ideas-growing-businesses",
+    icon: "https://www.messiah.edu/undergraduate/interest-area/business/_images/idea.svg",
+    label: "I’m interested in",
+    emphasis: "launching ideas",
+    suffix: "and growing businesses",
+    programs: [
+      "Entrepreneurship",
+      "Marketing",
+      "Digital Marketing",
+      "International Business",
+      "Technology and Operations Management",
+    ],
+  },
+  {
+    id: "building-technology-using-data-solve-problems",
+    icon: "https://www.messiah.edu/undergraduate/interest-area/business/_images/data-management.svg",
+    label: "I’m interested in",
+    emphasis: "building technology",
+    suffix: "and using data to solve problems",
+    programs: ["Data Science", "Business Information Systems", "Web Development"],
+  },
+  {
+    id: "strengthening-communities-improving-lives",
+    icon: "https://www.messiah.edu/undergraduate/interest-area/business/_images/community-building.svg",
+    label: "I’m interested in",
+    emphasis: "strengthening communities",
+    suffix: "and improving lives",
+    programs: [
+      "Economic Development",
+      "Global Health and Development",
+      "Healthcare Leadership (Accelerated)",
+    ],
+  },
+  {
+    id: "managing-experiences-music-sports-hospitality",
+    icon: "https://www.messiah.edu/undergraduate/interest-area/business/_images/talent-management.svg",
+    label: "I’m interested in",
+    emphasis: "managing experiences",
+    suffix: "in music, sports, and hospitality",
+    programs: [
+      "Commercial Music",
+      "Economic Development",
+      "Sport Management",
+      "Hospitality and Tourism Management",
+    ],
+  },
+  {
+    id: "leading-teams-developing-people",
+    icon: "https://www.messiah.edu/undergraduate/interest-area/business/_images/team.svg",
+    label: "I’m interested in",
+    emphasis: "leading teams",
+    suffix: "and developing people",
+    programs: ["Human Resource Management", "Leadership", "Strategic Leadership (Accelerated)"],
+  },
+];
+---
+
+<BaseLayout
+  title="Business and Leadership"
+  description="Explore business, leadership and innovation programs at Messiah University."
+>
+  <div x-data="interestAreaPage()" x-init="loadPrograms()">
+    <header
+      aria-labelledby="category-title"
+      class="relative -mt-32 isolate flex min-h-[550px] items-end bg-cover bg-center bg-no-repeat pb-8 pt-40 before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-700/70 before:to-transparent after:absolute after:inset-0 after:-z-10 after:bg-gradient-to-b after:from-black/60 after:to-transparent md:h-[70vh] md:max-h-[800px] md:items-center md:pb-4"
+      style="background-image: url('https://www.messiah.edu/undergraduate/_images/hero/mobile/business_administration_b.s.jpg')"
+    >
+      <div class="relative z-10 mx-auto w-full max-w-[2100px] px-4 lg:px-12">
+        <div class="md:w-1/2">
+          <h1 id="category-title" class="h1-md">Business, Leadership and Innovation</h1>
+          <hr class="mb-4 mt-3 w-1/2 border-tertiary-300 border-b-4 md:border-b-8" />
+          <p
+            class="font-title text-xl font-bold uppercase leading-none text-white md:text-2xl lg:text-3xl xl:text-4xl"
+          >
+            Programs at Messiah University
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <ul
+      class="fixed right-0 top-64 z-20 hidden bg-primary-800 py-1 text-sm uppercase text-white lg:block"
+    >
+      <li>
+        <a class="block px-4 py-1 hover:underline" href="https://www.messiah.edu/applytoday"
+          >Apply</a
+        >
+      </li>
+      <li>
+        <a class="block px-4 py-1 hover:underline" href="https://www.messiah.edu/visit">Visit</a>
+      </li>
+      <li>
+        <a
+          class="block px-4 py-1 hover:underline"
+          href="https://www.messiah.edu/office-of-development/">Give</a
+        >
+      </li>
+    </ul>
+
+    <main id="content">
+      <section class="pb-6 pt-24">
+        <div class="wrapper-md text-center">
+          <h2 class="font-title text-4xl font-bold leading-tight text-primary-800 sm:text-5xl">
+            Explore Business, Leadership and Innovation at Messiah University
+          </h2>
+          <p class="mx-auto mt-5 max-w-4xl leading-relaxed md:text-lg">
+            Business shapes economies, drives innovation and creates opportunities to serve others.
+            At Messiah University, our business and leadership programs prepare students to think
+            strategically, lead with integrity and solve real-world problems with confidence.
+            Through hands-on projects, internships, close faculty mentorship and a Christ-centered
+            perspective, you’ll build practical skills in finance, marketing, technology,
+            entrepreneurship and management—equipping you to lead organizations, strengthen
+            communities and make wise, ethical decisions in a rapidly changing world.
+          </p>
+        </div>
+      </section>
+
+      <section class="pb-24 pt-6" aria-label="Business program areas">
+        <div class="wrapper">
+          <div
+            x-show="loading"
+            class="border border-gray-300 bg-gray-100 p-6 text-center"
+            role="status"
+          >
+            Loading programs…
+          </div>
+          <div
+            x-show="error"
+            x-cloak
+            class="border border-red-200 bg-red-50 p-6 text-red-900"
+            role="alert"
+          >
+            <p class="font-bold">We couldn’t load the program list.</p>
+            <p class="mt-1 text-sm" x-text="error"></p>
+            <button type="button" class="mt-4 font-bold underline" @click="loadPrograms()"
+              >Try again</button
+            >
+          </div>
+
+          <div x-show="!loading && !error" x-cloak>
+            {
+              groups.map((group, index) => (
+                <article class="mb-4 border border-gray-300 bg-gray-100" x-data="{ open: false }">
+                  <h3>
+                    <button
+                      type="button"
+                      class="group relative flex w-full items-center gap-x-4 bg-gray-100 py-4 pl-4 pr-14 text-left transition-colors aria-expanded:bg-white"
+                      aria-controls={`category-${index + 1}`}
+                      x-bind:aria-expanded="open"
+                      x-on:click="open = !open"
+                    >
+                      <img
+                        src={group.icon}
+                        alt=""
+                        aria-hidden="true"
+                        width="40"
+                        height="40"
+                        class="size-10 shrink-0"
+                      />
+                      <span class="mr-auto text-sm text-primary-800 sm:text-base md:text-lg">
+                        {group.label} <strong>{group.emphasis}</strong> {group.suffix}
+                      </span>
+                      <Icon
+                        name="chevron-down"
+                        class="absolute right-4 top-1/2 size-5 -translate-y-1/2 transition-transform duration-300 group-aria-expanded:rotate-180"
+                      />
+                    </button>
+                  </h3>
+
+                  <div
+                    id={`category-${index + 1}`}
+                    x-show="open"
+                    x-collapse
+                    class="border-t border-gray-300 bg-white"
+                  >
+                    <div class="grid p-4">
+                      <template
+                        x-for={`program in programsFor('${group.id}', ${JSON.stringify(group.programs)})`}
+                        x-bind:key="program.entry_id"
+                      >
+                        <article class="group border-b border-slate-300 bg-white last:border-b-0">
+                          <div class="grid gap-4 p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-6 lg:px-6">
+                            <div class="min-w-0">
+                              <div
+                                class="mb-2 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-widest text-slate-500"
+                                x-text="programTypes(program).map((type) => type.label).join(', ')"
+                              />
+                              <h4 class="flex flex-wrap items-center gap-x-3 gap-y-2 font-title text-3xl font-bold text-primary-950">
+                                <a
+                                  x-bind:href="programUrl(program)"
+                                  class="hover:underline"
+                                  x-text="program.program_name.trim()"
+                                />
+                                <template x-for="degree in degrees(program)" x-bind:key="degree">
+                                  <span
+                                    class="inline-flex shrink-0 items-center bg-primary-900 px-2.5 py-1.5 font-sans text-xs font-extrabold uppercase leading-none tracking-[.08em] text-white"
+                                    x-text="degree"
+                                  />
+                                </template>
+                              </h4>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-200 pt-4 lg:flex-nowrap lg:justify-end lg:border-t-0 lg:pl-6 lg:pt-0">
+                              <button
+                                type="button"
+                                x-on:click="showDetails(program)"
+                                class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                              >
+                                Quick view
+                                <Icon name="expand" class="size-5 text-mango-300" />
+                              </button>
+                              <button
+                                type="button"
+                                x-on:click="$store.bookmarks.toggle(program.entry_id)"
+                                class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-extrabold uppercase tracking-wider text-primary-900"
+                                x-bind:aria-pressed="$store.bookmarks.has(program.entry_id)"
+                                x-bind:aria-label="$store.bookmarks.has(program.entry_id) ? `Remove ${program.program_name.trim()} from saved programs` : `Save ${program.program_name.trim()}`"
+                              >
+                                <span x-text="$store.bookmarks.has(program.entry_id) ? 'Saved' : 'Save program'" />
+                                <Icon
+                                  name="bookmark"
+                                  class="size-5"
+                                  x-bind:class="$store.bookmarks.has(program.entry_id) ? 'fill-mango-300' : ''"
+                                  aria-hidden="true"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </article>
+                      </template>
+                    </div>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="bg-primary-800 bg-cover bg-center bg-no-repeat py-24 text-white lg:py-36"
+        style="background-image: linear-gradient(rgb(39 61 94 / 88%), rgb(39 61 94 / 88%)), url('https://www.messiah.edu/dept-engineering/_images/bg-engineering.webp')"
+      >
+        <div class="wrapper grid items-center gap-8 md:grid-cols-2">
+          <div>
+            <h2 class="font-title text-4xl font-bold leading-tight text-white sm:text-5xl">
+              Messiah's unique approach to hands-on learning
+            </h2>
+            <p class="mt-5 leading-relaxed md:text-lg">
+              Learning in the classroom is important but actually applying that knowledge in a
+              hands-on way can make all the difference. At Messiah University, the Experiential
+              Learning Initiative (ELI) gives students opportunities to apply what they have learned
+              through internships, service learning, off-campus programs, student leadership and
+              undergraduate research.
+            </p>
+          </div>
+          <Youtube
+            videoId="GjSNNxVuoWA"
+            litebox
+            alt="Learn about hands-on learning at Messiah University"
+          />
+        </div>
+      </section>
+
+      <section class="bg-gray-100 py-24">
+        <div class="wrapper-md text-center">
+          <h2 class="font-title text-4xl font-bold text-primary-800 sm:text-5xl">
+            Tell us more about yourself!
+          </h2>
+          <p class="mt-4">
+            Complete the following form to receive more information about education programs at
+            Messiah University.
+          </p>
+          <div class="ug-rfi mt-10 text-left">
+            <div id="form_da8c5c4f-8a12-4118-8dca-066c7496f427">Loading…</div>
+            <script
+              is:inline
+              async
+              src="https://mcadmissions.messiah.edu/register/?id=da8c5c4f-8a12-4118-8dca-066c7496f427&output=embed&div=form_da8c5c4f-8a12-4118-8dca-066c7496f427"
+            ></script>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <ProgramDrawer />
+  </div>
+
+  <script is:inline>
+    // @ts-nocheck
+    function interestAreaPage() {
+      const types = [
+        { field: "major", key: "M", label: "Major", color: "#273d5e" },
+        { field: "minor", key: "m", label: "Minor", color: "#4d87a9" },
+        { field: "concentration", key: "C", label: "Concentration", color: "#ab4e42" },
+        { field: "pre_health", key: "P", label: "Pre-Health Advising", color: "#7477b8" },
+        { field: "partner_program", key: "3+", label: "3+ Partner Program", color: "#84ab8b" },
+        {
+          field: "teaching_certification",
+          key: "T",
+          label: "Teaching Certificate",
+          color: "#e37b65",
+        },
+        { field: "accelerated", key: "A", label: "Accelerated", color: "#dcac42" },
+        { field: "early_assurance", key: "E", label: "Early Assurance", color: "#777" },
+        {
+          field: "undergrad_certificate",
+          key: "UC",
+          label: "Undergraduate Certificate",
+          color: "#333",
+        },
+      ];
+
+      return {
+        loading: true,
+        error: null,
+        programs: [],
+        openProgram: null,
+
+        async loadPrograms() {
+          this.loading = true;
+          this.error = null;
+
+          try {
+            const response = await fetch(
+              "https://cascade-prod.messiah.edu/_program_data/ug-json.json",
+            );
+            if (!response.ok) throw new Error(`Request failed (${response.status})`);
+            const data = await response.json();
+            this.programs = data.items.filter(
+              (program) => program.hide_on_program_listing !== "yes",
+            );
+            this.$store.bookmarks.keepOnly(this.programs.map((program) => program.entry_id));
+          } catch (error) {
+            this.error = error instanceof Error ? error.message : "Unknown error";
+          } finally {
+            this.loading = false;
+          }
+        },
+
+        programsFor(groupId, preferredOrder) {
+          const order = new Map(preferredOrder.map((name, index) => [name.toLowerCase(), index]));
+
+          return this.programs
+            .filter((program) =>
+              (program.academic_categories || []).some(
+                (category) =>
+                  category.category_id === "business-leadership-innovation" &&
+                  category.subcategory_id === groupId,
+              ),
+            )
+            .sort((a, b) => {
+              const aName = (a.program_name || "").trim().toLowerCase();
+              const bName = (b.program_name || "").trim().toLowerCase();
+              return (order.get(aName) ?? 999) - (order.get(bName) ?? 999);
+            });
+        },
+
+        get relatedPrograms() {
+          if (!this.openProgram?.related_programs) return [];
+
+          return this.openProgram.related_programs
+            .split("|")
+            .map((id) => this.programs.find((program) => program.entry_id === id))
+            .filter(Boolean)
+            .slice(0, 3);
+        },
+
+        showDetails(program) {
+          this.openProgram = program;
+        },
+
+        closeDetails() {
+          this.openProgram = null;
+        },
+
+        programUrl(program) {
+          if (/^https?:\/\//.test(program.program_url || "")) return program.program_url;
+          return `https://www.messiah.edu/${String(program.program_url || program.url_slug || "").replace(/^\//, "")}`;
+        },
+
+        degrees(program) {
+          return program.degree && program.degree !== "none"
+            ? program.degree
+                .split("|")
+                .map((degree) => degree.trim())
+                .filter(Boolean)
+            : [];
+        },
+
+        programTypes(program) {
+          if (!program) return [];
+          return types.filter((type) => program[type.field] === "true");
+        },
+
+        careerItems(program) {
+          return (program?.job_title || "")
+            .split(/,|\r?\n/)
+            .map((item) => item.trim())
+            .filter(Boolean);
+        },
+      };
+    }
+  </script>
+</BaseLayout>
