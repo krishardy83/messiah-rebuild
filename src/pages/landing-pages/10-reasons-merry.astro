@@ -1,0 +1,344 @@
+---
+import SingleColumn from "../../layouts/single-column.astro";
+
+const reasons = [
+  {
+    number: "01",
+    title: "Find your people",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/01-find-your-people.jpg",
+    height: 422,
+    accent: "bg-holiday-green",
+  },
+  {
+    number: "02",
+    title: "A campus that feels like home",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/02-a-campus-that-feels-like-home.jpg",
+    height: 491,
+    accent: "bg-holiday-red",
+  },
+  {
+    number: "03",
+    title: "Grow your faith, make it your own",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/03-grow-your-faith-make-it-your-own.jpg",
+    height: 500,
+    accent: "bg-holiday-orange",
+  },
+  {
+    number: "04",
+    title: "Professors who actually know you",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/04-professors-who-actually-know-you.jpg",
+    height: 500,
+    accent: "bg-holiday-green-light",
+  },
+  {
+    number: "05",
+    title: "Big opportunities, personal experience",
+    href: "#",
+    image:
+      "https://www.messiah.edu/merry/_images/cards/05-big-opportunities-personal-experience.jpg",
+    height: 500,
+    accent: "bg-holiday-green",
+  },
+  {
+    number: "06",
+    title: "See the world, make a difference",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/06-see-the-world-make-a-difference.jpg",
+    height: 592,
+    accent: "bg-holiday-red",
+  },
+  {
+    number: "07",
+    title: "Game days hit different",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/07-game-days-hit-different.jpg",
+    height: 500,
+    accent: "bg-holiday-orange",
+  },
+  {
+    number: "08",
+    title: "Small campus, big possibilities",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/08-small-campus-big-possibilities.jpg",
+    height: 970,
+    accent: "bg-holiday-green-light",
+  },
+  {
+    number: "09",
+    title: "Yes, the food is actually good",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/09-yes-the-food-is-actually-good.jpg",
+    height: 500,
+    accent: "bg-holiday-green",
+  },
+  {
+    number: "10",
+    title: "Your next favorite place",
+    href: "#",
+    image: "https://www.messiah.edu/merry/_images/cards/10-your-next-favorite-place.jpg",
+    height: 518,
+    accent: "bg-holiday-red",
+  },
+] as const;
+
+const reasonsJson = JSON.stringify(reasons).replace(/</g, "\\u003c");
+---
+
+<SingleColumn
+  title="A very merry gift from us to you"
+  heroTitleClass="h1-md"
+  description="A very merry gift from Messiah University to you."
+  image="/images/10-reasons-holiday-banner.png"
+  analyticsKey="10-reasons-merry"
+>
+  <Fragment slot="heroOverlay">
+    <div
+      class="pointer-events-none absolute inset-0 z-[1] overflow-hidden text-white motion-reduce:hidden"
+      aria-hidden="true"
+    >
+      <span class="absolute -top-8 left-[3%] animate-snowfall text-sm [animation-delay:-2s]">❄</span
+      >
+      <span class="absolute -top-8 left-[9%] animate-snowfall-slow text-xs [animation-delay:-11s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[15%] animate-snowfall-fast text-base [animation-delay:-5s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[22%] animate-snowfall-slow text-sm [animation-delay:-15s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[29%] animate-snowfall text-lg [animation-delay:-8s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[36%] animate-snowfall-fast text-xs [animation-delay:-1s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[43%] animate-snowfall-slow text-base [animation-delay:-7s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[50%] animate-snowfall text-xs [animation-delay:-13s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[57%] animate-snowfall-fast text-sm [animation-delay:-9s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[64%] animate-snowfall-slow text-lg [animation-delay:-4s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[71%] animate-snowfall text-base [animation-delay:-12s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[78%] animate-snowfall-fast text-xs [animation-delay:-6s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[85%] animate-snowfall-slow text-sm [animation-delay:-17s]"
+        >❄</span
+      >
+      <span class="absolute -top-8 left-[91%] animate-snowfall text-lg [animation-delay:-3s]"
+        >❄</span
+      >
+      <span
+        class="absolute -top-8 left-[96%] animate-snowfall-fast text-base [animation-delay:-10s]"
+        >❄</span
+      >
+    </div>
+  </Fragment>
+
+  <section class="px-4 py-16 md:py-24">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-10 lg:gap-16">
+      <div class="text-left lg:col-span-7">
+        <p class="text-xs font-bold uppercase tracking-[.18em] !text-holiday-red">
+          Life at Messiah University
+        </p>
+
+        <h2 class="h2 mt-3 !text-holiday-green">10 reasons you'll love it here.</h2>
+
+        <p class="paragraph mt-6 max-w-3xl">
+          College is about more than classes. It's about finding your people, discovering your
+          purpose and making memories that last. Hear why Messiah students love calling this place
+          home.
+        </p>
+
+        <div
+          class="mt-10 bg-gray-100 p-6 md:p-8"
+          x-data="{
+            deadline: new Date('2026-12-31T23:59:00-05:00').getTime(),
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            expired: false,
+            interval: null,
+            updateCountdown() {
+              const remaining = Math.max(0, this.deadline - Date.now());
+              this.expired = remaining === 0;
+              this.days = Math.floor(remaining / 86400000);
+              this.hours = Math.floor((remaining % 86400000) / 3600000);
+              this.minutes = Math.floor((remaining % 3600000) / 60000);
+              this.seconds = Math.floor((remaining % 60000) / 1000);
+            },
+            startCountdown() {
+              this.updateCountdown();
+              this.interval = window.setInterval(() => this.updateCountdown(), 1000);
+            },
+            destroy() {
+              window.clearInterval(this.interval);
+            }
+          }"
+          x-init="startCountdown()"
+        >
+          <h3 class="h3 !text-holiday-red" x-cloak x-show="!expired">
+            Apply before December 31st for free
+          </h3>
+
+          <p
+            class="mt-3 font-title text-2xl font-bold !text-holiday-green"
+            role="timer"
+            aria-live="off"
+          >
+            <span x-cloak x-show="!expired">
+              <span
+                class="font-bold tabular-nums"
+                x-text="days + ' ' + (days === 1 ? 'day' : 'days')"></span>,
+              <span
+                class="font-bold tabular-nums"
+                x-text="hours + ' ' + (hours === 1 ? 'hour' : 'hours')"></span>,
+              <span
+                class="font-bold tabular-nums"
+                x-text="minutes + ' ' + (minutes === 1 ? 'minute' : 'minutes')"></span>, and
+              <span
+                class="font-bold tabular-nums"
+                x-text="seconds + ' ' + (seconds === 1 ? 'second' : 'seconds')"></span>
+              left
+            </span>
+            <span x-cloak x-show="expired">The free application offer has ended.</span>
+            <noscript>Apply for free through Dec. 31 at 11:59 p.m. Eastern.</noscript>
+          </p>
+
+          <p class="paragraph mb-6 mt-3 max-w-2xl">
+            Use promo code <strong>MERRY</strong> to apply for free during the promotion.
+          </p>
+
+          <a
+            href="https://www.messiah.edu/applytoday"
+            class="btn !bg-holiday-green text-white hover:opacity-80 focus-visible:opacity-80"
+          >
+            Explore the free application offer
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="h-[60vh] w-full max-w-sm justify-self-center overflow-hidden bg-primary-950 shadow-xl lg:col-span-3 lg:h-auto lg:justify-self-end"
+      >
+        <iframe
+          class="h-full w-full border-0"
+          src="https://www.youtube-nocookie.com/embed/UWvJ12_LhRw"
+          title="10 reasons you'll love life at Messiah University"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-100 px-4 py-16 md:py-24" aria-labelledby="reasons-grid-heading">
+    <div
+      class="mx-auto max-w-7xl"
+      x-data="{ reasons: [] }"
+      x-init="reasons = JSON.parse(document.getElementById('reasons-data').textContent)"
+    >
+      <script is:inline id="reasons-data" type="application/json" set:html={reasonsJson} />
+
+      <h2 id="reasons-grid-heading" class="sr-only">Ten reasons to love Messiah University</h2>
+
+      <ul class="grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 lg:grid-cols-3" x-cloak>
+        <template x-for="reason in reasons" :key="reason.number">
+          <li class="h-full">
+            <a
+              :href="reason.href"
+              class="group relative flex h-full w-full flex-col overflow-hidden border border-slate-300 bg-white text-slate-800 transition duration-200 hover:-translate-y-1 hover:border-primary-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-400 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+            >
+              <div class="block h-2.5 w-full shrink-0" :class="reason.accent" aria-hidden="true">
+              </div>
+
+              <div class="relative block h-64 w-full shrink-0 overflow-hidden bg-primary-900">
+                <img
+                  :src="reason.image"
+                  alt=""
+                  width="750"
+                  :height="reason.height"
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                />
+                <span
+                  aria-hidden="true"
+                  class="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent"
+                ></span>
+                <span
+                  aria-hidden="true"
+                  class="absolute right-4 top-5 font-title text-6xl font-bold leading-none text-primary-950 opacity-50"
+                  x-text="reason.number"></span>
+                <span
+                  aria-hidden="true"
+                  class="absolute right-5 top-4 z-10 font-title text-6xl font-bold leading-none text-white"
+                  x-text="reason.number"></span>
+              </div>
+
+              <div class="p-6 md:p-8">
+                <h3
+                  class="flex items-center gap-3 font-title text-3xl font-bold leading-[1.08] !text-holiday-green"
+                >
+                  <span x-text="reason.title"></span>
+                  <svg
+                    class="size-5 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6"></path>
+                  </svg>
+                </h3>
+              </div>
+            </a>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </section>
+
+  <section
+    class="bg-gray-100 px-4 py-16 text-center md:py-24"
+    aria-labelledby="application-offer-heading"
+  >
+    <div class="mx-auto max-w-6xl">
+      <h2 id="application-offer-heading" class="h2 !text-holiday-red">Apply for Free!</h2>
+
+      <a
+        href="https://www.messiah.edu/applytoday"
+        class="btn mt-8 !bg-holiday-green text-white hover:opacity-80 focus-visible:opacity-80"
+      >
+        Start your application
+      </a>
+
+      <p class="paragraph mt-12 italic">
+        Enter code <strong>MERRY</strong> when submitting the Messiah application. First-year, domestic
+        applicants applying via the Common App may waive the application fee by selecting the school-specific
+        fee waiver <strong>MERRY</strong> in the Messiah University questions section of the application.
+      </p>
+
+      <p class="paragraph mt-10 font-bold">(MERRY expires Dec. 31, 2026 at 11:59 p.m. Eastern.)</p>
+    </div>
+  </section>
+</SingleColumn>

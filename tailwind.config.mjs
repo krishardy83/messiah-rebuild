@@ -25,6 +25,16 @@ export default {
     "!text-6xl",
     "!text-7xl",
     "!text-8xl",
+    "!text-holiday-green",
+    "!text-holiday-red",
+    "!bg-holiday-green",
+    "bg-holiday-green",
+    "bg-holiday-green-light",
+    "bg-holiday-red",
+    "bg-holiday-orange",
+    "animate-snowfall",
+    "animate-snowfall-slow",
+    "animate-snowfall-fast",
     "py-6",
     "py-12",
     "py-24",
@@ -78,10 +88,37 @@ export default {
     "-mt-24",
     "w-20",
     "sm:w-28",
-    "lg:w-40"
+    "lg:w-40",
   ],
   theme: {
     extend: {
+      animation: {
+        snowfall: "snowfall 14s linear infinite",
+        "snowfall-slow": "snowfall-reverse 19s linear infinite",
+        "snowfall-fast": "snowfall 11s linear infinite",
+      },
+      keyframes: {
+        snowfall: {
+          "0%": { opacity: "0", transform: "translate3d(0, -10%, 0) rotate(0deg)" },
+          "10%": { opacity: "0.7" },
+          "50%": { transform: "translate3d(1.25rem, 45vh, 0) rotate(160deg)" },
+          "90%": { opacity: "0.55" },
+          "100%": {
+            opacity: "0",
+            transform: "translate3d(-0.75rem, 90vh, 0) rotate(320deg)",
+          },
+        },
+        "snowfall-reverse": {
+          "0%": { opacity: "0", transform: "translate3d(0, -10%, 0) rotate(0deg)" },
+          "10%": { opacity: "0.6" },
+          "50%": { transform: "translate3d(-1rem, 45vh, 0) rotate(-150deg)" },
+          "90%": { opacity: "0.5" },
+          "100%": {
+            opacity: "0",
+            transform: "translate3d(0.75rem, 90vh, 0) rotate(-300deg)",
+          },
+        },
+      },
       typography: {
         DEFAULT: {
           css: {
@@ -157,17 +194,23 @@ export default {
           950: "#182a39",
         },
         mango: {
-          50: '#fef9ec',
-          100: '#fbecca',
-          200: '#f7d890',
-          300: '#f2bd55',
-          400: '#efa630',
-          500: '#e88518',
-          600: '#cd6312',
-          700: '#aa4513',
-          800: '#8b3615',
-          900: '#722d15',
-          950: '#411507',
+          50: "#fef9ec",
+          100: "#fbecca",
+          200: "#f7d890",
+          300: "#f2bd55",
+          400: "#efa630",
+          500: "#e88518",
+          600: "#cd6312",
+          700: "#aa4513",
+          800: "#8b3615",
+          900: "#722d15",
+          950: "#411507",
+        },
+        holiday: {
+          green: "#067368",
+          "green-light": "#5d966b",
+          red: "#a73339",
+          orange: "#ef8533",
         },
         button: {
           from: "#6697B8",

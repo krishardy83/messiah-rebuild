@@ -1,0 +1,221 @@
+---
+import SingleColumn from "../../layouts/single-column.astro";
+
+const reasons = [
+  {
+    number: "01",
+    title: "Find your people",
+    image: "https://www.messiah.edu/merry/_images/cards/01-find-your-people.jpg",
+    height: 422,
+    accent: "bg-[#1682a6]",
+  },
+  {
+    number: "02",
+    title: "A campus that feels like home",
+    image: "https://www.messiah.edu/merry/_images/cards/02-a-campus-that-feels-like-home.jpg",
+    height: 491,
+    accent: "bg-[#d5a643]",
+  },
+  {
+    number: "03",
+    title: "Grow your faith, make it your own",
+    image: "https://www.messiah.edu/merry/_images/cards/03-grow-your-faith-make-it-your-own.jpg",
+    height: 500,
+    accent: "bg-[#4ca7bd]",
+  },
+  {
+    number: "04",
+    title: "Professors who actually know you",
+    image: "https://www.messiah.edu/merry/_images/cards/04-professors-who-actually-know-you.jpg",
+    height: 500,
+    accent: "bg-[#1682a6]",
+  },
+  {
+    number: "05",
+    title: "Big opportunities, personal experience",
+    image:
+      "https://www.messiah.edu/merry/_images/cards/05-big-opportunities-personal-experience.jpg",
+    height: 500,
+    accent: "bg-[#d5a643]",
+  },
+  {
+    number: "06",
+    title: "See the world, make a difference",
+    image: "https://www.messiah.edu/merry/_images/cards/06-see-the-world-make-a-difference.jpg",
+    height: 592,
+    accent: "bg-[#4ca7bd]",
+  },
+  {
+    number: "07",
+    title: "Game days hit different",
+    image: "https://www.messiah.edu/merry/_images/cards/07-game-days-hit-different.jpg",
+    height: 500,
+    accent: "bg-[#1682a6]",
+  },
+  {
+    number: "08",
+    title: "Small campus, big possibilities",
+    image: "https://www.messiah.edu/merry/_images/cards/08-small-campus-big-possibilities.jpg",
+    height: 970,
+    accent: "bg-[#d5a643]",
+  },
+  {
+    number: "09",
+    title: "Yes, the food is actually good",
+    image: "https://www.messiah.edu/merry/_images/cards/09-yes-the-food-is-actually-good.jpg",
+    height: 500,
+    accent: "bg-[#4ca7bd]",
+  },
+  {
+    number: "10",
+    title: "Your next favorite place",
+    image: "https://www.messiah.edu/merry/_images/cards/10-your-next-favorite-place.jpg",
+    height: 518,
+    accent: "bg-[#1682a6]",
+  },
+] as const;
+
+const reasonsJson = JSON.stringify(reasons).replace(/</g, "\\u003c");
+---
+
+<SingleColumn
+  title="A very merry gift from us to you"
+  description="A very merry gift from Messiah University to you."
+  image="/images/10-reasons-holiday-banner.png"
+  analyticsKey="10-reasons"
+>
+  <section class="px-4 py-16 md:py-24">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-10 lg:gap-16">
+      <div class="text-left lg:col-span-7">
+        <p class="text-xs font-bold uppercase tracking-[.18em] text-primary-800">
+          Life at Messiah University
+        </p>
+
+        <h2 class="h2 mt-3 text-primary-800">10 reasons you'll love it here.</h2>
+
+        <p class="paragraph mt-6 max-w-3xl">
+          College is about more than classes. It's about finding your people, discovering your
+          purpose and making memories that last. Hear why Messiah students love calling this place
+          home.
+        </p>
+
+        <div class="mt-10 bg-gray-100 p-6 md:p-8">
+          <h3 class="h3 text-primary-800">Your application is on us!</h3>
+
+          <p class="paragraph mb-6 mt-3 max-w-2xl">
+            Use promo code <strong>MERRY</strong> to apply for free during the promotion.
+          </p>
+
+          <a href="https://www.messiah.edu/applytoday" class="btn-primary">
+            Explore the free application offer
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="h-[60vh] w-full max-w-sm justify-self-center overflow-hidden bg-primary-950 shadow-xl lg:col-span-3 lg:h-auto lg:justify-self-end"
+      >
+        <iframe
+          class="h-full w-full border-0"
+          src="https://www.youtube-nocookie.com/embed/UWvJ12_LhRw"
+          title="10 reasons you'll love life at Messiah University"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-100 px-4 py-16 md:py-24" aria-labelledby="reasons-grid-heading">
+    <div
+      class="mx-auto max-w-7xl"
+      x-data="{ reasons: [] }"
+      x-init="reasons = JSON.parse(document.getElementById('reasons-data').textContent)"
+    >
+      <script is:inline id="reasons-data" type="application/json" set:html={reasonsJson} />
+
+      <h2 id="reasons-grid-heading" class="sr-only">Ten reasons to love Messiah University</h2>
+
+      <ul class="grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 lg:grid-cols-3" x-cloak>
+        <template x-for="reason in reasons" :key="reason.number">
+          <li class="h-full">
+            <a
+              href="#"
+              class="group relative flex h-full w-full flex-col overflow-hidden border border-slate-300 bg-white text-slate-800 transition duration-200 hover:-translate-y-1 hover:border-primary-300 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tertiary-400 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+            >
+              <div class="block h-2.5 w-full shrink-0" :class="reason.accent" aria-hidden="true">
+              </div>
+
+              <div class="relative block h-64 w-full shrink-0 overflow-hidden bg-primary-900">
+                <img
+                  :src="reason.image"
+                  alt=""
+                  width="750"
+                  :height="reason.height"
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover transition duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                />
+                <span
+                  aria-hidden="true"
+                  class="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent"
+                ></span>
+                <span
+                  aria-hidden="true"
+                  class="absolute right-4 top-5 font-title text-6xl font-bold leading-none text-primary-950 opacity-50"
+                  x-text="reason.number"></span>
+                <span
+                  aria-hidden="true"
+                  class="absolute right-5 top-4 z-10 font-title text-6xl font-bold leading-none text-white"
+                  x-text="reason.number"></span>
+              </div>
+
+              <div class="p-6 md:p-8">
+                <h3
+                  class="flex items-center gap-3 font-title text-3xl font-bold leading-[1.08] text-primary-950"
+                >
+                  <span x-text="reason.title"></span>
+                  <svg
+                    class="size-5 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6"></path>
+                  </svg>
+                </h3>
+              </div>
+            </a>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </section>
+
+  <section
+    class="bg-gray-100 px-4 py-16 text-center md:py-24"
+    aria-labelledby="application-offer-heading"
+  >
+    <div class="mx-auto max-w-6xl">
+      <h2 id="application-offer-heading" class="h2 text-primary-800">Apply for Free!</h2>
+
+      <a href="https://www.messiah.edu/applytoday" class="btn-primary mt-8">
+        Start your application
+      </a>
+
+      <p class="paragraph mt-12 italic">
+        Enter code <strong>MERRY</strong> when submitting the Messiah application. First-year, domestic
+        applicants applying via the Common App may waive the application fee by selecting the school-specific
+        fee waiver <strong>MERRY</strong> in the Messiah University questions section of the application.
+      </p>
+
+      <p class="paragraph mt-10 font-bold">(MERRY expires Jan. 4, 2026 at 11:59 p.m.)</p>
+    </div>
+  </section>
+</SingleColumn>
