@@ -8,9 +8,10 @@ interface Props {
   title: string;
   description: string;
   transparent?: boolean;
+  programDiscovery?: boolean;
 }
 
-const { title, description, transparent = true } = Astro.props;
+const { title, description, transparent = true, programDiscovery = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -210,7 +211,30 @@ const { title, description, transparent = true } = Astro.props;
     />
     <!-- End Lite YouTube Embed -->
   </head>
-  <body class="font-sans text-gray-700">
+  <body
+    class:list={[
+      "font-sans text-gray-700",
+      // The shared drawer is teleported to body, beside the discovery page.
+      programDiscovery && [
+        "[&_.program-discovery_:is(a,button,input,select):focus-visible]:outline [&_.program-discovery_:is(a,button,input,select):focus-visible]:outline-2 [&_.program-discovery_:is(a,button,input,select):focus-visible]:outline-offset-4 [&_.program-discovery_:is(a,button,input,select):focus-visible]:outline-primary-700",
+        "[&_.program-discovery_#next-steps_:is(a,button,input):focus-visible]:outline-mango-300",
+        "[&_.program-discovery_:is(a,button,input,select)]:duration-[180ms] [&_.program-discovery_:is(a,button,input,select)]:ease-[ease-out]",
+        "[&_.program-discovery_input]:caret-primary-700",
+        "[&_.program-discovery_::selection]:bg-mango-200 [&_.program-discovery_::selection]:text-primary-950",
+        "[&_.program-discovery_:is(h1,h2,h3)]:text-balance",
+        "[&_.program-discovery_[role=dialog]]:[scrollbar-color:theme(colors.primary.300)_theme(colors.primary.50)]",
+        "motion-reduce:[&_.program-discovery_*]:!animate-none",
+        "motion-reduce:[&_.program-discovery_*::before]:!animate-none",
+        "motion-reduce:[&_.program-discovery_*::after]:!animate-none",
+        "motion-reduce:[&_.program-discovery_*]:![transition:none]",
+        "motion-reduce:[&_.program-discovery_*::before]:![transition:none]",
+        "motion-reduce:[&_.program-discovery_*::after]:![transition:none]",
+        "motion-reduce:[&_.program-discovery_*]:!scroll-auto",
+        "motion-reduce:[&_.program-discovery_*::before]:!scroll-auto",
+        "motion-reduce:[&_.program-discovery_*::after]:!scroll-auto",
+      ],
+    ]}
+  >
     <!-- Google Tag Manager (noscript) -->
     <noscript>
       <iframe

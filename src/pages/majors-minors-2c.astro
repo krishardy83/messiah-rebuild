@@ -1,5 +1,4 @@
 ---
-import "../styles/program-discovery.css";
 import BaseLayout from "../layouts/base.astro";
 import Footer from "../views/majors-minors-new/footer.astro";
 import Hero from "../views/majors-minors-new/hero.astro";
@@ -99,6 +98,7 @@ const interestAreas = [
 ---
 
 <BaseLayout
+  programDiscovery
   title="Undergraduate Programs by Interest"
   description="Explore Messiah University undergraduate majors, minors and programs grouped by interest and career areas."
 >
@@ -115,10 +115,10 @@ const interestAreas = [
     <main id="content">
       <TabNavigation active="interest" />
 
-      <section id="interest-areas" class="discovery-section">
-        <div class="discovery-container">
-          <h2 class="discovery-heading">Find a direction that feels like you.</h2>
-          <p class="discovery-intro mb-10">
+      <section id="interest-areas" class="scroll-mt-24 bg-white pb-16 pt-8 lg:pb-24 lg:pt-12">
+        <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
+          <h2 class="max-w-4xl text-balance font-title text-4xl font-bold leading-tight tracking-tight text-primary-950 sm:text-5xl lg:text-6xl">Find a direction that feels like you.</h2>
+          <p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg mb-10">
             View academic programs grouped by interest and career areas. Choose a category to
             explore the majors, minors and pathways connected to it.
           </p>
@@ -126,7 +126,7 @@ const interestAreas = [
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {
               interestAreas.map((interest) => (
-                <article class="discovery-card group">
+                <article class="relative flex min-w-0 border border-slate-300 bg-white transition-[border-color,box-shadow] duration-[180ms] ease-out hover:border-primary-400 focus-within:border-primary-400 hover:shadow-[0_8px_20px_-12px_rgb(26_36_55_/_25%)] focus-within:shadow-[0_8px_20px_-12px_rgb(26_36_55_/_25%)] flex-col group">
                   <img
                     src={interest.image}
                     alt=""

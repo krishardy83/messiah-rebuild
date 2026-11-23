@@ -6,7 +6,7 @@ interface Props {
 const { filterInterests = false } = Astro.props;
 ---
 
-<article class="discovery-card group">
+<article class="relative flex min-w-0 border border-slate-300 bg-white transition-[border-color,box-shadow] duration-[180ms] ease-out hover:border-primary-400 focus-within:border-primary-400 hover:shadow-[0_8px_20px_-12px_rgb(26_36_55_/_25%)] focus-within:shadow-[0_8px_20px_-12px_rgb(26_36_55_/_25%)] flex-col group">
   <div class="relative aspect-video overflow-hidden bg-slate-200">
     <img
       :src="program.thumbnail_small"
@@ -35,7 +35,7 @@ const { filterInterests = false } = Astro.props;
   </div>
   <div class="flex flex-1 flex-col p-6 pb-4">
     <p
-      class="discovery-meta mb-2"
+      class="text-xs font-bold uppercase tracking-wider text-primary-700 mb-2"
       x-text="programTypes(program).map((type) => type.label).join(', ')"
     >
     </p>
@@ -59,11 +59,11 @@ const { filterInterests = false } = Astro.props;
             <button
               type="button"
               @click="chooseInterest(tag)"
-              class="discovery-tag hover:bg-primary-100"
+              class="inline-flex min-h-8 items-center bg-slate-100 px-2.5 py-1 text-xs leading-relaxed text-primary-700 hover:bg-primary-100"
               x-text="tag"
             />
           ) : (
-            <span class="discovery-tag" x-text="tag" />
+            <span class="inline-flex min-h-8 items-center bg-slate-100 px-2.5 py-1 text-xs leading-relaxed text-primary-700" x-text="tag" />
           )
         }
       </template>
@@ -73,11 +73,11 @@ const { filterInterests = false } = Astro.props;
         type="button"
         @click="showDetails(program)"
         :aria-label="`Quick view: ${program.program_name}`"
-        class="discovery-card-action border-r border-slate-200 pr-3"
+        class="flex min-h-11 items-center gap-2 text-left text-xs font-bold uppercase tracking-wide text-primary-900 hover:text-mango-800 justify-between border-r border-slate-200 pr-3"
       >
         Quick view <Icon name="expand" class="size-4 shrink-0" aria-hidden="true" />
       </button>
-      <a :href="programUrl(program)" class="discovery-card-action pl-3">
+      <a :href="programUrl(program)" class="flex min-h-11 items-center gap-2 text-left text-xs font-bold uppercase tracking-wide text-primary-900 hover:text-mango-800 justify-between pl-3">
         Full program <Icon name="chevron-right" class="size-4 shrink-0" aria-hidden="true" />
       </a>
     </div>
